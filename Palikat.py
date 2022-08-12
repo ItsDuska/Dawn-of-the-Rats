@@ -1,0 +1,249 @@
+import pygame, random, os
+from Palikka import Palikka
+from Pelaaja import Pelaaja
+from TuliKärpänen import Kärpänen
+from Animoidut_asiat import AnimatedObj
+from Music import Music
+from Laskut import *
+from Dialogit import Dialog
+from Enemy import Enemy
+
+pygame.mixer.pre_init(44100, -16, 2, 512)
+
+class Palikat:
+    def __init__(self,maxRuudut,widht,height):
+        self.maxRuudut = maxRuudut
+        self.display_surface = pygame.display.get_surface()
+        self.width = widht
+        self.height = height
+        self.currentFrame = 0
+        self.rightClick = False
+        self.tasoDir = os.path.join("Tasot","level1")
+        self.music = Music()
+        self.taso_num = 1
+        self.puhuminen = False
+        self.dilogit = []
+
+        self.offset = pygame.math.Vector2(0,0)
+        
+        self.enemies = pygame.sprite.Group()
+        self.kärpäs_group = pygame.sprite.Group()
+        self.visible_sprites = CameraGroup()
+        self.active_sprites = pygame.sprite.Group()
+        self.collision_sprites = pygame.sprite.Group()
+
+        self.FishBoiTexts = ["panic panic panic!", "I've lost my rats!!", "Someone call the ambulance, I think I'm having a heart attack!","Oh wait a minute.",
+        "we're in the medieval time, damn it!","Oh, I didn't see you there youngster.","Well... hehe...",
+        "I'm in a small pickle here so....", "Could you please be a nice human and go find all five of my rats.","If you do, I would reward you with something nice.",
+        "Now then, if I remember right the rats went to East."]
+
+        self.setup_level(self.Lataa())
+        
+    
+    def Lataa(self):
+        with open(self.tasoDir,"r") as file:
+            return [[int(digit) for digit in line.split()] for line in file]
+
+    def setup_level(self,tasoData):
+        Palikat = {1:"RuohoPalikka.png",2:"RuohoPalikka2.png",3:"KulmaPalikka.png",4:"KulmaPalikka2.png",5:"KulmaPalikka3.png",6:"KulmaPalikka4.png",
+        7:"ReunaPalikka.png",8:"ReunaPalikka2.png",9:"RuohoKulmaPalikka.png",10:"RuohoKulmaPalikka2.png",11:"RuohoKulmaPalikka3.png",12:"RuohoKulmaPalikka4.png",
+        13:"MultaAlas.png",14:"ReunaLoppuPalikka.png",15:"ReunaLoppuPalikka2.png",16:"Multaa.png",17:"Multaa2.png",18:"Multaa3.png",19:"Multaa4.png"
+        ,20:"Multaa5.png",21:"Multaa6.png",22:"Multaa7.png",23:"Multaa8.png",24:"Multaa9.png",
+        25:"Multaa10.png",26:"Multaa11.png",27:"Multaa12.png",28:"Multaa13.png",29:"MossyBrick2.png",30:"MossyBrick3.png",
+        31:"MossyBrick4.png",32:"MossyBrick5.png",33:"MossyBrick6.png",34:"MossyBrick7.png",35:"MossyBrick8.png",36:"Platform1.png",37:"Platform2.png",38:"Platform3.png",
+        39:"Brick1.png",}
+
+        Läpi_palikat = {
+        51:"RuohoJuttu1.png",52:"RuohoJuttu2.png",53:"RuohoJuttu3.png",54:"RuohoKulma.png",55:"RuohoKulma2.png",
+        56:"RuohoKukka.png",57:"RuohoKukka2.png",58:"RuohoKukka3.png",59:"RuohoKukka4.png",60:"RuohoKukka5.png",61:"RuohoKukka6.png",
+        62:"TaustaMulta.png",63:"Pikku_puu1.png",64:"Pikku_puu2.png",65:"Puu1.png",66:"Puu2.png",67:"Puu3.png",68:"Puu4.png",69:"Puu5.png",70:"Puu6.png",
+        71:"Puu7.png",72:"Puu8.png",73:"Spike1.png",74:"Spike2.png"}
+
+        animated_objects = {101:[["Orb1.png","Orb2.png","Orb3.png","Orb4.png","Orb5.png","Orb6.png","Orb7.png","Orb8.png","Orb9.png","Orb10.png"],
+        ["Orb"],2],102:[["Plant1.png","Plant2.png","Plant3.png","Plant4.png","Plant5.png","Plant6.png","Plant7.png","Plant8.png","Plant9.png","Plant10.png"],["Venus_Trap"]
+        ], 103:[["FishBoi1.png","FishBoi1.png","FishBoi1.png","FishBoi2.png","FishBoi2.png","FishBoi2.png","FishBoi3.png","FishBoi3.png","FishBoi3.png","FishBoi3.png"],["FishBoi"]],
+        104:[["SlimeBoi1.png","SlimeBoi1.png","SlimeBoi1.png","SlimeBoi2.png","SlimeBoi2.png","SlimeBoi2.png","SlimeBoi3.png","SlimeBoi3.png","SlimeBoi3.png","SlimeBoi3.png",],["SlimeBoi"]],
+        105:[["Snakee1.png","Snakee2.png","Snakee3.png","Snakee4.png","Snakee5.png","Snakee6.png","Snakee7.png","Snakee8.png","Snakee9.png","Snakee9.png",],["Snake"]],
+        106:[["ZombiNPC1.png","ZombiNPC1.png","ZombiNPC2.png","ZombiNPC2.png","ZombiNPC2.png","ZombiNPC3.png","ZombiNPC3.png","ZombiNPC3.png","ZombiNPC4.png","ZombiNPC4.png"],["ZombiNPC"]],
+        107:[["Dash1.png","Dash2.png","Dash3.png","Dash4.png","Dash5.png","Dash6.png","Dash7.png","Dash8.png","Dash9.png","Dash10.png","Dash11.png","Dash12.png"],
+        ["Orb"],1]
+        }
+        
+                                   # 1-50 ei ole läpi päästävii. 51-100 on läpi päästäviä. 101-150 on animoituja
+
+        self.generation_loop(tasoData,Palikat,)
+
+        self.generation_loop(tasoData,Läpi_palikat)
+
+        self.generation_loop(tasoData,animated_objects)
+
+        self.player = Pelaaja((200,3200),[self.visible_sprites,self.active_sprites],self.collision_sprites)
+
+    def generation_loop(self,tasoData,kuva):
+        for row_index,row in enumerate(tasoData):        
+            for col_index,col in enumerate(row):
+                x = col_index * int(self.width/self.maxRuudut)
+                y = row_index * int(self.width/self.maxRuudut)
+                if col in kuva:
+                    if col >= 50 and col <=100:
+                        
+                        self.lisää_kuva(x,y,kuva[col],self.display_surface,False,False,col)
+                    elif col <= 51:
+                        self.lisää_kuva(x,y,kuva[col],self.display_surface,True,False,col)
+                    elif col >= 101:
+                        if col in [105]:
+                            sus = Enemy((x,y),self.maxRuudut,True,col,kuva[col],self.width,self.height,self.display_surface,self.visible_sprites),
+                            self.enemies.add(sus)
+                        else:
+                            self.anim_obj = AnimatedObj((x,y),self.maxRuudut,kuva[col],self.display_surface,self.width,self.height,False,True,col,)
+                            self.visible_sprites.add(self.anim_obj)
+
+    def lisää_kuva(self,a,b,kuva,näyttö,passable,animate,col):
+        Palikka((a,b),self.maxRuudut,kuva,näyttö,self.maxRuudut,self.width,self.height,[self.visible_sprites,self.collision_sprites],passable,animate,col)
+
+    def AddKärpänen(self):
+        if random.randint(1,5) != 1:
+            return
+        x, y = (random.randint(0,self.width),random.randint(0,self.height))
+        r = random.randint(2, 4)
+        f = Kärpänen(x, y, r,[(205, 250, 80),(160, 150, 50),(50, 50, 50)],1)
+        self.kärpäs_group.add(f)
+        
+                
+
+    def update_kärpänen(self):
+        self.kärpäs_group.update(self.display_surface)
+        for tuli in self.kärpäs_group:
+            if tuli.y <= 0:
+                tuli.kill()
+        
+    
+    def ObjectTypeChecker(self):
+        mouspos = pygame.mouse.get_pos()
+        mouspos += self.offset
+       
+
+        if self.puhuminen:
+            self.talk.tekstikohta.update()
+            self.talk.updatee(self.rightClick)
+            if self.talk.StopTalking():
+                self.puhuminen = False
+            if self.rightClick:
+                self.rightClick = False  
+        else:          
+            for sprite in self.visible_sprites: 
+                if sprite.animate:
+                    if sprite.type == 103:  
+                        if Distance(sprite.rect,self.player.rect) <= 100 and self.rightClick and not self.puhuminen and sprite.rect.collidepoint(mouspos):
+                            self.puhuminen = True
+                            self.talk = Dialog(self.display_surface,sprite,self.FishBoiTexts)
+                        else:
+                            self.rightClick = False
+        
+        for enemy in self.enemies:
+            enemy.Animoi(self.offset)
+            if enemy.type == 105:
+                enemy.shoot((self.player.rect.x,self.player.rect.y))    
+                enemy.updateAmmusPosAndBlit(self.offset) 
+        
+            if enemy.rect.colliderect(self.player.rect) or enemy.rectball.colliderect(self.player.rect) and not self.player.lopetaHurting:
+                self.player.hurting = True  
+                self.player.lopetaHurting = True  
+                    
+
+    def run(self):
+        self.active_sprites.update()
+        self.visible_sprites.custom_draw(self.player)
+        self.AddKärpänen()
+        self.update_kärpänen()
+        if not self.player.mute:
+            self.music.Play_music()
+        self.ObjectTypeChecker()
+        self.offset = self.visible_sprites.offset
+        
+
+        
+class CameraGroup(pygame.sprite.Group):
+    def __init__(self):
+        super().__init__()
+        self.scroll = 0
+        self.CAMERA_BORDERS = {'left': 100,'right': 200,'top':100,'bottom': 150}
+        self.display_surface = pygame.display.get_surface()
+        self.offset = pygame.math.Vector2(100,300)
+        self.tausta = Background(self.display_surface,self.scroll) 
+
+        self.sparkles = pygame.sprite.Group()
+		# camera
+        cam_left = self.CAMERA_BORDERS['left']
+        cam_top = self.CAMERA_BORDERS['top']
+        cam_width = self.display_surface.get_size()[0] - (cam_left + self.CAMERA_BORDERS['right'])
+        cam_height = self.display_surface.get_size()[1] - (cam_top + self.CAMERA_BORDERS['bottom'])
+
+        self.camera_rect = pygame.Rect(cam_left,cam_top,cam_width,cam_height)
+        
+
+    def custom_draw(self,player):
+		#camera pos
+        if player.rect.left < self.camera_rect.left:
+            self.tausta.scroll -= 1
+            self.camera_rect.left = player.rect.left
+        if player.rect.right > self.camera_rect.right:
+            self.tausta.scroll += 1
+            self.camera_rect.right = player.rect.right
+        if player.rect.top < self.camera_rect.top:
+            self.camera_rect.top = player.rect.top
+        if player.rect.bottom > self.camera_rect.bottom:
+            self.camera_rect.bottom = player.rect.bottom
+
+        
+        self.tausta.draw_bg()
+		#camera offsetti kai jotain emt 
+        self.offset = pygame.math.Vector2(
+			self.camera_rect.left - self.CAMERA_BORDERS['left'],
+			self.camera_rect.top - self.CAMERA_BORDERS['top'])
+
+        for sprite in self.sprites():
+            offset_pos = sprite.rect.topleft - self.offset 
+            self.display_surface.blit(sprite.image,offset_pos)
+            if sprite.animate:
+                sprite.Animoi()
+
+                if sprite.orb:
+                    if sprite.rect.colliderect(player.rect) and player.jump_on_air and player.orbattu == False:
+                        player.orbissa = True 
+                        player.OrbCheck(sprite.orbType)
+                    sprite.AddParticle(self.offset)
+                    sprite.Update_Particle(-self.offset[0],-self.offset[1])
+
+                if player.hurtingTime == 0 and not player.hurting:
+                    player.lopetaHurting = False
+
+            if sprite.type in [73,74,102] :
+                    player.Check_hurting(sprite)
+                
+                
+    def animate_all(self):
+        for sprite in self.visible_sprites:
+            if sprite.animate:
+                sprite.Animoi()
+                
+class Background:
+    def __init__(self,screen,scroll):
+        self.screen = screen
+        self.scroll = scroll
+
+        self.bg_images = []
+        for i in range(1, 5):
+            self.bg_image = pygame.image.load(os.path.join("Kuvat","BackGround",f"Bg{i}.png")).convert_alpha()
+            self.bg_image = pygame.transform.scale(self.bg_image,(1200,800))
+            self.bg_images.append(self.bg_image)
+        self.bg_width = self.bg_images[0].get_width()
+
+    def draw_bg(self):
+        for x in range(6):
+            speed = 1
+            for i in self.bg_images:
+                self.screen.blit(i, ((x * self.bg_width-300) - self.scroll * speed, 0))
+                speed += 0.2
+
+    

@@ -1,3 +1,6 @@
+# 200 per asia
+#Tee se myöhemmi
+
 blockit = {1:"RuohoPalikka.png",2:"RuohoPalikka2.png",3:"KulmaPalikka.png",4:"KulmaPalikka2.png",5:"KulmaPalikka3.png",6:"KulmaPalikka4.png",
         7:"ReunaPalikka.png",8:"ReunaPalikka2.png",9:"RuohoKulmaPalikka.png",10:"RuohoKulmaPalikka2.png",11:"RuohoKulmaPalikka3.png",12:"RuohoKulmaPalikka4.png",
         13:"MultaAlas.png",14:"ReunaLoppuPalikka.png",15:"ReunaLoppuPalikka2.png",16:"Multaa.png",17:"Multaa2.png",18:"Multaa3.png",19:"Multaa4.png"

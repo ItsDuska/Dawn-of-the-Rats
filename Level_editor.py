@@ -2,7 +2,6 @@ from genericpath import exists
 import pygame
 import numpy
 import os
-from Levelit import Levelit
 
 
 pygame.init()

@@ -35,7 +35,7 @@ class Enemy(pygame.sprite.Sprite):
     def shoot(self,pelPos):
         if not (Distance(self.rect,pelPos) <= 350 and not self.shooting):
             return
-        print("eys")
+
         self.shooting = True
         self.pelaajaXY = pelPos
         distance = Distance(self.pelaajaXY,(self.rect.x,self.rect.y))

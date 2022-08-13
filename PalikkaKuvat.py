@@ -10,7 +10,7 @@ blockit = {1:"RuohoPalikka.png",2:"RuohoPalikka2.png",3:"KulmaPalikka.png",4:"Ku
         39:"Brick1.png",}
 
 Läpi_palikat = {
-        51:"RuohoJuttu1.png",52:"RuohoJuttu2.png",53:"RuohoJuttu3.png",54:"RuohoKulma.png",55:"RuohoKulma2.png",
-        56:"RuohoKukka.png",57:"RuohoKukka2.png",58:"RuohoKukka3.png",59:"RuohoKukka4.png",60:"RuohoKukka5.png",61:"RuohoKukka6.png",
-        62:"TaustaMulta.png",63:"Pikku_puu1.png",64:"Pikku_puu2.png",65:"Puu1.png",66:"Puu2.png",67:"Puu3.png",68:"Puu4.png",69:"Puu5.png",70:"Puu6.png",
-        71:"Puu7.png",72:"Puu8.png",73:"Spike1.png",74:"Spike2.png"}
+        201:"RuohoJuttu1.png",202:"RuohoJuttu2.png",203:"RuohoJuttu3.png",204:"RuohoKulma.png",205:"RuohoKulma2.png",
+        206:"RuohoKukka.png",207:"RuohoKukka2.png",208:"RuohoKukka3.png",209:"RuohoKukka4.png",210:"RuohoKukka5.png",211:"RuohoKukka6.png",
+        212:"TaustaMulta.png",213:"Pikku_puu1.png",214:"Pikku_puu2.png",215:"Puu1.png",216:"Puu2.png",217:"Puu3.png",218:"Puu4.png",219:"Puu5.png",220:"Puu6.png",
+        221:"Puu7.png",222:"Puu8.png",223:"Spike1.png",224:"Spike2.png"}

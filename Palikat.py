@@ -26,7 +26,7 @@ class Palikat:
         self.dilogit = []
         self.Palikat = blockit
         self.Läpi_palikat = Läpi_palikat
-
+        self.enemies = [405,]
 
         self.offset = pygame.math.Vector2(0,0)
         
@@ -51,18 +51,17 @@ class Palikat:
     def setup_level(self,tasoData,):
         
 
-        animated_objects = {101:[["Orb1.png","Orb2.png","Orb3.png","Orb4.png","Orb5.png","Orb6.png","Orb7.png","Orb8.png","Orb9.png","Orb10.png"],
-        ["Orb"],2],102:[["Plant1.png","Plant2.png","Plant3.png","Plant4.png","Plant5.png","Plant6.png","Plant7.png","Plant8.png","Plant9.png","Plant10.png"],["Venus_Trap"]
-        ], 103:[["FishBoi1.png","FishBoi1.png","FishBoi1.png","FishBoi2.png","FishBoi2.png","FishBoi2.png","FishBoi3.png","FishBoi3.png","FishBoi3.png","FishBoi3.png"],["FishBoi"]],
-        104:[["SlimeBoi1.png","SlimeBoi1.png","SlimeBoi1.png","SlimeBoi2.png","SlimeBoi2.png","SlimeBoi2.png","SlimeBoi3.png","SlimeBoi3.png","SlimeBoi3.png","SlimeBoi3.png",],["SlimeBoi"]],
-        105:[["Snakee1.png","Snakee2.png","Snakee3.png","Snakee4.png","Snakee5.png","Snakee6.png","Snakee7.png","Snakee8.png","Snakee9.png","Snakee9.png",],["Snake"]],
-        106:[["ZombiNPC1.png","ZombiNPC1.png","ZombiNPC2.png","ZombiNPC2.png","ZombiNPC2.png","ZombiNPC3.png","ZombiNPC3.png","ZombiNPC3.png","ZombiNPC4.png","ZombiNPC4.png"],["ZombiNPC"]],
-        107:[["Dash1.png","Dash2.png","Dash3.png","Dash4.png","Dash5.png","Dash6.png","Dash7.png","Dash8.png","Dash9.png","Dash10.png","Dash11.png","Dash12.png"],
+        animated_objects = {401:[["Orb1.png","Orb2.png","Orb3.png","Orb4.png","Orb5.png","Orb6.png","Orb7.png","Orb8.png","Orb9.png","Orb10.png"],
+        ["Orb"],2],402:[["Plant1.png","Plant2.png","Plant3.png","Plant4.png","Plant5.png","Plant6.png","Plant7.png","Plant8.png","Plant9.png","Plant10.png"],["Venus_Trap"]
+        ], 403:[["FishBoi1.png","FishBoi1.png","FishBoi1.png","FishBoi2.png","FishBoi2.png","FishBoi2.png","FishBoi3.png","FishBoi3.png","FishBoi3.png","FishBoi3.png"],["FishBoi"]],
+        404:[["SlimeBoi1.png","SlimeBoi1.png","SlimeBoi1.png","SlimeBoi2.png","SlimeBoi2.png","SlimeBoi2.png","SlimeBoi3.png","SlimeBoi3.png","SlimeBoi3.png","SlimeBoi3.png",],["SlimeBoi"]],
+        405:[["Snakee1.png","Snakee2.png","Snakee3.png","Snakee4.png","Snakee5.png","Snakee6.png","Snakee7.png","Snakee8.png","Snakee9.png","Snakee9.png",],["Snake"]],
+        406:[["ZombiNPC1.png","ZombiNPC1.png","ZombiNPC2.png","ZombiNPC2.png","ZombiNPC2.png","ZombiNPC3.png","ZombiNPC3.png","ZombiNPC3.png","ZombiNPC4.png","ZombiNPC4.png"],["ZombiNPC"]],
+        407:[["Dash1.png","Dash2.png","Dash3.png","Dash4.png","Dash5.png","Dash6.png","Dash7.png","Dash8.png","Dash9.png","Dash10.png","Dash11.png","Dash12.png"],
         ["Orb"],1]
         }
         
                                    # 1-50 ei ole läpi päästävii. 51-100 on läpi päästäviä. 101-150 on animoituja
-        print(self.Palikat[1])
         self.generation_loop(tasoData,self.Palikat)
 
         self.generation_loop(tasoData,self.Läpi_palikat)
@@ -78,13 +77,12 @@ class Palikat:
                 x = col_index * int(self.width/self.maxRuudut)
                 y = row_index * int(self.width/self.maxRuudut)
                 if col in kuva:
-                    if col >= 50 and col <=100:
-                        
+                    if col >= 201 and col <=400:
                         self.lisää_kuva(x,y,kuva[col],self.display_surface,False,False,col)
-                    elif col <= 51:
+                    elif col <= 200:
                         self.lisää_kuva(x,y,kuva[col],self.display_surface,True,False,col)
-                    elif col >= 101:
-                        if col in [105]:
+                    elif col >= 401:
+                        if col in self.enemies:
                             sus = Enemy((x,y),self.maxRuudut,True,col,kuva[col],self.width,self.height,self.display_surface,self.visible_sprites),
                             self.enemies.add(sus)
                         else:
@@ -126,7 +124,7 @@ class Palikat:
         else:          
             for sprite in self.visible_sprites: 
                 if sprite.animate:
-                    if sprite.type == 103:  
+                    if sprite.type == 403:  
                         if Distance(sprite.rect,self.player.rect) <= 100 and self.rightClick and not self.puhuminen and sprite.rect.collidepoint(mouspos):
                             self.puhuminen = True
                             self.talk = Dialog(self.display_surface,sprite,self.FishBoiTexts)
@@ -135,7 +133,7 @@ class Palikat:
         
         for enemy in self.enemies:
             enemy.Animoi(self.offset)
-            if enemy.type == 105:
+            if enemy.type == 405:
                 enemy.shoot((self.player.rect.x,self.player.rect.y))    
                 enemy.updateAmmusPosAndBlit(self.offset) 
         
@@ -211,7 +209,7 @@ class CameraGroup(pygame.sprite.Group):
                 if player.hurtingTime == 0 and not player.hurting:
                     player.lopetaHurting = False
 
-            if sprite.type in [73,74,102] :
+            if sprite.type in [73,74,402] :
                     player.Check_hurting(sprite)
                 
                 

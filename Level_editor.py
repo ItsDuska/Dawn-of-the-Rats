@@ -39,13 +39,13 @@ class Render:
 
         self.Läpi_palikat = Läpi_palikat
 
-        self.animated_objects = {101:[["Orb1.png"],["Orb"]],102:[["Plant1.png"],["Venus_Trap"]],103:[["FishBoi1.png"],["FishBoi"]],104:[["SlimeBoi1.png"],["SlimeBoi"]],
-        105:[["Snakee1.png"],["Snake"]],106:[["ZombiNPC1.png"],["ZombiNPC"]],107:[["Dash1.png"],["Orb"]]
+        self.animated_objects = {401:[["Orb1.png"],["Orb"]],402:[["Plant1.png"],["Venus_Trap"]],403:[["FishBoi1.png"],["FishBoi"]],404:[["SlimeBoi1.png"],["SlimeBoi"]],
+        405:[["Snakee1.png"],["Snake"]],406:[["ZombiNPC1.png"],["ZombiNPC"]],407:[["Dash1.png"],["Orb"]],408:[["Bord1.png"],["Bord"]]
         }
        
 
         ##########################
-        self.enemies = [105,]
+        self.enemies = [405,408]
         ##########################
 
 
@@ -71,11 +71,11 @@ class Render:
                 x = col_index * int(self.width/self.maxRuudut)
                 y = row_index * int(self.width/self.maxRuudut)
                 if col in kuva:
-                    if col >= 51 and col <= 100:
+                    if col >= 201 and col <= 400:
                         self.lisää_kuva(x,y,kuva[col],self.display_surface,"PalikkaKuvat",False,False)
-                    elif col <= 50:
+                    elif col <= 200:
                         self.lisää_kuva(x,y,kuva[col],self.display_surface,"PalikkaKuvat",False,False)
-                    elif col >= 101 and col not in self.enemies: #vika on enemies
+                    elif col >= 401 and col not in self.enemies: #vika on enemies
                         self.lisää_kuva(x,y,kuva[col][0][0],self.display_surface,kuva[col][1][0],True,False)
                     elif col in self.enemies: # enemies
                         self.lisää_kuva(x,y,kuva[col][0][0],self.display_surface,kuva[col][1][0],True,True)
@@ -115,11 +115,11 @@ class Render:
         elif keys[pygame.K_2]:
             self.tyyppi = self.Läpi_palikat
             self.currentFrame = 1
-            self.alotus = 50
+            self.alotus = 200
         elif keys[pygame.K_3]:
             self.tyyppi = self.animated_objects
             self.currentFrame = 1
-            self.alotus = 100
+            self.alotus = 400
 
     def drawGrid(self):
         blockSize = int(self.width/self.maxRuudut) #Set the size of the grid block
@@ -166,13 +166,10 @@ class Render:
         self.setup_level(self.level)
 
     def DrawGUI(self):
-        
-
-        if self.currentFrame+self.alotus <= 0 or (self.currentFrame+self.alotus <= 50 and self.tyyppi == self.Läpi_palikat) or (self.currentFrame+self.alotus <= 100 and self.tyyppi == self.animated_objects):
+        if self.currentFrame+self.alotus <= 0 or (self.currentFrame+self.alotus <= 200 and self.tyyppi == self.Läpi_palikat) or (self.currentFrame+self.alotus <= 400 and self.tyyppi == self.animated_objects):
             self.currentFrame = len(self.tyyppi)
         elif self.currentFrame >= 1+len(self.tyyppi):
             self.currentFrame = 1
-
 
 
         if self.tyyppi == self.animated_objects:
@@ -181,7 +178,9 @@ class Render:
             else:
                 self.kuvaa = pygame.image.load(os.path.join("Kuvat","Palikat","Animoidut_palikat",self.animated_objects[self.currentFrame+self.alotus][1][0],self.animated_objects[self.currentFrame+self.alotus][0][0])).convert_alpha()
         else:
+            
             self.kuvaa = pygame.image.load(os.path.join("Kuvat","Palikat","PalikkaKuvat",self.tyyppi[self.currentFrame+self.alotus])).convert_alpha()
+        
         self.kuvaa = pygame.transform.scale(self.kuvaa,(64,64))
         self.display_surface.blit(self.kuvaa,(0,736))
 
@@ -241,5 +240,6 @@ while päällä:
     win.blit(tausta,(0,0))
     render.run()  
     pygame.display.update()
+
 
 render.Tallennus()

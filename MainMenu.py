@@ -58,7 +58,6 @@ class MainMenu:
                     
                 self.screen.blit(sprite.button,sprite.pos)
                 sprite.tekstikohta.update()
-
             self.Title.update()
         if self.hidden:
             for teksti in self.credit_texts:

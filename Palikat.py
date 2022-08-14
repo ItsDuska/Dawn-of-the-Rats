@@ -26,7 +26,7 @@ class Palikat:
         self.dilogit = []
         self.Palikat = blockit
         self.Läpi_palikat = Läpi_palikat
-        self.enemies = [405,]
+        self.enemies = [405]
 
         self.offset = pygame.math.Vector2(0,0)
         
@@ -49,8 +49,6 @@ class Palikat:
             return [[int(digit) for digit in line.split()] for line in file]
 
     def setup_level(self,tasoData,):
-        
-
         animated_objects = {401:[["Orb1.png","Orb2.png","Orb3.png","Orb4.png","Orb5.png","Orb6.png","Orb7.png","Orb8.png","Orb9.png","Orb10.png"],
         ["Orb"],2],402:[["Plant1.png","Plant2.png","Plant3.png","Plant4.png","Plant5.png","Plant6.png","Plant7.png","Plant8.png","Plant9.png","Plant10.png"],["Venus_Trap"]
         ], 403:[["FishBoi1.png","FishBoi1.png","FishBoi1.png","FishBoi2.png","FishBoi2.png","FishBoi2.png","FishBoi3.png","FishBoi3.png","FishBoi3.png","FishBoi3.png"],["FishBoi"]],
@@ -59,9 +57,8 @@ class Palikat:
         406:[["ZombiNPC1.png","ZombiNPC1.png","ZombiNPC2.png","ZombiNPC2.png","ZombiNPC2.png","ZombiNPC3.png","ZombiNPC3.png","ZombiNPC3.png","ZombiNPC4.png","ZombiNPC4.png"],["ZombiNPC"]],
         407:[["Dash1.png","Dash2.png","Dash3.png","Dash4.png","Dash5.png","Dash6.png","Dash7.png","Dash8.png","Dash9.png","Dash10.png","Dash11.png","Dash12.png"],
         ["Orb"],1]
-        }
-        
-                                   # 1-50 ei ole läpi päästävii. 51-100 on läpi päästäviä. 101-150 on animoituja
+        }    
+                                   # 1-200 ei ole läpi päästävii. 201-400 on läpi päästäviä. 401-600 on animoituja
         self.generation_loop(tasoData,self.Palikat)
 
         self.generation_loop(tasoData,self.Läpi_palikat)
@@ -209,7 +206,7 @@ class CameraGroup(pygame.sprite.Group):
                 if player.hurtingTime == 0 and not player.hurting:
                     player.lopetaHurting = False
 
-            if sprite.type in [73,74,402] :
+            if sprite.type in [223,224,402] :
                     player.Check_hurting(sprite)
                 
                 

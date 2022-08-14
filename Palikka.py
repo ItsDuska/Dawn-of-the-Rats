@@ -7,9 +7,7 @@ class Palikka(pygame.sprite.Sprite):
         self.orb = None
         self.animate = animate
         self.type = col
-        self.id = num #kylttei varte. 0 = ei kylttiä olemassa
-     
-        
+        self.id = num #kylttei varte. 0 = ei kylttiä olemassa    
         self.image = pygame.image.load(os.path.join("Kuvat","Palikat","PalikkaKuvat",kuva)).convert_alpha() 
         self.image = pygame.transform.scale(self.image,(int(width/maxRuudut),int(height/maxRuudut)))
         näyttö.blit(self.image,(size,size))

@@ -43,8 +43,7 @@ class Palikat:
         "Now then, if I remember right the rats went to East."]
 
         self.setup_level(self.Lataa())
-        
-    
+         
     def Lataa(self):
         with open(self.tasoDir,"r") as file:
             return [[int(digit) for digit in line.split()] for line in file]
@@ -60,9 +59,7 @@ class Palikat:
         ["Orb"],1],408:[["Bord1.png","Bord2.png","Bord3.png","Bord3.png","Bord4.png","Bord5.png","Bord6.png","Bord7.png","Bord8.png"],["Bord"]],
         }    
                                    # 1-200 ei ole läpi päästävii. 201-400 on läpi päästäviä. 401-600 on animoituja
-
-
-        
+       
         self.generation_loop(tasoData,self.Palikat)
 
         self.generation_loop(tasoData,self.Läpi_palikat)
@@ -109,14 +106,11 @@ class Palikat:
         f = Kärpänen(x, y, r,[(205, 250, 80),(160, 150, 50),(50, 50, 50)],1)
         self.kärpäs_group.add(f)
         
-                
-
     def update_kärpänen(self):
         self.kärpäs_group.update(self.display_surface)
         for tuli in self.kärpäs_group:
             if tuli.y <= 0:
-                tuli.kill()
-        
+                tuli.kill()     
     
     def ObjectTypeChecker(self):   
         for enemy in self.enemy_group:
@@ -137,7 +131,6 @@ class Palikat:
             if self.talk.StopTalking():
                 self.puhuminen = False
 
-
     def getDialog(self,id,type):
         lista = []
         f = open(os.path.join("dialogit",self.getDialogPath(id,type)), "r")
@@ -157,20 +150,15 @@ class Palikat:
             if fname in file:
                 return file 
 
-
-
     def klikObejet(self,mouspos):
         self.rightClick = True
         mouspos += self.offset                   
         for sprite in self.visible_sprites: 
             if sprite.type in [403,225]:        
                 if Distance(sprite.rect,self.player.rect) <= 100 and not self.puhuminen and sprite.rect.collidepoint(mouspos):
-                    print("sus")
                     self.puhuminen = True
                     self.talk = Dialog(self.display_surface,sprite,self.getDialog(sprite.id,sprite.type))
                         
-        
-
     def run(self):
         self.active_sprites.update()
         self.visible_sprites.custom_draw(self.player)
@@ -181,7 +169,6 @@ class Palikat:
         self.ObjectTypeChecker()
         self.offset = self.visible_sprites.offset
         
-
         
 class CameraGroup(pygame.sprite.Group):
     def __init__(self):
@@ -199,8 +186,7 @@ class CameraGroup(pygame.sprite.Group):
         cam_width = self.display_surface.get_size()[0] - (cam_left + self.CAMERA_BORDERS['right'])
         cam_height = self.display_surface.get_size()[1] - (cam_top + self.CAMERA_BORDERS['bottom'])
 
-        self.camera_rect = pygame.Rect(cam_left,cam_top,cam_width,cam_height)
-        
+        self.camera_rect = pygame.Rect(cam_left,cam_top,cam_width,cam_height)      
 
     def custom_draw(self,player):
 		#camera pos
@@ -227,26 +213,23 @@ class CameraGroup(pygame.sprite.Group):
             self.display_surface.blit(sprite.image,offset_pos)
             if sprite.animate:
                 sprite.Animoi()
-
                 if sprite.orb:
                     if sprite.rect.colliderect(player.rect) and player.jump_on_air and player.orbattu == False:
                         player.orbissa = True 
                         player.OrbCheck(sprite.orbType)
                     sprite.AddParticle(self.offset)
                     sprite.Update_Particle(-self.offset[0],-self.offset[1])
-
                 if player.hurtingTime == 0 and not player.hurting:
                     player.lopetaHurting = False
-
             if sprite.type in [223,224,402] :
                     player.Check_hurting(sprite.rect)
-                
-                
+                                
     def animate_all(self):
         for sprite in self.visible_sprites:
             if sprite.animate:
                 sprite.Animoi()
-                
+               
+               
 class Background:
     def __init__(self,screen,scroll):
         self.screen = screen

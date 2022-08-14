@@ -19,7 +19,6 @@ class AnimatedObj(pygame.sprite.Sprite):
         ]
         
         self.orb = True if self.folder == "Orb" else False
-
         self.orbType = kuva[2] if self.folder == "Orb" else None
     
         self.spark = pygame.sprite.Group()
@@ -40,7 +39,6 @@ class AnimatedObj(pygame.sprite.Sprite):
             self.image = pygame.transform.scale(self.image,(int(self.width/self.maxRuudut),2*int(self.height/self.maxRuudut)+3))
         else:
             self.image = pygame.transform.scale(self.image,(int(self.width/self.maxRuudut),int(self.height/self.maxRuudut)+2))
-
 
     def AddParticle(self,sus):
         if random.randint(1,35) != 1:

@@ -6,7 +6,7 @@ from Animoidut_asiat import AnimatedObj
 from Music import Music
 from Laskut import *
 from Dialogit import Dialog
-from Enemy import Enemy
+from Enemy import Enemy, Snake
 from PalikkaKuvat import blockit, Läpi_palikat
 
 pygame.mixer.pre_init(44100, -16, 2, 512)
@@ -26,11 +26,11 @@ class Palikat:
         self.dilogit = []
         self.Palikat = blockit
         self.Läpi_palikat = Läpi_palikat
-        self.enemies = [405]
+        self.enemies = [405,408]
 
         self.offset = pygame.math.Vector2(0,0)
         
-        self.enemies = pygame.sprite.Group()
+        self.enemy_group = pygame.sprite.Group()
         self.kärpäs_group = pygame.sprite.Group()
         self.visible_sprites = CameraGroup()
         self.active_sprites = pygame.sprite.Group()
@@ -56,7 +56,7 @@ class Palikat:
         405:[["Snakee1.png","Snakee2.png","Snakee3.png","Snakee4.png","Snakee5.png","Snakee6.png","Snakee7.png","Snakee8.png","Snakee9.png","Snakee9.png",],["Snake"]],
         406:[["ZombiNPC1.png","ZombiNPC1.png","ZombiNPC2.png","ZombiNPC2.png","ZombiNPC2.png","ZombiNPC3.png","ZombiNPC3.png","ZombiNPC3.png","ZombiNPC4.png","ZombiNPC4.png"],["ZombiNPC"]],
         407:[["Dash1.png","Dash2.png","Dash3.png","Dash4.png","Dash5.png","Dash6.png","Dash7.png","Dash8.png","Dash9.png","Dash10.png","Dash11.png","Dash12.png"],
-        ["Orb"],1]
+        ["Orb"],1],408:[["Bord1.png","Bord2.png","Bord3.png","Bord3.png","Bord4.png","Bord5.png","Bord6.png","Bord7.png","Bord8.png"],["Bord"]],
         }    
                                    # 1-200 ei ole läpi päästävii. 201-400 on läpi päästäviä. 401-600 on animoituja
         self.generation_loop(tasoData,self.Palikat)
@@ -80,8 +80,11 @@ class Palikat:
                         self.lisää_kuva(x,y,kuva[col],self.display_surface,True,False,col)
                     elif col >= 401:
                         if col in self.enemies:
-                            sus = Enemy((x,y),self.maxRuudut,True,col,kuva[col],self.width,self.height,self.display_surface,self.visible_sprites),
-                            self.enemies.add(sus)
+                            if col == 405:
+                                sus = Snake((x,y),self.maxRuudut,True,col,kuva[col],self.width,self.height,self.display_surface)
+                            else:
+                                sus = Enemy((x,y),self.maxRuudut,True,col,kuva[col],self.width,self.height,self.display_surface,0.1)
+                            self.enemy_group.add(sus)
                         else:
                             self.anim_obj = AnimatedObj((x,y),self.maxRuudut,kuva[col],self.display_surface,self.width,self.height,False,True,col,)
                             self.visible_sprites.add(self.anim_obj)
@@ -128,15 +131,16 @@ class Palikat:
                         else:
                             self.rightClick = False
         
-        for enemy in self.enemies:
+        for enemy in self.enemy_group:
             enemy.Animoi(self.offset)
             if enemy.type == 405:
                 enemy.shoot((self.player.rect.x,self.player.rect.y))    
                 enemy.updateAmmusPosAndBlit(self.offset) 
-        
-            if enemy.rect.colliderect(self.player.rect) or enemy.rectball.colliderect(self.player.rect) and not self.player.lopetaHurting:
-                self.player.hurting = True  
-                self.player.lopetaHurting = True  
+                self.player.Check_hurting(enemy.rectball)
+                
+
+            self.player.Check_hurting(enemy.rect)
+            
                     
 
     def run(self):
@@ -207,7 +211,7 @@ class CameraGroup(pygame.sprite.Group):
                     player.lopetaHurting = False
 
             if sprite.type in [223,224,402] :
-                    player.Check_hurting(sprite)
+                    player.Check_hurting(sprite.rect)
                 
                 
     def animate_all(self):

@@ -278,7 +278,7 @@ class Pelaaja(pygame.sprite.Sprite):
                 
 
     def Check_hurting(self,objekt):
-        if objekt.rect.colliderect(self.rect) and not self.lopetaHurting:
+        if objekt.colliderect(self.rect) and not self.lopetaHurting:
             self.hurting = True  
             self.lopetaHurting = True
              

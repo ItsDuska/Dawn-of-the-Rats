@@ -32,7 +32,7 @@ class AnimatedObj(pygame.sprite.Sprite):
         if self.currentFrame >= len(self.kuva):
                 self.currentFrame = 0 
         self.image = pygame.image.load(os.path.join("Kuvat","Palikat","Animoidut_palikat",self.folder,self.kuva[int(self.currentFrame)])).convert_alpha()
-        if self.type in [103,105,106]:
+        if self.type in [403,405,406]:
             self.image = pygame.transform.scale(self.image,(int(self.width/self.maxRuudut),2*int(self.height/self.maxRuudut)+3))
         else:
             self.image = pygame.transform.scale(self.image,(int(self.width/self.maxRuudut),int(self.height/self.maxRuudut)+2))

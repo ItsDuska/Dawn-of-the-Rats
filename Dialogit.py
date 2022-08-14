@@ -18,10 +18,7 @@ class Dialog:
         self.tekstikohta = Text(self.näyttö,(100,620),self.text[self.kohta],32,(255,255,255)) 
       
     def StopTalking(self):
-        if self.kohta >= len(self.text):
-            return True
-        else:
-            return False
+        return True if self.kohta >= len(self.text) else False
 
     def updatee(self,click):
         if click:

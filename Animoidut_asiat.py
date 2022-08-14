@@ -13,6 +13,7 @@ class AnimatedObj(pygame.sprite.Sprite):
         self.kuva = kuva[0]
         self.maxRuudut = maxRuudut
         self.currentFrame = 0
+        self.id = 0
         self.folder = kuva[1][0]
         self.colors = [[(130, 160, 250),(90, 120, 200),(50, 50, 50)],[(250, 160, 240),(200, 130, 200),(50, 50, 50)]
         ]

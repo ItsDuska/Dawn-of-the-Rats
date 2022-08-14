@@ -1,3 +1,4 @@
+from re import S
 import pygame, random, os
 from Palikka import Palikka
 from Pelaaja import Pelaaja
@@ -27,7 +28,7 @@ class Palikat:
         self.Palikat = blockit
         self.Läpi_palikat = Läpi_palikat
         self.enemies = [405,408]
-
+        self.num = 0 # kylttien id
         self.offset = pygame.math.Vector2(0,0)
         
         self.enemy_group = pygame.sprite.Group()
@@ -94,7 +95,11 @@ class Palikat:
                             self.visible_sprites.add(self.anim_obj)
 
     def lisää_kuva(self,a,b,kuva,näyttö,passable,animate,col):
-        Palikka((a,b),self.maxRuudut,kuva,näyttö,self.maxRuudut,self.width,self.height,[self.visible_sprites,self.collision_sprites],passable,animate,col)
+        if col == 225:
+            self.num +=1
+            Palikka((a,b),self.maxRuudut,kuva,näyttö,self.maxRuudut,self.width,self.height,[self.visible_sprites,self.collision_sprites],passable,animate,col,self.num)
+        else:
+            Palikka((a,b),self.maxRuudut,kuva,näyttö,self.maxRuudut,self.width,self.height,[self.visible_sprites,self.collision_sprites],passable,animate,col)
 
     def AddKärpänen(self):
         if random.randint(1,5) != 1:
@@ -133,15 +138,37 @@ class Palikat:
                 self.puhuminen = False
 
 
+    def getDialog(self,id,type):
+        lista = []
+        f = open(os.path.join("dialogit",self.getDialogPath(id,type)), "r")
+        for line in f:
+            if not "#" in line:
+                lista.append(line)
+        f.close()
+        return lista
+
+    def getDialogPath(self,id,type):
+        if type == 403:
+            tyyppi = "Fish"
+        else:
+            tyyppi = "Sign"
+        fname = "L"+ str(self.taso_num)+tyyppi+str(id)
+        for file in os.listdir(os.path.join('Dialogit')):
+            if fname in file:
+                return file 
+
+
+
     def klikObejet(self,mouspos):
         self.rightClick = True
         mouspos += self.offset                   
         for sprite in self.visible_sprites: 
-            if sprite.animate:
-                if sprite.type == 403:        
-                    if Distance(sprite.rect,self.player.rect) <= 100 and not self.puhuminen and sprite.rect.collidepoint(mouspos):
-                        self.puhuminen = True
-                        self.talk = Dialog(self.display_surface,sprite,self.FishBoiTexts)
+            if sprite.type in [403,225]:        
+                if Distance(sprite.rect,self.player.rect) <= 100 and not self.puhuminen and sprite.rect.collidepoint(mouspos):
+                    print("sus")
+                    self.puhuminen = True
+                    self.talk = Dialog(self.display_surface,sprite,self.getDialog(sprite.id,sprite.type))
+                        
         
 
     def run(self):

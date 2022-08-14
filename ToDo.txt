@@ -1,0 +1,13 @@
+-ENEMMÄN PALIKOITA!!!
+-LEVELIT!!
+-launch pad
+-viholliset
+-ampuvat kasvi % osittain
+-äänet
+-Kasvi katossa joka tippuu pelaajan päälle jos pelaaja on sen alapuolella. 
+-npc/npc:t joka puhuu   % osittain
+-boss fight koska tukepuke
+-collect about 5 spinning rats and return them to the npc
+
+-Snakin bulletit rikki. Pelaaja ei ota damaa
+-lue Dialogit dialogit.txt tiedostosta (ehkä jokaselle dialogille oma tiedosto)

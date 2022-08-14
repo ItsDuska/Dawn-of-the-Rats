@@ -18,7 +18,7 @@ To do list:
 -boss fight koska tukepuke
 -collect about 5 spinning rats and return them to the npc
 
-
+#Snakin bulletit rikki. Pelaaja ei ota damaa
 """
 
 

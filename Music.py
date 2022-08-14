@@ -26,5 +26,5 @@ class Music:
                 break
         self.song = song
         pygame.mixer.music.load(os.path.join("Musiikit",self.song))
-        pygame.mixer.music.set_volume(0.1)
+        pygame.mixer.music.set_volume(0.05)
         pygame.mixer.music.play()

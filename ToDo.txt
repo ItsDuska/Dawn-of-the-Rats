@@ -10,4 +10,3 @@
 -collect about 5 spinning rats and return them to the npc
 
 -Snakin bulletit rikki. Pelaaja ei ota damaa
--lue Dialogit dialogit.txt tiedostosta (ehkä jokaselle dialogille oma tiedosto)

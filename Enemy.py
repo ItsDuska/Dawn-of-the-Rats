@@ -68,6 +68,7 @@ class Snake(Enemy):
         if self.pelaajaXY[0] < self.rect.x:
             self.pituus *= -1
 
+
     def updateAmmusPosAndBlit(self,offset):
         if not self.shooting:
             return
@@ -88,6 +89,7 @@ class Snake(Enemy):
         self.imageball = pygame.image.load(os.path.join("Kuvat","Enemies",self.folder,self.fireball[int(self.currentFrame1)])).convert_alpha()
         self.imageball = pygame.transform.scale(self.imageball,(int((self.width/self.maxRuudut)-1),int((self.height/self.maxRuudut)-1)))
         self.rectball = self.imageball.get_rect(topleft = (self.ammusPos[0],self.ammusPos[1]))
+
 
 class Bord(Enemy):
     def __init__(self, pos, maxRuudut, animate, col, kuva, width, height, display_surface,suunnat) -> None:

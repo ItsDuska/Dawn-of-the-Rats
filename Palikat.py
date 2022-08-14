@@ -119,6 +119,7 @@ class Palikat:
                 enemy.shoot((self.player.rect.x,self.player.rect.y))    
                 enemy.updateAmmusPosAndBlit(self.offset) 
                 self.player.Check_hurting(enemy.rectball)
+
             if enemy.type == 408:
                 enemy.Moving()
                 

@@ -49,7 +49,7 @@ def Game_loop(win):
                     print(clock)
                     print(palikat.kärpäs_group)
                 elif pygame.mouse.get_pressed()[2]:
-                    palikat.rightClick = True
+                    palikat.klikObejet(pygame.mouse.get_pos())
             
         
         if palikat.player.hp == 0:

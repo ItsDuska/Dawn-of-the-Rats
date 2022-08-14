@@ -113,28 +113,7 @@ class Palikat:
                 tuli.kill()
         
     
-    def ObjectTypeChecker(self):
-        mouspos = pygame.mouse.get_pos()
-        mouspos += self.offset
-       
-
-        if self.puhuminen:
-            self.talk.tekstikohta.update()
-            self.talk.updatee(self.rightClick)
-            if self.talk.StopTalking():
-                self.puhuminen = False
-            if self.rightClick:
-                self.rightClick = False  
-        else:          
-            for sprite in self.visible_sprites: 
-                if sprite.animate:
-                    if sprite.type == 403:  
-                        if Distance(sprite.rect,self.player.rect) <= 100 and self.rightClick and not self.puhuminen and sprite.rect.collidepoint(mouspos):
-                            self.puhuminen = True
-                            self.talk = Dialog(self.display_surface,sprite,self.FishBoiTexts)
-                        else:
-                            self.rightClick = False
-        
+    def ObjectTypeChecker(self):   
         for enemy in self.enemy_group:
             enemy.Animoi(self.offset)
             if enemy.type == 405:
@@ -144,10 +123,26 @@ class Palikat:
             if enemy.type == 408:
                 enemy.Moving()
                 
-
             self.player.Check_hurting(enemy.rect)
             
-                    
+        if self.puhuminen:
+            self.talk.tekstikohta.update()
+            self.talk.updatee(self.rightClick)
+            self.rightClick = False
+            if self.talk.StopTalking():
+                self.puhuminen = False
+
+
+    def klikObejet(self,mouspos):
+        self.rightClick = True
+        mouspos += self.offset                   
+        for sprite in self.visible_sprites: 
+            if sprite.animate:
+                if sprite.type == 403:        
+                    if Distance(sprite.rect,self.player.rect) <= 100 and not self.puhuminen and sprite.rect.collidepoint(mouspos):
+                        self.puhuminen = True
+                        self.talk = Dialog(self.display_surface,sprite,self.FishBoiTexts)
+        
 
     def run(self):
         self.active_sprites.update()

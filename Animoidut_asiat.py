@@ -26,6 +26,9 @@ class AnimatedObj(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image,(int(width/maxRuudut),int(height/maxRuudut)))
         self.näyttö.blit(self.image,(maxRuudut,maxRuudut))
         self.rect = self.image.get_rect(topleft = pos)
+        if self.type == 403:
+            self.rect.h *= 2
+            self.rect.w *= 2
 
     def Animoi(self):
         self.currentFrame += 0.1

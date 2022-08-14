@@ -20,6 +20,7 @@ class Enemy(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image,(int(self.width/maxRuudut),int(self.height/maxRuudut)))
         self.näyttö.blit(self.image,(self.maxRuudut,self.maxRuudut))
         self.rect = self.image.get_rect(topleft = pos)
+        self.vasemmalle = False
                   
     def Animoi(self,offset):
         self.currentFrame += self.animationSpeed
@@ -31,9 +32,15 @@ class Enemy(pygame.sprite.Sprite):
             self.rect = self.image.get_rect(topleft = (self.rect.x,self.rect.y))
         else:
             self.image = pygame.transform.scale(self.image,(int(self.width/self.maxRuudut),int(self.height/self.maxRuudut)+2))
+
+        self.CheckVasen()
         
         self.näyttö.blit(self.image,(self.rect.x-offset[0],self.rect.y-offset[1]))
    
+
+    def CheckVasen(self):
+        if self.vasemmalle:
+            self.image = pygame.transform.flip(self.image,True,False)
 
 class Snake(Enemy):
     def __init__(self, pos, maxRuudut, animate, col, kuva, width, height, display_surface) -> None:
@@ -81,3 +88,36 @@ class Snake(Enemy):
         self.imageball = pygame.image.load(os.path.join("Kuvat","Enemies",self.folder,self.fireball[int(self.currentFrame1)])).convert_alpha()
         self.imageball = pygame.transform.scale(self.imageball,(int((self.width/self.maxRuudut)-1),int((self.height/self.maxRuudut)-1)))
         self.rectball = self.imageball.get_rect(topleft = (self.ammusPos[0],self.ammusPos[1]))
+
+class Bord(Enemy):
+    def __init__(self, pos, maxRuudut, animate, col, kuva, width, height, display_surface,suunnat) -> None:
+        super().__init__(pos, maxRuudut, animate, col, kuva, width, height, display_surface,0.2)
+        self.suunnat = suunnat # lista vector2 arvoja
+        self.currentMovement = 0
+        self.movingSpeed = 1
+        self.kokopalikka = [(self.width/self.maxRuudut),(self.height/self.maxRuudut)]
+        self.startPos = self.rect.x,self.rect.y
+      
+
+    def Moving(self):
+        if self.suunnat[self.currentMovement][0] < 0:    
+            self.rect.x -= self.movingSpeed
+            self.vasemmalle = False
+        elif self.suunnat[self.currentMovement][0] > 0:
+            self.rect.x += self.movingSpeed
+            self.vasemmalle = True
+
+        if self.suunnat[self.currentMovement][1] < 0:    
+            self.rect.y -= self.movingSpeed
+        elif self.suunnat[self.currentMovement][1] > 0:
+            self.rect.y += self.movingSpeed
+ 
+    
+        if self.startPos[0] + (self.suunnat[self.currentMovement][0]*int(self.kokopalikka[0])) == self.rect.x and self.startPos[1] + (self.suunnat[self.currentMovement][1]*int(self.kokopalikka[1])) == self.rect.y:
+            self.currentMovement += 1
+            self.startPos = self.rect.x,self.rect.y     
+            if self.currentMovement == len(self.suunnat)-1:
+                self.currentMovement = 0
+
+    
+                

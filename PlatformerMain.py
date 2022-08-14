@@ -3,26 +3,6 @@ from MainMenu import MainMenu
 import pygame, sys
 
 
-
-""" 
-To do list:
-
--ENEMMÄN PALIKOITA!!!
--LEVELIT!!
--launch pad
--viholliset
--ampuvat kasvi % osittain
--äänet
--Kasvi katossa joka tippuu pelaajan päälle jos pelaaja on sen alapuolella. 
--npc/npc:t joka puhuu   % osittain
--boss fight koska tukepuke
--collect about 5 spinning rats and return them to the npc
-
-#Snakin bulletit rikki. Pelaaja ei ota damaa
-"""
-
-
-
 width = 800
 heigth = 800
 maxRuudut = 23 # kuinka monta ruuta näkyy oikealle ja ylös. Esim jos maxRuudut on 10 niin 10*10 ruutua näytöllä.

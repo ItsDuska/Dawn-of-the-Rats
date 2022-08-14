@@ -6,7 +6,7 @@ from Animoidut_asiat import AnimatedObj
 from Music import Music
 from Laskut import *
 from Dialogit import Dialog
-from Enemy import Enemy, Snake
+from Enemy import Enemy, Snake, Bord
 from PalikkaKuvat import blockit, Läpi_palikat
 
 pygame.mixer.pre_init(44100, -16, 2, 512)
@@ -59,6 +59,9 @@ class Palikat:
         ["Orb"],1],408:[["Bord1.png","Bord2.png","Bord3.png","Bord3.png","Bord4.png","Bord5.png","Bord6.png","Bord7.png","Bord8.png"],["Bord"]],
         }    
                                    # 1-200 ei ole läpi päästävii. 201-400 on läpi päästäviä. 401-600 on animoituja
+
+
+        
         self.generation_loop(tasoData,self.Palikat)
 
         self.generation_loop(tasoData,self.Läpi_palikat)
@@ -68,7 +71,6 @@ class Palikat:
         self.player = Pelaaja((200,3200),[self.visible_sprites,self.active_sprites],self.collision_sprites)
 
     def generation_loop(self,tasoData,kuva):
-
         for row_index,row in enumerate(tasoData):        
             for col_index,col in enumerate(row):
                 x = col_index * int(self.width/self.maxRuudut)
@@ -82,6 +84,8 @@ class Palikat:
                         if col in self.enemies:
                             if col == 405:
                                 sus = Snake((x,y),self.maxRuudut,True,col,kuva[col],self.width,self.height,self.display_surface)
+                            elif col == 408:
+                                sus = Bord((x,y),self.maxRuudut,True,col,kuva[col],self.width,self.height,self.display_surface,[[4,0],[0,4],[-4,0],[0,-4],[0,-4]])
                             else:
                                 sus = Enemy((x,y),self.maxRuudut,True,col,kuva[col],self.width,self.height,self.display_surface,0.1)
                             self.enemy_group.add(sus)
@@ -137,6 +141,8 @@ class Palikat:
                 enemy.shoot((self.player.rect.x,self.player.rect.y))    
                 enemy.updateAmmusPosAndBlit(self.offset) 
                 self.player.Check_hurting(enemy.rectball)
+            if enemy.type == 408:
+                enemy.Moving()
                 
 
             self.player.Check_hurting(enemy.rect)

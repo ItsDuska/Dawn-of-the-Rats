@@ -8,5 +8,13 @@
 -npc/npc:t joka puhuu   % osittain
 -boss fight koska tukepuke
 -collect about 5 spinning rats and return them to the npc
+-Ikkuna fullacreeniin ja korjaa sen tuottamat bugit
+-Slime enemy joka liikkuu maatapitki mutta ei voi hyppiä tai ampua
+-Kasvi viholline joka pudottaa bulletin / jonku asian alas jos sen alapuolella ollaan
+-Kasvit seiniin ja kattoon ???
+-Remake puut??
+-Tee oma pelaajan sprite. (Harkinnassa)
+
+
 
 -Snakin bulletit rikki. Pelaaja ei ota damaa

@@ -3,8 +3,10 @@ from Text import Text
 from Music import Music
 
 class MainMenu:
-    def __init__(self,screen) -> None:
+    def __init__(self,screen,w,h) -> None:
         self.screen = screen
+        self.width = w
+        self.height = h
         self.napit = []
         self.texts = ["Play","Credits","Quit"]
         self.TeeNapit(3)
@@ -12,9 +14,9 @@ class MainMenu:
         self.rats = []
         for num in range(1,46):
             self.rats.append("rat-spinning"+str(num)+".png")
-        self.tausta = Animate((0,0),self.taustat,"Taustat",screen,(800,800),0.03)
-        self.rat = Animate((600,600),self.rats,"Rat",screen,(200,200),0.3)
-        self.Title = Text(self.screen,(100,20),"Dawn of the Rats",64,(255,255,255))      
+        self.tausta = Animate((0,0),self.taustat,"Taustat",screen,(self.width,self.height),0.03)
+        self.rat = Animate((self.width-200,self.height-200),self.rats,"Rat",screen,(200,200),0.3)
+        self.Title = Text(self.screen,(self.width/4+150,20),"Dawn of the Rats",64,(255,255,255),self.width,self.height)      
         self.musiikki = Music()
         self.musiikki.type = 3
         self.click = False
@@ -33,12 +35,12 @@ class MainMenu:
          
     def credits(self):  
         for rivi,teksti in enumerate(reversed(self.credits_text)):
-            self.credit = Text(self.screen,(100,-1500+50*rivi),teksti,32,(0,0,0))
+            self.credit = Text(self.screen,(self.width/3,-1500+50*rivi),teksti,32,(0,0,0),self.width,self.height)
             self.credit_texts.append(self.credit)
 
     def TeeNapit(self,määrä):
         for x in range(määrä):
-            self.button = Button(self.texts[x],(50,150+x*200),300,100,self.screen,(100,100,255,128))
+            self.button = Button(self.texts[x],(self.width/2-100,150+x*200),300,100,self.screen,(100,100,255,128))
             self.napit.append(self.button)
 
     def run(self):
@@ -138,7 +140,7 @@ class Button:
         pygame.draw.rect(self.button, (255, 255, 255, 200), (0, 0, self.width, self.height), 1)                   
         näyttö.blit(self.button, (0,0))
         self.rect = self.button.get_rect(topleft = pos)
-        self.tekstikohta = Text(self.näyttö,(self.rect.x+5,self.rect.y+20),self.text,64,(255,255,255)) 
+        self.tekstikohta = Text(self.näyttö,(self.rect.x+5,self.rect.y-50),self.text,64,(255,255,255),self.width,self.height) 
 
     def kohdalla(self):
         self.button.fill(self.color)

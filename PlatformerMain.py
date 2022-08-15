@@ -3,18 +3,20 @@ from MainMenu import MainMenu
 import pygame, sys
 
 
-width = 800
-heigth = 800
-maxRuudut = 23 # kuinka monta ruuta näkyy oikealle ja ylös. Esim jos maxRuudut on 10 niin 10*10 ruutua näytöllä.
+
+maxRuudut = 22.5 # kuinka monta ruuta näkyy oikealle ja ylös. Esim jos maxRuudut on 10 niin 10*10 ruutua näytöllä.
 
 pygame.init()
-win =  pygame.display.set_mode((width, heigth))
-koko = (width, heigth )
+infoObject = pygame.display.Info()
+width = infoObject.current_w
+heigth = infoObject.current_h-60
+win =  pygame.display.set_mode((infoObject.current_w, infoObject.current_h-60))
+
 clock = pygame.time.Clock()
 
 def Main_Menu(win):
     clock = pygame.time.Clock()
-    menu = MainMenu(win)
+    menu = MainMenu(win,width,heigth)
     while menu.päällä: 
         clock.tick(60)
         for event in pygame.event.get():

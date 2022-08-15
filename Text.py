@@ -1,9 +1,11 @@
 import pygame,os
 pygame.font.init()
 class Text:
-    def __init__(self,näyttö,pos,text,koko,color) -> None:
+    def __init__(self,näyttö,pos,text,koko,color,w,h) -> None:
         self.fontti = pygame.font.Font(os.path.join("yoster.ttf"),koko)
         self.näyttö = näyttö
+        self.width = w
+        self.height = h
         self.text = text
         self.pos_x = pos[0]
         self.pos_y = pos[1]
@@ -19,7 +21,7 @@ class Text:
     def blit_text(self, text, pos, font, color=pygame.Color('black')):
         words = [word.split(' ') for word in text.splitlines()]  # 2D array where each row is a list of words.
         space = font.size(' ')[0]  # The width of a space.
-        max_width = 750
+        max_width = self.width-50
         x, y = pos
         for line in words:
             for word in line:

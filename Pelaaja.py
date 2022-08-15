@@ -24,9 +24,9 @@ class Pelaaja(pygame.sprite.Sprite):
         self.image = pygame.image.load(os.path.join("kuvat","Pelaaja","Pelaaja_idle",self.idle[self.currentFrame])).convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)
         self.direction = pygame.math.Vector2()
-        self.speed = 4
-        self.gravity = 0.8
-        self.jump_speed = 13
+        self.speed = 5
+        self.gravity = 0.9
+        self.jump_speed = 16
         self.collision_sprites = collision_sprites
         self.on_floor = False
         self.vasemmalle = False
@@ -53,6 +53,8 @@ class Pelaaja(pygame.sprite.Sprite):
         self.suunta = [0,0]
         self.surface = pygame.Surface((self.rect.w,self.rect.h),pygame.SRCALPHA) #pygame.SRCALPHA
         self.type = None
+        self.rect.w += self.rect.w
+        self.rect.h += self.rect.h
 
 
     def FrameCheck(self,kuvat,time,folder,loppu):
@@ -118,6 +120,8 @@ class Pelaaja(pygame.sprite.Sprite):
         elif self.hyökkäys == True and self.direction.x == 0:
             self.FrameCheck(self.attack,0.25,"Pelaaja_Attack",False)
             self.CheckVasen()
+
+        self.image = pygame.transform.scale(self.image,(self.rect.w,self.rect.h))
         
         
         

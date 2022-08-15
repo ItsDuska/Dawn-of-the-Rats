@@ -33,14 +33,9 @@ class Palikat:
         
         self.enemy_group = pygame.sprite.Group()
         self.kärpäs_group = pygame.sprite.Group()
-        self.visible_sprites = CameraGroup()
+        self.visible_sprites = CameraGroup(self.width,self.height)
         self.active_sprites = pygame.sprite.Group()
         self.collision_sprites = pygame.sprite.Group()
-
-        self.FishBoiTexts = ["panic panic panic!", "I've lost my rats!!", "Someone call the ambulance, I think I'm having a heart attack!","Oh wait a minute.",
-        "we're in the medieval time, damn it!","Oh, I didn't see you there youngster.","Well... hehe...",
-        "I'm in a small pickle here so....", "Could you please be a nice human and go find all five of my rats.","If you do, I would reward you with something nice.",
-        "Now then, if I remember right the rats went to East."]
 
         self.setup_level(self.Lataa())
          
@@ -66,13 +61,13 @@ class Palikat:
 
         self.generation_loop(tasoData,animated_objects)
 
-        self.player = Pelaaja((200,3200),[self.visible_sprites,self.active_sprites],self.collision_sprites)
+        self.player = Pelaaja((400,4400),[self.visible_sprites,self.active_sprites],self.collision_sprites)
 
     def generation_loop(self,tasoData,kuva):
         for row_index,row in enumerate(tasoData):        
             for col_index,col in enumerate(row):
                 x = col_index * int(self.width/self.maxRuudut)
-                y = row_index * int(self.width/self.maxRuudut)
+                y = row_index * int(self.height/self.maxRuudut)
                 if col in kuva:
                     if col >= 201 and col <=400:
                         self.lisää_kuva(x,y,kuva[col],self.display_surface,False,False,col)
@@ -158,7 +153,7 @@ class Palikat:
             if sprite.type in [403,225]:        
                 if Distance(sprite.rect,self.player.rect) <= 100 and not self.puhuminen and sprite.rect.collidepoint(mouspos):
                     self.puhuminen = True
-                    self.talk = Dialog(self.display_surface,sprite,self.getDialog(sprite.id,sprite.type))
+                    self.talk = Dialog(self.display_surface,sprite,self.getDialog(sprite.id,sprite.type),self.width,self.height)
                         
     def run(self):
         self.active_sprites.update()
@@ -172,13 +167,13 @@ class Palikat:
         
         
 class CameraGroup(pygame.sprite.Group):
-    def __init__(self):
+    def __init__(self,w,h):
         super().__init__()
         self.scroll = 0
         self.CAMERA_BORDERS = {'left': 100,'right': 200,'top':100,'bottom': 150}
         self.display_surface = pygame.display.get_surface()
         self.offset = pygame.math.Vector2(100,300)
-        self.tausta = Background(self.display_surface,self.scroll) 
+        self.tausta = Background(self.display_surface,self.scroll,w,h) 
 
         self.sparkles = pygame.sprite.Group()
 		# camera
@@ -232,14 +227,16 @@ class CameraGroup(pygame.sprite.Group):
                
                
 class Background:
-    def __init__(self,screen,scroll):
+    def __init__(self,screen,scroll,w,h):
+        self.width = w
+        self.height = h
         self.screen = screen
         self.scroll = scroll
 
         self.bg_images = []
         for i in range(1, 5):
             self.bg_image = pygame.image.load(os.path.join("Kuvat","BackGround",f"Bg{i}.png")).convert_alpha()
-            self.bg_image = pygame.transform.scale(self.bg_image,(1200,800))
+            self.bg_image = pygame.transform.scale(self.bg_image,(self.width,self.height))
             self.bg_images.append(self.bg_image)
         self.bg_width = self.bg_images[0].get_width()
 

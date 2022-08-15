@@ -10,7 +10,7 @@ class Palikka(pygame.sprite.Sprite):
         self.id = num #kylttei varte. 0 = ei kylttiä olemassa    
         self.image = pygame.image.load(os.path.join("Kuvat","Palikat","PalikkaKuvat",kuva)).convert_alpha() 
         self.image = pygame.transform.scale(self.image,(int(width/maxRuudut),int(height/maxRuudut)))
-        näyttö.blit(self.image,(size,size))
+        näyttö.blit(self.image,(size,size)) #size,size vanha
         self.rect = self.image.get_rect(topleft = pos)
         if self.type in [36,37,38]:
             self.rect.h = 1

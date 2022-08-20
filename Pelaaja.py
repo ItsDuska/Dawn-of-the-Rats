@@ -19,7 +19,7 @@ class Pelaaja(pygame.sprite.Sprite):
         self.hurt = ["Hurt1.png","Hurt2.png","Hurt3.png","Hurt4.png","Hurt5.png","Hurt6.png","Hurt7.png"]
 
 
-        self.hp = 3
+        self.hp = 20 # normaali on kolme
         self.currentFrame = 0
         self.image = pygame.image.load(os.path.join("kuvat","Pelaaja","Pelaaja_idle",self.idle[self.currentFrame])).convert_alpha()
         self.rect = self.image.get_rect(topleft = pos)
@@ -53,9 +53,12 @@ class Pelaaja(pygame.sprite.Sprite):
         self.suunta = [0,0]
         self.surface = pygame.Surface((self.rect.w,self.rect.h),pygame.SRCALPHA) #pygame.SRCALPHA
         self.type = None
-        self.rect.w += self.rect.w
-        self.rect.h += self.rect.h
+        
+        self.rect.w += self.rect.w/2
+        self.rect.h += self.rect.h/2
 
+        self.leveys = self.rect.w
+        self.korkeus = self.rect.h
 
     def FrameCheck(self,kuvat,time,folder,loppu):
         self.currentFrame += time  
@@ -81,6 +84,7 @@ class Pelaaja(pygame.sprite.Sprite):
 
 
         if self.hurting == True:
+            self.leveys += 6
             if self.currentFrame >= 6:
                # self.hurting = False
                 self.lopetaHurting = False
@@ -118,10 +122,12 @@ class Pelaaja(pygame.sprite.Sprite):
             
         
         elif self.hyökkäys == True and self.direction.x == 0:
+            self.leveys += 22
             self.FrameCheck(self.attack,0.25,"Pelaaja_Attack",False)
             self.CheckVasen()
 
-        self.image = pygame.transform.scale(self.image,(self.rect.w,self.rect.h))
+        self.image = pygame.transform.scale(self.image,(self.leveys,self.korkeus))
+        self.leveys = self.rect.w
         
         
         

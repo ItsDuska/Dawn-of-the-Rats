@@ -4,7 +4,7 @@ import pygame, sys
 
 
 
-maxRuudut = 22.5 # kuinka monta ruuta näkyy oikealle ja ylös. Esim jos maxRuudut on 10 niin 10*10 ruutua näytöllä.
+maxRuudut = 32 # kuinka monta ruuta näkyy oikealle ja ylös. Esim jos maxRuudut on 10 niin 10*10 ruutua näytöllä. 18% 25?
 
 pygame.init()
 infoObject = pygame.display.Info()

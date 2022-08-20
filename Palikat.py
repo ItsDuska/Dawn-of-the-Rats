@@ -61,7 +61,7 @@ class Palikat:
 
         self.generation_loop(tasoData,animated_objects)
 
-        self.player = Pelaaja((400,4400),[self.visible_sprites,self.active_sprites],self.collision_sprites)
+        self.player = Pelaaja((500,2300),[self.visible_sprites,self.active_sprites],self.collision_sprites)
 
     def generation_loop(self,tasoData,kuva):
         for row_index,row in enumerate(tasoData):        

@@ -14,6 +14,10 @@
 -Kasvit seiniin ja kattoon ???
 -Remake puut??
 -Tee oma pelaajan sprite. (Harkinnassa)
+-korjaa platformien spirtet
+-korjaa tekstit / dialogit
+-muuta joissakin tilanteissa palikoiden hue
+-pelaaja ottaa damaagee niin, sen keho muuttuu valkoseks ja sit punaseksi
 
 
 

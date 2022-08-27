@@ -1,8 +1,11 @@
-import pygame,os
+import pygame
+import os
 pygame.font.init()
+
+
 class Text:
-    def __init__(self,näyttö,pos,text,koko,color,w,h) -> None:
-        self.fontti = pygame.font.Font(os.path.join("yoster.ttf"),koko)
+    def __init__(self, näyttö, pos, text, koko, color, w, h) -> None:
+        self.fontti = pygame.font.Font(os.path.join("yoster.ttf"), koko)
         self.näyttö = näyttö
         self.width = w
         self.height = h
@@ -10,16 +13,18 @@ class Text:
         self.pos_x = pos[0]
         self.pos_y = pos[1]
         self.color = color
-        self.blit_text(self.text,(pos[0],pos[1]),self.fontti,self.color)
+        self.blit_text(self.text, (pos[0], pos[1]), self.fontti, self.color)
 
     def update(self):
-         self.blit_text(self.text,(self.pos_x,self.pos_y),self.fontti,self.color)
+        self.blit_text(self.text, (self.pos_x, self.pos_y),
+                       self.fontti, self.color)
 
     def liiku(self):
-        self.pos_y += 0.7 #0.4
+        self.pos_y += 0.7  # 0.4
 
     def blit_text(self, text, pos, font, color=pygame.Color('black')):
-        words = [word.split(' ') for word in text.splitlines()]  # 2D array where each row is a list of words.
+        # 2D array where each row is a list of words.
+        words = [word.split(' ') for word in text.splitlines()]
         space = font.size(' ')[0]  # The width of a space.
         max_width = self.width-50
         x, y = pos

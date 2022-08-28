@@ -1,10 +1,9 @@
 import pygame
 import random
 import os
-from Palikka import Palikka
+from Palikka import Palikka, AnimatedObj
 from Pelaaja import Pelaaja
 from TuliKärpänen import Kärpänen
-from Animoidut_asiat import AnimatedObj
 from Music import Music
 from Laskut import *
 from Dialogit import Dialog
@@ -125,8 +124,6 @@ class Palikat:
             if enemy.type == 405:
                 enemy.shoot((self.player.rect.x, self.player.rect.y))
                 enemy.updateAmmusPosAndBlit(self.offset)
-                print(self.player.rect.x, self.player.rect.y,
-                      "\n", enemy.rectball.x, enemy.rectball.y, "\n")
                 self.player.Check_hurting(enemy.rectball)
 
             if enemy.type == 408:

@@ -23,9 +23,8 @@ class Text:
         self.pos_y += 0.7  # 0.4
 
     def blit_text(self, text, pos, font, color=pygame.Color('black')):
-        # 2D array where each row is a list of words.
         words = [word.split(' ') for word in text.splitlines()]
-        space = font.size(' ')[0]  # The width of a space.
+        space = font.size(' ')[0]
         max_width = self.width-50
         x, y = pos
         for line in words:
@@ -33,9 +32,9 @@ class Text:
                 word_surface = font.render(word, 0, color)
                 word_width, word_height = word_surface.get_size()
                 if x + word_width >= max_width:
-                    x = pos[0]  # Reset the x.
-                    y += word_height  # Start on new row.
+                    x = pos[0]
+                    y += word_height
                 self.näyttö.blit(word_surface, (x, y))
                 x += word_width + space
-            x = pos[0]  # Reset the x.
-            y += word_height  # Start on new row.
+            x = pos[0]
+            y += word_height

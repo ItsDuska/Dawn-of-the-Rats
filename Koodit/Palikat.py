@@ -125,6 +125,8 @@ class Palikat:
             if enemy.type == 405:
                 enemy.shoot((self.player.rect.x, self.player.rect.y))
                 enemy.updateAmmusPosAndBlit(self.offset)
+                print(self.player.rect.x, self.player.rect.y,
+                      "\n", enemy.rectball.x, enemy.rectball.y, "\n")
                 self.player.Check_hurting(enemy.rectball)
 
             if enemy.type == 408:

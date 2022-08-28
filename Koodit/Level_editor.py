@@ -107,8 +107,11 @@ class Render:
             self.offset_y += 1
         else:
             self.world_shift_y = 0
-        if keys[pygame.K_e]:
+        if keys[pygame.K_r]:
             self.Reset()
+        elif keys[pygame.K_e]:
+            self.Tallennus()
+
         if keys[pygame.K_1]:
             self.tyyppi = self.Palikat
             self.currentFrame = 1

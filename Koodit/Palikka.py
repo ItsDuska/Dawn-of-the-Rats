@@ -35,8 +35,8 @@ class AnimatedObj(Palikka, pygame.sprite.Sprite):
         self.maxRuudut = maxRuudut
         self.currentFrame = 0
         self.folder = kuva[1][0]
-        self.colors = [[(130, 160, 250), (90, 120, 200), (50, 50, 50)], [(250, 160, 240), (200, 130, 200), (50, 50, 50)]
-                       ]
+        self.colors = [[(130, 160, 250), (90, 120, 200), (50, 50, 50)], [
+            (250, 160, 240), (200, 130, 200), (50, 50, 50)]]
 
         self.orb = True if self.folder == "Orb" else False
         self.orbType = kuva[2] if self.folder == "Orb" else None

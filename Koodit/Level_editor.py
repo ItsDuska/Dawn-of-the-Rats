@@ -147,6 +147,8 @@ class Render:
             for X in range(self.HoldPos[0], x):
                 if delete:
                     self.level[Y][X] = 0
+                elif self.level[Y][X] == self.currentFrame + self.alotus:
+                    pass
                 else:
                     self.level[Y][X] = self.currentFrame + self.alotus
         self.tiles.empty()

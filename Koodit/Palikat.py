@@ -28,7 +28,7 @@ class Palikat:
         self.dilogit = []
         self.Palikat = blockit
         self.Läpi_palikat = Läpi_palikat
-        self.enemies = [405, 408]
+        self.enemies = [405, 408, 409]
         self.num = 0  # kylttien id
         self.offset = pygame.math.Vector2(0, 0)
 
@@ -52,7 +52,7 @@ class Palikat:
                             405: [["Snakee1.png", "Snakee2.png", "Snakee3.png", "Snakee4.png", "Snakee5.png", "Snakee6.png", "Snakee7.png", "Snakee8.png", "Snakee9.png", "Snakee9.png", ], ["Snake"]],
                             406: [["ZombiNPC1.png", "ZombiNPC1.png", "ZombiNPC2.png", "ZombiNPC2.png", "ZombiNPC2.png", "ZombiNPC3.png", "ZombiNPC3.png", "ZombiNPC3.png", "ZombiNPC4.png", "ZombiNPC4.png"], ["ZombiNPC"]],
                             407: [["Dash1.png", "Dash2.png", "Dash3.png", "Dash4.png", "Dash5.png", "Dash6.png", "Dash7.png", "Dash8.png", "Dash9.png", "Dash10.png", "Dash11.png", "Dash12.png"],
-                                  ["Orb"], 1], 408: [["Bord1.png", "Bord2.png", "Bord3.png", "Bord3.png", "Bord4.png", "Bord5.png", "Bord6.png", "Bord7.png", "Bord8.png"], ["Bord"]],
+                                  ["Orb"], 1], 408: [["Bord1.png", "Bord2.png", "Bord3.png", "Bord3.png", "Bord4.png", "Bord5.png", "Bord6.png", "Bord7.png", "Bord8.png"], ["Bord"]], 409: [["FallingRock1.png"], ["FallingRock"]]
                             }
         # 1-200 ei ole läpi päästävii. 201-400 on läpi päästäviä. 401-600 on animoituja
 
@@ -63,13 +63,13 @@ class Palikat:
         self.generation_loop(tasoData, animated_objects)
 
         self.player = Pelaaja(
-            (500, 2300), [self.visible_sprites, self.active_sprites], self.collision_sprites)
+            (500, 86*int(self.height/self.maxRuudut)), [self.visible_sprites, self.active_sprites], self.collision_sprites)
 
     def generation_loop(self, tasoData, kuva):
         for row_index, row in enumerate(tasoData):
             for col_index, col in enumerate(row):
                 x = col_index * int(self.width/self.maxRuudut)
-                y = row_index * int(self.height/self.maxRuudut)
+                y = row_index * int(self.height/self.maxRuudut)  # height
                 if col in kuva:
                     if col >= 201 and col <= 400:
                         self.lisää_kuva(

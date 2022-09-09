@@ -3,6 +3,7 @@ import pygame
 import numpy
 import os
 from PalikkaKuvat import *
+from Laskut import *
 
 pygame.init()
 win = pygame.display.set_mode((800, 800))
@@ -19,7 +20,7 @@ taso = input("anna taso\n")
 class Render:
     def __init__(self, maxRuudut, näyttö, taso):
         self.maxRuudut = maxRuudut
-        #self.levelit = Levelit()
+        # self.levelit = Levelit()
         self.display_surface = näyttö
         self.width = 800
         self.height = 800
@@ -33,17 +34,19 @@ class Render:
         self.offset_x = 0
         self.offset_y = 0
         self.alotus = 0
+        self.holdingShift = False
+        self.HoldPos = (0, 0)
 
         self.Palikat = blockit
 
         self.Läpi_palikat = Läpi_palikat
 
         self.animated_objects = {401: [["Orb1.png"], ["Orb"]], 402: [["Plant1.png"], ["Venus_Trap"]], 403: [["FishBoi1.png"], ["FishBoi"]], 404: [["SlimeBoi1.png"], ["SlimeBoi"]],
-                                 405: [["Snakee1.png"], ["Snake"]], 406: [["ZombiNPC1.png"], ["ZombiNPC"]], 407: [["Dash1.png"], ["Orb"]], 408: [["Bord1.png"], ["Bord"]]
+                                 405: [["Snakee1.png"], ["Snake"]], 406: [["ZombiNPC1.png"], ["ZombiNPC"]], 407: [["Dash1.png"], ["Orb"]], 408: [["Bord1.png"], ["Bord"]], 409: [["FallingRock1.png"], ["FallingRock"]]
                                  }
 
         ##########################
-        self.enemies = [405, 408]
+        self.enemies = [405, 408, 409]
         ##########################
 
         self.tasoDir = os.path.join("Tasot", taso)
@@ -112,6 +115,11 @@ class Render:
         elif keys[pygame.K_e]:
             self.Tallennus()
 
+        if keys[pygame.K_LSHIFT]:
+            self.holdingShift = True
+        else:
+            self.holdingShift = False
+
         if keys[pygame.K_1]:
             self.tyyppi = self.Palikat
             self.currentFrame = 1
@@ -134,11 +142,28 @@ class Render:
                 pygame.draw.rect(self.display_surface,
                                  (100, 100, 100), rect, 1)
 
+    def FillArea(self, x, y, delete):
+        for Y in range(self.HoldPos[1], y):
+            for X in range(self.HoldPos[0], x):
+                if delete:
+                    self.level[Y][X] = 0
+                else:
+                    self.level[Y][X] = self.currentFrame + self.alotus
+        self.tiles.empty()
+        self.setup_level(self.level)
+
     def click(self, x, y, delete):
         grid_x, grid_y = x//int(self.width /
                                 self.maxRuudut), y//int(self.width/self.maxRuudut)
+
         grid_x += self.offset_x
         grid_y += self.offset_y
+
+        if self.holdingShift:
+            self.FillArea(grid_x, grid_y, delete)
+            return
+        else:
+            self.HoldPos = (grid_x, grid_y)
 
         if delete:
             self.level[grid_y][grid_x] = 0
@@ -183,7 +208,7 @@ class Render:
                     "Kuvat", "Enemies", self.animated_objects[self.currentFrame+self.alotus][1][0], self.animated_objects[self.currentFrame+self.alotus][0][0])).convert_alpha()
             else:
                 self.kuvaa = pygame.image.load(os.path.join("Kuvat", "Palikat", "Animoidut_palikat", self.animated_objects[
-                                               self.currentFrame+self.alotus][1][0], self.animated_objects[self.currentFrame+self.alotus][0][0])).convert_alpha()
+                    self.currentFrame+self.alotus][1][0], self.animated_objects[self.currentFrame+self.alotus][0][0])).convert_alpha()
         else:
 
             self.kuvaa = pygame.image.load(os.path.join(

@@ -4,14 +4,13 @@ import pygame
 import sys
 
 
-maxRuudut = 29  # kuinka monta ruuta näkyy oikealle ja ylös. Esim jos maxRuudut on 10 niin 10*10 ruutua näytöllä. 18% 25?
+maxRuudut = 25  # kuinka monta ruuta näkyy oikealle ja ylös. Esim jos maxRuudut on 10 niin 10*10 ruutua näytöllä. 18% 25?
 
 pygame.init()
 infoObject = pygame.display.Info()
-width = infoObject.current_w
+width = infoObject.current_h
 heigth = infoObject.current_h-60
-win = pygame.display.set_mode((infoObject.current_w, infoObject.current_h-60))
-
+win = pygame.display.set_mode((width, heigth))
 clock = pygame.time.Clock()
 
 
@@ -36,7 +35,7 @@ def Main_Menu(win):
 
 def Game_loop(win):
     päällä = True
-    palikat = Palikat(maxRuudut, width, heigth)
+    palikat = Palikat(maxRuudut, width, heigth)  # height
  # mainloop
     clock = pygame.time.Clock()
     while päällä:

@@ -24,21 +24,24 @@ class Palikka(pygame.sprite.Sprite):
             self.rect.h = 10
 
 
-class AnimatedObj(Palikka, pygame.sprite.Sprite):
-    def __init__(self, pos, size, kuva, näyttö, maxRuudut, width, height, asia, kasvi, animate, col, num=0) -> None:
-        super().__init__(pos, size, kuva, näyttö, maxRuudut,
-                         width, height, asia, kasvi, animate, col, num)
+class AnimatedObj(pygame.sprite.Sprite):
+    def __init__(self, pos, maxRuudut, kuva, näyttö, width, height, kasvi, animate, type) -> None:
+        super().__init__()
+        self.passable = kasvi
         self.näyttö = näyttö
         self.width = width
         self.height = height
+        self.animate = animate
+        self.type = type
         self.kuva = kuva[0]
         self.maxRuudut = maxRuudut
         self.currentFrame = 0
         self.folder = kuva[1][0]
-        self.colors = [[(130, 160, 250), (90, 120, 200), (50, 50, 50)], [
-            (250, 160, 240), (200, 130, 200), (50, 50, 50)]]
+        self.colors = [[(130, 160, 250), (90, 120, 200), (50, 50, 50)], [(250, 160, 240), (200, 130, 200), (50, 50, 50)]
+                       ]
 
         self.orb = True if self.folder == "Orb" else False
+
         self.orbType = kuva[2] if self.folder == "Orb" else None
 
         self.spark = pygame.sprite.Group()
@@ -48,9 +51,6 @@ class AnimatedObj(Palikka, pygame.sprite.Sprite):
             self.image, (int(width/maxRuudut), int(height/maxRuudut)))
         self.näyttö.blit(self.image, (maxRuudut, maxRuudut))
         self.rect = self.image.get_rect(topleft=pos)
-        if self.type == 403:
-            self.rect.h *= 2
-            self.rect.w *= 2
 
     def Animoi(self):
         self.currentFrame += 0.1
@@ -58,7 +58,7 @@ class AnimatedObj(Palikka, pygame.sprite.Sprite):
             self.currentFrame = 0
         self.image = pygame.image.load(os.path.join(
             "Kuvat", "Palikat", "Animoidut_palikat", self.folder, self.kuva[int(self.currentFrame)])).convert_alpha()
-        if self.type in [403, 405, 406]:
+        if self.type in [103, 105, 106]:
             self.image = pygame.transform.scale(self.image, (int(
                 self.width/self.maxRuudut), 2*int(self.height/self.maxRuudut)+3))
         else:

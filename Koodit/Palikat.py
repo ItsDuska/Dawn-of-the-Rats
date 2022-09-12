@@ -91,7 +91,8 @@ class Palikat:
                             self.enemy_group.add(sus)
                         else:
                             self.anim_obj = AnimatedObj(
-                                (x, y), self.maxRuudut, kuva[col], self.display_surface, self.width, self.height, False, True, col,)
+                                (x, y), self.maxRuudut, kuva[col], self.display_surface, self.width, self.height, True, True, col)
+                            #(x, y), self.maxRuudut, kuva[col], self.display_surface, self.width, self.height, False, True, True, True, col
                             self.visible_sprites.add(self.anim_obj)
 
     def lisää_kuva(self, a, b, kuva, näyttö, passable, animate, col):

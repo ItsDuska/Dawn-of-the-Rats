@@ -10,8 +10,10 @@ pygame.init()
 infoObject = pygame.display.Info()
 width = infoObject.current_h
 heigth = infoObject.current_h-60
-win = pygame.display.set_mode((width, heigth))
+win = pygame.display.set_mode(
+    (width, heigth), 0, 16)
 clock = pygame.time.Clock()
+pygame.event.set_allowed(pygame.QUIT | pygame.KEYDOWN | pygame.MOUSEBUTTONDOWN)
 
 
 def Main_Menu(win):
@@ -48,7 +50,6 @@ def Game_loop(win):
                 if pygame.mouse.get_pressed()[0]:
                     palikat.player.hyökkäys = not palikat.player.hyökkäys
                     print(clock)
-                    print(palikat.kärpäs_group)
                 elif pygame.mouse.get_pressed()[2]:
                     palikat.klikObejet(pygame.mouse.get_pos())
 

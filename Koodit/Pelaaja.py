@@ -25,8 +25,7 @@ class Pelaaja(pygame.sprite.Sprite):
 
         self.hp = 20  # normaali on kolme
         self.currentFrame = 0
-        self.image = pygame.image.load(os.path.join(
-            "kuvat", "Pelaaja", "Pelaaja_idle", self.idle[self.currentFrame])).convert_alpha()
+        self.image = pygame.image.load(os.path.join("kuvat", "Pelaaja", "Pelaaja_idle", self.idle[self.currentFrame])).convert_alpha()
         self.rect = self.image.get_rect(topleft=pos)
         self.direction = pygame.math.Vector2()
         self.speed = 5

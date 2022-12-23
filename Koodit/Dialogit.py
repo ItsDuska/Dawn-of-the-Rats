@@ -4,6 +4,7 @@ from Text import Text
 
 class Dialog:
     def __init__(self, näyttö, sprite, text, w, h) -> None:
+        __slots__ = "näyttö", "sprite", "text", "widht", "height", "kohta", "GUI", "rect", "tekstikohta"
         self.näyttö = näyttö
         self.sprite = sprite
         self.text = text

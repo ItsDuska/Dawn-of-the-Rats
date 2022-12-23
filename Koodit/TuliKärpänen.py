@@ -3,6 +3,8 @@ import random
 
 
 class Kärpänen(pygame.sprite.Sprite):
+    __slots__ = "x", "y", "radius", "yvel", "burn_rate", "layers", "glow", "colors", "Yminus", "Xminus", "surf"
+
     def __init__(self, x, y, radius, colors, yvel):
         super(Kärpänen, self).__init__()
         self.x = x

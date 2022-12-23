@@ -4,6 +4,7 @@ from random import choice
 
 
 class Music:
+    __slots__ = "Musiikit", "songDelay", "type", "song"
 
     def __init__(self) -> None:
         self.Musiikit = [["Flower_Solo.mp3", "Peace_In_The_Meadows.mp3", "Field_Of_The_Wild.mp3", "Hearth_Of_The_Kingdom1.mp3", "Chorus_Wheat.mp3", "Rats_Behold.mp3"],

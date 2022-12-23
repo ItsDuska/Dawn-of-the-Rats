@@ -1,6 +1,7 @@
 import pygame
 import random
 import os
+# from dataclasses import dataclass
 from Palikka import Palikka, AnimatedObj
 from Pelaaja import Pelaaja
 from TuliKärpänen import Kärpänen
@@ -70,30 +71,35 @@ class Palikat:
             for col_index, col in enumerate(row):
                 x = col_index * int(self.width/self.maxRuudut)
                 y = row_index * int(self.height/self.maxRuudut)  # height
-                if col in kuva:
-                    if col >= 201 and col <= 400:
-                        self.lisää_kuva(
-                            x, y, kuva[col], self.display_surface, False, False, col)
-                    elif col <= 200:
-                        self.lisää_kuva(
-                            x, y, kuva[col], self.display_surface, True, False, col)
-                    elif col >= 401:
-                        if col in self.enemies:
-                            if col == 405:
-                                sus = Snake((x, y), self.maxRuudut, True, col,
-                                            kuva[col], self.width, self.height, self.display_surface)
-                            elif col == 408:
-                                sus = Bord((x, y), self.maxRuudut, True, col, kuva[col], self.width, self.height, self.display_surface, [
-                                           [4, 0], [0, 4], [-4, 0], [0, -4], [0, -4]])
-                            else:
-                                sus = Enemy((x, y), self.maxRuudut, True, col,
-                                            kuva[col], self.width, self.height, self.display_surface, 0.1)
-                            self.enemy_group.add(sus)
-                        else:
-                            self.anim_obj = AnimatedObj(
-                                (x, y), self.maxRuudut, kuva[col], self.display_surface, self.width, self.height, True, True, col)
-                            #(x, y), self.maxRuudut, kuva[col], self.display_surface, self.width, self.height, False, True, True, True, col
-                            self.visible_sprites.add(self.anim_obj)
+                if not col in kuva:
+                    continue
+                if col >= 201 and col <= 400:
+                    self.lisää_kuva(
+                        x, y, kuva[col], self.display_surface, False, False, col)
+                elif col <= 200:
+                    self.lisää_kuva(
+                        x, y, kuva[col], self.display_surface, True, False, col)
+                elif col >= 401:
+                    if col in self.enemies:
+                        self.addEnemy(col, x, y, kuva)
+                    else:
+                        self.anim_obj = AnimatedObj(
+                            (x, y), self.maxRuudut, kuva[col], self.display_surface, self.width, self.height, True, True, col)
+                        # (x, y), self.maxRuudut, kuva[col], self.display_surface, self.width, self.height, False, True, True, True, col
+                        self.visible_sprites.add(self.anim_obj)
+
+    def addEnemy(self, col, x, y, kuva):
+        if col == 405:
+            sus = Snake((x, y), self.maxRuudut, True, col,
+                        kuva[col], self.width, self.height, self.display_surface)
+        elif col == 408:
+            sus = Bord((x, y), self.maxRuudut, True, col, kuva[col], self.width, self.height, self.display_surface, [
+                       [4, 0], [0, 4], [-4, 0], [0, -4], [0, -4]])
+        else:
+            sus = Enemy((x, y), self.maxRuudut, True, col,
+                        kuva[col], self.width, self.height, self.display_surface, 0.1)
+
+        self.enemy_group.add(sus)
 
     def lisää_kuva(self, a, b, kuva, näyttö, passable, animate, col):
         if col == 225:
@@ -243,13 +249,13 @@ class CameraGroup(pygame.sprite.Group):
 
 
 class Background:
-    def __init__(self, screen, scroll, w, h):
-        self.width = w
-        self.height = h
+    def __init__(self, screen, scroll, width, height):
         self.screen = screen
         self.scroll = scroll
-
+        self.width = width
+        self.height = height
         self.bg_images = []
+
         for i in range(1, 5):
             self.bg_image = pygame.image.load(os.path.join(
                 "Kuvat", "BackGround", f"Bg{i}.png")).convert_alpha()

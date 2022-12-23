@@ -4,6 +4,8 @@ pygame.font.init()
 
 
 class Text:
+    __slots__ = "fontti", "näyttö", "width", "height", "text", "pos_x", "pos_y", "color"
+
     def __init__(self, näyttö, pos, text, koko, color, w, h) -> None:
         self.fontti = pygame.font.Font(os.path.join("yoster.ttf"), koko)
         self.näyttö = näyttö

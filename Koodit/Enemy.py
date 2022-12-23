@@ -6,6 +6,7 @@ from Laskut import *
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, pos, maxRuudut, animate, col, kuva, width, height, display_surface, animationSpeed) -> None:
+        __slots__ = "animationSpeed", "animate", "pos", "maxRuudut", "type", "kuva", "folder", "width", "height", "näyttö", "currentFrame", "orb", "image", "rect", "vasemmalle"
         super().__init__()
         self.animationSpeed = animationSpeed
         self.animate = animate
@@ -52,6 +53,8 @@ class Enemy(pygame.sprite.Sprite):
 
 
 class Snake(Enemy):
+    __slots__ = "currentFrame1", "pelaajaXY", "korkeus", "pituus", "shooting", "ammuksenKesto", "fireball", "imageball", "rectball"
+
     def __init__(self, pos, maxRuudut, animate, col, kuva, width, height, display_surface) -> None:
         super().__init__(pos, maxRuudut, animate, col,
                          kuva, width, height, display_surface, 0.1)
@@ -108,6 +111,8 @@ class Snake(Enemy):
 
 
 class Bord(Enemy):
+    __slots__ = "suunnat", "currentMovement", "movingSpeed", "movingSpeed", "kokopalikka", "startPos"
+
     def __init__(self, pos, maxRuudut, animate, col, kuva, width, height, display_surface, suunnat) -> None:
         super().__init__(pos, maxRuudut, animate, col,
                          kuva, width, height, display_surface, 0.2)

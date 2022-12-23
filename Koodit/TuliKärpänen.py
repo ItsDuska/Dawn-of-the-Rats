@@ -37,12 +37,7 @@ class Kärpänen(pygame.sprite.Sprite):
             if alpha <= 0:
                 alpha = 0.01
             radius = int(self.radius * self.glow * i * i)
-            if self.radius > 3.5:
-                color = self.colors[0]
-            elif self.radius > 2.5:
-                color = self.colors[1]
-            else:
-                color = self.colors[1]
+            color = self.colors[0] if self.radius > 3.5 else self.colors[1]
             color = (*color, alpha)
             pygame.draw.circle(self.surf, color, (self.surf.get_width(
             ) // 2, self.surf.get_height() // 2), radius)

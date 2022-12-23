@@ -19,7 +19,7 @@ class Music:
             return
 
         self.songDelay += 0.1
-        if not self.songDelay >= 10:
+        if self.songDelay < 10:
             return
 
         self.songDelay = 0

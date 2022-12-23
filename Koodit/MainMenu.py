@@ -16,9 +16,7 @@ class MainMenu:
         self.TeeNapit(3)
         self.taustat = ["Tausta1.png", "Tausta2.png", "Tausta3.png",
                         "Tausta3.png", "Tausta4.png", "Tausta5.png"]
-        self.rats = []
-        for num in range(1, 46):
-            self.rats.append("rat-spinning"+str(num)+".png")
+        self.rats = [f"rat-spinning{str(num)}.png" for num in range(1, 46)]
         self.tausta = Animate((0, 0), self.taustat, "Taustat",
                               screen, (self.width, self.height), 0.03)
         self.rat = Animate((self.width-200, self.height-200),
@@ -87,21 +85,21 @@ class MainMenu:
 
     def katso_nappi(self, sprite):
         if sprite.text == "Play":
-            pygame.mixer.music.fadeout(500)
-            self.sus.play()
-            self.sus.set_volume(0.1)
-            self.päällä = False
+            self.activateButton()
         elif sprite.text == "Quit":
-            pygame.mixer.music.fadeout(500)
-            self.sus.play()
-            self.sus.set_volume(0.1)
-            self.päällä = False
+            self.activateButton()
             time.sleep(3)
             pygame.quit()
             sys.exit()
         else:
             self.hidden = True
             self.credits()
+
+    def activateButton(self):
+        pygame.mixer.music.fadeout(500)
+        self.sus.play()
+        self.sus.set_volume(0.1)
+        self.päällä = False
 
 
 class Animate:

@@ -67,13 +67,16 @@ class Snake(Enemy):
         self.fireball = ["FireBall1.png", "FireBall2.png",
                          "FireBall3.png", "FireBall4.png"]
         # self.ammusPos = [self.rect.x, self.rect.y]
-        self.imageball = pygame.image.load(os.path.join(
-            "Kuvat", "Enemies", self.folder, self.fireball[int(self.currentFrame1)])).convert_alpha()
+        self.imageball = pygame.image.load(
+            os.path.join(
+                "Kuvat", "Enemies", self.folder, self.fireball[self.currentFrame1]
+            )
+        ).convert_alpha()
         self.rectball = self.imageball.get_rect(
             topleft=(self.rect.x, self.rect.y))
 
     def shoot(self, pelPos):
-        if not (Distance(self.rect, pelPos) <= 350 and not self.shooting):
+        if Distance(self.rect, pelPos) > 350 or self.shooting:
             return
         self.shooting = True
         self.pelaajaXY = pelPos

@@ -35,9 +35,11 @@ class DawnOfTheRats:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    if pygame.mouse.get_pressed()[0]:
-                        menu.click = True
+                if (
+                    event.type == pygame.MOUSEBUTTONDOWN
+                    and pygame.mouse.get_pressed()[0]
+                ):
+                    menu.click = True
             self.window.fill((100, 100, 100))
             menu.run()
             pygame.display.update()

@@ -1,3 +1,4 @@
+import itertools
 from genericpath import exists
 import pygame
 import numpy
@@ -115,11 +116,7 @@ class Render:
         elif keys[pygame.K_e]:
             self.Tallennus()
 
-        if keys[pygame.K_LSHIFT]:
-            self.holdingShift = True
-        else:
-            self.holdingShift = False
-
+        self.holdingShift = bool(keys[pygame.K_LSHIFT])
         if keys[pygame.K_1]:
             self.tyyppi = self.Palikat
             self.currentFrame = 1
@@ -136,21 +133,17 @@ class Render:
     def drawGrid(self):
         # Set the size of the grid block
         blockSize = int(self.width/self.maxRuudut)
-        for x in range(0, 800, blockSize):
-            for y in range(0, 800, blockSize):
-                rect = pygame.Rect(x, y, blockSize, blockSize)
-                pygame.draw.rect(self.display_surface,
-                                 (100, 100, 100), rect, 1)
+        for x, y in itertools.product(range(0, 800, blockSize), range(0, 800, blockSize)):
+            rect = pygame.Rect(x, y, blockSize, blockSize)
+            pygame.draw.rect(self.display_surface,
+                             (100, 100, 100), rect, 1)
 
     def FillArea(self, x, y, delete):
-        for Y in range(self.HoldPos[1], y):
-            for X in range(self.HoldPos[0], x):
-                if delete:
-                    self.level[Y][X] = 0
-                elif self.level[Y][X] == self.currentFrame + self.alotus:
-                    pass
-                else:
-                    self.level[Y][X] = self.currentFrame + self.alotus
+        for Y, X in itertools.product(range(self.HoldPos[1], y), range(self.HoldPos[0], x)):
+            if delete:
+                self.level[Y][X] = 0
+            elif self.level[Y][X] != self.currentFrame + self.alotus:
+                self.level[Y][X] = self.currentFrame + self.alotus
         self.tiles.empty()
         self.setup_level(self.level)
 
@@ -190,12 +183,12 @@ class Render:
             return self.Lataa()
         f = open(self.tasoDir, "x")
         f.close()
-        self.level = [[0 for i in range(500)]for i in range(100)]
+        self.level = [[0 for _ in range(500)] for _ in range(100)]
 
     def Reset(self):
         f = open(self.tasoDir, "w").close()
         self.tiles.empty()
-        self.level = [[0 for i in range(500)]for i in range(100)]
+        self.level = [[0 for _ in range(500)] for _ in range(100)]
         self.setup_level(self.level)
 
     def DrawGUI(self):

@@ -22,7 +22,7 @@ class Dialog:
                                 self.text[self.kohta], 32, (255, 255, 255), self.widht, self.height)
 
     def StopTalking(self):
-        return True if self.kohta >= len(self.text) else False
+        return self.kohta >= len(self.text)
 
     def updatee(self, click):
         if click:

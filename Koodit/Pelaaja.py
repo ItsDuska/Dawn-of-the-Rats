@@ -25,7 +25,8 @@ class Pelaaja(pygame.sprite.Sprite):
 
         self.hp = 20  # normaali on kolme
         self.currentFrame = 0
-        self.image = pygame.image.load(os.path.join("kuvat", "Pelaaja", "Pelaaja_idle", self.idle[self.currentFrame])).convert_alpha()
+        self.image = pygame.image.load(os.path.join(
+            "kuvat", "Pelaaja", "Pelaaja_idle", self.idle[self.currentFrame])).convert_alpha()
         self.rect = self.image.get_rect(topleft=pos)
         self.direction = pygame.math.Vector2()
         self.speed = 5
@@ -68,11 +69,7 @@ class Pelaaja(pygame.sprite.Sprite):
     def FrameCheck(self, kuvat, time, folder, loppu):
         self.currentFrame += time
         if self.currentFrame >= len(kuvat):
-            if loppu == True:
-                self.currentFrame = len(kuvat)-1
-            else:
-                self.currentFrame = 0
-
+            self.currentFrame = len(kuvat)-1 if loppu == True else 0
         self.image = pygame.image.load(os.path.join(
             "Kuvat", "Pelaaja", folder, kuvat[int(self.currentFrame)])).convert_alpha()
 
@@ -82,13 +79,11 @@ class Pelaaja(pygame.sprite.Sprite):
 
     def do_animation(self):
         # x akselin suunnat
-        if self.hurtingTime == 0 and self.hurting:
-            self.currentFrame = 0
-
-        if self.hurting == True:
+        if self.hurting:
             self.leveys += 6
+            if self.hurtingTime == 0:
+                self.currentFrame = 0
             if self.currentFrame >= 6:
-               # self.hurting = False
                 self.lopetaHurting = False
             self.FrameCheck(self.hurt, 0.15, "PlayerHurt", True)
             self.CheckVasen()
@@ -157,11 +152,9 @@ class Pelaaja(pygame.sprite.Sprite):
             self.oikea = False
             self.ylös = False
 
-        if keys[pygame.K_SPACE] and self.on_floor:
-            self.direction.y = -self.jump_speed
-            self.jump_on_air = True
-
-        elif keys[pygame.K_SPACE] and not self.on_floor:
+        if keys[pygame.K_SPACE]:
+            if self.on_floor:
+                self.direction.y = -self.jump_speed
             self.jump_on_air = True
 
         if keys[pygame.K_m]:
@@ -169,31 +162,32 @@ class Pelaaja(pygame.sprite.Sprite):
 
     def horizontal_collisions(self):
         for sprite in self.collision_sprites.sprites():
-            if sprite.passable and sprite.rect.colliderect(self.rect):
-                # jos type = platform niin se ei katso horizontal collisioneita
-                if not sprite.type in [36, 37, 38]:
-                    if self.direction.x < 0:
-                        self.colliding_x = True
-                        self.rect.left = sprite.rect.right
-                    elif self.direction.x > 0:
-                        self.colliding_x = True
-                        self.rect.right = sprite.rect.left
-                    else:
-                        self.colliding_x = False
+            if (
+                sprite.passable
+                and sprite.rect.colliderect(self.rect)
+                and sprite.type not in [36, 37, 38]
+            ):
+                if self.direction.x < 0:
+                    self.colliding_x = True
+                    self.rect.left = sprite.rect.right
+                elif self.direction.x > 0:
+                    self.colliding_x = True
+                    self.rect.right = sprite.rect.left
+                else:
+                    self.colliding_x = False
 
     def vertical_collisions(self):
         for sprite in self.collision_sprites.sprites():
             if sprite.passable and sprite.rect.colliderect(self.rect):
-                if self.direction.y > 0:
-                    if sprite.type in [36, 37, 38] and self.alas:
-                        pass
-                    else:
-                        self.rect.bottom = sprite.rect.top
-                        self.direction.y = 0
-                        self.on_floor = True
-                        self.orbattu = False
+                if self.direction.y > 0 and (
+                    sprite.type not in [36, 37, 38] or not self.alas
+                ):
+                    self.rect.bottom = sprite.rect.top
+                    self.direction.y = 0
+                    self.on_floor = True
+                    self.orbattu = False
 
-                if self.direction.y < 0 and not sprite.type in [36, 37, 38]:
+                if self.direction.y < 0 and sprite.type not in [36, 37, 38]:
                     self.rect.top = sprite.rect.bottom
                     self.direction.y = 0
 
@@ -218,7 +212,7 @@ class Pelaaja(pygame.sprite.Sprite):
             self.orbattu = True
 
     def Orb_Dash(self):
-        if not self.orbType == 1:
+        if self.orbType != 1:
             return
 
         if not self.lopetaOrb:
@@ -247,14 +241,10 @@ class Pelaaja(pygame.sprite.Sprite):
 
         if self.currentFrame >= 9:
             self.orbKuva("Dash9.png")
-            if self.suunta[0] == -5:
-                self.image = pygame.transform.flip(self.image, True, False)
-
         else:
             self.orbKuva("Dash15.png")
-            if self.suunta[0] == -5:
-
-                self.image = pygame.transform.flip(self.image, True, False)
+        if self.suunta[0] == -5:
+            self.image = pygame.transform.flip(self.image, True, False)
 
     def Orbs(self):
         if not self.orbissa:
@@ -267,12 +257,13 @@ class Pelaaja(pygame.sprite.Sprite):
             "Kuvat", "Pelaaja", "PlayerDash", kuva)).convert_alpha()
 
     def damage(self):
-        if self.hurting == True:
-            self.hurtingTime += 0.1
-            if self.hurtingTime >= 6:
-                self.hp -= 1
-                self.hurtingTime = 0
-                self.hurting = False
+        if not self.hurting:
+            return
+        self.hurtingTime += 0.1
+        if self.hurtingTime >= 6:
+            self.hp -= 1
+            self.hurtingTime = 0
+            self.hurting = False
 
     def Check_hurting(self, objekt):
         if objekt.colliderect(self.rect) and not self.lopetaHurting:

@@ -1,6 +1,6 @@
 import pygame
-import os
-import random
+from os import path
+from random import randint
 from TuliKärpänen import Kärpänen
 
 
@@ -12,7 +12,7 @@ class Palikka(pygame.sprite.Sprite):
         self.animate = animate
         self.type = col
         self.id = num  # kylttei varte. 0 = ei kylttiä olemassa
-        self.image = pygame.image.load(os.path.join(
+        self.image = pygame.image.load(path.join(
             "Kuvat", "Palikat", "PalikkaKuvat", kuva)).convert_alpha()
         self.image = pygame.transform.scale(
             self.image, (int(width/maxRuudut), int(height/maxRuudut)))
@@ -45,7 +45,7 @@ class AnimatedObj(pygame.sprite.Sprite):
         self.orbType = kuva[2] if self.folder == "Orb" else None
 
         self.spark = pygame.sprite.Group()
-        self.image = pygame.image.load(os.path.join(
+        self.image = pygame.image.load(path.join(
             "Kuvat", "Palikat", "Animoidut_palikat", self.folder, self.kuva[0])).convert_alpha()
         self.image = pygame.transform.scale(
             self.image, (int(width/maxRuudut), int(height/maxRuudut)))
@@ -56,7 +56,7 @@ class AnimatedObj(pygame.sprite.Sprite):
         self.currentFrame += 0.1
         if self.currentFrame >= len(self.kuva):
             self.currentFrame = 0
-        self.image = pygame.image.load(os.path.join(
+        self.image = pygame.image.load(path.join(
             "Kuvat", "Palikat", "Animoidut_palikat", self.folder, self.kuva[int(self.currentFrame)])).convert_alpha()
         if self.type in [103, 105, 106]:
             self.image = pygame.transform.scale(self.image, (int(
@@ -66,11 +66,11 @@ class AnimatedObj(pygame.sprite.Sprite):
                 self.image, (int(self.width/self.maxRuudut), int(self.height/self.maxRuudut)+2))
 
     def AddParticle(self, sus):
-        if random.randint(1, 35) != 1:
+        if randint(1, 35) != 1:
             return
-        x, y = (random.randint(-sus[0]+self.rect.x, -sus[0]+self.rect.x+30),
-                random.randint(-sus[1]+self.rect.y+20, -sus[1]+self.rect.y+30))
-        r = random.randint(3, 4)
+        x, y = (randint(-sus[0]+self.rect.x, -sus[0]+self.rect.x+30),
+                randint(-sus[1]+self.rect.y+20, -sus[1]+self.rect.y+30))
+        r = randint(3, 4)
         f = Kärpänen(x, y, r, self.colors[self.orbType-1], 0.5)
         self.spark.add(f)
 

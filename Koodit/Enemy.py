@@ -1,5 +1,5 @@
 import pygame
-import os
+from os import path
 import math
 from Laskut import *
 
@@ -20,7 +20,7 @@ class Enemy(pygame.sprite.Sprite):
         self.näyttö = display_surface
         self.currentFrame = 0
         self.orb = None
-        self.image = pygame.image.load(os.path.join(
+        self.image = pygame.image.load(path.join(
             "Kuvat", "Enemies", self.folder, self.kuva[0])).convert_alpha()
         self.image = pygame.transform.scale(
             self.image, (int(self.width/maxRuudut), int(self.height/maxRuudut)))
@@ -32,7 +32,7 @@ class Enemy(pygame.sprite.Sprite):
         self.currentFrame += self.animationSpeed
         if self.currentFrame >= len(self.kuva):
             self.currentFrame = 0
-        self.image = pygame.image.load(os.path.join(
+        self.image = pygame.image.load(path.join(
             "Kuvat", "Enemies", self.folder, self.kuva[int(self.currentFrame)])).convert_alpha()
         if self.type in [403, 405, 406]:
             self.image = pygame.transform.scale(self.image, (int(
@@ -68,7 +68,7 @@ class Snake(Enemy):
                          "FireBall3.png", "FireBall4.png"]
         # self.ammusPos = [self.rect.x, self.rect.y]
         self.imageball = pygame.image.load(
-            os.path.join(
+            path.join(
                 "Kuvat", "Enemies", self.folder, self.fireball[self.currentFrame1]
             )
         ).convert_alpha()
@@ -105,7 +105,7 @@ class Snake(Enemy):
         self.currentFrame1 += 0.1
         if self.currentFrame1 >= len(self.fireball):
             self.currentFrame1 = 0
-        self.imageball = pygame.image.load(os.path.join(
+        self.imageball = pygame.image.load(path.join(
             "Kuvat", "Enemies", self.folder, self.fireball[int(self.currentFrame1)])).convert_alpha()
         self.imageball = pygame.transform.scale(self.imageball, (int(
             (self.width/self.maxRuudut)-10), int((self.height/self.maxRuudut)-2)))

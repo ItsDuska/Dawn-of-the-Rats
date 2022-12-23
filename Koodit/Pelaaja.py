@@ -1,6 +1,5 @@
-
 import pygame
-import os
+from os import path
 
 
 class Pelaaja(pygame.sprite.Sprite):
@@ -25,7 +24,7 @@ class Pelaaja(pygame.sprite.Sprite):
 
         self.hp = 20  # normaali on kolme
         self.currentFrame = 0
-        self.image = pygame.image.load(os.path.join(
+        self.image = pygame.image.load(path.join(
             "kuvat", "Pelaaja", "Pelaaja_idle", self.idle[self.currentFrame])).convert_alpha()
         self.rect = self.image.get_rect(topleft=pos)
         self.direction = pygame.math.Vector2()
@@ -70,7 +69,7 @@ class Pelaaja(pygame.sprite.Sprite):
         self.currentFrame += time
         if self.currentFrame >= len(kuvat):
             self.currentFrame = len(kuvat)-1 if loppu == True else 0
-        self.image = pygame.image.load(os.path.join(
+        self.image = pygame.image.load(path.join(
             "Kuvat", "Pelaaja", folder, kuvat[int(self.currentFrame)])).convert_alpha()
 
     def CheckVasen(self):
@@ -253,7 +252,7 @@ class Pelaaja(pygame.sprite.Sprite):
         self.Orb_Dash()
 
     def orbKuva(self, kuva):
-        self.image = pygame.image.load(os.path.join(
+        self.image = pygame.image.load(path.join(
             "Kuvat", "Pelaaja", "PlayerDash", kuva)).convert_alpha()
 
     def damage(self):

@@ -1,5 +1,5 @@
 import pygame
-import os
+from os import path
 from random import choice
 
 
@@ -28,6 +28,6 @@ class Music:
             if self.song != song:
                 break
         self.song = song
-        pygame.mixer.music.load(os.path.join("Musiikit", self.song))
+        pygame.mixer.music.load(path.join("Musiikit", self.song))
         pygame.mixer.music.set_volume(0.05)
         pygame.mixer.music.play()

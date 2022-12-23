@@ -1,5 +1,5 @@
 import pygame
-import random
+from random import randint
 
 
 class Kärpänen(pygame.sprite.Sprite):
@@ -22,7 +22,7 @@ class Kärpänen(pygame.sprite.Sprite):
         self.surf = pygame.Surface((surf_size, surf_size), pygame.SRCALPHA)
 
     def update(self, win, x=0, y=0):
-        xvel = random.randint(-1, 1)
+        xvel = randint(-1, 1)
 
         self.x += xvel
         self.y -= self.yvel

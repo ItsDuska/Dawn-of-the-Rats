@@ -1,7 +1,7 @@
 import pygame
-import os
-import sys
-import time
+from os import path
+from sys import exit
+from time import sleep
 from Text import Text
 from Music import Music
 
@@ -29,7 +29,7 @@ class MainMenu:
         self.päällä = True
         self.hidden = False
         self.credit_texts = []
-        self.sus = pygame.mixer.Sound(os.path.join("Musiikit", "Amogus.mp3"))
+        self.sus = pygame.mixer.Sound(path.join("Musiikit", "Amogus.mp3"))
 
         self.credits_text = ["Dawn of the Rats", " ", "Producers", "Game desinger: Minä and Tuke", " ", "lead designer: Minä", " ", "Software Developer: Minä", " ", "Game Programmer: Minä", " ",
                              "Audio Engineer: Tuke", " ", "Game Animator", "Player: Random guy from interweb", "Enemies: Minä and Tuke", "Others: Tuke", " ",
@@ -77,7 +77,7 @@ class MainMenu:
         if self.rat.rect.collidepoint(pygame.mouse.get_pos()) and self.click and pygame.mixer.music.get_busy():
             self.click = False
             pygame.mixer.music.fadeout(50)
-            pygame.mixer.music.load(os.path.join("Musiikit", "Rat.mp3"))
+            pygame.mixer.music.load(path.join("Musiikit", "Rat.mp3"))
             pygame.mixer.music.set_volume(0.1)
             pygame.mixer.music.play()
 
@@ -88,9 +88,9 @@ class MainMenu:
             self.activateButton()
         elif sprite.text == "Quit":
             self.activateButton()
-            time.sleep(3)
+            sleep(3)
             pygame.quit()
-            sys.exit()
+            exit()
         else:
             self.hidden = True
             self.credits()
@@ -116,7 +116,7 @@ class Animate:
         self.currentFrame += self.time
         if self.currentFrame >= len(self.kuvat):
             self.currentFrame = 0
-        self.image = pygame.image.load(os.path.join(
+        self.image = pygame.image.load(path.join(
             "Kuvat", "MainMenuStuff", self.folder, self.kuvat[int(self.currentFrame)])).convert_alpha()
         self.image = pygame.transform.scale(
             self.image, (self.koko[0], self.koko[1]))

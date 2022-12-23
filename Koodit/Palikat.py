@@ -1,6 +1,6 @@
 import pygame
-import random
-import os
+from random import randint
+from os import listdir, path
 
 
 from Pelaaja import Pelaaja
@@ -29,10 +29,10 @@ class Palikat:
             (500, 86*int(self.height/self.maxRuudut)), [self.level.visible_sprites, self.level.active_sprites], self.level.collision_sprites)
 
     def AddKärpänen(self):
-        if random.randint(1, 5) != 1:
+        if randint(1, 5) != 1:
             return
-        x, y = (random.randint(0, self.width), random.randint(0, self.height))
-        r = random.randint(2, 4)
+        x, y = (randint(0, self.width), randint(0, self.height))
+        r = randint(2, 4)
         f = Kärpänen(x, y, r, [(205, 250, 80),
                      (160, 150, 50), (50, 50, 50)], 1)
         self.level.kärpäs_group.add(f)
@@ -65,14 +65,14 @@ class Palikat:
 
     def getDialog(self, id, type):
         lista = []
-        with open(os.path.join("dialogit", self.getDialogPath(id, type)), "r") as f:
+        with open(path.join("dialogit", self.getDialogPath(id, type)), "r") as f:
             lista.extend(line for line in f if "#" not in line)
         return lista
 
     def getDialogPath(self, id, type):
         tyyppi = "Fish" if type == 403 else "Sign"
         fname = f"L{str(self.taso_num)}{tyyppi}{str(id)}"
-        for file in os.listdir(os.path.join('Dialogit')):
+        for file in listdir(path.join('Dialogit')):
             if fname in file:
                 return file
 

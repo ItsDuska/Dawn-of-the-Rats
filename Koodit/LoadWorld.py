@@ -1,5 +1,5 @@
 import pygame
-import os
+from os import path
 from Palikka import Palikka, AnimatedObj
 from PalikkaKuvat import blockit, Läpi_palikat
 from Enemy import Enemy, Snake, Bord
@@ -12,7 +12,7 @@ class LoadWorld:
         self.width = width
         self.height = height
         self.maxRuudut = maxRuudut
-        self.tasoDir = os.path.join("Tasot", level)
+        self.tasoDir = path.join("Tasot", level)
         self.num = 0
         self.enemies = [405, 408, 409]
         self.initGroups()

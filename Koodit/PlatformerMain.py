@@ -1,8 +1,7 @@
 from Palikat import Palikat
 from MainMenu import MainMenu
+from sys import exit
 import pygame
-import sys
-
 
 """
 
@@ -34,7 +33,7 @@ class DawnOfTheRats:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    sys.exit()
+                    exit()
                 if (
                     event.type == pygame.MOUSEBUTTONDOWN
                     and pygame.mouse.get_pressed()[0]
@@ -47,28 +46,24 @@ class DawnOfTheRats:
         self.Game_loop()
 
     def Game_loop(self):
-        päällä = True
         palikat = Palikat(self.maxRuudut, self.width, self.heigth)
-        while päällä:
+        while palikat.player.hp > 0:
             self.clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    päällä = False
+                    palikat.player.hp = 0
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if pygame.mouse.get_pressed()[0]:
                         palikat.player.hyökkäys = not palikat.player.hyökkäys
                     elif pygame.mouse.get_pressed()[2]:
                         palikat.klikObejet(pygame.mouse.get_pos())
 
-            if palikat.player.hp == 0:
-                päällä = False
-                pygame.mixer.music.fadeout(500)
-                self.Main_Menu()
-
             pygame.display.set_caption(str(int(self.clock.get_fps())))
             self.window.fill((146, 244, 255))
             palikat.run()
             pygame.display.update()
+        pygame.mixer.music.fadeout(500)
+        self.Main_Menu()
 
     def profiling(self):
         if not self.profile:

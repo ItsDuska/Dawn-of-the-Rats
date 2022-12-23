@@ -30,6 +30,7 @@ class LoadWorld:
             return [[int(digit) for digit in line.split()] for line in file]
 
     def setup_level(self, tasoData):
+        # 1-200 ei ole läpi päästävii. 201-400 on läpi päästäviä. 401-600 on animoituja
         animated_objects = {401: [["Orb1.png", "Orb2.png", "Orb3.png", "Orb4.png", "Orb5.png", "Orb6.png", "Orb7.png", "Orb8.png", "Orb9.png", "Orb10.png"],
                                   ["Orb"], 2], 402: [["Plant1.png", "Plant2.png", "Plant3.png", "Plant4.png", "Plant5.png", "Plant6.png", "Plant7.png", "Plant8.png", "Plant9.png", "Plant10.png"], ["Venus_Trap"]
                                                      ], 403: [["FishBoi1.png", "FishBoi1.png", "FishBoi1.png", "FishBoi2.png", "FishBoi2.png", "FishBoi2.png", "FishBoi3.png", "FishBoi3.png", "FishBoi3.png", "FishBoi3.png"], ["FishBoi"]],
@@ -39,7 +40,6 @@ class LoadWorld:
                             407: [["Dash1.png", "Dash2.png", "Dash3.png", "Dash4.png", "Dash5.png", "Dash6.png", "Dash7.png", "Dash8.png", "Dash9.png", "Dash10.png", "Dash11.png", "Dash12.png"],
                                   ["Orb"], 1], 408: [["Bord1.png", "Bord2.png", "Bord3.png", "Bord3.png", "Bord4.png", "Bord5.png", "Bord6.png", "Bord7.png", "Bord8.png"], ["Bord"]], 409: [["FallingRock1.png"], ["FallingRock"]]
                             }
-        # 1-200 ei ole läpi päästävii. 201-400 on läpi päästäviä. 401-600 on animoituja
         self.generation_loop(tasoData, blockit)
         self.generation_loop(tasoData, Läpi_palikat)
         self.generation_loop(tasoData, animated_objects)
@@ -48,7 +48,7 @@ class LoadWorld:
         for row_index, row in enumerate(tasoData):
             for col_index, col in enumerate(row):
                 x = col_index * int(self.width/self.maxRuudut)
-                y = row_index * int(self.height/self.maxRuudut)  # height
+                y = row_index * int(self.height/self.maxRuudut)
                 if col not in kuvat:
                     continue
                 if col >= 201 and col <= 400:
@@ -78,7 +78,6 @@ class LoadWorld:
         else:
             sus = Enemy((x, y), self.maxRuudut, True, col,
                         kuva[col], self.width, self.height, self.display_surface, 0.1)
-
         self.enemy_group.add(sus)
 
     def lisää_kuva(self, a, b, kuva, näyttö, passable, animate, col):

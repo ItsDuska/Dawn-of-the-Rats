@@ -42,8 +42,10 @@ class DawnOfTheRats:
             self.window.fill((100, 100, 100))
             menu.run()
             pygame.display.update()
-
-        self.Game_loop()
+        if self.profile:
+            self.profiling()
+        else:
+            self.Game_loop()
 
     def Game_loop(self):
         palikat = Palikat(self.maxRuudut, self.width, self.heigth)
@@ -78,7 +80,7 @@ class DawnOfTheRats:
         stats = pstats.Stats(pr)
         stats.sort_stats(pstats.SortKey.TIME)
         stats.dump_stats(filename="ProfilingJuttu.prof")
-        #    ./ProfilingJuttu.prof kun haluu profilaa
+        #   snakeviz ./ProfilingJuttu.prof kun haluu profilaa
 
 
 dawnOfTheRats = DawnOfTheRats()

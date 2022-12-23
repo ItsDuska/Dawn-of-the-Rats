@@ -51,7 +51,7 @@ class CameraGroup(pygame.sprite.Group):
                 if sprite.orb:
                     if sprite.rect.colliderect(player.rect) and player.jump_on_air and player.orbattu == False:
                         player.orbissa = True
-                        player.OrbCheck(sprite.orbType)
+                        player.getOrb(sprite.orbType)
                     sprite.AddParticle(self.offset)
                     sprite.Update_Particle(-self.offset[0], -self.offset[1])
                 if player.hurtingTime == 0 and not player.hurting:

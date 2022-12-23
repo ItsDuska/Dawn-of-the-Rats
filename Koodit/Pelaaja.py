@@ -55,13 +55,10 @@ class Pelaaja(pygame.sprite.Sprite):
         self.lopetaOrb = False
         self.mute = False
         self.suunta = [0, 0]
-        self.surface = pygame.Surface(
-            (self.rect.w, self.rect.h), pygame.SRCALPHA)  # pygame.SRCALPHA
         self.type = None
 
         self.rect.w += self.rect.w/2
         self.rect.h += self.rect.h/2
-
         self.leveys = self.rect.w
         self.korkeus = self.rect.h
 
@@ -133,6 +130,17 @@ class Pelaaja(pygame.sprite.Sprite):
 
         self.jump_on_air = False
         keys = pygame.key.get_pressed()
+        self.movement(keys)
+
+        if keys[pygame.K_SPACE]:
+            if self.on_floor:
+                self.direction.y = -self.jump_speed
+            self.jump_on_air = True
+
+        if keys[pygame.K_m]:
+            self.mute = not self.mute
+
+    def movement(self, keys):
         if keys[pygame.K_d]:
             self.vasen = True
             self.direction.x = 1
@@ -143,37 +151,28 @@ class Pelaaja(pygame.sprite.Sprite):
             self.alas = True
         elif keys[pygame.K_w]:
             self.ylös = True
-
         else:
-            self.direction.x = 0
-            self.alas = False
-            self.vasen = False
-            self.oikea = False
-            self.ylös = False
+            self.resetVelocity()
 
-        if keys[pygame.K_SPACE]:
-            if self.on_floor:
-                self.direction.y = -self.jump_speed
-            self.jump_on_air = True
-
-        if keys[pygame.K_m]:
-            self.mute = not self.mute
+    def resetVelocity(self):
+        self.direction.x = 0
+        self.alas = False
+        self.vasen = False
+        self.oikea = False
+        self.ylös = False
 
     def horizontal_collisions(self):
         for sprite in self.collision_sprites.sprites():
-            if (
-                sprite.passable
-                and sprite.rect.colliderect(self.rect)
-                and sprite.type not in [36, 37, 38]
-            ):
-                if self.direction.x < 0:
-                    self.colliding_x = True
-                    self.rect.left = sprite.rect.right
-                elif self.direction.x > 0:
-                    self.colliding_x = True
-                    self.rect.right = sprite.rect.left
-                else:
-                    self.colliding_x = False
+            if (not (sprite.passable and sprite.rect.colliderect(self.rect) and sprite.type not in [36, 37, 38])):
+                continue
+            if self.direction.x < 0:
+                self.colliding_x = True
+                self.rect.left = sprite.rect.right
+            elif self.direction.x > 0:
+                self.colliding_x = True
+                self.rect.right = sprite.rect.left
+            else:
+                self.colliding_x = False
 
     def vertical_collisions(self):
         for sprite in self.collision_sprites.sprites():
@@ -198,36 +197,21 @@ class Pelaaja(pygame.sprite.Sprite):
         self.direction.y += self.gravity
         self.rect.y += self.direction.y
 
-    def OrbCheck(self, type):
+    def getOrb(self, type):
         self.orbType = type
 
     def Orb_Jump(self):
-        if not self.orbissa:
+        if not self.orbissa and self.orbType != 2:
             return
-        if self.orbType == 2:
-            self.direction.y = -12
-
-            self.orbissa = False
-            self.orbattu = True
+        self.direction.y = -12
+        self.orbissa = False
+        self.orbattu = True
 
     def Orb_Dash(self):
         if self.orbType != 1:
             return
 
-        if not self.lopetaOrb:
-            self.lopetaOrb = True
-            if self.oikea:
-                self.suunta[0] = -5
-                self.suunta[1] = 0
-            elif self.vasen:
-                self.suunta[0] = 5
-                self.suunta[1] = 0
-
-            elif self.alas:
-                self.suunta[1] = 10
-            else:
-                self.suunta[1] = -10
-
+        self.continueDash()
         self.times += 0.4
         if self.times >= 10:
             self.times = 0
@@ -245,12 +229,29 @@ class Pelaaja(pygame.sprite.Sprite):
         if self.suunta[0] == -5:
             self.image = pygame.transform.flip(self.image, True, False)
 
+    def continueDash(self):
+        if self.lopetaOrb:
+            return
+
+        self.lopetaOrb = True
+        if self.oikea:
+            self.suunta[0] = -5
+            self.suunta[1] = 0
+        elif self.vasen:
+            self.suunta[0] = 5
+            self.suunta[1] = 0
+        elif self.alas:
+            self.suunta[1] = 10
+        else:
+            self.suunta[1] = -10
+
     def Orbs(self):
         if not self.orbissa:
             return
         self.Orb_Jump()
         self.Orb_Dash()
 
+        # Tarvittaessa poista tämä ja käytä uutta rendering classia
     def orbKuva(self, kuva):
         self.image = pygame.image.load(path.join(
             "Kuvat", "Pelaaja", "PlayerDash", kuva)).convert_alpha()

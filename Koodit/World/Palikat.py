@@ -2,8 +2,7 @@ import pygame
 from random import randint
 from os import listdir, path
 
-
-from Pelaaja import Pelaaja
+from Koodit.Player.Pelaaja import Pelaaja
 from TuliKärpänen import Kärpänen
 from Music import Music
 from Laskut import *

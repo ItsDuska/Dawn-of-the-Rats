@@ -1,5 +1,6 @@
 import pygame
 from os import path
+from PlayersInput import PlayersInput
 
 
 class Pelaaja(pygame.sprite.Sprite):
@@ -24,41 +25,31 @@ class Pelaaja(pygame.sprite.Sprite):
 
         self.hp = 20  # normaali on kolme
         self.currentFrame = 0
-        self.image = pygame.image.load(path.join(
-            "kuvat", "Pelaaja", "Pelaaja_idle", self.idle[self.currentFrame])).convert_alpha()
+        self.image = pygame.image.load(path.join("kuvat", "Pelaaja", "Pelaaja_idle", self.idle[self.currentFrame])).convert_alpha()
         self.rect = self.image.get_rect(topleft=pos)
-        self.direction = pygame.math.Vector2()
-        self.speed = 5
-        self.gravity = 0.9
-        self.jump_speed = 16
         self.collision_sprites = collision_sprites
         self.on_floor = False
         self.vasemmalle = False
         self.falling = False
-        self.colliding_x = False
-        self.hyppymax = False
+        #self.colliding_x = False
         self.hyökkäys = False
-        self.animate = False
-        self.orb = None
+        self.animate = False # turha?
+        self.orb = None   # tää pois?
         self.orbissa = False
-        self.jump_on_air = False
         self.orbattu = False
-        self.alas = False
-        self.vasen = False
-        self.oikea = False
-        self.ylös = False
         self.hurting = False
         self.hurtingTime = 0
         self.lopetaHurting = False
         self.orbType = 0
         self.times = 0
         self.lopetaOrb = False
-        self.mute = False
         self.suunta = [0, 0]
-        self.type = None
+        self.type = None  # tää pois
+        self.playerInput = PlayersInput()
 
         self.rect.w += self.rect.w/2
         self.rect.h += self.rect.h/2
+
         self.leveys = self.rect.w
         self.korkeus = self.rect.h
 
@@ -66,13 +57,13 @@ class Pelaaja(pygame.sprite.Sprite):
         self.currentFrame += time
         if self.currentFrame >= len(kuvat):
             self.currentFrame = len(kuvat)-1 if loppu == True else 0
-        self.image = pygame.image.load(path.join(
-            "Kuvat", "Pelaaja", folder, kuvat[int(self.currentFrame)])).convert_alpha()
+        self.image = pygame.image.load(path.join("Kuvat", "Pelaaja", folder, kuvat[int(self.currentFrame)])).convert_alpha()
+        self.checkVasen()
 
-    def CheckVasen(self):
+    def checkVasen(self):
         if self.vasemmalle:
             self.image = pygame.transform.flip(self.image, True, False)
-
+     
     def do_animation(self):
         # x akselin suunnat
         if self.hurting:
@@ -82,104 +73,54 @@ class Pelaaja(pygame.sprite.Sprite):
             if self.currentFrame >= 6:
                 self.lopetaHurting = False
             self.FrameCheck(self.hurt, 0.15, "PlayerHurt", True)
-            self.CheckVasen()
 
         elif self.direction == (0, 0) and not self.hyökkäys:
             self.FrameCheck(self.idle, 0.25, "Pelaaja_idle", False)
-            self.CheckVasen()
 
-        elif self.direction.x == 1 and self.on_floor:
+        elif self.direction.x in [1,-1] and self.on_floor:   
             self.FrameCheck(self.juoksu, 0.8, "Pelaaja_Juoksu", False)
-            self.vasemmalle = False
+            self.vasemmalle = self.direction.x != 1
 
-        elif self.direction.x == -1 and self.on_floor:
-            self.FrameCheck(self.juoksu, 0.8, "Pelaaja_Juoksu", False)
-            self.image = pygame.transform.flip(
-                self.image, True, False)  # muuttaa sen kävely suunnan
-            self.vasemmalle = True
-
-        # y akselin suunnat
         elif self.direction.y < 0:
             self.FrameCheck(self.hyppy, 0.2, "Pelaaja_Jump", True)
-            self.CheckVasen()
 
         elif self.direction.y > 1 and self.on_floor == False:
             self.FrameCheck(self.tippuu, 0.3, "Pelaaja_Tippuu", True)
             self.falling = True
-            self.CheckVasen()
 
         elif self.falling == True and self.direction == (0, 0):
             if self.currentFrame >= len(self.laskeutuminen):
                 self.falling = False
-            self.FrameCheck(self.laskeutuminen, 0.25,
-                            "Pelaaja_Laskeutuminen", False)
-            self.CheckVasen()
+            self.FrameCheck(self.laskeutuminen, 0.25,"Pelaaja_Laskeutuminen", False)
 
         elif self.hyökkäys == True and self.direction.x == 0:
-            self.leveys += 22
             self.FrameCheck(self.attack, 0.25, "Pelaaja_Attack", False)
-            self.CheckVasen()
-
+            self.leveys += 22
+ 
         self.image = pygame.transform.scale(
             self.image, (self.leveys, self.korkeus))
         self.leveys = self.rect.w
 
-    def input(self):
-        if self.orbissa:
-            return
-
-        self.jump_on_air = False
-        keys = pygame.key.get_pressed()
-        self.movement(keys)
-
-        if keys[pygame.K_SPACE]:
-            if self.on_floor:
-                self.direction.y = -self.jump_speed
-            self.jump_on_air = True
-
-        if keys[pygame.K_m]:
-            self.mute = not self.mute
-
-    def movement(self, keys):
-        if keys[pygame.K_d]:
-            self.vasen = True
-            self.direction.x = 1
-        elif keys[pygame.K_a]:
-            self.direction.x = -1
-            self.oikea = True
-        elif keys[pygame.K_s]:
-            self.alas = True
-        elif keys[pygame.K_w]:
-            self.ylös = True
-        else:
-            self.resetVelocity()
-
-    def resetVelocity(self):
-        self.direction.x = 0
-        self.alas = False
-        self.vasen = False
-        self.oikea = False
-        self.ylös = False
-
     def horizontal_collisions(self):
         for sprite in self.collision_sprites.sprites():
-            if (not (sprite.passable and sprite.rect.colliderect(self.rect) and sprite.type not in [36, 37, 38])):
-                continue
-            if self.direction.x < 0:
-                self.colliding_x = True
-                self.rect.left = sprite.rect.right
-            elif self.direction.x > 0:
-                self.colliding_x = True
-                self.rect.right = sprite.rect.left
-            else:
-                self.colliding_x = False
+            if (
+                sprite.passable
+                and sprite.rect.colliderect(self.rect)
+                and sprite.type not in [36, 37, 38]
+            ):
+                if self.direction.x < 0:
+                    #self.colliding_x = True
+                    self.rect.left = sprite.rect.right
+                elif self.direction.x > 0:
+                   # self.colliding_x = True
+                    self.rect.right = sprite.rect.left
+                #else:
+                   # self.colliding_x = False
 
     def vertical_collisions(self):
         for sprite in self.collision_sprites.sprites():
             if sprite.passable and sprite.rect.colliderect(self.rect):
-                if self.direction.y > 0 and (
-                    sprite.type not in [36, 37, 38] or not self.alas
-                ):
+                if self.direction.y > 0 and (sprite.type not in [36, 37, 38] or not self.alas):
                     self.rect.bottom = sprite.rect.top
                     self.direction.y = 0
                     self.on_floor = True
@@ -193,15 +134,13 @@ class Pelaaja(pygame.sprite.Sprite):
             self.on_floor = False
             self.alas = False
 
-    def apply_gravity(self):
-        self.direction.y += self.gravity
-        self.rect.y += self.direction.y
-
     def getOrb(self, type):
         self.orbType = type
 
     def Orb_Jump(self):
-        if not self.orbissa and self.orbType != 2:
+        if not self.orbissa:
+            return
+        if self.orbType != 2:
             return
         self.direction.y = -12
         self.orbissa = False
@@ -251,10 +190,8 @@ class Pelaaja(pygame.sprite.Sprite):
         self.Orb_Jump()
         self.Orb_Dash()
 
-        # Tarvittaessa poista tämä ja käytä uutta rendering classia
     def orbKuva(self, kuva):
-        self.image = pygame.image.load(path.join(
-            "Kuvat", "Pelaaja", "PlayerDash", kuva)).convert_alpha()
+        self.image = pygame.image.load(path.join("Kuvat", "Pelaaja", "PlayerDash", kuva)).convert_alpha()
 
     def damage(self):
         if not self.hurting:
@@ -272,10 +209,12 @@ class Pelaaja(pygame.sprite.Sprite):
 
     def update(self):
         self.do_animation()
-        self.input()
-        self.rect.x += self.direction.x * self.speed
+        self.playerInput.input()
+        
         self.horizontal_collisions()
-        self.apply_gravity()
+        self.rect.x, self.rect.y += self.playerInput.updatePlayerPosition()
         self.vertical_collisions()
-        self.Orbs()
+        #self.Orbs()  # self.orbHandler.update() tää on sama kuin orbs()
         self.damage()
+
+        #self.collisions.update()  tän sisällä horizontal ja vertical

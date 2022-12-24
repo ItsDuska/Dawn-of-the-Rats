@@ -1,5 +1,5 @@
 import pygame
-from Text import Text
+from Visuals.Text import Text
 
 
 class Dialog:

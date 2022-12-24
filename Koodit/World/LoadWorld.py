@@ -1,9 +1,12 @@
 import pygame
 from os import path
-from Palikka import Palikka, AnimatedObj
-from PalikkaKuvat import blockit, Läpi_palikat
-from Enemy import Enemy, Snake, Bord
-from CameraStuff import CameraGroup
+from World.Blocks.Palikka import Palikka
+from World.Blocks.AnimatedSprites import AnimatedObj
+from World.PalikkaKuvat import blockit, Läpi_palikat
+from Entities.Enemies.Enemy import Enemy
+from Entities.Enemies.Bord import Bord
+from Entities.Enemies.Snake import Snake
+from Player.CameraStuff import CameraGroup
 
 
 class LoadWorld:

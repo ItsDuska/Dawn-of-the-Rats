@@ -1,6 +1,7 @@
 import pygame
 from os import path
-from PlayersInput import PlayersInput
+from Player.PlayersInput import PlayersInput
+from Player.OrbHandler import OrbHandler
 
 
 class Pelaaja(pygame.sprite.Sprite):
@@ -31,21 +32,14 @@ class Pelaaja(pygame.sprite.Sprite):
         self.on_floor = False
         self.vasemmalle = False
         self.falling = False
-        #self.colliding_x = False
         self.hyökkäys = False
         self.animate = False # turha?
-        self.orb = None   # tää pois?
-        self.orbissa = False
-        self.orbattu = False
         self.hurting = False
         self.hurtingTime = 0
         self.lopetaHurting = False
-        self.orbType = 0
-        self.times = 0
-        self.lopetaOrb = False
-        self.suunta = [0, 0]
         self.type = None  # tää pois
         self.playerInput = PlayersInput()
+        self.orbHandler = OrbHandler()
 
         self.rect.w += self.rect.w/2
         self.rect.h += self.rect.h/2
@@ -74,26 +68,26 @@ class Pelaaja(pygame.sprite.Sprite):
                 self.lopetaHurting = False
             self.FrameCheck(self.hurt, 0.15, "PlayerHurt", True)
 
-        elif self.direction == (0, 0) and not self.hyökkäys:
+        elif self.playerInput.direction == (0, 0) and not self.hyökkäys:
             self.FrameCheck(self.idle, 0.25, "Pelaaja_idle", False)
 
-        elif self.direction.x in [1,-1] and self.on_floor:   
+        elif self.playerInput.direction.x in [1,-1] and self.on_floor:   
             self.FrameCheck(self.juoksu, 0.8, "Pelaaja_Juoksu", False)
-            self.vasemmalle = self.direction.x != 1
+            self.vasemmalle = self.playerInput.direction.x != 1
 
-        elif self.direction.y < 0:
+        elif self.playerInput.direction.y < 0:
             self.FrameCheck(self.hyppy, 0.2, "Pelaaja_Jump", True)
 
-        elif self.direction.y > 1 and self.on_floor == False:
+        elif self.playerInput.direction.y > 1 and self.on_floor == False:
             self.FrameCheck(self.tippuu, 0.3, "Pelaaja_Tippuu", True)
             self.falling = True
 
-        elif self.falling == True and self.direction == (0, 0):
+        elif self.falling == True and self.playerInput.direction == (0, 0):
             if self.currentFrame >= len(self.laskeutuminen):
                 self.falling = False
             self.FrameCheck(self.laskeutuminen, 0.25,"Pelaaja_Laskeutuminen", False)
 
-        elif self.hyökkäys == True and self.direction.x == 0:
+        elif self.hyökkäys == True and self.playerInput.direction.x == 0:
             self.FrameCheck(self.attack, 0.25, "Pelaaja_Attack", False)
             self.leveys += 22
  
@@ -108,90 +102,29 @@ class Pelaaja(pygame.sprite.Sprite):
                 and sprite.rect.colliderect(self.rect)
                 and sprite.type not in [36, 37, 38]
             ):
-                if self.direction.x < 0:
-                    #self.colliding_x = True
+                if self.playerInput.direction.x < 0:
                     self.rect.left = sprite.rect.right
-                elif self.direction.x > 0:
-                   # self.colliding_x = True
+                elif self.playerInput.direction.x > 0:
                     self.rect.right = sprite.rect.left
-                #else:
-                   # self.colliding_x = False
 
     def vertical_collisions(self):
         for sprite in self.collision_sprites.sprites():
             if sprite.passable and sprite.rect.colliderect(self.rect):
-                if self.direction.y > 0 and (sprite.type not in [36, 37, 38] or not self.alas):
+                if self.playerInput.direction.y > 0 and (sprite.type not in [36, 37, 38] or not self.playerInput.alas):
                     self.rect.bottom = sprite.rect.top
-                    self.direction.y = 0
+                    self.playerInput.direction.y = 0
                     self.on_floor = True
-                    self.orbattu = False
+                    self.orbHandler.useOrb = False
 
-                if self.direction.y < 0 and sprite.type not in [36, 37, 38]:
+                if self.playerInput.direction.y < 0 and sprite.type not in [36, 37, 38]:
                     self.rect.top = sprite.rect.bottom
-                    self.direction.y = 0
+                    self.playerInput.direction.y = 0
 
-        if self.on_floor and self.direction.y != 0:
+        if self.on_floor and self.playerInput.direction.y != 0:
             self.on_floor = False
-            self.alas = False
+            self.playerInput.alas = False
 
-    def getOrb(self, type):
-        self.orbType = type
 
-    def Orb_Jump(self):
-        if not self.orbissa:
-            return
-        if self.orbType != 2:
-            return
-        self.direction.y = -12
-        self.orbissa = False
-        self.orbattu = True
-
-    def Orb_Dash(self):
-        if self.orbType != 1:
-            return
-
-        self.continueDash()
-        self.times += 0.4
-        if self.times >= 10:
-            self.times = 0
-            self.orbissa = False
-            self.suunta = [0, 0]
-            self.lopetaOrb = False
-
-        self.rect.x += self.suunta[0]
-        self.direction.y = self.suunta[1]
-
-        if self.currentFrame >= 9:
-            self.orbKuva("Dash9.png")
-        else:
-            self.orbKuva("Dash15.png")
-        if self.suunta[0] == -5:
-            self.image = pygame.transform.flip(self.image, True, False)
-
-    def continueDash(self):
-        if self.lopetaOrb:
-            return
-
-        self.lopetaOrb = True
-        if self.oikea:
-            self.suunta[0] = -5
-            self.suunta[1] = 0
-        elif self.vasen:
-            self.suunta[0] = 5
-            self.suunta[1] = 0
-        elif self.alas:
-            self.suunta[1] = 10
-        else:
-            self.suunta[1] = -10
-
-    def Orbs(self):
-        if not self.orbissa:
-            return
-        self.Orb_Jump()
-        self.Orb_Dash()
-
-    def orbKuva(self, kuva):
-        self.image = pygame.image.load(path.join("Kuvat", "Pelaaja", "PlayerDash", kuva)).convert_alpha()
 
     def damage(self):
         if not self.hurting:
@@ -209,12 +142,13 @@ class Pelaaja(pygame.sprite.Sprite):
 
     def update(self):
         self.do_animation()
-        self.playerInput.input()
-        
+        self.playerInput.input(self.orbHandler.inOrb,self.on_floor)
+        self.rect.x += self.playerInput.applySpeed()
         self.horizontal_collisions()
-        self.rect.x, self.rect.y += self.playerInput.updatePlayerPosition()
+        self.rect.y += self.playerInput.aplyGravity()
         self.vertical_collisions()
-        #self.Orbs()  # self.orbHandler.update() tää on sama kuin orbs()
+        self.orbHandler.update(self.currentFrame,self.playerInput.oikea,self.playerInput.vasen,self.playerInput.alas)
+        temp = self.orbHandler.getDirection()
+        self.rect.x += temp[0]
+        self.playerInput.direction.y += temp[1]
         self.damage()
-
-        #self.collisions.update()  tän sisällä horizontal ja vertical

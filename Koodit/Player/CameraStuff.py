@@ -1,5 +1,5 @@
 import pygame
-from Background import Background
+from Visuals.Background import Background
 
 
 class CameraGroup(pygame.sprite.Group):
@@ -49,9 +49,9 @@ class CameraGroup(pygame.sprite.Group):
             if sprite.animate:
                 sprite.Animoi()
                 if sprite.orb:
-                    if sprite.rect.colliderect(player.rect) and player.jump_on_air and player.orbattu == False:
-                        player.orbissa = True
-                        player.getOrb(sprite.orbType)
+                    if sprite.rect.colliderect(player.rect) and player.playerInput.jump_on_air and player.orbHandler.useOrb == True:
+                        player.orbHandler.useOrb = False
+                        player.orbHandler.getOrb(sprite.orbType)
                     sprite.AddParticle(self.offset)
                     sprite.Update_Particle(-self.offset[0], -self.offset[1])
                 if player.hurtingTime == 0 and not player.hurting:
@@ -59,7 +59,3 @@ class CameraGroup(pygame.sprite.Group):
             if sprite.type in [223, 224, 402]:
                 player.Check_hurting(sprite.rect)
 
-    def animate_all(self):
-        for sprite in self.visible_sprites:
-            if sprite.animate:
-                sprite.Animoi()

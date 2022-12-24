@@ -14,14 +14,14 @@ class PlayersInput:
         #Utils
         self.mute = False
         
-    def input(self, inOrb):
+    def input(self, inOrb,on_floor):
         if inOrb:
             return
         self.jump_on_air = False
         keys = key.get_pressed()
         self.movement(keys)
         if keys[K_SPACE]:
-            if self.on_floor:
+            if on_floor:
                 self.direction.y = -self.jump_speed
             self.jump_on_air = True
         if keys[K_m]:
@@ -48,8 +48,9 @@ class PlayersInput:
         self.oikea = False
         self.ylös = False
 
-    def updatePlayerPosition(self):
+    def aplyGravity(self):
         self.direction.y += self.gravity
-        return self.direction.x * self.speed, self.direction.y
+        return self.direction.y
       
-
+    def applySpeed(self):
+        return self.direction.x * self.speed

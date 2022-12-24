@@ -1,7 +1,5 @@
 import pygame
 from os import path
-from random import randint
-from TuliKärpänen import Kärpänen
 
 
 class Palikka(pygame.sprite.Sprite):
@@ -22,6 +20,3 @@ class Palikka(pygame.sprite.Sprite):
             self.rect.h = 1
         elif self.type in [223, 223]:
             self.rect.h = 10
-
-
-

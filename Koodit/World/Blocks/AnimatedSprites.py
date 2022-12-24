@@ -1,6 +1,7 @@
 import pygame
 from os import path
 from random import randint
+from Visuals.TuliKärpänen import Kärpänen
 
 class AnimatedObj(pygame.sprite.Sprite):
     def __init__(self, pos, maxRuudut, kuva, näyttö, width, height, kasvi, animate, type) -> None:
@@ -15,8 +16,7 @@ class AnimatedObj(pygame.sprite.Sprite):
         self.maxRuudut = maxRuudut
         self.currentFrame = 0
         self.folder = kuva[1][0]
-        self.colors = [[(130, 160, 250), (90, 120, 200), (50, 50, 50)], [(250, 160, 240), (200, 130, 200), (50, 50, 50)]
-                       ]
+        self.colors = [[(130, 160, 250), (90, 120, 200), (50, 50, 50)], [(250, 160, 240), (200, 130, 200), (50, 50, 50)]]
 
         self.orb = self.folder == "Orb"
 
@@ -46,8 +46,7 @@ class AnimatedObj(pygame.sprite.Sprite):
     def AddParticle(self, sus):
         if randint(1, 35) != 1:
             return
-        x, y = (randint(-sus[0]+self.rect.x, -sus[0]+self.rect.x+30),
-                randint(-sus[1]+self.rect.y+20, -sus[1]+self.rect.y+30))
+        x, y = (randint(-sus[0]+self.rect.x, -sus[0]+self.rect.x+30),randint(-sus[1]+self.rect.y+20, -sus[1]+self.rect.y+30))
         r = randint(3, 4)
         f = Kärpänen(x, y, r, self.colors[self.orbType-1], 0.5)
         self.spark.add(f)

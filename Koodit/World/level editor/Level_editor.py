@@ -4,7 +4,7 @@ import pygame
 import numpy
 import os
 from PalikkaKuvat import *
-from Laskut import *
+from Utils.Laskut import Distance
 
 pygame.init()
 win = pygame.display.set_mode((800, 800))

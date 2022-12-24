@@ -2,8 +2,8 @@ import pygame
 from os import path
 from sys import exit
 from time import sleep
-from Text import Text
-from Music import Music
+from Visuals.Text import Text
+from Visuals.Music import Music
 
 
 class MainMenu:
@@ -88,7 +88,7 @@ class MainMenu:
             self.activateButton()
         elif sprite.text == "Quit":
             self.activateButton()
-            sleep(3)
+            sleep(1)
             pygame.quit()
             exit()
         else:

@@ -1,0 +1,2 @@
+
+        pygame.display.update()

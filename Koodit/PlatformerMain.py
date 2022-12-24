@@ -1,5 +1,5 @@
-from Palikat import Palikat
-from MainMenu import MainMenu
+from World.Palikat import Palikat
+from MainMenu.MainMenu import MainMenu
 from sys import exit
 import pygame
 
@@ -39,9 +39,7 @@ class DawnOfTheRats:
                     and pygame.mouse.get_pressed()[0]
                 ):
                     menu.click = True
-            self.window.fill((100, 100, 100))
-            menu.run()
-            pygame.display.update()
+            self.run(100, 100, 100, menu)
         if self.profile:
             self.profiling()
         else:
@@ -61,11 +59,14 @@ class DawnOfTheRats:
                         palikat.klikObejet(pygame.mouse.get_pos())
 
             pygame.display.set_caption(str(int(self.clock.get_fps())))
-            self.window.fill((146, 244, 255))
-            palikat.run()
-            pygame.display.update()
+            self.run(146, 244, 255, palikat)
         pygame.mixer.music.fadeout(500)
         self.Main_Menu()
+
+    def run(self, arg0, arg1, arg2, arg3):
+        self.window.fill((arg0, arg1, arg2))
+        arg3.run()
+        pygame.display.update()
 
     def profiling(self):
         if not self.profile:

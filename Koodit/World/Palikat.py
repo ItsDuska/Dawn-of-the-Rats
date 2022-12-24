@@ -2,12 +2,12 @@ import pygame
 from random import randint
 from os import listdir, path
 
-from Koodit.Player.Pelaaja import Pelaaja
-from TuliKärpänen import Kärpänen
-from Music import Music
-from Laskut import *
-from Dialogit import Dialog
-from LoadWorld import LoadWorld
+from Player.Pelaaja import Pelaaja
+from Visuals.TuliKärpänen import Kärpänen
+from Visuals.Music import Music
+from Utils.Laskut import Distance
+from Entities.Dialogit import Dialog
+from World.LoadWorld import LoadWorld
 pygame.mixer.pre_init(44100, -16, 2, 512)
 
 
@@ -89,12 +89,27 @@ class Palikat:
                 self.talk = Dialog(self.display_surface, sprite, self.getDialog(
                     sprite.id, sprite.type), self.width, self.height)
 
+    def orbColliding(self):
+        for sprite in self.level.collision_sprites:
+            if (
+                sprite.orb
+                and sprite.rect.colliderect(self.player.rect)
+                and self.player.playerInput.jump_on_air
+                and self.player.orbHandler.useOrb == False
+            ):
+                self.player.orbHandler.useOrb = True
+                self.player.orbHandler.getOrb(sprite.orbType)
+                sprite.AddParticle(self.offset)
+                sprite.Update_Particle(-self.offset[0], -self.offset[1])
+
+
     def run(self):
         self.level.active_sprites.update()
         self.level.visible_sprites.custom_draw(self.player)
         self.AddKärpänen()
         self.update_kärpänen()
-        if not self.player.mute:
+        if not self.player.playerInput.mute:
             self.music.Play_music()
         self.ObjectTypeChecker()
+        #self.orbColliding()
         self.offset = self.level.visible_sprites.offset

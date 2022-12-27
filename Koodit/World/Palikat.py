@@ -25,8 +25,8 @@ class Palikat:
         self.dilogit = []
         self.offset = pygame.math.Vector2(0, 0)
         self.player = Pelaaja(
-            (500, 86*int(self.height/self.maxRuudut)), [self.level.visible_sprites, self.level.active_sprites], self.level.collision_sprites)
-
+            (500, 86*int(self.height/self.maxRuudut)), [self.level.visible_sprites, self.level.active_sprites], self.level.collision_sprites,self.level.orb_group)
+    
     def AddKärpänen(self):
         if randint(1, 5) != 1:
             return
@@ -49,18 +49,19 @@ class Palikat:
                 enemy.shoot((self.player.rect.x, self.player.rect.y))
                 enemy.updateAmmusPosAndBlit(self.offset)
                 self.player.Check_hurting(enemy.rectball)
-
             if enemy.type == 408:
                 enemy.Moving()
-
             self.player.Check_hurting(enemy.rect)
+        self.checkTalking()
 
-        if self.puhuminen:
-            self.talk.tekstikohta.update()
-            self.talk.updatee(self.rightClick)
-            self.rightClick = False
-            if self.talk.StopTalking():
-                self.puhuminen = False
+    def checkTalking(self):
+        if not self.puhuminen:
+            return
+        self.talk.tekstikohta.update()
+        self.talk.updatee(self.rightClick)
+        self.rightClick = False
+        if self.talk.StopTalking():
+            self.puhuminen = False
 
     def getDialog(self, id, type):
         lista = []
@@ -89,27 +90,13 @@ class Palikat:
                 self.talk = Dialog(self.display_surface, sprite, self.getDialog(
                     sprite.id, sprite.type), self.width, self.height)
 
-    def orbColliding(self):
-        for sprite in self.level.collision_sprites:
-            if (
-                sprite.orb
-                and sprite.rect.colliderect(self.player.rect)
-                and self.player.playerInput.jump_on_air
-                and self.player.orbHandler.useOrb == False
-            ):
-                self.player.orbHandler.useOrb = True
-                self.player.orbHandler.getOrb(sprite.orbType)
-                sprite.AddParticle(self.offset)
-                sprite.Update_Particle(-self.offset[0], -self.offset[1])
-
 
     def run(self):
         self.level.active_sprites.update()
         self.level.visible_sprites.custom_draw(self.player)
         self.AddKärpänen()
         self.update_kärpänen()
-        if not self.player.playerInput.mute:
-            self.music.Play_music()
+        self.music.Play_music(self.player.playerInput.mute)
         self.ObjectTypeChecker()
-        #self.orbColliding()
         self.offset = self.level.visible_sprites.offset
+        self.player.offSet = self.offset

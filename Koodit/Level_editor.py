@@ -3,8 +3,9 @@ from genericpath import exists
 import pygame
 import numpy
 import os
-from PalikkaKuvat import *
-from Utils.Laskut import Distance
+
+from World.PalikkaKuvat import blockit, Läpi_palikat
+
 
 pygame.init()
 win = pygame.display.set_mode((800, 800))

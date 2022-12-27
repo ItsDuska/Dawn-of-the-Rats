@@ -14,7 +14,11 @@ class Music:
         self.type = 0  # 0 == päivä musiikit, 1 == yö musiikit, 2== boss battle, 3== main menu
         self.song = None
 
-    def Play_music(self):
+    def Play_music(self,mute):
+        if mute:
+            pygame.mixer.music.fadeout(50)
+            return
+
         if pygame.mixer.music.get_busy():
             return
 

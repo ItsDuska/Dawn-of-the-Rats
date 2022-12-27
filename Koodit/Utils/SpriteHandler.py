@@ -47,7 +47,6 @@ class AnimationHandler(pygame.sprite.Sprite):
             self.lastUpdate = currentTime
             if self.frame >= len(self.animationList):
                 self.frame = 0
-                print()
 
         self.animationList[action][self.frame] = pygame.transform.scale(
             self.animationList[action][self.frame], (self.width*self.scale, self.height*self.scale))

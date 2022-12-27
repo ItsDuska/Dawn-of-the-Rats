@@ -3,14 +3,8 @@ from MainMenu.MainMenu import MainMenu
 from sys import exit
 import pygame
 
-"""
 
-    GAME LOOP() 23.12.2022 klo 12.00 | Kesto 28.5 SEC
-
-"""
-
-
-class DawnOfTheRats:
+class DawnOfTheRats: 
     __slots__ = "maxRuudut", "width", "heigth", "profile", "window", "clock"
 
     def __init__(self) -> None:
@@ -58,7 +52,7 @@ class DawnOfTheRats:
                     elif pygame.mouse.get_pressed()[2]:
                         palikat.klikObejet(pygame.mouse.get_pos())
 
-            pygame.display.set_caption(str(int(self.clock.get_fps())))
+            pygame.display.set_caption(str(int(self.clock.get_fps())))   
             self.run(146, 244, 255, palikat)
         pygame.mixer.music.fadeout(500)
         self.Main_Menu()

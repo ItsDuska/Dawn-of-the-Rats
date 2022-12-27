@@ -1,2 +1,2 @@
 
-        pygame.display.update()
+            self.profiling()

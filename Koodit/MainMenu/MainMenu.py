@@ -81,7 +81,7 @@ class MainMenu:
             pygame.mixer.music.set_volume(0.1)
             pygame.mixer.music.play()
 
-        self.musiikki.Play_music()
+        self.musiikki.Play_music(False)
 
     def katso_nappi(self, sprite):
         if sprite.text == "Play":

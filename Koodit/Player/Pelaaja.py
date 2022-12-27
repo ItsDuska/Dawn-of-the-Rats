@@ -1,11 +1,10 @@
 import pygame
 from os import path
 from Player.PlayersInput import PlayersInput
-from Player.OrbHandler import OrbHandler
-
+#from Player.OrbHandler import OrbHandler
 
 class Pelaaja(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, collision_sprites):
+    def __init__(self, pos, groups, collision_sprites,orb_group):
         super().__init__(groups)
         self.idle = ["idle1.png", "idle2.png", "idle3.png", "idle4.png", "idle5.png", "idle6.png", "idle7.png", "idle8.png", "idle9.png",
                      "idle10.png", "idle11.png", "idle12.png", "idle13.png", "idle14.png", "idle15.png", "idle16.png", "idle17.png", "idle18.png"]
@@ -29,6 +28,7 @@ class Pelaaja(pygame.sprite.Sprite):
         self.image = pygame.image.load(path.join("kuvat", "Pelaaja", "Pelaaja_idle", self.idle[self.currentFrame])).convert_alpha()
         self.rect = self.image.get_rect(topleft=pos)
         self.collision_sprites = collision_sprites
+        self.orb_group = orb_group
         self.on_floor = False
         self.vasemmalle = False
         self.falling = False
@@ -36,13 +36,15 @@ class Pelaaja(pygame.sprite.Sprite):
         self.animate = False # turha?
         self.hurting = False
         self.hurtingTime = 0
+        self.inOrb = False
         self.lopetaHurting = False
         self.type = None  # tää pois
         self.playerInput = PlayersInput()
-        self.orbHandler = OrbHandler()
-
+        self.offSet = pygame.math.Vector2(0, 0)
+        #self.orbHandler = OrbHandler()
         self.rect.w += self.rect.w/2
         self.rect.h += self.rect.h/2
+        
 
         self.leveys = self.rect.w
         self.korkeus = self.rect.h
@@ -59,7 +61,6 @@ class Pelaaja(pygame.sprite.Sprite):
             self.image = pygame.transform.flip(self.image, True, False)
      
     def do_animation(self):
-        # x akselin suunnat
         if self.hurting:
             self.leveys += 6
             if self.hurtingTime == 0:
@@ -114,7 +115,8 @@ class Pelaaja(pygame.sprite.Sprite):
                     self.rect.bottom = sprite.rect.top
                     self.playerInput.direction.y = 0
                     self.on_floor = True
-                    self.orbHandler.useOrb = False
+                    #self.orbHandler.useOrb = False
+                   # self.orbHandler.inOrb = False
 
                 if self.playerInput.direction.y < 0 and sprite.type not in [36, 37, 38]:
                     self.rect.top = sprite.rect.bottom
@@ -124,7 +126,27 @@ class Pelaaja(pygame.sprite.Sprite):
             self.on_floor = False
             self.playerInput.alas = False
 
+    def orbColliding(self):
+        for sprite in self.orb_group:
+            #sprite.AddParticle(self.offSet)
+            #sprite.Update_Particle(-self.offSet[0], -self.offSet[1])  
 
+            if self.on_floor:
+                sprite.useOrb = True
+                sprite.inOrb = False
+            if self.inOrb:
+                sprite.run(self.playerInput.direction)
+                self.inOrb = sprite.getInOrb()
+
+            if (
+                sprite.rect.colliderect(self.rect)
+                and self.playerInput.jump_on_air
+                and sprite.useOrb == True
+            ):
+                self.inOrb = True
+                sprite.run(self.playerInput.direction)
+                sprite.useOrb = False
+            
 
     def damage(self):
         if not self.hurting:
@@ -142,13 +164,16 @@ class Pelaaja(pygame.sprite.Sprite):
 
     def update(self):
         self.do_animation()
-        self.playerInput.input(self.orbHandler.inOrb,self.on_floor)
+        self.playerInput.input(False,self.on_floor)
+        self.orbColliding()
         self.rect.x += self.playerInput.applySpeed()
         self.horizontal_collisions()
         self.rect.y += self.playerInput.aplyGravity()
         self.vertical_collisions()
-        self.orbHandler.update(self.currentFrame,self.playerInput.oikea,self.playerInput.vasen,self.playerInput.alas)
-        temp = self.orbHandler.getDirection()
-        self.rect.x += temp[0]
-        self.playerInput.direction.y += temp[1]
+        #self.orbColliding()
+
+
+       # self.orbHandler.update(self.currentFrame,self.playerInput.oikea,self.playerInput.vasen,self.playerInput.alas,self.playerInput.direction.y)
+        #self.rect.x += self.orbHandler.getDirectionX()
+       # self.playerInput.direction.y += self.orbHandler.getDirectionY()
         self.damage()

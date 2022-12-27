@@ -7,7 +7,8 @@ from Entities.Enemies.Enemy import Enemy
 from Entities.Enemies.Bord import Bord
 from Entities.Enemies.Snake import Snake
 from Player.CameraStuff import CameraGroup
-
+from Entities.Orbs.DashOrb import DashOrb
+from Entities.Orbs.JumpOrb import JumpOrb
 
 class LoadWorld:
     def __init__(self, level, width, height, maxRuudut) -> None:
@@ -17,12 +18,16 @@ class LoadWorld:
         self.maxRuudut = maxRuudut
         self.tasoDir = path.join("Tasot", level)
         self.num = 0
-        self.enemies = [405, 408, 409]
+        self.PASSABLE_BLOCKS = 200
+
+        self.ENEMIES = [405, 408, 409]
+        self.ORBS = [401,407]
         self.initGroups()
         self.setup_level(self.Lataa())
 
     def initGroups(self):
         self.enemy_group = pygame.sprite.Group()
+        self.orb_group = pygame.sprite.Group()
         self.kärpäs_group = pygame.sprite.Group()
         self.visible_sprites = CameraGroup(self.width, self.height)
         self.active_sprites = pygame.sprite.Group()
@@ -43,6 +48,12 @@ class LoadWorld:
                             407: [["Dash1.png", "Dash2.png", "Dash3.png", "Dash4.png", "Dash5.png", "Dash6.png", "Dash7.png", "Dash8.png", "Dash9.png", "Dash10.png", "Dash11.png", "Dash12.png"],
                                   ["Orb"], 1], 408: [["Bord1.png", "Bord2.png", "Bord3.png", "Bord3.png", "Bord4.png", "Bord5.png", "Bord6.png", "Bord7.png", "Bord8.png"], ["Bord"]], 409: [["FallingRock1.png"], ["FallingRock"]]
                             }
+
+        ###  VIHOLLISILLE OMA LISTA
+        ###  NPC:LLE OMA LISTA
+        ### animated OBJECTEILLE OMA LISTA
+
+
         self.generation_loop(tasoData, blockit)
         self.generation_loop(tasoData, Läpi_palikat)
         self.generation_loop(tasoData, animated_objects)
@@ -54,18 +65,21 @@ class LoadWorld:
                 y = row_index * int(self.height/self.maxRuudut)
                 if col not in kuvat:
                     continue
-                if col >= 201 and col <= 400:
+                if col > self.PASSABLE_BLOCKS and col <= 400:
                     self.lisää_kuva(
                         x, y, kuvat[col], self.display_surface, False, False, col)
-                elif col <= 200:
+                elif col <= self.PASSABLE_BLOCKS:
                     self.lisää_kuva(
                         x, y, kuvat[col], self.display_surface, True, False, col)
-                elif col >= 401:
-                    self.enemyOrAnimatedObject(col, x, y, kuvat)
+                else:
+                    self.getAnimatedType(col, x, y, kuvat)
 
-    def enemyOrAnimatedObject(self, col, x, y, kuva):
-        if col in self.enemies:
+    def getAnimatedType(self, col, x, y, kuva):
+        if col in self.ENEMIES:
             self.addEnemy(col, x, y, kuva)
+
+        elif col in self.ORBS:
+            self.getOrbType(col,x,y,kuva)
         else:
             anim_obj = AnimatedObj(
                 (x, y), self.maxRuudut, kuva[col], self.display_surface, self.width, self.height, True, True, col)
@@ -82,6 +96,14 @@ class LoadWorld:
             sus = Enemy((x, y), self.maxRuudut, True, col,
                         kuva[col], self.width, self.height, self.display_surface, 0.1)
         self.enemy_group.add(sus)
+
+    def getOrbType(self,col, x, y, kuva):
+        if col == 401:
+            orb = JumpOrb((x, y), self.maxRuudut, kuva[col], self.display_surface, self.width, self.height, True, True, col)
+        elif col == 407:
+            orb = DashOrb((x, y), self.maxRuudut, kuva[col], self.display_surface, self.width, self.height, True, True, col)
+        self.visible_sprites.add(orb)
+        self.orb_group.add(orb)
 
     def lisää_kuva(self, a, b, kuva, näyttö, passable, animate, col):
         if col == 225:

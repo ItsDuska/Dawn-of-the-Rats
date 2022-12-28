@@ -15,7 +15,7 @@ class Glow:
         value = int(self.amplitude * sin(2*pi*self.frequency*self.x))
         return (self.color[0]+value-self.amplitude,self.color[1]+value-self.amplitude,self.color[2]+value-self.amplitude,self.color[3])
             
-    def update(self,screen,pos):
+    def update(self,screen):
         self.getFlickeringValue()
         pygame.draw.circle(self.surface, self.getFlickeringValue(), (self.radius,self.radius), self.radius)
         screen.blit(self.surface,(-4,-4), special_flags=BLEND_RGB_ADD)

@@ -15,7 +15,7 @@ class DawnOfTheRats:
         self.maxRuudut = 25  # kuinka monta ruuta näkyy oikealle ja ylös. Esim jos maxRuudut on 10 niin 10*10 ruutua näytöllä. 18% 25?
         self.width = infoObject.current_h
         self.heigth = infoObject.current_h-60
-        self.profile = False
+        self.profile = False        #48
         self.window = pygame.display.set_mode((self.width, self.heigth), 0, 16)
         self.clock = pygame.time.Clock()
         self.Main_Menu()

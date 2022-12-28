@@ -85,6 +85,7 @@ class Palikat:
                 and Distance(sprite.rect, self.player.rect) <= 100
                 and not self.puhuminen
                 and sprite.rect.collidepoint(mouspos)
+                and sprite.updateObject 
             ):
                 self.puhuminen = True
                 self.talk = Dialog(self.display_surface, sprite, self.getDialog(
@@ -92,8 +93,8 @@ class Palikat:
 
 
     def run(self):
-        self.level.active_sprites.update()
-        self.level.visible_sprites.custom_draw(self.player)
+        self.level.active_sprites.update() # Pelaaja. Tää kutsuu sen update functioo
+        self.level.visible_sprites.custom_draw(self.player) #Piirtää kaikki spritet jotka kuuluu visible sprites grouppiin
         self.AddKärpänen()
         self.update_kärpänen()
         self.music.Play_music(self.player.playerInput.mute)

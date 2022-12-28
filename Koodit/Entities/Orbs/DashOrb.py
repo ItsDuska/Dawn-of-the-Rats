@@ -55,7 +55,7 @@ class DashOrb(Orb):
 
     def run(self,direction):
         self.Orb_Dash(direction)
-        self.glow.update(self.image,(0,0))
+        self.glow.update(self.image)
 
 
      

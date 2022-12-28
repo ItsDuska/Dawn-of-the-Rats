@@ -9,11 +9,11 @@ class JumpOrb(Orb):
     def Orb_Jump(self,direction):
         if not self.inOrb: #Jos ei ole orbissa
             return  
-
+        
         direction.y = -12
         self.inOrb = False
         self.useOrb = False
 
     def run(self,direction):
         self.Orb_Jump(direction)
-        self.glow.update(self.image,(0,0))
+        self.glow.update(self.image)

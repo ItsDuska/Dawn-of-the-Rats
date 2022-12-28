@@ -10,6 +10,7 @@ class Palikka(pygame.sprite.Sprite):
         self.animate = animate
         self.type = col
         self.id = num  # kylttei varte. 0 = ei kylttiä olemassa
+        self.updateObject = True
         self.image = pygame.image.load(path.join(
             "Kuvat", "Palikat", "PalikkaKuvat", kuva)).convert_alpha()
         self.image = pygame.transform.scale(

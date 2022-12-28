@@ -1,7 +1,6 @@
 import pygame
 from Visuals.Background import Background
 
-
 class CameraGroup(pygame.sprite.Group):
     def __init__(self, w, h):
         super().__init__()
@@ -11,7 +10,8 @@ class CameraGroup(pygame.sprite.Group):
         self.display_surface = pygame.display.get_surface()
         self.offset = pygame.math.Vector2(100, 300)
         self.tausta = Background(self.display_surface, self.scroll, w, h)
-
+        self.WINDOW_SIZE = pygame.display.get_window_size()
+        
         self.sparkles = pygame.sprite.Group()
         # camera
         cam_left = self.CAMERA_BORDERS['left']
@@ -45,11 +45,25 @@ class CameraGroup(pygame.sprite.Group):
 
         for sprite in self.sprites():
             offset_pos = sprite.rect.topleft - self.offset
+            if not self.isInScreen(offset_pos):
+                sprite.updateObject = False
+                continue
+            sprite.updateObject = True
             self.display_surface.blit(sprite.image, offset_pos)
             if sprite.animate:
                 sprite.Animoi()
-                if player.hurtingTime == 0 and not player.hurting:
-                    player.lopetaHurting = False
+                #if player.hurtingTime == 0 and not player.hurting:
+                   # player.lopetaHurting = False
             if sprite.type in [223, 224, 402]:
                 player.Check_hurting(sprite.rect)
+
+
+    def isInScreen(self,pos):
+        # 50 luku on sitä varten ettei kulmissa näy tyhjää
+        return (
+            pos[0] >= -50
+            and pos[0] <= self.WINDOW_SIZE[0]+50
+            and pos[1] >= -50
+            and pos[1] <= self.WINDOW_SIZE[1]+50
+        )
 

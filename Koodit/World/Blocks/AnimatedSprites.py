@@ -19,6 +19,7 @@ class AnimatedObj(pygame.sprite.Sprite):
         self.folder = kuva[1][0]
         self.spark = pygame.sprite.Group()
         self.color = None
+        self.updateObject = True
         
 
         self.orb = self.folder == "Orb"

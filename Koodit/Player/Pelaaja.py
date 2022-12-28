@@ -40,6 +40,7 @@ class Pelaaja(pygame.sprite.Sprite):
         self.type = None  # tää pois
         self.playerInput = PlayersInput()
         self.offSet = pygame.math.Vector2(0, 0)
+        self.updateObject = True
         
         #self.orbHandler = OrbHandler()
         self.rect.w += self.rect.w/2

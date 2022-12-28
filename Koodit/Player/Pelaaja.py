@@ -167,10 +167,8 @@ class Pelaaja(pygame.sprite.Sprite):
         self.horizontal_collisions()
         self.rect.y += self.playerInput.aplyGravity()
         self.vertical_collisions()
-        #self.orbColliding()
+    
 
 
-       # self.orbHandler.update(self.currentFrame,self.playerInput.oikea,self.playerInput.vasen,self.playerInput.alas,self.playerInput.direction.y)
-        #self.rect.x += self.orbHandler.getDirectionX()
-       # self.playerInput.direction.y += self.orbHandler.getDirectionY()
+
         self.damage()

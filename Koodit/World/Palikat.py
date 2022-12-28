@@ -2,7 +2,7 @@ import pygame
 from random import randint
 from os import listdir, path
 from sys import exit
-
+from time import time
 from Player.Pelaaja import Pelaaja
 from Visuals.TuliKärpänen import Kärpänen
 from Visuals.Music import Music
@@ -10,6 +10,17 @@ from Utils.Laskut import Distance
 from Entities.Dialogit import Dialog
 from World.LoadWorld import LoadWorld
 pygame.mixer.pre_init(44100, -16, 2, 512)
+
+
+def timer(func):
+        def timed(*args,**kw):
+            ts = time()
+            result = func(*args,**kw)
+            te = time()
+            print ('func:%r took: %2.4f sec' % \
+            (func.__name__,  te-ts))
+            return result
+        return timed
 
 
 class Palikat:
@@ -27,7 +38,8 @@ class Palikat:
         self.offset = pygame.math.Vector2(0, 0)
         self.player = Pelaaja(
             (500, 86*int(self.height/self.maxRuudut)), [self.level.visible_sprites, self.level.active_sprites], self.level.collision_sprites,self.level.orb_group)
-    
+      
+   # @timer
     def AddKärpänen(self):
         if randint(1, 5) != 1:
             return
@@ -42,7 +54,8 @@ class Palikat:
         for tuli in self.level.kärpäs_group:
             if tuli.y <= 0:
                 tuli.kill()
-
+      
+    #@timer
     def ObjectTypeChecker(self):
         for enemy in self.level.enemy_group:
             enemy.Animoi(self.offset)
@@ -91,17 +104,29 @@ class Palikat:
                 self.puhuminen = True
                 self.talk = Dialog(self.display_surface, sprite, self.getDialog(
                     sprite.id, sprite.type), self.width, self.height)
+      
+   # @timer
+    def updateAll(self):
+        self.level.visible_sprites.custom_draw(self.player) #Piirtää kaikki spritet jotka kuuluu visible sprites grouppiin
+    
+   # @timer
+    def updatePlayer(self):
+        self.level.active_sprites.update() # Pelaaja. Tää kutsuu sen update functioo
 
+    #@timer
+    def playMusic(self):
+        self.music.Play_music(self.player.playerInput.mute)
 
     def run(self):
-        self.level.active_sprites.update() # Pelaaja. Tää kutsuu sen update functioo
-        self.level.visible_sprites.custom_draw(self.player) #Piirtää kaikki spritet jotka kuuluu visible sprites grouppiin
+        self.updatePlayer()
+        self.updateAll()
         self.AddKärpänen()
         self.update_kärpänen()
-        self.music.Play_music(self.player.playerInput.mute)
+        self.playMusic()
         self.ObjectTypeChecker()
         self.offset = self.level.visible_sprites.offset
         self.player.offSet = self.offset
-        
 
-   
+
+
+    

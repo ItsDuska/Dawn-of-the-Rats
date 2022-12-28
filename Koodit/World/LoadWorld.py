@@ -10,6 +10,7 @@ from Player.CameraStuff import CameraGroup
 from Entities.Orbs.DashOrb import DashOrb
 from Entities.Orbs.JumpOrb import JumpOrb
 
+
 class LoadWorld:
     __slots__ = "display_surface", "width","height","maxRuudut","tasoDir","num","PASSABLE_BLOCKS","ENEMIES","ORBS","enemy_group","orb_group","kärpäs_group","visible_sprites","active_sprites","collision_sprites"
     def __init__(self, level, width, height, maxRuudut) -> None:
@@ -54,7 +55,7 @@ class LoadWorld:
         ###  NPC:LLE OMA LISTA
         ### animated OBJECTEILLE OMA LISTA
 
-
+       
         self.generation_loop(tasoData, blockit)
         self.generation_loop(tasoData, Läpi_palikat)
         self.generation_loop(tasoData, animated_objects)

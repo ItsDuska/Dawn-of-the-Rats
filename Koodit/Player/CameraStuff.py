@@ -48,11 +48,6 @@ class CameraGroup(pygame.sprite.Group):
             self.display_surface.blit(sprite.image, offset_pos)
             if sprite.animate:
                 sprite.Animoi()
-                #if sprite.orb:
-                   # if sprite.rect.colliderect(player.rect) and player.playerInput.jump_on_air and player.orbHandler.useOrb == False:
-                       # player.touchOrb(sprite.orbType)
-                   # sprite.AddParticle(self.offset)
-                  #  sprite.Update_Particle(-self.offset[0], -self.offset[1])
                 if player.hurtingTime == 0 and not player.hurting:
                     player.lopetaHurting = False
             if sprite.type in [223, 224, 402]:

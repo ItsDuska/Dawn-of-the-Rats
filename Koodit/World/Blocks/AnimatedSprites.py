@@ -54,8 +54,8 @@ class AnimatedObj(pygame.sprite.Sprite):
         r = randint(3, 4)
         f = Kärpänen(x, y, r, self.color, 0.5)
         self.spark.add(f)
-        print(self.rect.x,self.rect.y)
-        print(f.x,f.y)
+        #print(self.rect.x,self.rect.y)
+       # print(f.x,f.y)
 
     def Update_Particle(self, x, y):
         self.spark.update(self.näyttö, self.rect.x, self.rect.y)

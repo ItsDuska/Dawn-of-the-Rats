@@ -8,49 +8,54 @@ class DashOrb(Orb):
         super().__init__(pos, maxRuudut, kuva, näyttö, width, height, kasvi, animate, type)
         self.dashTime = 0
         self.MAX_DASH_TIME = 10
-        self.color = [(250, 160, 240), (200, 130, 200), (50, 50, 50)]
+        self.color = [(130, 160, 250), (90, 120, 200), (50, 50, 50)]
+        self.glow.color = [90, 120, 200,20]
+        
 
     def Orb_Dash(self,direction):
-        #if self.type != 407:
-           # return
-        self.inOrb = True
-        print(self.dashTime)
+        if not self.inOrb:
+            return
+        self.drawPlayerOrbing = True
+        self.lockMovement = True
         self.dashTime += 0.5
         if self.dashTime >= self.MAX_DASH_TIME:
             self.dashTime = 0
+            self.drawPlayerOrbing = False
             self.inOrb = False
+            self.lockMovement = False
             direction = pygame.math.Vector2(0,0)
         self.continueDash(direction)
-        self.dashSprite(direction)
         
     def continueDash(self,direction):
         if direction.x >= 1:
-            direction.x = 5
-            direction.x = 0
+            direction.x = 3
+            direction.y = 0
         elif direction.x <= -1:
-            direction.x = -5
+            direction.x = -3
             direction.y = 0
         elif direction.y >= 1:
-            direction.y = 10
+            direction.x = 0
+            direction.y = 15
         else:
-            direction.y = -10
+            direction.x = 0
+            direction.y = -15
 
-    def dashSprite(self,direction):
-        if self.currentFrame >= 9:
-            self.orbKuva("PlayerDash", "Dash9.png")
+    def dashSprite(self,direction,currentFrame):
+        if currentFrame >= 9:
+            image = self.orbKuva("PlayerDash", "Dash9.png")
         else:
-            self.orbKuva("PlayerDash", "Dash15.png")
-        if direction.x < -1:
-            self.image = pygame.transform.flip(self.image, True, False)
+            image = self.orbKuva("PlayerDash", "Dash15.png")
+        if direction < -1:
+            image = pygame.transform.flip(image, True, False)
+        return image
 
     def orbKuva(self,folder ,image):
-        self.image = pygame.image.load(path.join("Kuvat", "Pelaaja", folder, image)).convert_alpha()
+        return pygame.image.load(path.join("Kuvat", "Pelaaja", folder, image)).convert_alpha()
 
-    def getInOrb(self):
-        return self.inOrb
 
     def run(self,direction):
         self.Orb_Dash(direction)
+        self.glow.update(self.image,(0,0))
 
 
      

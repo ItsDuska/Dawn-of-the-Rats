@@ -100,3 +100,4 @@ class Palikat:
         self.ObjectTypeChecker()
         self.offset = self.level.visible_sprites.offset
         self.player.offSet = self.offset
+    

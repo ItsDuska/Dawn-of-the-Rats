@@ -3,19 +3,17 @@ from Entities.Orbs.Orb import Orb
 class JumpOrb(Orb):
     def __init__(self, pos, maxRuudut, kuva, näyttö, width, height, kasvi, animate, type) -> None:
         super().__init__(pos, maxRuudut, kuva, näyttö, width, height, kasvi, animate, type)
-        self.color = [(130, 160, 250), (90, 120, 200), (50, 50, 50)]
-
+        self.color = [(250, 160, 240), (200, 130, 200), (50, 50, 50)]
+        self.glow.color = [200, 130, 200,1]
 
     def Orb_Jump(self,direction):
-        if self.inOrb:
-            return
-        direction.y = -12
-        #self.inOrb = False
-        self.useOrb = False
+        if not self.inOrb: #Jos ei ole orbissa
+            return  
 
-        # ei ole hyötyä mutta tarvitaan että dash toimii
-    def getInOrb(self):
-        return self.inOrb
+        direction.y = -12
+        self.inOrb = False
+        self.useOrb = False
 
     def run(self,direction):
         self.Orb_Jump(direction)
+        self.glow.update(self.image,(0,0))

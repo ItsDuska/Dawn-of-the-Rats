@@ -1,7 +1,6 @@
 import pygame
 from os import path
 from Player.PlayersInput import PlayersInput
-#from Player.OrbHandler import OrbHandler
 
 class Pelaaja(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites,orb_group):
@@ -36,11 +35,12 @@ class Pelaaja(pygame.sprite.Sprite):
         self.animate = False # turha?
         self.hurting = False
         self.hurtingTime = 0
-        self.inOrb = False
+        self.lockMovements = False
         self.lopetaHurting = False
         self.type = None  # tää pois
         self.playerInput = PlayersInput()
         self.offSet = pygame.math.Vector2(0, 0)
+        
         #self.orbHandler = OrbHandler()
         self.rect.w += self.rect.w/2
         self.rect.h += self.rect.h/2
@@ -91,7 +91,8 @@ class Pelaaja(pygame.sprite.Sprite):
         elif self.hyökkäys == True and self.playerInput.direction.x == 0:
             self.FrameCheck(self.attack, 0.25, "Pelaaja_Attack", False)
             self.leveys += 22
- 
+        
+        
         self.image = pygame.transform.scale(
             self.image, (self.leveys, self.korkeus))
         self.leveys = self.rect.w
@@ -115,9 +116,6 @@ class Pelaaja(pygame.sprite.Sprite):
                     self.rect.bottom = sprite.rect.top
                     self.playerInput.direction.y = 0
                     self.on_floor = True
-                    #self.orbHandler.useOrb = False
-                   # self.orbHandler.inOrb = False
-
                 if self.playerInput.direction.y < 0 and sprite.type not in [36, 37, 38]:
                     self.rect.top = sprite.rect.bottom
                     self.playerInput.direction.y = 0
@@ -131,22 +129,20 @@ class Pelaaja(pygame.sprite.Sprite):
             #sprite.AddParticle(self.offSet)
             #sprite.Update_Particle(-self.offSet[0], -self.offSet[1])  
 
+            self.lockMovements = bool(sprite.lockMovement)
+            
+            if sprite.drawPlayerOrbing:
+                self.image = sprite.dashSprite(self.playerInput.direction.x,self.currentFrame)
+
             if self.on_floor:
                 sprite.useOrb = True
-                sprite.inOrb = False
-            if self.inOrb:
-                sprite.run(self.playerInput.direction)
-                self.inOrb = sprite.getInOrb()
-
             if (
                 sprite.rect.colliderect(self.rect)
                 and self.playerInput.jump_on_air
-                and sprite.useOrb == True
+                and sprite.useOrb == True  # useORb on True jos sitä voi käyttää
             ):
-                self.inOrb = True
-                sprite.run(self.playerInput.direction)
-                sprite.useOrb = False
-            
+                sprite.inOrb = True
+            sprite.run(self.playerInput.direction)
 
     def damage(self):
         if not self.hurting:
@@ -164,7 +160,7 @@ class Pelaaja(pygame.sprite.Sprite):
 
     def update(self):
         self.do_animation()
-        self.playerInput.input(False,self.on_floor)
+        self.playerInput.input(self.lockMovements,self.on_floor)
         self.orbColliding()
         self.rect.x += self.playerInput.applySpeed()
         self.horizontal_collisions()

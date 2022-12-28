@@ -2,6 +2,7 @@ import pygame
 from Visuals.Background import Background
 
 class CameraGroup(pygame.sprite.Group):
+    __slots__ = "scroll","CAMERA_BORDERS","display_surface","offset","background","WINDOW_SIZE","camera_rect",
     def __init__(self, w, h):
         super().__init__()
         self.scroll = 0
@@ -9,10 +10,9 @@ class CameraGroup(pygame.sprite.Group):
                                'right': 200, 'top': 100, 'bottom': 150}
         self.display_surface = pygame.display.get_surface()
         self.offset = pygame.math.Vector2(100, 300)
-        self.tausta = Background(self.display_surface, self.scroll, w, h)
+        self.background = Background(self.display_surface, self.scroll, w, h)
         self.WINDOW_SIZE = pygame.display.get_window_size()
         
-        self.sparkles = pygame.sprite.Group()
         # camera
         cam_left = self.CAMERA_BORDERS['left']
         cam_top = self.CAMERA_BORDERS['top']
@@ -27,17 +27,17 @@ class CameraGroup(pygame.sprite.Group):
     def custom_draw(self, player):
         # camera pos
         if player.rect.left < self.camera_rect.left:
-            self.tausta.scroll -= 1
+            self.background.scroll -= 1
             self.camera_rect.left = player.rect.left
         if player.rect.right > self.camera_rect.right:
-            self.tausta.scroll += 1
+            self.background.scroll += 1
             self.camera_rect.right = player.rect.right
         if player.rect.top < self.camera_rect.top:
             self.camera_rect.top = player.rect.top
         if player.rect.bottom > self.camera_rect.bottom:
             self.camera_rect.bottom = player.rect.bottom
 
-        self.tausta.draw_bg()
+        self.background.draw_bg()
         # camera offsetti kai jotain emt
         self.offset = pygame.math.Vector2(
             self.camera_rect.left - self.CAMERA_BORDERS['left'],

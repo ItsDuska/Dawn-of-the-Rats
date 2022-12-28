@@ -1,6 +1,7 @@
 from pygame import key, K_SPACE, K_m, K_d, K_a, K_s, K_w,Vector2
 
 class PlayersInput:
+    __slots__ = "direction","alas","vasen","oikea","ylös","jump_on_air","gravity","jump_speed","speed","mute"
     def __init__(self) -> None:
         self.direction = Vector2()
         self.alas = False

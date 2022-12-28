@@ -4,7 +4,7 @@ from os import path
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, pos, maxRuudut, animate, col, kuva, width, height, display_surface, animationSpeed) -> None:
-        __slots__ = "animationSpeed", "animate", "pos", "maxRuudut", "type", "kuva", "folder", "width", "height", "näyttö", "currentFrame", "orb", "image", "rect", "vasemmalle"
+        __slots__ = "animationSpeed", "animate", "pos", "maxRuudut", "type", "kuva", "folder", "width", "height", "näyttö", "currentFrame", "image", "rect", "vasemmalle"
         super().__init__()
         self.animationSpeed = animationSpeed
         self.animate = animate
@@ -17,7 +17,6 @@ class Enemy(pygame.sprite.Sprite):
         self.height = height
         self.näyttö = display_surface
         self.currentFrame = 0
-        self.orb = None
         self.image = pygame.image.load(path.join(
             "Kuvat", "Enemies", self.folder, self.kuva[0])).convert_alpha()
         self.image = pygame.transform.scale(

@@ -3,6 +3,7 @@ from pygame.locals import BLEND_RGB_ADD
 from math import sin, pi
 
 class Glow:
+    __slots__ = "amplitude","frequency","x","radius","color","surface"
     def __init__(self,amplitude,frequency,radius,color) -> None:
         self.amplitude = amplitude
         self.frequency = frequency

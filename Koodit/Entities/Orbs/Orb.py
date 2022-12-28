@@ -4,6 +4,7 @@ from Visuals.Glow import Glow
 
 
 class Orb(AnimatedObj):
+    __slots__ = "glow","inOrb","useOrb","lockMovement","drawPlayerOrbing"
     def __init__(self,pos, maxRuudut, kuva, näyttö, width, height, kasvi, animate, type) -> None:
         super().__init__(pos, maxRuudut, kuva, näyttö, width, height, kasvi, animate, type)
         self.glow = Glow(20,0.01,29,(0,0,0))

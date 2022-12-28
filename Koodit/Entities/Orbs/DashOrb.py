@@ -4,6 +4,7 @@ import pygame
 from os import path
 
 class DashOrb(Orb):
+    __slots__ = "dashTime","MAX_DASH_TIME"
     def __init__(self, pos, maxRuudut, kuva, näyttö, width, height, kasvi, animate, type) -> None:
         super().__init__(pos, maxRuudut, kuva, näyttö, width, height, kasvi, animate, type)
         self.dashTime = 0

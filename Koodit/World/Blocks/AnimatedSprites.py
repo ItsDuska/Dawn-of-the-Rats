@@ -4,6 +4,7 @@ from random import randint
 from Visuals.TuliKärpänen import Kärpänen
 
 class AnimatedObj(pygame.sprite.Sprite):
+    __slots__ = "passable","näyttö","width","height","animate","type","id","kuva","maxRuudut","currentFrame","folder","spark","color","updateObject","image","rect"
     def __init__(self, pos, maxRuudut, kuva, näyttö, width, height, kasvi, animate, type) -> None:
         super().__init__()
         self.passable = kasvi
@@ -21,12 +22,6 @@ class AnimatedObj(pygame.sprite.Sprite):
         self.color = None
         self.updateObject = True
         
-
-        self.orb = self.folder == "Orb"
-
-        #self.orbType = kuva[2] if self.folder == "Orb" else None
-
-        #self.spark = pygame.sprite.Group()
         self.image = pygame.image.load(path.join(
             "Kuvat", "Palikat", "Animoidut_palikat", self.folder, self.kuva[0])).convert_alpha()
         self.image = pygame.transform.scale(

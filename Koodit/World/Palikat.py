@@ -12,6 +12,7 @@ pygame.mixer.pre_init(44100, -16, 2, 512)
 
 
 class Palikat:
+    __slots__ = "maxRuudut","display_surface","width","height","rightClick","level","music","taso_num","puhuminen","dialogit","offset","player","talk"
     def __init__(self, maxRuudut, widht, height):
         self.maxRuudut = maxRuudut
         self.display_surface = pygame.display.get_surface()
@@ -22,7 +23,6 @@ class Palikat:
         self.music = Music()
         self.taso_num = 1
         self.puhuminen = False
-        self.dilogit = []
         self.offset = pygame.math.Vector2(0, 0)
         self.player = Pelaaja(
             (500, 86*int(self.height/self.maxRuudut)), [self.level.visible_sprites, self.level.active_sprites], self.level.collision_sprites,self.level.orb_group)

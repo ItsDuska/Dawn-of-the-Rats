@@ -7,6 +7,7 @@ from Visuals.Music import Music
 
 
 class MainMenu:
+    __slots__ = "screen","width","height","napit","texts","taustat","rats","tausta","rat","Title","musiikki","click","päällä","hidden","credits_text","sus","button"
     def __init__(self, screen, w, h) -> None:
         self.screen = screen
         self.width = w
@@ -28,7 +29,6 @@ class MainMenu:
         self.click = False
         self.päällä = True
         self.hidden = False
-        self.credit_texts = []
         self.sus = pygame.mixer.Sound(path.join("Musiikit", "Amogus.mp3"))
 
         self.credits_text = ["Dawn of the Rats", " ", "Producers", "Game desinger: Minä and Tuke", " ", "lead designer: Minä", " ", "Software Developer: Minä", " ", "Game Programmer: Minä", " ",
@@ -103,6 +103,7 @@ class MainMenu:
 
 
 class Animate:
+    __slots__ = "currentFrame","pos","kuvat","folder","screen","koko","time","image","rect"
     def __init__(self, pos, kuvat, folder, screen, koko, time) -> None:
         self.currentFrame = 0
         self.pos = pos
@@ -125,6 +126,7 @@ class Animate:
 
 
 class Button:
+    __slots__ = "näyttö","text","pos","width","height","color","button","rect","tekstikohta"
     def __init__(self, text, pos, width, height, näyttö, color) -> None:
         self.näyttö = näyttö
         self.text = text
@@ -133,17 +135,13 @@ class Button:
         self.height = height
         self.color = color
 
-        self.button = pygame.Surface(
-            (self.width, self.height), pygame.SRCALPHA)   # per-pixel alpha
+        self.button = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         self.button.fill(self.color)
-        pygame.draw.rect(self.button, (255, 255, 255, 200),
-                         (0, 0, self.width, self.height), 1)
+        pygame.draw.rect(self.button, (255, 255, 255, 200),(0, 0, self.width, self.height), 1)
         näyttö.blit(self.button, (0, 0))
         self.rect = self.button.get_rect(topleft=pos)
-        self.tekstikohta = Text(self.näyttö, (self.rect.x+5, self.rect.y-50),
-                                self.text, 64, (255, 255, 255), self.width, self.height)
+        self.tekstikohta = Text(self.näyttö, (self.rect.x+5, self.rect.y-50), self.text, 64, (255, 255, 255), self.width, self.height)
 
     def kohdalla(self):
         self.button.fill(self.color)
-        pygame.draw.rect(self.button, (255, 255, 255, 200),
-                         (0, 0, self.width, self.height), 1)
+        pygame.draw.rect(self.button, (255, 255, 255, 200), (0, 0, self.width, self.height), 1)

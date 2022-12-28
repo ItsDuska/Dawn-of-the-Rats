@@ -1,6 +1,7 @@
 import pygame
 from random import randint
 from os import listdir, path
+from sys import exit
 
 from Player.Pelaaja import Pelaaja
 from Visuals.TuliKärpänen import Kärpänen
@@ -101,4 +102,6 @@ class Palikat:
         self.ObjectTypeChecker()
         self.offset = self.level.visible_sprites.offset
         self.player.offSet = self.offset
-    
+        
+
+   

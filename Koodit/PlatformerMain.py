@@ -1,8 +1,11 @@
 from World.Palikat import Palikat
 from MainMenu.MainMenu import MainMenu
-from sys import exit
+#from time import time
 import pygame
 
+
+
+#15.541315079 millisekunttia main loop
 
 class DawnOfTheRats: 
     __slots__ = "maxRuudut", "width", "heigth", "profile", "window", "clock"
@@ -42,6 +45,7 @@ class DawnOfTheRats:
     def Game_loop(self):
         palikat = Palikat(self.maxRuudut, self.width, self.heigth)
         while palikat.player.hp > 0:
+            #start = time()
             self.clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -54,8 +58,11 @@ class DawnOfTheRats:
 
             pygame.display.set_caption(str(int(self.clock.get_fps())))   
             self.run(146, 244, 255, palikat)
+           # end = time()
+            #print(end-start)
         pygame.mixer.music.fadeout(500)
         self.Main_Menu()
+        
 
     def run(self, arg0, arg1, arg2, arg3):
         self.window.fill((arg0, arg1, arg2))

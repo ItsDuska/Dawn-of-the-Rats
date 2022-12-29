@@ -167,8 +167,4 @@ class Pelaaja(pygame.sprite.Sprite):
         self.horizontal_collisions()
         self.rect.y += self.playerInput.aplyGravity()
         self.vertical_collisions()
-    
-
-
-
         self.damage()

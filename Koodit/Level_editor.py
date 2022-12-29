@@ -3,6 +3,7 @@ from genericpath import exists
 import pygame
 import numpy
 import os
+from time import time
 
 from World.PalikkaKuvat import blockit, Läpi_palikat
 
@@ -38,7 +39,10 @@ class Render:
         self.alotus = 0
         self.holdingShift = False
         self.HoldPos = (0, 0)
-
+        self.clicked = False
+        self.mousePos = [0,0]
+        self.matrixPos = [0,0]
+        self.delete = False
         self.Palikat = blockit
 
         self.Läpi_palikat = Läpi_palikat
@@ -57,7 +61,7 @@ class Render:
 
         self.tyyppi = self.Palikat
 
-        self.orb_group = pygame.sprite.Group()
+        self.drawnTiles = pygame.sprite.Group()
         self.tiles = pygame.sprite.Group()
         self.setup_level(self.level)
 
@@ -86,9 +90,58 @@ class Render:
                             x, y, kuva[col][0][0], self.display_surface, kuva[col][1][0], True, True)
 
     def lisää_kuva(self, a, b, kuva, näyttö, kansio, kansio2, enemy):
-        self.tile = Palikka((a+self.world_shift_xx, b+self.world_shift_yy), self.maxRuudut,
+        tile = Palikka((a+self.world_shift_xx, b+self.world_shift_yy), self.maxRuudut,
                             kuva, näyttö, self.maxRuudut, self.width, self.height, kansio, kansio2, enemy)
-        self.tiles.add(self.tile)
+        self.tiles.add(tile)
+
+    def lisää_kuva2(self, a, b, kuva, näyttö, kansio, kansio2, enemy):
+        tile = Palikka((a * int(self.width/self.maxRuudut), b * int(self.width/self.maxRuudut)), self.maxRuudut,
+                            kuva, näyttö, self.maxRuudut, self.width, self.height, kansio, kansio2, enemy)
+        self.tiles.add(tile)
+
+
+    def changeImage(self,col,tile):
+        kuvat = [self.Palikat,self.Läpi_palikat,self.animated_objects]
+        for kuva in kuvat:
+            if col not in kuva:
+                continue
+
+
+            if col >= 201 and col <= 400:
+               # self.lisää_kuva(x,y, kuva[col], self.display_surface, "PalikkaKuvat", False, False)
+                tile.setImage("PalikkaKuvat",False,False,kuva[col])
+            elif col <= 200:
+                #self.lisää_kuva(x, y, kuva[col], self.display_surface, "PalikkaKuvat", False, False)
+                tile.setImage("PalikkaKuvat",False,False,kuva[col])
+
+            elif col >= 401 and col not in self.enemies:  # vika on enemies
+                #self.lisää_kuva(x, y, kuva[col][0][0], self.display_surface, kuva[col][1][0], True, False)
+                tile.setImage(kuva[col][1][0],True,False,kuva[col][0][0])
+            elif col in self.enemies:  # enemies
+                #self.lisää_kuva(x, y, kuva[col][0][0], self.display_surface, kuva[col][1][0], True, True)
+                tile.setImage(kuva[col][1][0],True,True,kuva[col][0][0])
+
+    def addNewBlockToGrid(self,col):
+            kuvat = [self.Palikat,self.Läpi_palikat,self.animated_objects]
+            for kuva in kuvat:
+                if col not in kuva:
+                    continue
+
+                if col >= 201 and col <= 400:
+                    self.lisää_kuva2(
+                        self.matrixPos[0],self.matrixPos[1], kuva[col], self.display_surface, "PalikkaKuvat", False, False)
+                    
+                elif col <= 200:
+                    self.lisää_kuva2(
+                        self.matrixPos[0],self.matrixPos[1] , kuva[col], self.display_surface, "PalikkaKuvat", False, False)
+                elif col >= 401 and col not in self.enemies:  # vika on enemies
+                    self.lisää_kuva2(
+                            self.matrixPos[0],self.matrixPos[1], kuva[col][0][0], self.display_surface, kuva[col][1][0], True, False)
+                elif col in self.enemies:  # enemies
+                    self.lisää_kuva2(
+                            self.matrixPos[0],self.matrixPos[1], kuva[col][0][0], self.display_surface, kuva[col][1][0], True, True)
+                
+
 
     def move(self):
         keys = pygame.key.get_pressed()
@@ -142,33 +195,43 @@ class Render:
     def FillArea(self, x, y, delete):
         for Y, X in itertools.product(range(self.HoldPos[1], y), range(self.HoldPos[0], x)):
             if delete:
+                self.clicked = True
                 self.level[Y][X] = 0
             elif self.level[Y][X] != self.currentFrame + self.alotus:
                 self.level[Y][X] = self.currentFrame + self.alotus
-        self.tiles.empty()
-        self.setup_level(self.level)
+            self.addNewBlockToGrid(self.currentFrame + self.alotus)
+        #self.tiles.empty()
+        #self.setup_level(self.level)
 
     def click(self, x, y, delete):
+        self.delete = delete
+        self.mousePos = [x,y]
         grid_x, grid_y = x//int(self.width /
                                 self.maxRuudut), y//int(self.width/self.maxRuudut)
 
         grid_x += self.offset_x
         grid_y += self.offset_y
 
+        self.matrixPos = [grid_x,grid_y]
+
         if self.holdingShift:
             self.FillArea(grid_x, grid_y, delete)
+            self.tiles.empty()
+            self.setup_level(self.level)
             return
         else:
             self.HoldPos = (grid_x, grid_y)
 
         if delete:
+            self.clicked = True
             self.level[grid_y][grid_x] = 0
         elif self.level[grid_y][grid_x] == self.currentFrame + self.alotus:
             return
         else:
             self.level[grid_y][grid_x] = self.currentFrame + self.alotus
-        self.tiles.empty()
-        self.setup_level(self.level)
+            self.addNewBlockToGrid(self.level[grid_y][grid_x])
+        #self.tiles.empty()
+        #self.setup_level(self.level)
 
     def Tallennus(self):
         arr = numpy.array(self.level)
@@ -214,11 +277,59 @@ class Render:
         self.display_surface.blit(self.kuvaa, (0, 736))
 
     def run(self):
-        self.tiles.draw(self.display_surface)
+        self.renderOnlyOnScreen()
         self.tiles.update(self.world_shift_x, self.world_shift_y)
         self.move()
         self.drawGrid()
         self.DrawGUI()
+
+    """
+    Ennen:
+    0.003535747528076172
+    0.0020220279693603516
+    0.0025217533111572266
+    
+    Nyt:
+
+
+    """
+
+    def addNewBlock(self,tile):
+        if not self.click:
+            return
+        
+        
+        if tile.rect.collidepoint(self.mousePos[0], self.mousePos[1]):
+            if self.delete:
+                self.tiles.remove(tile)
+            else:    
+                self.changeImage(self.level[self.matrixPos[1]][self.matrixPos[0]],tile)
+
+        self.clicked = False
+        
+
+
+    def renderOnlyOnScreen(self):
+        #a = time()
+        for tile in self.tiles:
+            self.addNewBlock(tile)
+            if not self.isInScreen((tile.rect.x,tile.rect.y)):
+                continue
+        
+            
+            self.display_surface.blit(tile.image,(tile.rect.x,tile.rect.y))
+        #b = time()
+        #print(b-a)
+
+
+    def isInScreen(self,pos):
+            # 50 luku on sitä varten ettei kulmissa näy tyhjää
+            return (
+                pos[0] >= -50
+                and pos[0] <= self.width+50
+                and pos[1] >= -50
+                and pos[1] <= self.height+50
+        )
 
 
 class Palikka(pygame.sprite.Sprite):
@@ -227,7 +338,11 @@ class Palikka(pygame.sprite.Sprite):
         self.maxRuudut = maxRuudut
         self.width = width
         self.height = height
+        self.setImage(kansio,kansio2,enemy,kuva)
+        näyttö.blit(self.image, (size, size))
+        self.rect = self.image.get_rect(topleft=pos)
 
+    def setImage(self,kansio,kansio2,enemy,kuva):
         if kansio2:
             if enemy:
                 self.image = pygame.image.load(os.path.join(
@@ -235,16 +350,13 @@ class Palikka(pygame.sprite.Sprite):
             else:
                 self.image = pygame.image.load(os.path.join(
                     "Kuvat", "Palikat", "Animoidut_palikat", kansio, kuva)).convert_alpha()
-
         else:
-
             self.image = pygame.image.load(os.path.join(
                 "Kuvat", "Palikat", kansio, kuva)).convert_alpha()
         self.image = pygame.transform.scale(
-            self.image, (int(width/maxRuudut), int(height/maxRuudut)))
-        näyttö.blit(self.image, (size, size))
-        self.rect = self.image.get_rect(topleft=pos)
-
+            self.image, (int(self.width/self.maxRuudut), int(self.height/self.maxRuudut)))
+        
+        
     def update(self, x_shift, y_shift):
         self.rect.x += x_shift
         self.rect.y += y_shift

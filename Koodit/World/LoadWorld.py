@@ -48,7 +48,8 @@ class LoadWorld:
                             405: [["Snakee1.png", "Snakee2.png", "Snakee3.png", "Snakee4.png", "Snakee5.png", "Snakee6.png", "Snakee7.png", "Snakee8.png", "Snakee9.png", "Snakee9.png", ], ["Snake"]],
                             406: [["ZombiNPC1.png", "ZombiNPC1.png", "ZombiNPC2.png", "ZombiNPC2.png", "ZombiNPC2.png", "ZombiNPC3.png", "ZombiNPC3.png", "ZombiNPC3.png", "ZombiNPC4.png", "ZombiNPC4.png"], ["ZombiNPC"]],
                             407: [["Dash1.png", "Dash2.png", "Dash3.png", "Dash4.png", "Dash5.png", "Dash6.png", "Dash7.png", "Dash8.png", "Dash9.png", "Dash10.png", "Dash11.png", "Dash12.png"],
-                                  ["Orb"], 1], 408: [["Bord1.png", "Bord2.png", "Bord3.png", "Bord3.png", "Bord4.png", "Bord5.png", "Bord6.png", "Bord7.png", "Bord8.png"], ["Bord"]], 409: [["FallingRock1.png"], ["FallingRock"]]
+                                  ["Orb"], 1], 408: [["Bord1.png", "Bord2.png", "Bord3.png", "Bord3.png", "Bord4.png", "Bord5.png", "Bord6.png", "Bord7.png", "Bord8.png"], ["Bord"]], 409: [["FallingRock1.png"], ["FallingRock"]],
+                            410: [[f"Water_Waves{i}.png" for i in range(1,18)],["Water_Waves"]]
                             }
 
         ###  VIHOLLISILLE OMA LISTA
@@ -89,15 +90,15 @@ class LoadWorld:
 
     def addEnemy(self, col, x, y, kuva):
         if col == 405:
-            sus = Snake((x, y), self.maxRuudut, True, col,
+            enemy = Snake((x, y), self.maxRuudut, True, col,
                         kuva[col], self.width, self.height, self.display_surface)
         elif col == 408:
-            sus = Bord((x, y), self.maxRuudut, True, col, kuva[col], self.width, self.height, self.display_surface, [
+            enemy = Bord((x, y), self.maxRuudut, True, col, kuva[col], self.width, self.height, self.display_surface, [
                        [4, 0], [0, 4], [-4, 0], [0, -4], [0, -4]])
         else:
-            sus = Enemy((x, y), self.maxRuudut, True, col,
+            enemy = Enemy((x, y), self.maxRuudut, True, col,
                         kuva[col], self.width, self.height, self.display_surface, 0.1)
-        self.enemy_group.add(sus)
+        self.enemy_group.add(enemy)
 
     def getOrbType(self,col, x, y, kuva):
         if col == 401:

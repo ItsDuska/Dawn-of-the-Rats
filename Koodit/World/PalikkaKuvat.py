@@ -12,4 +12,4 @@ Läpi_palikat = {
     201: "RuohoJuttu1.png", 202: "RuohoJuttu2.png", 203: "RuohoJuttu3.png", 204: "RuohoKulma.png", 205: "RuohoKulma2.png",
     206: "RuohoKukka.png", 207: "RuohoKukka2.png", 208: "RuohoKukka3.png", 209: "RuohoKukka4.png", 210: "RuohoKukka5.png", 211: "RuohoKukka6.png",
     212: "TaustaMulta.png", 213: "Pikku_puu1.png", 214: "Pikku_puu2.png", 215: "Puu1.png", 216: "Puu2.png", 217: "Puu3.png", 218: "Puu4.png", 219: "Puu5.png", 220: "Puu6.png",
-    221: "Puu7.png", 222: "Puu8.png", 223: "Spike1.png", 224: "Spike2.png", 225: "Kyltti.png"}
+    221: "Puu7.png", 222: "Puu8.png", 223: "Spike1.png", 224: "Spike2.png", 225: "Kyltti.png",226:"Water.png"}

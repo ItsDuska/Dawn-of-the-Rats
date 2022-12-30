@@ -48,7 +48,8 @@ class Render:
         self.Läpi_palikat = Läpi_palikat
 
         self.animated_objects = {401: [["Orb1.png"], ["Orb"]], 402: [["Plant1.png"], ["Venus_Trap"]], 403: [["FishBoi1.png"], ["FishBoi"]], 404: [["SlimeBoi1.png"], ["SlimeBoi"]],
-                                 405: [["Snakee1.png"], ["Snake"]], 406: [["ZombiNPC1.png"], ["ZombiNPC"]], 407: [["Dash1.png"], ["Orb"]], 408: [["Bord1.png"], ["Bord"]], 409: [["FallingRock1.png"], ["FallingRock"]]
+                                 405: [["Snakee1.png"], ["Snake"]], 406: [["ZombiNPC1.png"], ["ZombiNPC"]], 407: [["Dash1.png"], ["Orb"]], 408: [["Bord1.png"], ["Bord"]], 409: [["FallingRock1.png"], ["FallingRock"]],
+                                 410:[["Water_Waves1.png"],["Water_Waves"]]
                                  }
 
         ##########################

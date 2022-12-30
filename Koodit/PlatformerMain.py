@@ -1,4 +1,4 @@
-from World.Palikat import Palikat
+from World.GameHandler import GameHandler
 from MainMenu.MainMenu import MainMenu
 from os import path
 #from time import time
@@ -46,21 +46,21 @@ class DawnOfTheRats:
             self.Game_loop()
 
     def Game_loop(self):
-        palikat = Palikat(self.maxRuudut, self.width, self.heigth)
-        while palikat.player.hp > 0:
+        gameHandler = GameHandler(self.maxRuudut, self.width, self.heigth)
+        while gameHandler.player.hp > 0:
             #start = time()
             self.clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    palikat.player.hp = 0
+                    gameHandler.player.hp = 0
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if pygame.mouse.get_pressed()[0]:
-                        palikat.player.hyökkäys = not palikat.player.hyökkäys
+                        gameHandler.player.hyökkäys = not gameHandler.player.hyökkäys
                     elif pygame.mouse.get_pressed()[2]:
-                        palikat.klikObejet(pygame.mouse.get_pos())
+                        gameHandler.klikObejet(pygame.mouse.get_pos())
 
             pygame.display.set_caption(str(int(self.clock.get_fps())))   
-            self.run(146, 244, 255, palikat)
+            self.run(146, 244, 255, gameHandler)
            # end = time()
             #print(end-start)
         pygame.mixer.music.fadeout(500)

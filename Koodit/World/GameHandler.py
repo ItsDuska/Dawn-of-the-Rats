@@ -1,14 +1,15 @@
 import pygame
 from random import randint
-from os import listdir, path
+from os import path
 from sys import exit
 from time import time
 from Player.Pelaaja import Pelaaja
 from Visuals.TuliKärpänen import Kärpänen
 from Visuals.Music import Music
 from Utils.Laskut import Distance
-from Entities.Dialogit import Dialog
+from Dialogs.Dialogit import Dialog
 from World.LoadWorld import LoadWorld
+from Dialogs.DialogUtils import DialogUtils
 pygame.mixer.pre_init(44100, -16, 2, 512)
 
 
@@ -23,7 +24,7 @@ def timer(func):
         return timed
 
 
-class Palikat:
+class GameHandler:
     __slots__ = "maxRuudut","display_surface","width","height","rightClick","level","music","taso_num","puhuminen","dialogit","offset","player","talk"
     def __init__(self, maxRuudut, widht, height):
         self.maxRuudut = maxRuudut
@@ -77,18 +78,6 @@ class Palikat:
         if self.talk.StopTalking():
             self.puhuminen = False
 
-    def getDialog(self, id, type):
-        lista = []
-        with open(path.join("dialogit", self.getDialogPath(id, type)), "r") as f:
-            lista.extend(line for line in f if "#" not in line)
-        return lista
-
-    def getDialogPath(self, id, type):
-        tyyppi = "Fish" if type == 403 else "Sign"
-        fname = f"L{str(self.taso_num)}{tyyppi}{str(id)}"
-        for file in listdir(path.join('Dialogit')):
-            if fname in file:
-                return file
 
     def klikObejet(self, mouspos):
         self.rightClick = True
@@ -102,8 +91,8 @@ class Palikat:
                 and sprite.updateObject 
             ):
                 self.puhuminen = True
-                self.talk = Dialog(self.display_surface, sprite, self.getDialog(
-                    sprite.id, sprite.type), self.width, self.height)
+                self.talk = Dialog(self.display_surface, sprite, DialogUtils.getDialog(
+                    sprite.id, sprite.type,self.taso_num), self.width, self.height)
       
    # @timer
     def updateAll(self):

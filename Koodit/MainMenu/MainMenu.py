@@ -7,34 +7,34 @@ from Visuals.Music import Music
 
 
 class MainMenu:
-    __slots__ = "screen","width","height","napit","texts","taustat","rats","tausta","rat","Title","musiikki","click","päällä","hidden","credits_text","sus","button"
+    __slots__ = "screen","width","height","buttons","texts","backgrounds","rats","background","rat","Title","music","click","isWindowOn","hidden","credits_text","amogusSound","button"
     def __init__(self, screen, w, h) -> None:
         self.screen = screen
         self.width = w
         self.height = h
-        self.napit = []
+        self.buttons = []
         self.texts = ["Play", "Credits", "Quit"]
-        self.TeeNapit(3)
-        self.taustat = ["Tausta1.png", "Tausta2.png", "Tausta3.png",
+        self.createButtons(3)
+        self.backgrounds = ["Tausta1.png", "Tausta2.png", "Tausta3.png",
                         "Tausta3.png", "Tausta4.png", "Tausta5.png"]
         self.rats = [f"rat-spinning{str(num)}.png" for num in range(1, 46)]
-        self.tausta = Animate((0, 0), self.taustat, "Taustat",
+        self.background = Animate((0, 0), self.backgrounds, "Taustat",
                               screen, (self.width, self.height), 0.03)
         self.rat = Animate((self.width-200, self.height-200),
                            self.rats, "Rat", screen, (200, 200), 0.3)
         self.Title = Text(self.screen, (self.width/4+150, 20),
                           "Dawn of the Rats", 64, (255, 255, 255), self.width, self.height)
-        self.musiikki = Music()
-        self.musiikki.type = 3
+        self.music = Music()
+        self.music.type = 3
         self.click = False
-        self.päällä = True
+        self.isWindowOn = True
         self.hidden = False
-        self.sus = pygame.mixer.Sound(path.join("Musiikit", "Amogus.mp3"))
+        self.amogusSound = pygame.mixer.Sound(path.join("Musiikit", "Amogus.mp3"))
 
         self.credits_text = ["Dawn of the Rats", " ", "Producers", "Game desinger: Minä and Tuke", " ", "lead designer: Minä", " ", "Software Developer: Minä", " ", "Game Programmer: Minä", " ",
                              "Audio Engineer: Tuke", " ", "Game Animator", "Player: Random guy from interweb", "Enemies: Minä and Tuke", "Others: Tuke", " ",
                              "Game Artist", "Blocks: Minä and Tuke", "Enemies: Tuke", "Backgrounds: Minä", " ", "Interpreters and Translators: Äitis", " ", "Game Play Tester: Minä",
-                             " ", "Professional Gamer: Rat", " ", " ", " ", "If you're reading this, you're sus"]
+                             " ", "Professional Gamer: Rat", " ", " ", " ", "If you're reading this, you're amogusSound"]
 
     def credits(self):
         for rivi, teksti in enumerate(reversed(self.credits_text)):
@@ -42,26 +42,26 @@ class MainMenu:
                                teksti, 32, (0, 0, 0), self.width, self.height)
             self.credit_texts.append(self.credit)
 
-    def TeeNapit(self, määrä):
+    def createButtons(self, määrä):
         for x in range(määrä):
             self.button = Button(
                 self.texts[x], (self.width/2-100, 150+x*200), 300, 100, self.screen, (100, 100, 255, 128))
-            self.napit.append(self.button)
+            self.buttons.append(self.button)
 
     def run(self):
-        self.tausta.Animate_stuff()
+        self.background.Animate_stuff()
         self.rat.Animate_stuff()
         if not self.hidden:
-            for sprite in self.napit:
+            for sprite in self.buttons:
                 if sprite.rect.collidepoint(pygame.mouse.get_pos()):
                     sprite.color = (200, 200, 255, 128)
-                    sprite.kohdalla()
+                    sprite.mouseOnButton()
                     if self.click:
                         self.click = False
-                        self.katso_nappi(sprite)
+                        self.checkButton(sprite)
                 else:
                     sprite.color = (100, 100, 255, 128)
-                    sprite.kohdalla()
+                    sprite.mouseOnButton()
 
                 self.screen.blit(sprite.button, sprite.pos)
                 sprite.tekstikohta.update()
@@ -69,7 +69,7 @@ class MainMenu:
         if self.hidden:
             for teksti in self.credit_texts:
                 teksti.update()
-                teksti.liiku()
+                teksti.moveEndCredits()
             if self.credit_texts[0].pos_y >= 780:
                 self.hidden = False
                 self.credit_texts = []
@@ -81,9 +81,9 @@ class MainMenu:
             pygame.mixer.music.set_volume(0.1)
             pygame.mixer.music.play()
 
-        self.musiikki.Play_music(False)
+        self.music.playMusic(False)
 
-    def katso_nappi(self, sprite):
+    def checkButton(self, sprite):
         if sprite.text == "Play":
             self.activateButton()
         elif sprite.text == "Quit":
@@ -97,38 +97,38 @@ class MainMenu:
 
     def activateButton(self):
         pygame.mixer.music.fadeout(500)
-        self.sus.play()
-        self.sus.set_volume(0.1)
-        self.päällä = False
+        self.amogusSound.play()
+        self.amogusSound.set_volume(0.1)
+        self.isWindowOn = False
 
 
 class Animate:
-    __slots__ = "currentFrame","pos","kuvat","folder","screen","koko","time","image","rect"
-    def __init__(self, pos, kuvat, folder, screen, koko, time) -> None:
+    __slots__ = "currentFrame","pos","images","folder","screen","size","time","image","rect"
+    def __init__(self, pos, images, folder, screen, size, time) -> None:
         self.currentFrame = 0
         self.pos = pos
-        self.kuvat = kuvat
+        self.images = images
         self.folder = folder
         self.screen = screen
-        self.koko = koko
+        self.size = size
         self.time = time
 
     def Animate_stuff(self):
         self.currentFrame += self.time
-        if self.currentFrame >= len(self.kuvat):
+        if self.currentFrame >= len(self.images):
             self.currentFrame = 0
         self.image = pygame.image.load(path.join(
-            "Kuvat", "MainMenuStuff", self.folder, self.kuvat[int(self.currentFrame)])).convert_alpha()
+            "Kuvat", "MainMenuStuff", self.folder, self.images[int(self.currentFrame)])).convert_alpha()
         self.image = pygame.transform.scale(
-            self.image, (self.koko[0], self.koko[1]))
+            self.image, (self.size[0], self.size[1]))
         self.screen.blit(self.image, self.pos)
         self.rect = self.image.get_rect(topleft=self.pos)
 
 
 class Button:
-    __slots__ = "näyttö","text","pos","width","height","color","button","rect","tekstikohta"
-    def __init__(self, text, pos, width, height, näyttö, color) -> None:
-        self.näyttö = näyttö
+    __slots__ = "screen","text","pos","width","height","color","button","rect","tekstikohta"
+    def __init__(self, text, pos, width, height, screen, color) -> None:
+        self.screen = screen
         self.text = text
         self.pos = pos
         self.width = width
@@ -138,10 +138,10 @@ class Button:
         self.button = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         self.button.fill(self.color)
         pygame.draw.rect(self.button, (255, 255, 255, 200),(0, 0, self.width, self.height), 1)
-        näyttö.blit(self.button, (0, 0))
+        screen.blit(self.button, (0, 0))
         self.rect = self.button.get_rect(topleft=pos)
-        self.tekstikohta = Text(self.näyttö, (self.rect.x+5, self.rect.y-50), self.text, 64, (255, 255, 255), self.width, self.height)
+        self.tekstikohta = Text(self.screen, (self.rect.x+5, self.rect.y-50), self.text, 64, (255, 255, 255), self.width, self.height)
 
-    def kohdalla(self):
+    def mouseOnButton(self):
         self.button.fill(self.color)
         pygame.draw.rect(self.button, (255, 255, 255, 200), (0, 0, self.width, self.height), 1)

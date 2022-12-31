@@ -1,33 +1,33 @@
 from Entities.Enemies.Enemy import Enemy
 
 class Bord(Enemy):
-    __slots__ = "suunnat", "currentMovement", "movingSpeed", "movingSpeed", "kokopalikka", "startPos"
+    __slots__ = "directions", "currentMovement", "movingSpeed", "movingSpeed", "blockSize", "startPos"
 
-    def __init__(self, pos, maxRuudut, animate, col, kuva, width, height, display_surface, suunnat) -> None:
-        super().__init__(pos, maxRuudut, animate, col,
-                         kuva, width, height, display_surface, 0.2)
-        self.suunnat = suunnat  # lista vector2 arvoja
+    def __init__(self, pos, maxTiles, animate, col, images, width, height, display_surface, directions) -> None:
+        super().__init__(pos, maxTiles, animate, col,
+                         images, width, height, display_surface, 0.2)
+        self.directions = directions  # lista vector2 arvoja
         self.currentMovement = 0
         self.movingSpeed = 1
-        self.kokopalikka = [(self.width/self.maxRuudut),
-                            (self.height/self.maxRuudut)]
+        self.blockSize = [(self.width/self.maxTiles),
+                            (self.height/self.maxTiles)]
         self.startPos = self.rect.x, self.rect.y
 
     def Moving(self):
-        if self.suunnat[self.currentMovement][0] < 0:
+        if self.directions[self.currentMovement][0] < 0:
             self.rect.x -= self.movingSpeed
-            self.vasemmalle = False
-        elif self.suunnat[self.currentMovement][0] > 0:
+            self.facingLeft = False
+        elif self.directions[self.currentMovement][0] > 0:
             self.rect.x += self.movingSpeed
-            self.vasemmalle = True
+            self.facingLeft = True
 
-        if self.suunnat[self.currentMovement][1] < 0:
+        if self.directions[self.currentMovement][1] < 0:
             self.rect.y -= self.movingSpeed
-        elif self.suunnat[self.currentMovement][1] > 0:
+        elif self.directions[self.currentMovement][1] > 0:
             self.rect.y += self.movingSpeed
 
-        if self.startPos[0] + (self.suunnat[self.currentMovement][0]*int(self.kokopalikka[0])) == self.rect.x and self.startPos[1] + (self.suunnat[self.currentMovement][1]*int(self.kokopalikka[1])) == self.rect.y:
+        if self.startPos[0] + (self.directions[self.currentMovement][0]*int(self.blockSize[0])) == self.rect.x and self.startPos[1] + (self.directions[self.currentMovement][1]*int(self.blockSize[1])) == self.rect.y:
             self.currentMovement += 1
             self.startPos = self.rect.x, self.rect.y
-            if self.currentMovement == len(self.suunnat)-1:
+            if self.currentMovement == len(self.directions)-1:
                 self.currentMovement = 0

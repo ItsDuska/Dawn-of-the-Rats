@@ -4,24 +4,24 @@ pygame.font.init()
 
 
 class Text:
-    __slots__ = "fontti", "näyttö", "width", "height", "text", "pos_x", "pos_y", "color"
+    __slots__ = "font", "screen", "width", "height", "text", "pos_x", "pos_y", "color"
 
-    def __init__(self, näyttö, pos, text, koko, color, w, h) -> None:
-        self.fontti = pygame.font.Font(path.join("yoster.ttf"), koko)
-        self.näyttö = näyttö
-        self.width = w
-        self.height = h
+    def __init__(self, screen, pos, text, size, color, width, height) -> None:
+        self.font = pygame.font.Font(path.join("yoster.ttf"), size)
+        self.screen = screen
+        self.width = width
+        self.height = height
         self.text = text
         self.pos_x = pos[0]
         self.pos_y = pos[1]
         self.color = color
-        self.blit_text(self.text, (pos[0], pos[1]), self.fontti, self.color)
+        self.blit_text(self.text, (pos[0], pos[1]), self.font, self.color)
 
     def update(self):
         self.blit_text(self.text, (self.pos_x, self.pos_y),
-                       self.fontti, self.color)
+                       self.font, self.color)
 
-    def liiku(self):
+    def moveEndCredits(self):
         self.pos_y += 0.7  # 0.4
 
     def blit_text(self, text, pos, font, color=pygame.Color('black')):
@@ -36,7 +36,7 @@ class Text:
                 if x + word_width >= max_width:
                     x = pos[0]
                     y += word_height
-                self.näyttö.blit(word_surface, (x, y))
+                self.screen.blit(word_surface, (x, y))
                 x += word_width + space
             x = pos[0]
             y += word_height

@@ -28,7 +28,7 @@ class DawnOfTheRats:
 
     def Main_Menu(self):
         menu = MainMenu(self.window, self.width, self.heigth)
-        while menu.päällä:
+        while menu.isWindowOn:
             self.clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -45,7 +45,7 @@ class DawnOfTheRats:
         else:
             self.Game_loop()
 
-    def Game_loop(self):
+    def Game_loop(self):           
         gameHandler = GameHandler(self.maxRuudut, self.width, self.heigth)
         while gameHandler.player.hp > 0:
             #start = time()

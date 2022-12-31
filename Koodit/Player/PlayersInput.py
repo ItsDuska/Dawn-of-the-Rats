@@ -1,13 +1,13 @@
 from pygame import key, K_SPACE, K_m, K_d, K_a, K_s, K_w,Vector2
 
 class PlayersInput:
-    __slots__ = "direction","alas","vasen","oikea","ylös","jump_on_air","gravity","jump_speed","speed","mute"
+    __slots__ = "direction","down","left","right","up","jump_on_air","gravity","jump_speed","speed","mute"
     def __init__(self) -> None:
         self.direction = Vector2()
-        self.alas = False
-        self.vasen = False
-        self.oikea = False
-        self.ylös = False
+        self.down = False
+        self.left = False
+        self.right = False
+        self.up = False
         self.jump_on_air = False
         self.gravity = 0.9
         self.jump_speed = 16
@@ -30,24 +30,24 @@ class PlayersInput:
 
     def movement(self, keys):
         if keys[K_d]:
-            self.vasen = True
+            self.left = True
             self.direction.x = 1
         elif keys[K_a]:
             self.direction.x = -1
-            self.oikea = True
+            self.right = True
         elif keys[K_s]:
-            self.alas = True
+            self.down = True
         elif keys[K_w]:
-            self.ylös = True
+            self.up = True
         else:
             self.resetVelocity()
 
     def resetVelocity(self):
         self.direction.x = 0
-        self.alas = False
-        self.vasen = False
-        self.oikea = False
-        self.ylös = False
+        self.down = False
+        self.left = False
+        self.right = False
+        self.up = False
 
     def aplyGravity(self):
         self.direction.y += self.gravity

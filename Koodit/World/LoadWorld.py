@@ -12,20 +12,20 @@ from Entities.Orbs.JumpOrb import JumpOrb
 
 
 class LoadWorld:
-    __slots__ = "display_surface", "width","height","maxRuudut","tasoDir","num","PASSABLE_BLOCKS","ENEMIES","ORBS","enemy_group","orb_group","kärpäs_group","visible_sprites","active_sprites","collision_sprites"
-    def __init__(self, level, width, height, maxRuudut) -> None:
+    __slots__ = "display_surface", "width","height","maxTiles","levelDirection","num","PASSABLE_BLOCKS","ENEMIES","ORBS","enemy_group","orb_group","kärpäs_group","visible_sprites","active_sprites","collision_sprites"
+    def __init__(self, level, width, height, maxTiles) -> None:
         self.display_surface = pygame.display.get_surface()
         self.width = width
         self.height = height
-        self.maxRuudut = maxRuudut
-        self.tasoDir = path.join("Tasot", level)
+        self.maxTiles = maxTiles
+        self.levelDirection = path.join("Tasot", level)
         self.num = 0
         self.PASSABLE_BLOCKS = 200
 
         self.ENEMIES = [405, 408, 409]
         self.ORBS = [401,407]
         self.initGroups()
-        self.setup_level(self.Lataa())
+        self.setup_level(self.load())
 
     def initGroups(self):
         self.enemy_group = pygame.sprite.Group()
@@ -35,8 +35,8 @@ class LoadWorld:
         self.active_sprites = pygame.sprite.Group()
         self.collision_sprites = pygame.sprite.Group()
 
-    def Lataa(self):
-        with open(self.tasoDir, "r") as file:
+    def load(self):
+        with open(self.levelDirection, "r") as file:
             return [[int(digit) for digit in line.split()] for line in file]
 
     def setup_level(self, tasoData):
@@ -57,22 +57,22 @@ class LoadWorld:
         ### animated OBJECTEILLE OMA LISTA
 
        
-        self.generation_loop(tasoData, blockit)
-        self.generation_loop(tasoData, Läpi_palikat)
-        self.generation_loop(tasoData, animated_objects)
+        self.generationLoop(tasoData, blockit)
+        self.generationLoop(tasoData, Läpi_palikat)
+        self.generationLoop(tasoData, animated_objects)
 
-    def generation_loop(self, tasoData, kuvat):
+    def generationLoop(self, tasoData, kuvat):
         for row_index, row in enumerate(tasoData):
             for col_index, col in enumerate(row):
-                x = col_index * int(self.width/self.maxRuudut)
-                y = row_index * int(self.height/self.maxRuudut)
+                x = col_index * int(self.width/self.maxTiles)
+                y = row_index * int(self.height/self.maxTiles)
                 if col not in kuvat:
                     continue
                 if col > self.PASSABLE_BLOCKS and col <= 400:
-                    self.lisää_kuva(
+                    self.addImage(
                         x, y, kuvat[col], self.display_surface, False, False, col)
                 elif col <= self.PASSABLE_BLOCKS:
-                    self.lisää_kuva(
+                    self.addImage(
                         x, y, kuvat[col], self.display_surface, True, False, col)
                 else:
                     self.getAnimatedType(col, x, y, kuvat)
@@ -85,34 +85,34 @@ class LoadWorld:
             self.getOrbType(col,x,y,kuva)
         else:
             anim_obj = AnimatedObj(
-                (x, y), self.maxRuudut, kuva[col], self.display_surface, self.width, self.height, True, True, col)
+                (x, y), self.maxTiles, kuva[col], self.display_surface, self.width, self.height, True, True, col)
             self.visible_sprites.add(anim_obj)
 
     def addEnemy(self, col, x, y, kuva):
         if col == 405:
-            enemy = Snake((x, y), self.maxRuudut, True, col,
+            enemy = Snake((x, y), self.maxTiles, True, col,
                         kuva[col], self.width, self.height, self.display_surface)
         elif col == 408:
-            enemy = Bord((x, y), self.maxRuudut, True, col, kuva[col], self.width, self.height, self.display_surface, [
+            enemy = Bord((x, y), self.maxTiles, True, col, kuva[col], self.width, self.height, self.display_surface, [
                        [4, 0], [0, 4], [-4, 0], [0, -4], [0, -4]])
         else:
-            enemy = Enemy((x, y), self.maxRuudut, True, col,
+            enemy = Enemy((x, y), self.maxTiles, True, col,
                         kuva[col], self.width, self.height, self.display_surface, 0.1)
         self.enemy_group.add(enemy)
 
     def getOrbType(self,col, x, y, kuva):
         if col == 401:
-            orb = JumpOrb((x, y), self.maxRuudut, kuva[col], self.display_surface, self.width, self.height, True, True, col)
+            orb = JumpOrb((x, y), self.maxTiles, kuva[col], self.display_surface, self.width, self.height, True, True, col)
         elif col == 407:
-            orb = DashOrb((x, y), self.maxRuudut, kuva[col], self.display_surface, self.width, self.height, True, True, col)
+            orb = DashOrb((x, y), self.maxTiles, kuva[col], self.display_surface, self.width, self.height, True, True, col)
         self.visible_sprites.add(orb)
         self.orb_group.add(orb)
 
-    def lisää_kuva(self, a, b, kuva, näyttö, passable, animate, col):
+    def addImage(self, a, b, kuva, näyttö, passable, animate, col):
         if col == 225:
             self.num += 1
-            Palikka((a, b), self.maxRuudut, kuva, näyttö, self.maxRuudut, self.width, self.height, [
+            Palikka((a, b), self.maxTiles, kuva, näyttö, self.maxTiles, self.width, self.height, [
                     self.visible_sprites, self.collision_sprites], passable, animate, col, self.num)
         else:
-            Palikka((a, b), self.maxRuudut, kuva, näyttö, self.maxRuudut, self.width, self.height, [
+            Palikka((a, b), self.maxTiles, kuva, näyttö, self.maxTiles, self.width, self.height, [
                     self.visible_sprites, self.collision_sprites], passable, animate, col)

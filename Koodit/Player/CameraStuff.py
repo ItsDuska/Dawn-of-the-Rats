@@ -51,11 +51,11 @@ class CameraGroup(pygame.sprite.Group):
             sprite.updateObject = True
             self.display_surface.blit(sprite.image, offset_pos)
             if sprite.animate:
-                sprite.Animoi()
+                sprite.animate()
                 #if player.hurtingTime == 0 and not player.hurting:
                    # player.lopetaHurting = False
             if sprite.type in [223, 224, 402]:
-                player.Check_hurting(sprite.rect)
+                player.checkHurting(sprite.rect)
 
 
     def isInScreen(self,pos):

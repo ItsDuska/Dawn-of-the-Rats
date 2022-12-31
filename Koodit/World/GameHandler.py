@@ -4,7 +4,7 @@ from os import path
 from sys import exit
 from time import time
 from Player.Pelaaja import Pelaaja
-from Visuals.TuliKärpänen import Kärpänen
+from Visuals.Particle import Particle
 from Visuals.Music import Music
 from Utils.Laskut import Distance
 from Dialogs.Dialogit import Dialog
@@ -46,7 +46,7 @@ class GameHandler:
             return
         x, y = (randint(0, self.width), randint(0, self.height))
         r = randint(2, 4)
-        f = Kärpänen(x, y, r, [(205, 250, 80),
+        f = Particle(x, y, r, [(205, 250, 80),
                      (160, 150, 50), (50, 50, 50)], 1)
         self.level.kärpäs_group.add(f)
 
@@ -59,20 +59,20 @@ class GameHandler:
     #@timer
     def ObjectTypeChecker(self):
         for enemy in self.level.enemy_group:
-            enemy.Animoi(self.offset)
+            enemy.animate(self.offset)
             if enemy.type == 405:
                 enemy.shoot((self.player.rect.x, self.player.rect.y))
-                enemy.updateAmmusPosAndBlit(self.offset)
-                self.player.Check_hurting(enemy.rectball)
+                enemy.updateBullets(self.offset)
+                self.player.checkHurting(enemy.rectBall)
             if enemy.type == 408:
                 enemy.Moving()
-            self.player.Check_hurting(enemy.rect)
+            self.player.checkHurting(enemy.rect)
         self.checkTalking()
 
     def checkTalking(self):
         if not self.puhuminen:
             return
-        self.talk.tekstikohta.update()
+        self.talk.textPlace.update()
         self.talk.updatee(self.rightClick)
         self.rightClick = False
         if self.talk.StopTalking():
@@ -104,7 +104,7 @@ class GameHandler:
 
     #@timer
     def playMusic(self):
-        self.music.Play_music(self.player.playerInput.mute)
+        self.music.playMusic(self.player.playerInput.mute)
 
     def run(self):
         self.updatePlayer()

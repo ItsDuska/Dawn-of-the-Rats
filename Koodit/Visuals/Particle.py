@@ -2,11 +2,11 @@ import pygame
 from random import randint
 
 
-class Kärpänen(pygame.sprite.Sprite):
+class Particle(pygame.sprite.Sprite):
     __slots__ = "x", "y", "radius", "yvel", "burn_rate", "layers", "glow", "colors", "Yminus", "Xminus", "surf"
 
     def __init__(self, x, y, radius, colors, yvel):
-        super(Kärpänen, self).__init__()
+        super(Particle, self).__init__()
         self.x = x
         self.y = y
         self.radius = radius

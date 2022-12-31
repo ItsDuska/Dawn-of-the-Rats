@@ -5,8 +5,8 @@ from os import path
 
 class DashOrb(Orb):
     __slots__ = "dashTime","MAX_DASH_TIME"
-    def __init__(self, pos, maxRuudut, kuva, näyttö, width, height, kasvi, animate, type) -> None:
-        super().__init__(pos, maxRuudut, kuva, näyttö, width, height, kasvi, animate, type)
+    def __init__(self, pos, maxTiles, image, screen, width, height, isPassable, animate, type) -> None:
+        super().__init__( pos, maxTiles, image, screen, width, height, isPassable, animate, type)
         self.dashTime = 0
         self.MAX_DASH_TIME = 10
         self.color = [(130, 160, 250), (90, 120, 200), (50, 50, 50)]
@@ -50,7 +50,7 @@ class DashOrb(Orb):
             image = pygame.transform.flip(image, True, False)
         return image
 
-    def orbKuva(self,folder ,image):
+    def orbKuva(self, folder ,image):
         return pygame.image.load(path.join("Kuvat", "Pelaaja", folder, image)).convert_alpha()
 
 

@@ -7,7 +7,7 @@ from Visuals.Music import Music
 
 
 class MainMenu:
-    __slots__ = "screen","width","height","buttons","texts","backgrounds","rats","background","rat","Title","music","click","isWindowOn","hidden","credits_text","amogusSound","button"
+    __slots__ = "screen","width","height","buttons","texts","backgrounds","rats","background","rat","Title","music","click","isWindowOn","hidden","credits_text","amogusSound","button","credit","allCredits"
     def __init__(self, screen, w, h) -> None:
         self.screen = screen
         self.width = w
@@ -29,6 +29,7 @@ class MainMenu:
         self.click = False
         self.isWindowOn = True
         self.hidden = False
+        self.allCredits = []
         self.amogusSound = pygame.mixer.Sound(path.join("Musiikit", "Amogus.mp3"))
 
         self.credits_text = ["Dawn of the Rats", " ", "Producers", "Game desinger: Minä and Tuke", " ", "lead designer: Minä", " ", "Software Developer: Minä", " ", "Game Programmer: Minä", " ",
@@ -40,7 +41,7 @@ class MainMenu:
         for rivi, teksti in enumerate(reversed(self.credits_text)):
             self.credit = Text(self.screen, (self.width/3, -1500+50*rivi),
                                teksti, 32, (0, 0, 0), self.width, self.height)
-            self.credit_texts.append(self.credit)
+            self.allCredits.append(self.credit)
 
     def createButtons(self, määrä):
         for x in range(määrä):
@@ -67,12 +68,12 @@ class MainMenu:
                 sprite.tekstikohta.update()
             self.Title.update()
         if self.hidden:
-            for teksti in self.credit_texts:
+            for teksti in self.allCredits:
                 teksti.update()
                 teksti.moveEndCredits()
-            if self.credit_texts[0].pos_y >= 780:
+            if self.allCredits[0].pos_y >= 780:
                 self.hidden = False
-                self.credit_texts = []
+                self.allCredits = []
 
         if self.rat.rect.collidepoint(pygame.mouse.get_pos()) and self.click and pygame.mixer.music.get_busy():
             self.click = False

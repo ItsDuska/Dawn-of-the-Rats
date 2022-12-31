@@ -7,7 +7,7 @@ class Text:
     __slots__ = "font", "screen", "width", "height", "text", "pos_x", "pos_y", "color"
 
     def __init__(self, screen, pos, text, size, color, width, height) -> None:
-        self.font = pygame.font.Font(path.join("yoster.ttf"), size)
+        self.font = pygame.font.Font(path.join("Fonts","yoster.ttf"), size)
         self.screen = screen
         self.width = width
         self.height = height

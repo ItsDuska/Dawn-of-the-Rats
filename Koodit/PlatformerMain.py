@@ -58,6 +58,8 @@ class DawnOfTheRats:
                         gameHandler.player.hyökkäys = not gameHandler.player.hyökkäys
                     elif pygame.mouse.get_pressed()[2]:
                         gameHandler.klikObejet(pygame.mouse.get_pos())
+                if event.type == pygame.KEYUP and event.key == pygame.K_m:
+                    gameHandler.player.playerInput.mute = not gameHandler.player.playerInput.mute
 
             pygame.display.set_caption(str(int(self.clock.get_fps())))   
             self.run(146, 244, 255, gameHandler)

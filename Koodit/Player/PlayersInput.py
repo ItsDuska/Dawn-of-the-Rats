@@ -25,8 +25,8 @@ class PlayersInput:
             if on_floor:
                 self.direction.y = -self.jump_speed
             self.jump_on_air = True
-        if keys[K_m]:
-            self.mute = not self.mute
+        #if keys[K_m]:
+            #self.mute = not self.mute
 
     def movement(self, keys):
         if keys[K_d]:

@@ -13,6 +13,7 @@ class Music:
         self.songDelay = 0
         self.type = 0  # 0 == päivä musiikit, 1 == yö musiikit, 2== boss battle, 3== main menu
         self.song = None
+        #self.firstMute = False
 
     def playMusic(self,mute):
         if mute:

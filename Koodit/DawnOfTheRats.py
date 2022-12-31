@@ -55,7 +55,7 @@ class DawnOfTheRats:
                     gameHandler.player.hp = 0
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if pygame.mouse.get_pressed()[0]:
-                        gameHandler.player.hyökkäys = not gameHandler.player.hyökkäys
+                        gameHandler.player.attacking = not gameHandler.player.attacking
                     elif pygame.mouse.get_pressed()[2]:
                         gameHandler.klikObejet(pygame.mouse.get_pos())
                 if event.type == pygame.KEYUP and event.key == pygame.K_m:

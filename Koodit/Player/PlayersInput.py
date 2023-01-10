@@ -10,8 +10,8 @@ class PlayersInput:
         self.up = False
         self.jump_on_air = False
         self.gravity = 0.9
-        self.jump_speed = 16
-        self.speed = 5
+        self.jump_speed = 14 # 16
+        self.speed = 4  # 5
         #Utils
         self.mute = False
         

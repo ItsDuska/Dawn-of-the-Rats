@@ -2,7 +2,9 @@ import pygame
 from os import path
 from random import choice
 
-
+"""
+Class that can play music or play sound
+"""
 class Music:
     __slots__ = "musics", "songDelay", "type", "song"
 
@@ -16,6 +18,7 @@ class Music:
         #self.firstMute = False
 
     def playMusic(self,mute):
+        return
         if mute:
             pygame.mixer.music.fadeout(50)
             return
@@ -36,3 +39,11 @@ class Music:
         pygame.mixer.music.load(path.join("Musiikit", self.song))
         pygame.mixer.music.set_volume(0.05)
         pygame.mixer.music.play()
+
+
+    def playSound(self,soundPath):
+        print(path.join("Musiikit",soundPath))
+        sound = pygame.mixer.Sound(path.join("Musiikit",soundPath))
+        if pygame.mixer.Sound.get_num_channels(sound) >= 1:
+            return
+        pygame.mixer.Sound.play(sound)

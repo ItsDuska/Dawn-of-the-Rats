@@ -1,22 +1,8 @@
-#include <iostream>
-#include  "SFML/Graphics.hpp" 
+#include "GameManager/Game.h"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Amogus");
-
-    sf::Event event;
-
-    while (window.isOpen()) {
-
-        while (window.pollEvent(event)) {
-
-            if (event.type == sf::Event::Closed) {
-
-                window.close();
-            }
-        }
-    }
-
+    Game game;
+    game.run();
     return 0;
 }

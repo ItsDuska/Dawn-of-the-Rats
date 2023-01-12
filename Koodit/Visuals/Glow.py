@@ -18,8 +18,11 @@ class Glow:
             
     def update(self,screen):
         self.getFlickeringValue()
+        self.surface.fill((0,0,0,0))
+        self.surface.set_alpha(255)
         pygame.draw.circle(self.surface, self.getFlickeringValue(), (self.radius,self.radius), self.radius)
-        screen.blit(self.surface,(-4,-4), special_flags=BLEND_RGB_ADD)
+        screen.blit(self.surface,(0,0), special_flags=BLEND_RGB_ADD)
+        self.surface.set_colorkey((0,0,0))
         if self.x > 100:
             self.x = 0
         self.x += 1

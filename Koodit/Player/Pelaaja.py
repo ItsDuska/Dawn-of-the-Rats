@@ -130,8 +130,9 @@ class Pelaaja(pygame.sprite.Sprite):
             #sprite.AddParticle(self.offSet)
             #sprite.Update_Particle(-self.offSet[0], -self.offSet[1])  
 
-            self.lockMovements = bool(sprite.lockMovement)
-            
+            self.lockMovements = bool(sprite.lockMovement)    
+
+
             if sprite.drawPlayerOrbing:
                 self.image = sprite.dashSprite(self.playerInput.direction.x,self.currentFrame)
 
@@ -143,7 +144,7 @@ class Pelaaja(pygame.sprite.Sprite):
                 and sprite.useOrb == True  # useORb on True jos sitä voi käyttää
             ):
                 sprite.inOrb = True
-            sprite.run(self.playerInput.direction)
+            sprite.run(self.playerInput.direction,self.offSet)
 
     def damage(self):
         if not self.hurting:

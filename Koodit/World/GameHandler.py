@@ -94,10 +94,13 @@ class GameHandler:
                 self.talk = Dialog(self.display_surface, sprite, DialogUtils.getDialog(
                     sprite.id, sprite.type,self.taso_num), self.width, self.height)
       
-   # @timer
+    #@timer
     def updateAll(self):
-        self.level.visible_sprites.custom_draw(self.player) #Piirtää kaikki spritet jotka kuuluu visible sprites grouppiin
-    
+        #for orb in self.level.orb_group:
+           # orb.glow.update(self.display_surface)
+        self.level.visible_sprites.custom_draw(self.player) #Piirtää kaikki spritet jotka kuuluu visible sprites grouppii
+
+
    # @timer
     def updatePlayer(self):
         self.level.active_sprites.update() # Pelaaja. Tää kutsuu sen update functioo

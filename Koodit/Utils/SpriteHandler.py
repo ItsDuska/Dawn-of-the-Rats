@@ -28,7 +28,7 @@ class AnimationHandler(pygame.sprite.Sprite):
         image.blit(self.sheet, (0, 0),
                    ((frame*self.width), 0, self.width, self.height))
         image = pygame.transform.scale(
-            image, (self.width*self.scale, self.height*self.scale))
+            image, self.scale)
         # image.set_colorkey((0, 0, 0))
         return image
 

@@ -1,6 +1,7 @@
 import pygame
 from Visuals.Background import Background
 
+
 class CameraGroup(pygame.sprite.Group):
     __slots__ = "scroll","CAMERA_BORDERS","display_surface","offset","background","WINDOW_SIZE","camera_rect",
     def __init__(self, w, h):

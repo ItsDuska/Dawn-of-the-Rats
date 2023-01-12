@@ -1,15 +1,21 @@
 from World.GameHandler import GameHandler
 from MainMenu.MainMenu import MainMenu
 from os import path
-#from time import time
-import pygame
+from time import time
+import pygame 
 
 
 
-#15.541315079 millisekunttia main loop
+
+#vanha
+
+#0.015118217468261719
+
+
+#0.014493799209594727
 
 class DawnOfTheRats: 
-    __slots__ = "maxRuudut", "width", "heigth", "profile", "window", "clock"
+    __slots__ = "maxRuudut", "width", "heigth", "profile", "window", "clock","test"
 
     def __init__(self) -> None:
         pygame.init()
@@ -24,6 +30,7 @@ class DawnOfTheRats:
         self.window = pygame.display.set_mode((self.width, self.heigth), 0, 16)
         pygame.display.set_icon(icon)
         self.clock = pygame.time.Clock()
+        self.test = 0
         self.Main_Menu()
 
     def Main_Menu(self):
@@ -48,7 +55,7 @@ class DawnOfTheRats:
     def Game_loop(self):           
         gameHandler = GameHandler(self.maxRuudut, self.width, self.heigth)
         while gameHandler.player.hp > 0:
-            #start = time()
+           # start = time()
             self.clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -64,7 +71,11 @@ class DawnOfTheRats:
             pygame.display.set_caption(str(int(self.clock.get_fps())))   
             self.run(146, 244, 255, gameHandler)
            # end = time()
-            #print(end-start)
+           # print(end-start)
+           # self.test +=1
+          #  if self.test == 10:
+              #  break
+            
         pygame.mixer.music.fadeout(500)
         self.Main_Menu()
         

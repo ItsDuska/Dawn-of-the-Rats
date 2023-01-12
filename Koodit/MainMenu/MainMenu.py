@@ -22,7 +22,7 @@ class MainMenu:
                               screen, (self.width, self.height), 0.03)
         self.rat = Animate((self.width-200, self.height-200),
                            self.rats, "Rat", screen, (200, 200), 0.3)
-        self.Title = Text(self.screen, (self.width/4+150, 20),
+        self.Title = Text(self.screen, (self.width/4, self.height/40),
                           "Dawn of the Rats", 64, (255, 255, 255), self.width, self.height)
         self.music = Music()
         self.music.type = 3
@@ -30,7 +30,7 @@ class MainMenu:
         self.isWindowOn = True
         self.hidden = False
         self.allCredits = []
-        self.amogusSound = pygame.mixer.Sound(path.join("Musiikit", "Amogus.mp3"))
+        self.amogusSound = "Amogus.mp3"
 
         self.credits_text = ["Dawn of the Rats", " ", "Producers", "Game desinger: Minä and Tuke", " ", "lead designer: Minä", " ", "Software Developer: Minä", " ", "Game Programmer: Minä", " ",
                              "Audio Engineer: Tuke", " ", "Game Animator", "Player: Random guy from interweb", "Enemies: Minä and Tuke", "Others: Tuke", " ",
@@ -45,8 +45,9 @@ class MainMenu:
 
     def createButtons(self, määrä):
         for x in range(määrä):
+            #print(self.height/4)
             self.button = Button(
-                self.texts[x], (self.width/2-100, 150+x*200), 300, 100, self.screen, (100, 100, 255, 128))
+                self.texts[x], (self.width/4, (self.height/4.5)+x*self.height/5), 300, 100, self.screen, (100, 100, 255, 128))
             self.buttons.append(self.button)
 
     def run(self):
@@ -98,8 +99,7 @@ class MainMenu:
 
     def activateButton(self):
         pygame.mixer.music.fadeout(500)
-        self.amogusSound.play()
-        self.amogusSound.set_volume(0.1)
+        #self.music.playSound(self.amogusSound)
         self.isWindowOn = False
 
 

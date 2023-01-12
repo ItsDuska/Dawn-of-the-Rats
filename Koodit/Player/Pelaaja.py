@@ -43,8 +43,8 @@ class Pelaaja(pygame.sprite.Sprite):
         self.updateObject = True
         
         #self.orbHandler = OrbHandler()
-        self.rect.w += self.rect.w/2
-        self.rect.h += self.rect.h/2
+        #self.rect.w += self.rect.w/2
+        #self.rect.h += self.rect.h/2
         
 
         self.width = self.rect.w

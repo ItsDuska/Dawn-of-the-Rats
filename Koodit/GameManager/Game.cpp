@@ -9,7 +9,14 @@ Game::Game()
 {
 	this->initWindow();
 	auto winSize = this->window->getSize();
-	menu = new MainMenu ((int) winSize.x,(int)winSize.y);
+	menu = new MainMenu ( winSize.x,winSize.y);
+
+	/*
+	["Tausta1.png", "Tausta2.png", "Tausta3.png",
+                        "Tausta3.png", "Tausta4.png", "Tausta5.png"]
+	
+	*/
+
 }
 
 Game::~Game()

@@ -9,7 +9,7 @@ void MainMenu::initBackGround()
 		return;
 	}
 	this->BackGround.setTexture(this->texture);
-	this->BackGround.setScale(this->screenWidht/800, this->screenHeight/800);
+	this->BackGround.setScale((float)this->screenWidht/1000, (float)this->screenHeight/900);
 
 }
 

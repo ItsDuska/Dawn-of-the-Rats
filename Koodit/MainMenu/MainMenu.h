@@ -6,6 +6,7 @@
 class MainMenu
 {
 private:
+	std::string backGroundsNames[5];
 	sf::Texture texture;
 	sf::Sprite BackGround;
 	int screenWidht;

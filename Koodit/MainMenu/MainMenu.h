@@ -6,7 +6,8 @@
 class MainMenu
 {
 private:
-	std::string backGroundsNames[5];
+	std::string backGroundsNames[6] = { "Tausta1.png", "Tausta2.png", "Tausta3.png",
+		"Tausta3.png", "Tausta4.png", "Tausta5.png" };
 	sf::Texture texture;
 	sf::Sprite BackGround;
 	int screenWidht;

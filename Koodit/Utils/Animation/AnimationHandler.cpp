@@ -38,6 +38,6 @@ void AnimationHandler::update()
 	}
 	this->lastFrame = (int)this->currentFrame;
 	this->objectsSprite->setTexture(this->textures[(int)this->currentFrame]);
-	this->objectsSprite->setScale(this->scalingSize);
-	
+	if (this->scalingSize != sf::Vector2f(0, 0))
+		this->objectsSprite->setScale(this->scalingSize);	
 }

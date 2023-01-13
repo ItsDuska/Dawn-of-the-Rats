@@ -3,6 +3,7 @@
 void Game::initWindow()
 {
 	this->window = new sf::RenderWindow(sf::VideoMode(sf::VideoMode::getDesktopMode()), "AmogusRöpö");
+	this->window->setFramerateLimit(60);
 }
 
 Game::Game()
@@ -30,6 +31,7 @@ void Game::updateSFMLEvents()
 void Game::update()
 {
 	this->updateSFMLEvents();
+	this->menu->update();
 }
 
 void Game::render()
@@ -45,8 +47,14 @@ void Game::render()
 
 void Game::run()
 {
+	//std::chrono::time_point<std::chrono::system_clock> start, end;
 	while (this->window->isOpen()) {
+		//start = std::chrono::system_clock::now();
 		this->update();
 		this->render();
+		//end = std::chrono::system_clock::now();
+
+		//std::chrono::duration<double, std::milli> elapsed = end - start;
+		//std::cout << "Elapsed Time: " << elapsed.count() << "ms" << std::endl;
 	}
 }

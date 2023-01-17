@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "../Utils/Animation/AnimationHandler.h"
-#include "../MainMenu/Buttons/Button.h"
+#include "Buttons/ActionButtons/ExitButton.h"
 
 class MainMenu
 {
@@ -14,7 +14,8 @@ private:
 	AnimationHandler *backgrounds;
 	AnimationHandler *rats;
 	//Buttons
-	
+	ExitButton* exitButton;
+
 	sf::Vector2f mousePos = {0,0};
 	int screenWidht;
 	int screenHeight;
@@ -22,6 +23,7 @@ private:
 	std::vector<std::string> initRat();
 public:
 	MainMenu(int width, int height);
+	~MainMenu();
 	void update();
 	void render(sf::RenderTarget* window);
 };

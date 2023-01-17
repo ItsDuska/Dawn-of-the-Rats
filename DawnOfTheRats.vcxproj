@@ -19,13 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\ExitButton.cpp" />
+    <ClCompile Include="Koodit\MainMenu\Buttons\MenuButton.cpp" />
     <ClCompile Include="Koodit\Utils\Animation\AnimationHandler.cpp" />
-    <ClCompile Include="Koodit\MainMenu\Button.cpp" />
     <ClCompile Include="Koodit\GameManager\Game.cpp" />
     <ClCompile Include="Koodit\DawnOfTheRats.cpp" />
     <ClCompile Include="Koodit\MainMenu\MainMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Koodit\Font\Font.h" />
+    <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\ExitButton.h" />
+    <ClInclude Include="Koodit\MainMenu\Buttons\MenuButton.h" />
     <ClInclude Include="Koodit\Utils\Animation\AnimationHandler.h" />
     <ClInclude Include="Koodit\MainMenu\Button.h" />
     <ClInclude Include="Koodit\GameManager\Game.h" />
@@ -48,6 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="ToDo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Fonts\yoster.ttf" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

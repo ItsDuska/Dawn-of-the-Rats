@@ -11,7 +11,6 @@ Game::Game()
 	this->initWindow();
 	auto winSize = this->window->getSize();
 	menu = new MainMenu ( winSize.x,winSize.y);
-
 }
 
 Game::~Game()
@@ -37,11 +36,7 @@ void Game::update()
 void Game::render()
 {
 	this->window->clear();
-	
-	//renderaa kaikki kakat tässä välis
 	this->menu->render(window);
-	//this->buttonPlay->render(window);
-
 	this->window->display();
 }
 
@@ -53,7 +48,6 @@ void Game::run()
 		this->update();
 		this->render();
 		//end = std::chrono::system_clock::now();
-
 		//std::chrono::duration<double, std::milli> elapsed = end - start;
 		//std::cout << "Elapsed Time: " << elapsed.count() << "ms" << std::endl;
 	}

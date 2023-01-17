@@ -17,7 +17,7 @@ void AnimationHandler::addTexture(std::string path,std::vector<std::string>fileN
 AnimationHandler::AnimationHandler(std::vector<std::string> fileNames, std::string path,float delay,sf::Sprite *sprite,sf::Vector2f scalingSize)
 {
 	this->scalingSize = scalingSize;
-	this->maxFrames = fileNames.size();
+	this->maxFrames = (float)fileNames.size();
 	this->objectsSprite = sprite;
 	this->delay = delay;
 	this->textures.resize(fileNames.size());

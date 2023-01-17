@@ -27,12 +27,14 @@ MainMenu::MainMenu(int width,int height)
 
 void MainMenu::update()
 {
+	
 	this->backgrounds->update();
 	this->rats->update();
 }
 
 void MainMenu::render(sf::RenderTarget *window)
 {
+	this->mousePos = window->mapPixelToCoords(sf::Mouse::getPosition());
 	window->draw(this->backGround);
 	window->draw(this->rat);
 }

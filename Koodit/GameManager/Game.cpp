@@ -40,7 +40,7 @@ void Game::render()
 	
 	//renderaa kaikki kakat tässä välis
 	this->menu->render(window);
-
+	//this->buttonPlay->render(window);
 
 	this->window->display();
 }

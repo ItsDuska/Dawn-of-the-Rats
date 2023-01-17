@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "../Utils/Animation/AnimationHandler.h"
+#include "../MainMenu/Buttons/Button.h"
 
 class MainMenu
 {
@@ -12,7 +13,9 @@ private:
 	sf::Sprite rat;
 	AnimationHandler *backgrounds;
 	AnimationHandler *rats;
-
+	//Buttons
+	
+	sf::Vector2f mousePos = {0,0};
 	int screenWidht;
 	int screenHeight;
 	void initBackGround();

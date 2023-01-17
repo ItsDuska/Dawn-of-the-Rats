@@ -1,5 +1,7 @@
 #pragma once
-class Button
+class PlayButton
 {
+
+
 };
 

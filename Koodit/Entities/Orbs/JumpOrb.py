@@ -16,5 +16,5 @@ class JumpOrb(Orb):
         self.useOrb = False
 
     def run(self,direction,offset):
-        self.glow.update(self.image)
+        #self.glow.update(self.image)
         self.Orb_Jump(direction)

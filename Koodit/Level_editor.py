@@ -275,7 +275,7 @@ class Render:
                 "Kuvat", "Palikat", "PalikkaKuvat", self.tyyppi[self.currentFrame+self.alotus])).convert_alpha()
 
         self.kuvaa = pygame.transform.scale(self.kuvaa, (64, 64))
-        self.display_surface.blit(self.kuvaa, (0, 736))
+        self.display_surface.blit(self.kuvaa, (0, 636))
 
     def run(self):
         self.renderOnlyOnScreen()

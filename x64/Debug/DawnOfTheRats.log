@@ -1,4 +1,0 @@
-﻿  MainMenu.cpp
-C:\Users\Olli\Documents\KoodiJutut\PythonKämät\Dawn of the Rats\Koodit\MainMenu\MainMenu.cpp(12,69): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Olli\Documents\KoodiJutut\PythonKämät\Dawn of the Rats\Koodit\MainMenu\MainMenu.cpp(12,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  DawnOfTheRats.vcxproj -> C:\Users\Olli\Documents\KoodiJutut\PythonKämät\Dawn of the Rats\x64\Debug\DawnOfTheRats.exe

@@ -19,6 +19,8 @@ Game::~Game()
 	delete this->window;
 }
 
+
+
 void Game::updateSFMLEvents()
 {
 	while (this->window->pollEvent(this->sfEvent)) {

@@ -1,5 +1,5 @@
 #pragma once
-#include "../MenuButton.h"
+#include "../Button.h"
 
 class ExitButton : public Button
 {

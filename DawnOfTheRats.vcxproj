@@ -20,20 +20,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\ExitButton.cpp" />
-    <ClCompile Include="Koodit\MainMenu\Buttons\MenuButton.cpp" />
+    <ClCompile Include="Koodit\MainMenu\Buttons\Button.cpp" />
     <ClCompile Include="Koodit\Utils\Animation\AnimationHandler.cpp" />
     <ClCompile Include="Koodit\GameManager\Game.cpp" />
     <ClCompile Include="Koodit\DawnOfTheRats.cpp" />
     <ClCompile Include="Koodit\MainMenu\MainMenu.cpp" />
+    <ClCompile Include="Koodit\Visuals\Texts\Text.cpp" />
+    <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Koodit\Font\Font.h" />
     <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\ExitButton.h" />
-    <ClInclude Include="Koodit\MainMenu\Buttons\MenuButton.h" />
+    <ClInclude Include="Koodit\MainMenu\Buttons\Button.h" />
     <ClInclude Include="Koodit\Utils\Animation\AnimationHandler.h" />
     <ClInclude Include="Koodit\MainMenu\Button.h" />
     <ClInclude Include="Koodit\GameManager\Game.h" />
     <ClInclude Include="Koodit\MainMenu\MainMenu.h" />
+    <ClInclude Include="Koodit\Visuals\Texts\Text.h" />
+    <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="openal32.dll" />

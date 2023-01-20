@@ -9,6 +9,7 @@ private:
 	sf::RenderWindow* window;
 	sf::Event sfEvent;
 	MainMenu *menu;
+	sf::Clock deltaClock;
 	void initWindow();
 	void updateSFMLEvents();
 	void update();

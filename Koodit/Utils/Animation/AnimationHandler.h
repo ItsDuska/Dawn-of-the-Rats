@@ -2,19 +2,16 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-class AnimationHandler
-{
+class AnimationHandler {
 private:
-	sf::Sprite* objectsSprite;
-	std::vector<sf::Texture> textures;
-	sf::Vector2f scalingSize;
-	unsigned int lastFrame = 0;
-	float currentFrame = 0;
-	float maxFrames;
+	std::vector<sf::IntRect> frames;
+	sf::Vector2i frameResolution;
+	sf::Sprite* sprite;
+	sf::Int8 lastFrame;
+	sf::Int8 TOTAL_FRAMES;
+	float totalProgress;
 	float delay;
-	void addTexture(std::string path, std::vector<std::string>fileNames);
 public:
-	AnimationHandler(std::vector<std::string> fileNames, std::string path, float delay, sf::Sprite *sprite, sf::Vector2f scalingSize);
+	AnimationHandler(sf::Sprite *target,float delay,sf::Vector2i frameResolution, sf::Int8 maxFrames);
 	void update();
 };
-

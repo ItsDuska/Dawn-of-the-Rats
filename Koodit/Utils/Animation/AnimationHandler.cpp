@@ -1,43 +1,27 @@
 #include "AnimationHandler.h"
 
-void AnimationHandler::addTexture(std::string path,std::vector<std::string>fileNames)
+AnimationHandler::AnimationHandler(sf::Sprite *target, float delay, sf::Vector2i frameResolution,sf::Int8 maxFrames)
 {
-	for (int i = 0; i < fileNames.size(); i++) 
-	{
-		std::string filePath = path;
-		filePath.append(fileNames[i]);
-		if (!this->textures[i].loadFromFile(filePath))
-		{
-			std::cout << "ERROR! Can't load file: " << filePath << "\n ";
-			return;
-		}
-	}
-}
-
-AnimationHandler::AnimationHandler(std::vector<std::string> fileNames, std::string path,float delay,sf::Sprite *sprite,sf::Vector2f scalingSize)
-{
-	this->scalingSize = scalingSize;
-	this->maxFrames = (float)fileNames.size();
-	this->objectsSprite = sprite;
+	this->sprite = target;
+	this->totalProgress = 0.0f;
+	this->lastFrame = 0;
+	this->frameResolution = frameResolution;
+	this->TOTAL_FRAMES = maxFrames-1;
 	this->delay = delay;
-	this->textures.resize(fileNames.size());
-	addTexture(path,fileNames);
-
+	sprite->setTextureRect(sf::IntRect(0, 0, this->frameResolution.x, this->frameResolution.y));
 }
 
 void AnimationHandler::update()
 {
-	this->currentFrame += this->delay;
-	if (this->currentFrame >= this->maxFrames)
+	this->totalProgress += this->delay;
+	if (this->totalProgress >= this->TOTAL_FRAMES)
 	{
-		this->currentFrame = 0;
+		this->totalProgress = 0;
 	}
-	if (this->lastFrame == (int)this->currentFrame)
+	if (this->lastFrame == (int)this->totalProgress)
 	{
 		return;
 	}
-	this->lastFrame = (int)this->currentFrame;
-	this->objectsSprite->setTexture(this->textures[(int)this->currentFrame]);
-	if (this->scalingSize != sf::Vector2f(0, 0))
-		this->objectsSprite->setScale(this->scalingSize);	
+	this->lastFrame = (int)this->totalProgress;
+	sprite->setTextureRect(sf::IntRect((int)this->totalProgress * this->frameResolution.x, 0, this->frameResolution.x, this->frameResolution.y));
 }

@@ -10,7 +10,7 @@ Game::Game()
 {
 	this->initWindow();
 	auto winSize = this->window->getSize();
-	menu = new MainMenu ( winSize.x,winSize.y);
+	menu = new MainMenu ((int) winSize.x,(int)winSize.y);
 }
 
 Game::~Game()
@@ -31,6 +31,7 @@ void Game::updateSFMLEvents()
 
 void Game::update()
 {
+	sf::Time deltaTime = deltaClock.restart();
 	this->updateSFMLEvents();
 	this->menu->update();
 }

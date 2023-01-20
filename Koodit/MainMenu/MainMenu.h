@@ -9,6 +9,8 @@ class MainMenu
 private:
 	std::vector<std::string> backGroundsNames = { "Tausta1.png", "Tausta2.png", "Tausta3.png",
 		"Tausta3.png", "Tausta4.png", "Tausta5.png" };
+	sf::Texture bgTexture;
+	sf::Texture ratSheet;
 	sf::Sprite backGround;
 	sf::Sprite rat;
 	AnimationHandler *backgrounds;
@@ -20,7 +22,7 @@ private:
 	int screenWidht;
 	int screenHeight;
 	void initBackGround();
-	std::vector<std::string> initRat();
+	void loadSprites(sf::Texture& texture, sf::Sprite& sprite, std::string path);
 public:
 	MainMenu(int width, int height);
 	~MainMenu();

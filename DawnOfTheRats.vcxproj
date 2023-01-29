@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Koodit\GameManager\ActualGame\ActualGame.cpp" />
+    <ClCompile Include="Koodit\Utils\Assets\AssetManager.cpp" />
     <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\ExitButton.cpp" />
     <ClCompile Include="Koodit\MainMenu\Buttons\Button.cpp" />
     <ClCompile Include="Koodit\Utils\Animation\AnimationHandler.cpp" />
@@ -26,9 +28,13 @@
     <ClCompile Include="Koodit\DawnOfTheRats.cpp" />
     <ClCompile Include="Koodit\MainMenu\MainMenu.cpp" />
     <ClCompile Include="Koodit\Visuals\Texts\Text.cpp" />
+    <ClCompile Include="Koodit\GameManager\States\StateMachine.cpp" />
     <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Koodit\GameManager\ActualGame\ActualGame.h" />
+    <ClInclude Include="Koodit\GameManager\States\State.h" />
+    <ClInclude Include="Koodit\Utils\Assets\AssetManager.h" />
     <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\ExitButton.h" />
     <ClInclude Include="Koodit\MainMenu\Buttons\Button.h" />
     <ClInclude Include="Koodit\Utils\Animation\AnimationHandler.h" />
@@ -36,6 +42,8 @@
     <ClInclude Include="Koodit\GameManager\Game.h" />
     <ClInclude Include="Koodit\MainMenu\MainMenu.h" />
     <ClInclude Include="Koodit\Visuals\Texts\Text.h" />
+    <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.h" />
+    <ClInclude Include="Koodit\GameManager\States\StateMachine.h" />
     <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.h" />
   </ItemGroup>
   <ItemGroup>

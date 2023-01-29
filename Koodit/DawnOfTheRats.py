@@ -36,6 +36,7 @@ class DawnOfTheRats:
     def Main_Menu(self):
         menu = MainMenu(self.window, self.width, self.heigth)
         while menu.isWindowOn:
+           # start = time()
             self.clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -47,6 +48,8 @@ class DawnOfTheRats:
                 ):
                     menu.click = True
             self.run(100, 100, 100, menu)
+            #end = time()
+           # print(end-start)
         if self.profile:
             self.profiling()
         else:

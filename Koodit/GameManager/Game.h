@@ -1,16 +1,20 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "../MainMenu/MainMenu.h"
-//#include <chrono> 
+#include "States/StateMachine.h"
+#include "ActualGame/ActualGame.h"
+#include <chrono> 
 
 class Game
 {
 private:
 	sf::RenderWindow* window;
 	sf::Event sfEvent;
-	MainMenu *menu;
+	StateMachine states;
+	//MainMenu *menu;
 	sf::Clock deltaClock;
 	void initWindow();
+	void changeStates();
 	void updateSFMLEvents();
 	void update();
 	void render();

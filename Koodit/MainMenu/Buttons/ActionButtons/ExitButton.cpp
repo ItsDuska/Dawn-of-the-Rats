@@ -4,7 +4,7 @@ ExitButton::ExitButton(sf::Vector2f position, sf::Vector2f size, sf::Color color
 {
 }
 
-void ExitButton::buttonFunction()
+void ExitButton::buttonFunction(State* state)
 {
 	std::exit(EXIT_FAILURE);
 }

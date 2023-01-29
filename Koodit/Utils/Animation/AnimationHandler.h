@@ -13,5 +13,5 @@ private:
 	float delay;
 public:
 	AnimationHandler(sf::Sprite *target,float delay,sf::Vector2i frameResolution, sf::Int8 maxFrames);
-	void update();
+	void update(float deltaTime);
 };

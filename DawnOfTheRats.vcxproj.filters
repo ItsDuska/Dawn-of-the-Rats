@@ -36,7 +36,16 @@
     <ClCompile Include="Koodit\Visuals\Texts\Text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Koodit\Utils\Assets\AssetManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Koodit\GameManager\States\StateMachine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Koodit\GameManager\ActualGame\ActualGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -63,6 +72,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Koodit\Utils\Assets\AssetManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Koodit\GameManager\States\State.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Koodit\GameManager\States\StateMachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Koodit\GameManager\ActualGame\ActualGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,16 +6,30 @@ void Game::initWindow()
 	this->window->setFramerateLimit(60);
 }
 
+void Game::changeStates()
+{
+	switch (this->states.getActiveState().changeStateTo)
+	{
+	default:
+		break;
+	case 0:
+		return;
+	case 1:
+		this->states.addState((new MainMenu(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height)));
+	case 2:
+		this->states.addState(new ActualGame());
+	}
+}
+
 Game::Game()
 {
 	this->initWindow();
-	auto winSize = this->window->getSize();
-	menu = new MainMenu ((int) winSize.x,(int)winSize.y);
+	this->states.addState((new MainMenu(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height)));
+	//menu = new MainMenu(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height);
 }
 
 Game::~Game()
 {
-	delete this->menu;
 	delete this->window;
 }
 
@@ -33,13 +47,17 @@ void Game::update()
 {
 	sf::Time deltaTime = deltaClock.restart();
 	this->updateSFMLEvents();
-	this->menu->update();
+	this->states.getActiveState().update(deltaTime.asSeconds(),&this->states.getActiveState());
+	this->changeStates();
+	//this->menu->update(deltaTime.asSeconds());
+	
 }
 
 void Game::render()
 {
 	this->window->clear();
-	this->menu->render(window);
+	this->states.getActiveState().render(window);
+	//this->menu->render(window);
 	this->window->display();
 }
 
@@ -48,6 +66,8 @@ void Game::run()
 	//std::chrono::time_point<std::chrono::system_clock> start, end;
 	while (this->window->isOpen()) {
 		//start = std::chrono::system_clock::now();
+		this->states.procssStateChanges();
+
 		this->update();
 		this->render();
 		//end = std::chrono::system_clock::now();

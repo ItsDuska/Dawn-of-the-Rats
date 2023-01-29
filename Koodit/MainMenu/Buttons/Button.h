@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "../../Visuals/Texts/Text.h"
+#include "../../GameManager/States/StateMachine.h"
 #include <iostream>
 
 /*
@@ -18,11 +19,11 @@ private:
 	sf::Color color;
 	Text *text;
 	sf::Int8 getButtonColor(int mainColor, int secondColor);
-	virtual void buttonFunction() = 0;
+	virtual void buttonFunction(State* state) = 0;
 	void initButton(sf::RectangleShape *currentButton, sf::Vector2f position, std::string title, sf::Int8 charSize);
 public:
 	Button(sf::Vector2f position,sf::Vector2f size, sf::Color color, std::string title);
 	~Button();
 	void render(sf::RenderTarget *window);
-	void checkMousePos(sf::Vector2f mousePos);
+	void checkMousePos(sf::Vector2f mousePos, State* state);
 };

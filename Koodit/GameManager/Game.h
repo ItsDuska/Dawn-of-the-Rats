@@ -1,8 +1,7 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include "../MainMenu/MainMenu.h"
 #include "States/StateMachine.h"
-#include "ActualGame/ActualGame.h"
+#include "ActualGame/GameLoop.h"
 #include <chrono> 
 
 class Game

@@ -19,8 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Koodit\GameManager\ActualGame\ActualGame.cpp" />
-    <ClCompile Include="Koodit\Utils\Assets\AssetManager.cpp" />
+    <ClCompile Include="Koodit\GameManager\ActualGame\GameLoop.cpp" />
     <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\ExitButton.cpp" />
     <ClCompile Include="Koodit\MainMenu\Buttons\Button.cpp" />
     <ClCompile Include="Koodit\Utils\Animation\AnimationHandler.cpp" />
@@ -30,9 +29,11 @@
     <ClCompile Include="Koodit\Visuals\Texts\Text.cpp" />
     <ClCompile Include="Koodit\GameManager\States\StateMachine.cpp" />
     <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.cpp" />
+    <ClCompile Include="Koodit\World\Generation\WorldCreator\WorldCreator.cpp" />
+    <ClCompile Include="Koodit\Player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Koodit\GameManager\ActualGame\ActualGame.h" />
+    <ClInclude Include="Koodit\GameManager\ActualGame\GameLoop.h" />
     <ClInclude Include="Koodit\GameManager\States\State.h" />
     <ClInclude Include="Koodit\Utils\Assets\AssetManager.h" />
     <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\ExitButton.h" />
@@ -44,7 +45,8 @@
     <ClInclude Include="Koodit\Visuals\Texts\Text.h" />
     <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.h" />
     <ClInclude Include="Koodit\GameManager\States\StateMachine.h" />
-    <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.h" />
+    <ClInclude Include="Koodit\World\Generation\WorldCreator\WorldCreator.h" />
+    <ClInclude Include="Koodit\Player\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="openal32.dll" />
@@ -60,6 +62,8 @@
     <None Include="sfml-system-d-2.dll" />
     <None Include="sfml-window-2.dll" />
     <None Include="sfml-window-d-2.dll" />
+    <None Include="Shaders\MainMenuShaders\Background.frag" />
+    <None Include="Shaders\MainMenuShaders\Background.vert" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ToDo.txt" />

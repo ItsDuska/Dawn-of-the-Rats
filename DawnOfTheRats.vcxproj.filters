@@ -1,94 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="Koodit\GameManager\ActualGame\GameLoop.cpp" />
+    <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\ExitButton.cpp" />
+    <ClCompile Include="Koodit\MainMenu\Buttons\Button.cpp" />
+    <ClCompile Include="Koodit\Utils\Animation\AnimationHandler.cpp" />
+    <ClCompile Include="Koodit\GameManager\Game.cpp" />
+    <ClCompile Include="Koodit\DawnOfTheRats.cpp" />
+    <ClCompile Include="Koodit\MainMenu\MainMenu.cpp" />
+    <ClCompile Include="Koodit\Visuals\Texts\Text.cpp" />
+    <ClCompile Include="Koodit\GameManager\States\StateMachine.cpp" />
+    <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.cpp" />
+    <ClCompile Include="Koodit\World\Generation\WorldCreator\WorldCreator.cpp" />
+    <ClCompile Include="Koodit\Player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Koodit\DawnOfTheRats.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Koodit\GameManager\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Koodit\MainMenu\MainMenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Koodit\Utils\Animation\AnimationHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Koodit\MainMenu\Buttons\Button.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\ExitButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Koodit\Visuals\Texts\Text.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Koodit\Utils\Assets\AssetManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Koodit\GameManager\States\StateMachine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Koodit\GameManager\ActualGame\ActualGame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClInclude Include="Koodit\GameManager\ActualGame\GameLoop.h" />
+    <ClInclude Include="Koodit\GameManager\States\State.h" />
+    <ClInclude Include="Koodit\Utils\Assets\AssetManager.h" />
+    <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\ExitButton.h" />
+    <ClInclude Include="Koodit\MainMenu\Buttons\Button.h" />
+    <ClInclude Include="Koodit\Utils\Animation\AnimationHandler.h" />
+    <ClInclude Include="Koodit\MainMenu\Button.h" />
+    <ClInclude Include="Koodit\GameManager\Game.h" />
+    <ClInclude Include="Koodit\MainMenu\MainMenu.h" />
+    <ClInclude Include="Koodit\Visuals\Texts\Text.h" />
+    <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.h" />
+    <ClInclude Include="Koodit\GameManager\States\StateMachine.h" />
+    <ClInclude Include="Koodit\World\Generation\WorldCreator\WorldCreator.h" />
+    <ClInclude Include="Koodit\Player\Player.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Koodit\GameManager\Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Koodit\MainMenu\MainMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Koodit\MainMenu\Button.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Koodit\Utils\Animation\AnimationHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Koodit\MainMenu\Buttons\Button.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\ExitButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Koodit\Visuals\Texts\Text.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Koodit\Utils\Assets\AssetManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Koodit\GameManager\States\State.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Koodit\GameManager\States\StateMachine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Koodit\GameManager\ActualGame\ActualGame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <Font Include="Fonts\yoster.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="openal32.dll" />
@@ -104,11 +47,10 @@
     <None Include="sfml-system-d-2.dll" />
     <None Include="sfml-window-2.dll" />
     <None Include="sfml-window-d-2.dll" />
+    <None Include="Shaders\MainMenuShaders\Background.vert" />
+    <None Include="Shaders\MainMenuShaders\Background.frag" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ToDo.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="Fonts\yoster.ttf" />
   </ItemGroup>
 </Project>

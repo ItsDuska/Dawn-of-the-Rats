@@ -33,7 +33,6 @@ sf::Int8 Button::getButtonColor(int mainColor, int secondColor)
 	return (sf::Int8)(mainColor + secondColor) / 2;
 }
 
-// Check if mouse is on the button and change the color
 void Button::checkMousePos(sf::Vector2f mousePos, State* state)
 {
 	if (!this->button->getGlobalBounds().contains(mousePos))
@@ -42,7 +41,6 @@ void Button::checkMousePos(sf::Vector2f mousePos, State* state)
 		return;
 	}
 
-	//klick check here
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		this->buttonFunction(state);
@@ -51,7 +49,7 @@ void Button::checkMousePos(sf::Vector2f mousePos, State* state)
 		getButtonColor(this->color.r,255),
 		getButtonColor(this->color.g, 255),
 		getButtonColor(this->color.b, 255),
-		200)
+		128)
 	);
 }		
 

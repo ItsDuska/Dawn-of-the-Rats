@@ -25,7 +25,6 @@ Game::Game()
 {
 	this->initWindow();
 	this->states.addState((new MainMenu(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height)));
-	//menu = new MainMenu(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height);
 }
 
 Game::~Game()
@@ -33,14 +32,12 @@ Game::~Game()
 	delete this->window;
 }
 
-
-
 void Game::updateSFMLEvents()
 {
 	while (this->window->pollEvent(this->sfEvent)) {
 		if (this->sfEvent.type == sf::Event::Closed)
 			this->window->close();
-	}
+	}	
 }
 
 void Game::update()
@@ -49,29 +46,24 @@ void Game::update()
 	this->updateSFMLEvents();
 	this->states.getActiveState().update(deltaTime.asSeconds(),&this->states.getActiveState());
 	this->changeStates();
-	//this->menu->update(deltaTime.asSeconds());
-	
 }
 
 void Game::render()
 {
 	this->window->clear();
 	this->states.getActiveState().render(window);
-	//this->menu->render(window);
 	this->window->display();
 }
 
 void Game::run()
 {
-	//std::chrono::time_point<std::chrono::system_clock> start, end;
+	std::chrono::time_point<std::chrono::system_clock> start, end;
 	while (this->window->isOpen()) {
 		//start = std::chrono::system_clock::now();
 		this->states.procssStateChanges();
-
 		this->update();
 		this->render();
 		//end = std::chrono::system_clock::now();
-		//std::chrono::duration<double, std::milli> elapsed = end - start;
-		//std::cout << "Elapsed Time: " << elapsed.count() << "ms" << std::endl;
+		//std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << "[microsecs]" << std::endl;
 	}
 }

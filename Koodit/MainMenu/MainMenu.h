@@ -1,5 +1,4 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include <iostream>
 #include "../Utils/Animation/AnimationHandler.h"
 #include "../GameManager/States/StateMachine.h"
@@ -10,13 +9,14 @@
 class MainMenu : public State
 {
 private:
-	std::string backgroundPath = "Kuvat/MainMenuStuff/Taustat/Tausta1.png";
 	std::string ratPath = "Kuvat/MainMenuStuff/Rat/RatSpriteSheet.png";
-	sf::Sprite backGround;
 	sf::Sprite rat;
-	//AnimationHandler *backgrounds;
+	sf::Shader shader;
+	sf::Clock clock;
+	sf::RectangleShape background;
 	AnimationHandler *rats;
-	AssetManager assets;
+	//AssetManager assets;
+
 	//Buttons
 	PlayButton* playButton;
 	ExitButton* exitButton;

@@ -8,6 +8,7 @@
 class ActualGame : public State
 {
     Player player;
+public:
     void init();
     void update(float dt, State* state);
     void render(sf::RenderTarget *window);

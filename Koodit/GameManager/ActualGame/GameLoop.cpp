@@ -2,6 +2,7 @@
 
 void ActualGame::init()
 {
+	this->changeStateTo = 2;
 }
 
 void ActualGame::update(float dt, State* state)

@@ -11,6 +11,7 @@ private:
 	sf::Event sfEvent;
 	StateMachine states;
 	//MainMenu *menu;
+	int currentState;
 	sf::Clock deltaClock;
 	void initWindow();
 	void changeStates();

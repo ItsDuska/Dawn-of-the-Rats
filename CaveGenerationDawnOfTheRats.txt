@@ -1,0 +1,29 @@
+Maailma koostuu listasta chunkkeja, jotka ovat saman kokosia esim 512.
+
+jokainen chunk on joko iso luola tai pieni luola joka yhdistyy isompiin luoliin.
+
+jokainen iso luola luodaan perlin noisen avulla ja se antaa jokaisen palikan kohdalle joko ykkösen tai nollan eli palikka tai ei palikkaa. esim:
+{
+100111
+100011
+110011
+111001
+}
+
+pienet luolat luodaan kahden pisteen avulla eli suora viiva ja siihen päälle sin wave arvoja.
+
+käyttäen listaa joka sisältää 1 tai nollan, valitsemme minkä textuurin laitamme kohtaan. biomeita voidaan käyttää eri palikoille tai random arvoa.
+
+palikoiden päälle pystyy laittamaan toisia palikoita. esim yhdessä palikassa on ruohoa ja lampun jalka.
+
+tutkitut chunkit jotka unloadataan tallennetaan tiedostoon ja ladataan uudelleen sieltä jos pelaaja palaa alueelle.
+
+
+collisioniin vaan pelaajan ympärillä olevat palikat eli grid size ois 3x3
+renderaa vaan näytöllä näkyvät hommat
+
+
+maailma on esim 5x11 chunkkia ja pelaaja alkaa ylhäältä ja yrittää päästä alas
+
+
+

@@ -9,7 +9,7 @@ void Player::inputs()
 		facingLeft = false;
 		keyPressed = true;
 		animationSpeed = 0.125;
-		this->player.move(6, 0);
+		this->direction.x = this->SPEED;
 		this->currentAnimationFrames = this->allAnimationFrames[1];
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
@@ -17,7 +17,7 @@ void Player::inputs()
 		facingLeft = true;
 		keyPressed = true;
 		animationSpeed = 0.125;
-		this->player.move(-6, 0);
+		this->direction.x = -this->SPEED;
 		this->currentAnimationFrames = this->allAnimationFrames[1];
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
@@ -36,6 +36,7 @@ void Player::inputs()
 
 	else if (!keyPressed){
 		animationSpeed = 0.1;
+		this->direction = { 0,0 };
 		this->currentAnimationFrames = this->allAnimationFrames[0];
 	}
 	
@@ -44,18 +45,56 @@ void Player::inputs()
 	this->animationHandler.changeAnimation(this->currentAnimationFrames,animationSpeed);
 }
 
-Player::Player() : animationHandler(&this->player,0.1f, sf::Vector2i(16, 16), 6, 0)
+void Player::accelerationHandler()
 {
+	this->velocity.x += this->acceleration * this->direction.x;
+
+	if (this->velocity.x > 0.f && this->velocity.x > this->maxVelocity)
+	{
+		this->velocity.x = this->maxVelocity;
+	}
+	else if (this->velocity.x < 0.f && this->velocity.x < -this->maxVelocity)
+	{
+		this->velocity.x = -this->maxVelocity;
+	}
+
+	// y velocity hommelit tähä
+}
+
+void Player::decelerationHandler()
+{
+	if (this->velocity.x > 0.f)
+	{
+		this->velocity.x -= this->deceleration;
+		if (this->velocity.x < 0.f) { this->velocity.x = 0.f; }
+	}
+	else if (this->velocity.x < 0.f)
+	{
+		this->velocity.x += this->deceleration;
+		if (this->velocity.x > 0.f) { this->velocity.x = 0.f; }
+	}
+}
+
+Player::Player() : animationHandler(&this->player,0.1f, sf::Vector2i(16, 16), 6, 0)
+{ 
 	AssetManager::loadTexture("Player", "Kuvat/NewSprites/PlayerSheet.png");
 	this->player.setTexture(AssetManager::getTexture("Player"));
 	this->player.scale(8.f, 8.f);
 	this->player.setPosition(400, 400);	
 }
 
+Player::~Player()
+{
+}
+
 void Player::update()
 {
 	this->inputs();
 	this->animationHandler.update(facingLeft);
+	this->accelerationHandler();
+	this->decelerationHandler();
+	this->player.move(this->velocity);
+	
 }
 
 void Player::render(sf::RenderTarget* window)

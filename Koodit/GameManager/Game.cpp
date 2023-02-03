@@ -8,6 +8,7 @@ void Game::initWindow()
 
 void Game::changeStates()
 {
+	if (this->states.getActiveState().changeStateTo == this->currentState) { return; }
 	switch (this->states.getActiveState().changeStateTo)
 	{
 	default:
@@ -19,12 +20,14 @@ void Game::changeStates()
 	case 2:
 		this->states.addState(new ActualGame());
 	}
+	this->currentState = this->states.getActiveState().changeStateTo;
 }
 
 Game::Game()
 {
+	this->currentState = 1;
 	this->initWindow();
-	this->states.addState((new MainMenu(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height)));
+	this->states.addState((new MainMenu(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height)),true);
 }
 
 Game::~Game()
@@ -57,12 +60,13 @@ void Game::render()
 
 void Game::run()
 {
-	std::chrono::time_point<std::chrono::system_clock> start, end;
+	//std::chrono::time_point<std::chrono::system_clock> start, end;
 	while (this->window->isOpen()) {
 		//start = std::chrono::system_clock::now();
 		this->states.procssStateChanges();
 		this->update();
 		this->render();
+		if (this->states.getActiveState().exit) { this->window->close(); }
 		//end = std::chrono::system_clock::now();
 		//std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << "[microsecs]" << std::endl;
 	}

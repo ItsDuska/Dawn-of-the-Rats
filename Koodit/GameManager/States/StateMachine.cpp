@@ -2,10 +2,19 @@
 
 StateMachine::StateMachine()
 {
+	this->_isAdding = NULL;
+	this->_isRemoving = false;
+	this->_isReplacing = NULL;
+	this->_newState = NULL;
 }
 
 StateMachine::~StateMachine()
 {
+	while (!this->_states.empty())
+	{
+		delete this->_states.top();
+		this->_states.pop();
+	}
 }
 
 void StateMachine::addState(State *newState, bool isReplacing)
@@ -24,6 +33,7 @@ void StateMachine::procssStateChanges()
 {
 	if (this->_isRemoving && !this->_states.empty())
 	{
+		delete this->_states.top();
 		this->_states.pop();
 		if (!this->_states.empty())
 		{
@@ -38,6 +48,7 @@ void StateMachine::procssStateChanges()
 		{
 			if (this->_isReplacing)
 			{
+				delete this->_states.top();
 				this->_states.pop();
 			}
 			else

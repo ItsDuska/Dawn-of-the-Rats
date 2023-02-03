@@ -13,6 +13,7 @@ void MainMenu::initBackGround()
 
 MainMenu::MainMenu(int width,int height)
 {
+	this->changeStateTo = 1;
 	this->screenWidht = width;
 	this->screenHeight = height;
 	AssetManager::loadTexture("Rat", this->ratPath);

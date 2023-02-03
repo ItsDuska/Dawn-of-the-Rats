@@ -2,29 +2,29 @@
 
 Button::~Button()
 {
-	delete this->button;
-	delete this->text;
+	
 }
 
 void Button::render(sf::RenderTarget *window)
 {
-	window->draw(*this->button);
-	window->draw(this->text->text);
+	window->draw(this->button);
+	window->draw(this->text.text);
 }
 
-void Button::initButton(sf::RectangleShape *currentButton,sf::Vector2f position, std::string title, sf::Int8 charSize)
+void Button::initButton(sf::Vector2f position)
 {
-	currentButton->setPosition(position);
-	currentButton->setFillColor(color);
-	currentButton->setOutlineColor(sf::Color::White);
-	currentButton->setOutlineThickness(2);
-	this->text = new Text(charSize, title, sf::Vector2f(position.x + position.x / 10, position.y + position.y / 10));
+	this->button.setPosition(position);
+	this->button.setFillColor(color);
+	this->button.setOutlineColor(sf::Color::White);
+	this->button.setOutlineThickness(2);
+	//this->text = new Text(charSize, title, sf::Vector2f(position.x + position.x / 10, position.y + position.y / 10));
 }
 
-Button::Button(sf::Vector2f position, sf::Vector2f size, sf::Color color, std::string title)
+Button::Button(sf::Vector2f position, sf::Vector2f size, sf::Color color, std::string title) 
+	: text(50, title, sf::Vector2f(position.x + position.x / 10, position.y + position.y / 10))
 {
-	this->button = new sf::RectangleShape(size);
-	this->initButton(this->button,position,title,50);
+	this->button.setSize(size);
+	this->initButton(position);
 	this->color = color;
 }
 
@@ -35,9 +35,9 @@ sf::Int8 Button::getButtonColor(int mainColor, int secondColor)
 
 void Button::checkMousePos(sf::Vector2f mousePos, State* state)
 {
-	if (!this->button->getGlobalBounds().contains(mousePos))
+	if (!this->button.getGlobalBounds().contains(mousePos))
 	{
-		this->button->setFillColor(this->color);
+		this->button.setFillColor(this->color);
 		return;
 	}
 
@@ -45,7 +45,7 @@ void Button::checkMousePos(sf::Vector2f mousePos, State* state)
 	{
 		this->buttonFunction(state);
 	}
-	this->button->setFillColor(sf::Color(
+	this->button.setFillColor(sf::Color(
 		getButtonColor(this->color.r,255),
 		getButtonColor(this->color.g, 255),
 		getButtonColor(this->color.b, 255),

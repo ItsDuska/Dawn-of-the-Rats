@@ -9,7 +9,7 @@
 class MainMenu : public State
 {
 private:
-	std::string ratPath = "Kuvat/MainMenuStuff/Rat/RatSpriteSheet.png";
+	const std::string ratPath = "Kuvat/MainMenuStuff/Rat/RatSpriteSheet.png";
 	sf::Sprite rat;
 	sf::Shader shader;
 	sf::Clock clock;

@@ -15,12 +15,12 @@ buttonFunction can be overrited so new types of buttons can be added
 class Button
 {
 private:
-	sf::RectangleShape *button;
+	sf::RectangleShape button;
 	sf::Color color;
-	Text *text;
+	Text text;
 	sf::Int8 getButtonColor(int mainColor, int secondColor);
 	virtual void buttonFunction(State* state) = 0;
-	void initButton(sf::RectangleShape *currentButton, sf::Vector2f position, std::string title, sf::Int8 charSize);
+	void initButton(sf::Vector2f position);
 public:
 	Button(sf::Vector2f position,sf::Vector2f size, sf::Color color, std::string title);
 	~Button();

@@ -13,6 +13,7 @@
     <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.cpp" />
     <ClCompile Include="Koodit\World\Generation\WorldCreator\WorldCreator.cpp" />
     <ClCompile Include="Koodit\Player\Player.cpp" />
+    <ClCompile Include="Koodit\World\Generation\PerlinNoice\PerlineNoise.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Koodit\GameManager\ActualGame\GameLoop.h" />
@@ -29,6 +30,8 @@
     <ClInclude Include="Koodit\GameManager\States\StateMachine.h" />
     <ClInclude Include="Koodit\World\Generation\WorldCreator\WorldCreator.h" />
     <ClInclude Include="Koodit\Player\Player.h" />
+    <ClInclude Include="Koodit\World\Generation\WorldCreator\CaveGenerator.h" />
+    <ClInclude Include="Koodit\World\Generation\PerlinNoice\PerlineNoice.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Fonts\yoster.ttf" />

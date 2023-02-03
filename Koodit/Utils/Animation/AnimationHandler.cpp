@@ -1,5 +1,6 @@
 #include "AnimationHandler.h"
 
+
 AnimationHandler::AnimationHandler(sf::Sprite *target, float delay, sf::Vector2i frameResolution,sf::Int8 maxFrames,sf::Int8 firstFrame)
 {
 	this->sprite = target;

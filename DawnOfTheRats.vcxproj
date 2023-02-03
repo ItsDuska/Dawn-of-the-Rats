@@ -29,6 +29,7 @@
     <ClCompile Include="Koodit\Visuals\Texts\Text.cpp" />
     <ClCompile Include="Koodit\GameManager\States\StateMachine.cpp" />
     <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.cpp" />
+    <ClCompile Include="Koodit\World\Generation\PerlinNoice\PerlineNoise.cpp" />
     <ClCompile Include="Koodit\World\Generation\WorldCreator\WorldCreator.cpp" />
     <ClCompile Include="Koodit\Player\Player.cpp" />
   </ItemGroup>
@@ -45,6 +46,8 @@
     <ClInclude Include="Koodit\Visuals\Texts\Text.h" />
     <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.h" />
     <ClInclude Include="Koodit\GameManager\States\StateMachine.h" />
+    <ClInclude Include="Koodit\World\Generation\PerlinNoice\PerlineNoice.hpp" />
+    <ClInclude Include="Koodit\World\Generation\WorldCreator\CaveGenerator.h" />
     <ClInclude Include="Koodit\World\Generation\WorldCreator\WorldCreator.h" />
     <ClInclude Include="Koodit\Player\Player.h" />
   </ItemGroup>
@@ -147,6 +150,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\Olli\Desktop\C++ kirjastot\SFML-2.5.1\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -181,6 +185,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\Olli\Desktop\C++ kirjastot\SFML-2.5.1\include;C:\Users\olli.sotavalta\Documents\sfmlKansio\SFML-2.5.1\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

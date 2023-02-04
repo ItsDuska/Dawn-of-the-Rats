@@ -3,8 +3,7 @@
 #include "State.h"
 #include <iostream>
 
-//typedef std::unique_ptr<State> StateRef;
-
+//class that handles different states like main menu and the actual game.
 class StateMachine
 {
 public:

@@ -23,7 +23,79 @@ collisioniin vaan pelaajan ympärillä olevat palikat eli grid size ois 3x3
 renderaa vaan näytöllä näkyvät hommat
 
 
+
+TEE SPRITE JOKAISELLE PALIKALLE JOTKA OVAT TARKOITETTU VAIN YKSINÄISELLE PALIKALLE
+
+
 maailma on esim 5x11 chunkkia ja pelaaja alkaa ylhäältä ja yrittää päästä alas
+
+
+spriteSheet Toiminto:
+
+Sprite sheet menee sen mukaan, että jokaiselle eri palikkatyypille (esim ruoho ja kivi) saman suuntaiset palikat on samassa kohtaa mutta y akseli on aina tietyn verran offSettinä.
+Tän avulla koodin puolella voidaan vaan katsoa aluksi, että onko palikka kulma palikka ja sen perusteella saadaan kordinaatit tekstuurissa siihen. 
+Tämän jälkeen katsotaan mikä palikka on kyseessä ja sen perusteella lisätään tekstuurin y kordinaattiin tietty luku esim 6.
+
+Sprite sheetissä textuurit menis näin palikalle:
+1-4 tarkottaa suuntaa esim 1 = vasenylä- ja 4 oikea-alakulma
+suorien palikoiden suunta menee ilmansuuntien mukaan. 
+
+kulma = K
+suora = S
+Tausta = T
+L muotonen pala = L
+yksinäinen palikka on = O
+ a-g.. merkki tarkoittaa saman palikan varient 
+
+Index:
+0,  1,  2,  3,  4,   5,   6,   7,   8,   9,   10, 11, 12, 13, 14, 15, 16, 17, 18, 19
+merkki:
+K1, K2, K3, K4, SNa, SNb, SNc, SSa, SSb, SSc, SW, SE, Ta, Tb, Tc, L1, L2, L3, L4, O
+
+
+jokanen on 1 tai 0
+[0,1,2,3,4,5,6,7]
+
+
+jos naapureissa on vain yks palikka tai jokaisessa kulmassa on yks palikka niin texture on yhdelle palikalle
+
+
+
+
+Spudo Code textuuri valintaa varten:
+
+
+Vector2i tileSize = {x,y};
+Vector2i neighbors[8];
+bool neighborBlocks[8];
+
+for (int index = 0; index < 8; index++) // [0,1], [0,0] lista
+{
+	if (!isInBounds(position + neighbors[index], gridSize)) 
+	{
+		neighborBlocks[index] = true;
+		continue;
+	}
+	neighborBlocks[index] = getCaveBlock(position+neighborBlocks[index]);
+	
+}
+vector2i texCoord = getTexCoord(neighborBlocks);
+createQuad(&quad[posInVertexArray], position, texCoord, tileSize);
+
+//bittien tapaan hankitaan jokainen arvo
+tee skripti pyyttonil ja laita arvot txt tiedostoon ja lue sieltä kaikki järjestykset
+
+
+vector2i getTexCoord(bool neighborBlocks[])
+{
+	
+
+/tää uudelleen koska kulma palat puuttuu (palikoiden sisällä olevat kulmat)
+
+}
+
+
+
 
 
 

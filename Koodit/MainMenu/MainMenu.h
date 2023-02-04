@@ -6,6 +6,8 @@
 #include "Buttons/ActionButtons/ExitButton.h"
 #include "Buttons/ActionButtons/PlayButton.h"
 
+
+//The main menu state.
 class MainMenu : public State
 {
 private:

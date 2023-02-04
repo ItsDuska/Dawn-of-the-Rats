@@ -1,5 +1,6 @@
 #include "StateMachine.h"
 
+//Amogus moment
 StateMachine::StateMachine()
 {
 	this->_isAdding = NULL;
@@ -8,6 +9,7 @@ StateMachine::StateMachine()
 	this->_newState = NULL;
 }
 
+//Delete every state.
 StateMachine::~StateMachine()
 {
 	while (!this->_states.empty())
@@ -17,6 +19,7 @@ StateMachine::~StateMachine()
 	}
 }
 
+//Add a new state.
 void StateMachine::addState(State *newState, bool isReplacing)
 {
 	this->_isAdding = true;
@@ -29,6 +32,7 @@ void StateMachine::removeState()
 	this->_isRemoving = true;
 }
 
+//The actual brain of the States that switches between different states and puts them on different levels on the stack.
 void StateMachine::procssStateChanges()
 {
 	if (this->_isRemoving && !this->_states.empty())
@@ -62,6 +66,7 @@ void StateMachine::procssStateChanges()
 	}
 }
 
+//Get the current state.
 State& StateMachine::getActiveState()
 {
 	return *this->_states.top();

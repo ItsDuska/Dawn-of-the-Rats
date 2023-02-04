@@ -4,6 +4,8 @@
 #include "ActualGame/GameLoop.h"
 #include <chrono> 
 
+
+//The mainGameLoop that handles everything aka the "base class."
 class Game
 {
 private:

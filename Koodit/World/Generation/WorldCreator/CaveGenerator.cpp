@@ -22,7 +22,7 @@ void CaveGeneration::generateCave()
 	}
 }
 
-std::vector<std::vector<bool>>& CaveGeneration::getCave()
+bool CaveGeneration::getCaveBlock(sf::Vector2i position)
 {
-	return this->cave;
+	return this->cave[position.y][position.x];
 }

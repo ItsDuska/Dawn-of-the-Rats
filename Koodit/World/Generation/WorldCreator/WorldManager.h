@@ -1,7 +1,7 @@
 #pragma once
 #include "Chunk.h"
 
-//Handles everything about world generation and stuff.
+//Handles a 2d array of chunks (The whole world)
 class WorldManager
 {
 private:

@@ -1,11 +1,13 @@
 #include "Game.h"
 
+//Create the window.
 void Game::initWindow()
 {
 	this->window = new sf::RenderWindow(sf::VideoMode(sf::VideoMode::getDesktopMode()), "AmogusRöpö");
 	this->window->setFramerateLimit(60);
 }
 
+//Change the state if needed to.
 void Game::changeStates()
 {
 	if (this->states.getActiveState().changeStateTo == this->currentState) { return; }

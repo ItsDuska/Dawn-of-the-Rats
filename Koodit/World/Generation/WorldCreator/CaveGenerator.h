@@ -14,5 +14,5 @@ private:
 	void generateCave();
 public:
 	CaveGeneration(int seed, float threshold, sf::Vector2i gridSize);
-	std::vector < std::vector<bool>>& getCave();
+	bool getCaveBlock(sf::Vector2i position);
 };

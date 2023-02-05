@@ -24,12 +24,11 @@ private:
 	ExitButton* exitButton;
 
 	sf::Vector2f mousePos = {0,0};
-	int screenWidht;
-	int screenHeight;
+	sf::Vector2f screenSize;
 	void initBackGround();
 	
 public:
-	MainMenu(int width, int height);
+	MainMenu(sf::Vector2f screenSize);
 	~MainMenu();
 	void init() {};
 	void update(float dt, State* state);

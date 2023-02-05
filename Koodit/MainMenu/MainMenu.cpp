@@ -3,19 +3,18 @@
 void MainMenu::initBackGround()
 {
 	if (!this->shader.loadFromFile("Shaders/MainMenuShaders/background.vert", "Shaders/MainMenuShaders/background.frag")) {std::cout << "Error while loading shaders!";}
-	this->shader.setUniform("u_resolution", sf::Vector2f(this->screenWidht,this->screenHeight));
+	this->shader.setUniform("u_resolution", this->screenSize);
 	this->rats = new AnimationHandler(&this->rat, 0.1f, sf::Vector2i(32, 32), 18);
-	this->rat.setPosition(sf::Vector2f(this->screenWidht- (int)this->screenWidht/2,this->screenHeight-(int)this->screenHeight/2));
+	this->rat.setPosition(sf::Vector2f(this->screenSize.x - this->screenSize.x / 2.0f, this->screenSize.y - this->screenSize.y / 2.0f ));
 	this->rat.setScale(sf::Vector2f(4, 4));
 	this->clock.restart();
-	this->background.setSize(sf::Vector2f(this->screenWidht, this->screenHeight));
+	this->background.setSize(this->screenSize);
 }
 
-MainMenu::MainMenu(int width,int height)
+MainMenu::MainMenu(sf::Vector2f screenSize)
 {
 	this->changeStateTo = 1;
-	this->screenWidht = width;
-	this->screenHeight = height;
+	this->screenSize = screenSize;
 	AssetManager::loadTexture("Rat", this->ratPath);
 	this->rat.setTexture(AssetManager::getTexture("Rat"));
 	this->initBackGround();

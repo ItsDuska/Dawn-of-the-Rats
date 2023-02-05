@@ -18,7 +18,7 @@ void Game::changeStates()
 	case 0:
 		return;
 	case 1:
-		this->states.addState((new MainMenu(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height)));
+		this->states.addState((new MainMenu(sf::Vector2f((float)sf::VideoMode::getDesktopMode().width, (float)sf::VideoMode::getDesktopMode().height))));
 	case 2:
 		this->states.addState(new ActualGame());
 	}
@@ -29,7 +29,7 @@ Game::Game()
 {
 	this->currentState = 1;
 	this->initWindow();
-	this->states.addState((new MainMenu(sf::VideoMode::getDesktopMode().width, sf::VideoMode::getDesktopMode().height)),true);
+	this->states.addState((new MainMenu(sf::Vector2f( (float) sf::VideoMode::getDesktopMode().width, (float) sf::VideoMode::getDesktopMode().height))),true);
 }
 
 Game::~Game()

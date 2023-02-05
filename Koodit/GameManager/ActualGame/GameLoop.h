@@ -14,6 +14,7 @@ public:
     void init();
     void update(float dt, State* state);
     void render(sf::RenderTarget *window);
+    ActualGame();
     ~ActualGame();
 };
 

@@ -23,19 +23,19 @@ void Player::inputs()
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
 	{
 		keyPressed = true;
-		animationSpeed = 0.07;
+		animationSpeed = 0.07f;
 		this->currentAnimationFrames = this->allAnimationFrames[2];
 	}
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		keyPressed = true;
-		animationSpeed = 0.2;
+		animationSpeed = 0.2f;
 		this->currentAnimationFrames = this->allAnimationFrames[4];
 	}
 
 	else if (!keyPressed){
-		animationSpeed = 0.1;
+		animationSpeed = 0.1f;
 		this->direction = { 0,0 };
 		this->currentAnimationFrames = this->allAnimationFrames[0];
 	}

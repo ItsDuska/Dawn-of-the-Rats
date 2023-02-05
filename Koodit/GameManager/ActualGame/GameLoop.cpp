@@ -4,7 +4,7 @@
 void ActualGame::init()
 {
 	this->changeStateTo = 2;
-	this->chunk = new Chunk(sf::Vector2i(128, 128), 5579, 0.6f, sf::Vector2f(8,8));
+	this->chunk = new Chunk(sf::Vector2i(50, 50), 5579, 0.5f, sf::Vector2f(16,16));
 	AssetManager::loadTexture("Blocks", "Kuvat/NewSprites/Block.png");
 }
 
@@ -19,6 +19,11 @@ void ActualGame::render(sf::RenderTarget* window)
 {
 	this->player.render(window);
 	window->draw(*chunk);
+}
+
+ActualGame::ActualGame()
+{
+	chunk = nullptr;
 }
 
 ActualGame::~ActualGame()

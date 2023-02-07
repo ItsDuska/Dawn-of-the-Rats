@@ -20,7 +20,7 @@ void Game::changeStates()
 	case 1:
 		this->states.addState((new MainMenu(sf::Vector2f((float)sf::VideoMode::getDesktopMode().width, (float)sf::VideoMode::getDesktopMode().height))));
 	case 2:
-		this->states.addState(new ActualGame());
+		this->states.addState(new ActualGame(sf::Vector2f((float)sf::VideoMode::getDesktopMode().width, (float)sf::VideoMode::getDesktopMode().height)));
 	}
 	this->currentState = this->states.getActiveState().changeStateTo;
 }

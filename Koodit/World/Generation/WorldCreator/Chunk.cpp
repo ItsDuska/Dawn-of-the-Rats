@@ -7,7 +7,6 @@ Chunk::Chunk(sf::Vector2i gridSize, int seed, float threshold, sf::Vector2f tile
 	this->chunk.setPrimitiveType(sf::Quads);
 	this->chunk.resize(static_cast<size_t>(gridSize.y) * gridSize.x * 4);
 	thread.launch();
-	//WorldCreator(this->chunk, gridSize, seed, threshold, tileSize);
 }
 
 void Chunk::createChunk()

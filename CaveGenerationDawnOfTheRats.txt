@@ -90,10 +90,12 @@ vector2i getTexCoord(bool neighborBlocks[])
 {
 	
 
-/tää uudelleen koska kulma palat puuttuu (palikoiden sisällä olevat kulmat)
 
 }
 
+katso vain tietyt kulmat eli ne mihin tulee kulmat ja suorat. 
+else:
+texCoord.x = 19
 
 
 

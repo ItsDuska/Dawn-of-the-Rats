@@ -50,7 +50,7 @@ sf::Vector2i WorldCreator::findTexCoord(bool* blocks, sf::Vector2i tileSize)
 		{
 			//std::cout << "yeeT ";
 			//if ((bool)bits[bit * 2] != (char)(blocks & (1 << bit) ? '1' : '0')) {break; }
-			std::cout << (bool)bits[bit * 2] << "  " << blocks[bit] << "\n";
+			//std::cout << (bool)bits[bit * 2] << "  " << blocks[bit] << "\n";
 			if ((bool)bits[bit * 2] != blocks[bit]) { continue; }
 			//Found the texture number!
 
@@ -63,7 +63,7 @@ sf::Vector2i WorldCreator::findTexCoord(bool* blocks, sf::Vector2i tileSize)
 		//std::cout << "\n\n";
 		if (exit) { break; }
 	}
-	std::cout << row << "\n";
+	//std::cout << row << "\n";
 	std::getline(inputfile, output);
 	std::stringstream iss(output);
 	if (output.size() == 0) { output = "6"; }
@@ -90,6 +90,7 @@ WorldCreator::WorldCreator(sf::VertexArray& tileMap, sf::Vector2i gridSize, int 
 	start = std::chrono::system_clock::now();
 
 	CaveGeneration blockMap(seed, threshold, gridSize);
+	std::cout << gridSize.x;
 	sf::Vector2i neighborCellPositons[8] = { {-1,-1}, {0,-1}, {1,-1}, {-1,0}, {1,0}, {-1,1}, {0,1}, {1,1} };
 	for (int y = 0; y < gridSize.y; y++)
 	{
@@ -116,10 +117,11 @@ WorldCreator::WorldCreator(sf::VertexArray& tileMap, sf::Vector2i gridSize, int 
 				//neighborBlocks ^= (1u << index);
 				
 			}
+			std::cout << x << "\n";
 			//std::cout << (unsigned int)neighborBlocks << "\n ";
 			sf::Vector2i texCoord = this->findTexCoord(neighborBlocks,sf::Vector2i((int)tileSize.x,(int)tileSize.y));
-			sf::Vertex *quad = &tileMap[(y + static_cast<size_t>(x) * gridSize.x)*4];
-			this->createQuad(quad,sf::Vector2f((float)x, (float)y), texCoord, tileSize);
+			sf::Vertex *quad = &tileMap[(x + (static_cast<size_t>(y) * gridSize.x))*4];
+			this->createQuad(quad,sf::Vector2f((float)y, (float)x), texCoord, tileSize);
 		}
 	}
 

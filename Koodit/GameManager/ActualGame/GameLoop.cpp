@@ -4,10 +4,10 @@
 void ActualGame::init()
 {
 	this->changeStateTo = 2;
-	sf::Vector2i chunkSize = {(int) windowSize.x / 16, (int) windowSize.y / 16 };
-	std::cout << chunkSize.x << " " << chunkSize.y << "\n";
-	this->chunk = new Chunk(chunkSize, 1579, 0.5f, sf::Vector2f(16,16));
-	AssetManager::loadTexture("Blocks", "Kuvat/NewSprites/Block.png");
+	const int8_t BLOCK_SIZE = 32;
+	sf::Vector2i chunkSize = {(int) windowSize.x / BLOCK_SIZE, (int) windowSize.y / BLOCK_SIZE };
+	this->chunk = new Chunk(chunkSize, 9631, 0.45f, sf::Vector2f(BLOCK_SIZE,BLOCK_SIZE));
+		AssetManager::loadTexture("Blocks", "Kuvat/NewSprites/Block.png");
 }
 
 //update function for the game loop.

@@ -2,6 +2,7 @@
 # include <iostream>
 # include "../PerlinNoice/PerlineNoice.hpp"
 # include <SFML/System/Vector2.hpp>
+#include <SFML/System/Vector2.hpp>
 
 // generates a 2d array of zeros and ones. one is a block and zero is nothing.
 class CaveGeneration
@@ -13,6 +14,7 @@ private:
 	PerlinNoise perlinNoice;
 	void generateCave();
 public:
+	~CaveGeneration();
 	CaveGeneration(int seed, float threshold, sf::Vector2i gridSize);
 	bool getCaveBlock(sf::Vector2i position);
 };

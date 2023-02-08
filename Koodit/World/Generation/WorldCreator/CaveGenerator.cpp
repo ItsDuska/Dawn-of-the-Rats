@@ -1,5 +1,9 @@
 #include "CaveGenerator.h"
 
+CaveGeneration::~CaveGeneration()
+{
+}
+
 CaveGeneration::CaveGeneration(int seed, float threshold, sf::Vector2i gridSize)
 	:perlinNoice(seed)
 {

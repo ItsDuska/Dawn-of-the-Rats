@@ -17,10 +17,10 @@ void WorldCreator::createQuad(sf::Vertex *quad, sf::Vector2f position, sf::Vecto
 	quad[2].position = sf::Vector2f(((float)position.y + 1 ) * tileSize.x, ((float)position.x + 1) * tileSize.y);
 	quad[3].position = sf::Vector2f((float)position.y * tileSize.x, ((float)position.x + 1) * tileSize.y);
 
-	quad[0].texCoords = sf::Vector2f(texCoord.x * sizeInTexture, 0 * texCoord.y);
-	quad[1].texCoords = sf::Vector2f((texCoord.x +1) * sizeInTexture, 0 * texCoord.y);
-	quad[2].texCoords = sf::Vector2f((texCoord.x +1) * sizeInTexture,  texCoord.y);
-	quad[3].texCoords = sf::Vector2f(texCoord.x * sizeInTexture,  texCoord.y);
+	quad[0].texCoords = sf::Vector2f((float)texCoord.x * sizeInTexture, 0 * (float)texCoord.y);
+	quad[1].texCoords = sf::Vector2f(((float)texCoord.x +1) * sizeInTexture, 0 * (float)texCoord.y);
+	quad[2].texCoords = sf::Vector2f(((float)texCoord.x +1) * sizeInTexture,  (float)texCoord.y);
+	quad[3].texCoords = sf::Vector2f((float)texCoord.x * sizeInTexture,  (float)texCoord.y);
 }
 
 void WorldCreator::removeSpace(std::string& text)
@@ -30,32 +30,25 @@ void WorldCreator::removeSpace(std::string& text)
 
 sf::Vector2i WorldCreator::findTexCoord(bool* blocks, sf::Vector2i tileSize)
 {
+	return sf::Vector2i(19, 16);
 	std::vector<int8_t> possibleOutComes;
 	std::string output, bits;
 	std::ifstream inputfile("Koodit/World/Generation/WorldCreator/MatrixThings.txt");
 	bool exit = false;
-	//std::cout << "\nuus hommeli\n";
-	//for (int8_t bitt = sizeof(blocks) * CHAR_BIT - 1; bitt >= 0; --bitt) { std::cout << (blocks & (1 << bitt) ? '1' : '0') << " "; }
-	//std::cout << "\n\n\n";
 	if (!inputfile.is_open())
 	{
 		std::cout << "Error opening file";
 	}
-	int row = -1;
+	//int row = -1;
 	while (std::getline(inputfile, bits))
 	{
-		row += 1;
+		//row += 1;
+		
 		if (bits.size() != 15) { continue; }
-		for (int8_t bit = 0; bit < 7; bit++)
+		for (int bit = 0; bit < 7; bit++)
 		{
-			//std::cout << "yeeT ";
-			//if ((bool)bits[bit * 2] != (char)(blocks & (1 << bit) ? '1' : '0')) {break; }
-			//std::cout << (bool)bits[bit * 2] << "  " << blocks[bit] << "\n";
-			if ((bool)bits[bit * 2] != blocks[bit]) { continue; }
+			if ((bool)bits[static_cast<std::basic_string<char, std::char_traits<char>, std::allocator<char>>::size_type>(bit) * 2] != blocks[bit]) { continue; }
 			//Found the texture number!
-
-			//std::cout << "\nTexFile bits, row" << row << "\n" << bits << "\n";
-			//std::cout << "\nFOUND MATCHING BITS!\n";
 			exit = true;
 			break;
 
@@ -81,6 +74,52 @@ sf::Vector2i WorldCreator::findTexCoord(bool* blocks, sf::Vector2i tileSize)
 	//xValue = 5;
 	//return sf::Vector2i(xValue % (320 / tileSize.x), xValue / (320 / tileSize.y));
 	return sf::Vector2i(xValue, 16);
+}
+
+sf::Vector2i WorldCreator::getTexCoord(bool* blocks)
+{
+	std::vector<std::vector<bool>> possiblities
+	{
+		//  0
+		{0,0,0,
+		0, 1,
+		0,1,1}, 
+
+		{0,0,1, 
+		0, 1, 
+		0,1,1},
+
+		{0,0,1,
+		0, 1,
+		1,1,1},
+
+		// 1
+		{0,0,0,
+		1, 0,
+		1,1,0},
+
+		{1,0,0,
+		1, 0,
+		1,1,0},
+
+		{1,0,0,
+		1, 0,
+		1,1,1},
+
+		//2
+
+
+	};
+	switch (*blocks)
+	{
+	default:
+		break;
+	case 1:
+		return sf::Vector2i(19, 0);
+	}
+
+
+	return sf::Vector2i();
 }
 
 //Create a detailed vertex array with every quad that has it's own texture.
@@ -112,12 +151,9 @@ WorldCreator::WorldCreator(sf::VertexArray& tileMap, sf::Vector2i gridSize, int 
 					continue; 
 				}
 				neighborBlocks[index] = blockMap.getCaveBlock(sf::Vector2i(x, y) + neighborCellPositons[index]);
-				//neighborBlocks |= (1 << index)& (~((1 << index) ^ (block << index)));
-				//neighborBlocks |= 1 << index;
-				//neighborBlocks ^= (1u << index);
 				
 			}
-			std::cout << x << "\n";
+			//std::cout << x << "\n";
 			//std::cout << (unsigned int)neighborBlocks << "\n ";
 			sf::Vector2i texCoord = this->findTexCoord(neighborBlocks,sf::Vector2i((int)tileSize.x,(int)tileSize.y));
 			sf::Vertex *quad = &tileMap[(x + (static_cast<size_t>(y) * gridSize.x))*4];

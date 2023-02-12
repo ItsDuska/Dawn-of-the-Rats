@@ -12,11 +12,11 @@ void WorldCreator::createQuad(sf::Vertex *quad, sf::Vector2f position, sf::Vecto
 {
 	const float sizeInTexture = 16.f;
 
-	quad[0].position = sf::Vector2f((float)position.y * tileSize.x, (float)position.x * tileSize.y);
-	quad[1].position = sf::Vector2f(((float)position.y+1) * tileSize.x, (float)position.x * tileSize.y);
-	quad[2].position = sf::Vector2f(((float)position.y + 1 ) * tileSize.x, ((float)position.x + 1) * tileSize.y);
-	quad[3].position = sf::Vector2f((float)position.y * tileSize.x, ((float)position.x + 1) * tileSize.y);
-
+	quad[0].position = sf::Vector2f(position.y * tileSize.x, position.x * tileSize.y);
+	quad[1].position = sf::Vector2f((position.y+1) * tileSize.x, position.x * tileSize.y);
+	quad[2].position = sf::Vector2f((position.y + 1 ) * tileSize.x, (position.x + 1) * tileSize.y);
+	quad[3].position = sf::Vector2f(position.y * tileSize.x, (position.x + 1) * tileSize.y);
+	
 	quad[0].texCoords = sf::Vector2f((float)texCoord.x * sizeInTexture, 0 * (float)texCoord.y);
 	quad[1].texCoords = sf::Vector2f(((float)texCoord.x +1) * sizeInTexture, 0 * (float)texCoord.y);
 	quad[2].texCoords = sf::Vector2f(((float)texCoord.x +1) * sizeInTexture,  (float)texCoord.y);
@@ -35,15 +35,13 @@ sf::Vector2i WorldCreator::findTexCoord(bool* blocks, sf::Vector2i tileSize)
 	std::string output, bits;
 	std::ifstream inputfile("Koodit/World/Generation/WorldCreator/MatrixThings.txt");
 	bool exit = false;
+
 	if (!inputfile.is_open())
 	{
 		std::cout << "Error opening file";
 	}
-	//int row = -1;
 	while (std::getline(inputfile, bits))
 	{
-		//row += 1;
-		
 		if (bits.size() != 15) { continue; }
 		for (int bit = 0; bit < 7; bit++)
 		{
@@ -53,26 +51,24 @@ sf::Vector2i WorldCreator::findTexCoord(bool* blocks, sf::Vector2i tileSize)
 			break;
 
 		}
-		//std::cout << "\n\n";
 		if (exit) { break; }
 	}
-	//std::cout << row << "\n";
+
 	std::getline(inputfile, output);
 	std::stringstream iss(output);
+
 	if (output.size() == 0) { output = "6"; }
+
 	for (std::string s;iss >> s;)
 	{ 
 		possibleOutComes.push_back(std::stoi(s));
 	}
+
 	possibleOutComes.push_back(std::stoi(output));
 
-	
 	inputfile.close();
-	//std::cout <<"\n"<< output << "\n";
 	uint16_t xValue = possibleOutComes[rand() % possibleOutComes.size()]; 
-	//std::cout << xValue;
-	//xValue = 5;
-	//return sf::Vector2i(xValue % (320 / tileSize.x), xValue / (320 / tileSize.y));
+
 	return sf::Vector2i(xValue, 16);
 }
 
@@ -130,17 +126,17 @@ sf::Vector2i WorldCreator::getTexCoord(bool* blocks)
 }
 
 //Create a detailed vertex array with every quad that has it's own texture.
-WorldCreator::WorldCreator(sf::VertexArray& tileMap, sf::Vector2i gridSize, int seed, float threshold, sf::Vector2f tileSize)
+WorldCreator::WorldCreator(sf::VertexArray& tileMap, sf::Vector2i gridSize, int seed, float threshold, sf::Vector2f tileSize, sf::Vector2i chunkCoord)
 {
 	std::chrono::time_point<std::chrono::system_clock> start, end;
 	start = std::chrono::system_clock::now();
 
-	CaveGeneration blockMap(seed, threshold, gridSize);
-	std::cout << gridSize.x;
-	sf::Vector2i neighborCellPositons[8] = { {-1,-1}, {0,-1}, {1,-1}, {-1,0}, {1,0}, {-1,1}, {0,1}, {1,1} };
+	CaveGeneration blockMap(seed, threshold, gridSize, chunkCoord);
+	sf::Vector2f WORLD_POSITION = {(float) chunkCoord.x * (float)gridSize.x, (float)chunkCoord.y * (float) gridSize.y };
+	const sf::Vector2i neighborCellPositons[8] = { {-1,-1}, {-1,0}, {-1,1},    {0,-1}, {0,1},     {1,-1},  {1,0}, {1,1} };
+												//vasen ylä -> alas
 	for (int y = 0; y < gridSize.y; y++)
 	{
-		//std::cout << "\n";
 		for (int x = 0; x < gridSize.x; x++)
 		{
 			//std::cout << blockMap.getCaveBlock(sf::Vector2i(x, y)) << " ";
@@ -152,19 +148,22 @@ WorldCreator::WorldCreator(sf::VertexArray& tileMap, sf::Vector2i gridSize, int 
 			{
 				if (!this->isInBounds(sf::Vector2i(x, y) + neighborCellPositons[index], gridSize)) 
 				{ 
-					//neighborBlocks |= (1 << index);
 					neighborBlocks[index] = true;
 					
 					continue; 
 				}
+
 				neighborBlocks[index] = blockMap.getCaveBlock(sf::Vector2i(x, y) + neighborCellPositons[index]);
 				
 			}
-			//std::cout << x << "\n";
-			//std::cout << (unsigned int)neighborBlocks << "\n ";
-			sf::Vector2i texCoord = this->findTexCoord(neighborBlocks,sf::Vector2i((int)tileSize.x,(int)tileSize.y));
-			sf::Vertex *quad = &tileMap[(x + (static_cast<size_t>(y) * gridSize.x))*4];
-			this->createQuad(quad,sf::Vector2f((float)y, (float)x), texCoord, tileSize);
+
+			const sf::Vector2i texCoord = this->findTexCoord(neighborBlocks, sf::Vector2i((int) tileSize.x, (int) tileSize.y));
+			sf::Vertex *quad = &tileMap[(x + (static_cast<size_t>(y) * gridSize.x)) * 4];
+
+			sf::Vector2f pos(WORLD_POSITION + sf::Vector2f((float)x, (float)y));
+			
+
+			this->createQuad(quad, pos, texCoord, tileSize);
 		}
 	}
 

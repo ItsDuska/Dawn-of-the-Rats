@@ -9,7 +9,7 @@
 class ActualGame : public State
 {
     Player player;
-    Chunk *chunk; 
+    sf::View camera;
     ChunkManager chunkManager;
     sf::Vector2f windowSize;
 public:

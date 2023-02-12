@@ -12,9 +12,9 @@ private:
 	sf::Vector2i gridSize;
 	std::vector < std::vector<bool> > cave;
 	PerlinNoise perlinNoice;
-	void generateCave();
+	void generateCave(sf::Vector2i chunkCoord);
 public:
 	~CaveGeneration();
-	CaveGeneration(int seed, float threshold, sf::Vector2i gridSize);
+	CaveGeneration(int seed, float threshold, sf::Vector2i gridSize, sf::Vector2i chunkCoord);
 	bool getCaveBlock(sf::Vector2i position);
 };

@@ -1,7 +1,7 @@
 #pragma once
 #include "../MainMenu/MainMenu.h"
 #include "States/StateMachine.h"
-#include "ActualGame/GameLoop.h"
+#include "GameState/GameLoop.h"
 #include <chrono> 
 
 

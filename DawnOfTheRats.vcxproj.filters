@@ -16,7 +16,7 @@
     <ClCompile Include="Koodit\World\Generation\PerlinNoice\PerlineNoise.cpp" />
     <ClCompile Include="Koodit\World\Generation\WorldCreator\CaveGenerator.cpp" />
     <ClCompile Include="Koodit\World\Generation\WorldCreator\Chunk.cpp" />
-    <ClCompile Include="Koodit\World\Generation\WorldCreator\WorldManager.cpp" />
+    <ClCompile Include="Koodit\World\Generation\WorldCreator\ChunkManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Koodit\GameManager\ActualGame\GameLoop.h" />
@@ -36,7 +36,7 @@
     <ClInclude Include="Koodit\World\Generation\WorldCreator\CaveGenerator.h" />
     <ClInclude Include="Koodit\World\Generation\PerlinNoice\PerlineNoice.hpp" />
     <ClInclude Include="Koodit\World\Generation\WorldCreator\Chunk.h" />
-    <ClInclude Include="Koodit\World\Generation\WorldCreator\WorldManager.h" />
+    <ClInclude Include="Koodit\World\Generation\WorldCreator\ChunkManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Fonts\yoster.ttf" />

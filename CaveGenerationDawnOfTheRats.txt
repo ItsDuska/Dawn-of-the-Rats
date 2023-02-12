@@ -98,6 +98,84 @@ else:
 texCoord.x = 19
 
 
+/////////////////////////////////////////////////////////
+chunkki handlaajan koodi esimerkki miten se voisi toimia:
+/////////////////////////////////////////////////////////
+
+//view on se joka päättää tietyn alueen maailmasta ikkunalle.
+
+/////////////
+hpp tiedosto:
+////////////
+
+// windowSize avulla katsotaan kuinka kaukana pelaajasta chunkki on.
+//Chunk classilla on chunk pos joka on esimerkiksi {0,0}, tai {0,1}
+// save tallentaa chunkin vertexit tiedostoon.
+// load lataa tallennetun chunkin tiedostosta chunks listaan.
+
+
+class ChunkHandler
+{
+private:
+	int seed;
+	float threshold;
+	sf::Vector2i gridSize;
+	std::vector<*Chunk> chunks;
+	sf::Vector2i windowSize; 
+	void save(sf::vector2i chunkPosition);
+	void load(sf::vector2i chunkPosition);
+	void addChunk(int seed, float threshold, sf::Vector2i gridSize);
+	void removeChunk(sf::Vector2i chunkPosition);
+	void clearAllChunks(); //when game is over
+	bool isInWindow(playerPosition);
+public:
+	void update(Vector2f playerPosition,View view);
+	ChunkHandler(Vector2i windowSize,int seed, float threshold, sf::Vector2i gridSize);
+	~ChunkHandler();
+};
 
 
 
+/////////////
+cpp tiedosto:
+/////////////
+
+
+ChunkHandler::ChunkHandler(Vector2i windowSize, int seed, float threshold, sf::Vector2i gridSize)
+{
+	this->windowSize = windowSize;
+	this->seed = seed;
+	this->threshold = threshold;
+	this->gridSize = gridSize;
+	addChunk(chunkPosition = 0,0);
+}
+
+
+ChunkHandler::update(Vector2f playerPosition,View view)
+{
+	for chunk in chunks
+	{
+		if(!isInWindow(chunk.getChunkPosition(),playerPosition);
+		{
+			get current chunkPosition() ja katso missä ikkunan kulmassa on tyhjää
+			addChunk(new chunkPosition, seed ja muut);
+		}
+		else
+		{
+			save(chunk.getChunkPosition())
+			removeChunk(chunk.getChunkPosition());
+		}
+	}
+}
+
+
+bool ChunkHandler::isInWindow(chunkPosition,playerPosition)
+{
+	return if (chunk on ruudulla (pelaaja on keskipiste));
+}
+
+
+//Save ja load kannattaa tehdä uudella threadilla
+//Jokaiselle chunkille on oma tiedostonsa jotka tallentuvat omaan kansioon nimeltä save tai jotain.
+
+//clearAllChunks kutsutaan kun pelaaja kuolee tai häviää pelin. Tämä funktio tyhjetää chunks listan ja poistaa jokaisen chunkin save filen

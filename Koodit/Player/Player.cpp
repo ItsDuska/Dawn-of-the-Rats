@@ -27,10 +27,11 @@ void Player::inputs()
 		this->currentAnimationFrames = this->allAnimationFrames[2];
 	}
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	else if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		keyPressed = true;
 		animationSpeed = 0.2f;
+		this->direction = { 0,0 };
 		this->currentAnimationFrames = this->allAnimationFrames[4];
 	}
 

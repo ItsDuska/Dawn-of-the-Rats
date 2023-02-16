@@ -88,9 +88,6 @@ tee skripti pyyttonil ja laita arvot txt tiedostoon ja lue sieltä kaikki järje
 
 vector2i getTexCoord(bool neighborBlocks[])
 {
-	
-
-
 }
 
 katso vain tietyt kulmat eli ne mihin tulee kulmat ja suorat. 
@@ -179,3 +176,90 @@ bool ChunkHandler::isInWindow(chunkPosition,playerPosition)
 //Jokaiselle chunkille on oma tiedostonsa jotka tallentuvat omaan kansioon nimeltä save tai jotain.
 
 //clearAllChunks kutsutaan kun pelaaja kuolee tai häviää pelin. Tämä funktio tyhjetää chunks listan ja poistaa jokaisen chunkin save filen
+
+
+
+Teoria miksi chunkit menee hassusti:
+chunkit x ja y arvot on vääripäi.
+vertex array alkaa rakentamaan quadeja tälleen:
+1 = quad
+0 = empty
+1,1,1,1,1,1,1
+1,0,0,0,0,0,0  
+1,1,1,0,0,0,0
+eli eka luodaan x rivi ja siihen jokainen y rivi. 
+
+Elikkäs sillon kuin currentChunkPosition lasketaan niin sen pitäisi olla näin.
+
+CurrentChunk_x = player.x / (gridSize.y * BLOCK_SIZE);
+CurrentChunk_y = player.y / (gridSize.x * BLOCK_SIZE);
+
+Jos Pelaaja on TIETYN_MATKAN_PÄÄSSÄ loadatusta chunkita:
+	CHunk voidaan Renderaa = trues
+	
+	
+	
+	
+GUI:
+
+voitaisiin renderaa esim 30 kertaa per sekuntti eikä 60.
+
+renderaa bäckgroundina se empty inventory ja piirrä päälle itemit
+
+
+
+Item Class:
+
+sit on staff class ja muita eri item classeja jotka herittaa itemista
+jokasella on oma funktiot ja image path sekä tarvittaessa sound
+
+
+Sound itemien equipmentille.
+
+
+
+Sound Manager class.
+
+
+ 
+Enemy class ja managerit tai jotain
+Jokaiselle ai.
+boss ai.
+
+
+//////////////////////
+MITÄ PITÄÄ SIIS TEHDÄ:
+//////////////////////
+
+
+World Generation
+isojen luolien generaatio.
+luolien yhdistyminen toisiinsta pienillä luolilla.
+luolien outojen muotojen generoituminen.
+texture generation for the blocks.
+Inventory system
+sound system
+Enemies and the ai
+collisions.
+pimeys effecti koska olemme luolassa.
+lighting system eli bloomia. varmaa uus fragment shaderi tarvitaan.
+shadows ehkä.
+Pelaajan hyppy ja gravitaatio.
+Hyökkäys eli onko se melee vai ranged attack.
+boss ja sen ai.
+save systeemi ehkä?
+damage systeemi
+starting room ja boss room.
+loot chest system.
+item collection.
+storing the items.
+ovet ja lukitut ovet.
+ansat.
+Health bar ja mana bar.
+current score.
+end screen eli se joka tulee kun kuolet tai voitat pelin. (näkyy statsit)
+stats system eli pidetään runin statsit kuten tapettujen vihollisten määrä tallessa.
+Kaikki textuurit.
+Ääänet ja musiikit.
+hieman tarinaa joka yhdistäis paikan yhteen.
+particle system.

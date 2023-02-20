@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Koodit\GameManager\ActualGame\GameLoop.cpp" />
     <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\ExitButton.cpp" />
     <ClCompile Include="Koodit\MainMenu\Buttons\Button.cpp" />
     <ClCompile Include="Koodit\Utils\Animation\AnimationHandler.cpp" />
@@ -17,9 +16,9 @@
     <ClCompile Include="Koodit\World\Generation\WorldCreator\CaveGenerator.cpp" />
     <ClCompile Include="Koodit\World\Generation\WorldCreator\Chunk.cpp" />
     <ClCompile Include="Koodit\World\Generation\WorldCreator\ChunkManager.cpp" />
+    <ClCompile Include="Koodit\GameManager\GameState\GameLoop.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Koodit\GameManager\ActualGame\GameLoop.h" />
     <ClInclude Include="Koodit\GameManager\States\State.h" />
     <ClInclude Include="Koodit\Utils\Assets\AssetManager.h" />
     <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\ExitButton.h" />
@@ -37,6 +36,13 @@
     <ClInclude Include="Koodit\World\Generation\PerlinNoice\PerlineNoice.hpp" />
     <ClInclude Include="Koodit\World\Generation\WorldCreator\Chunk.h" />
     <ClInclude Include="Koodit\World\Generation\WorldCreator\ChunkManager.h" />
+    <ClInclude Include="Koodit\GameManager\GameState\GameLoop.h" />
+    <ClInclude Include="Koodit\GUI\Inventory\Inventory.h" />
+    <ClInclude Include="Koodit\GUI\Inventory\Item.h" />
+    <ClInclude Include="Koodit\GUI\Inventory\Items\ItemStaff.h" />
+    <ClInclude Include="Koodit\GUI\Inventory\Items\ItemAccessory.h" />
+    <ClInclude Include="Koodit\GUI\Inventory\Items\ItemSpell.h" />
+    <ClInclude Include="Koodit\Player\PlayerStats.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Fonts\yoster.ttf" />
@@ -61,5 +67,6 @@
   <ItemGroup>
     <Text Include="ToDo.txt" />
     <Text Include="Koodit\World\Generation\WorldCreator\MatrixThings.txt" />
+    <Text Include="CaveGenerationDawnOfTheRats.txt" />
   </ItemGroup>
 </Project>

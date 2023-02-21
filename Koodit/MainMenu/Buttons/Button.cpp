@@ -24,6 +24,7 @@ Button::Button(sf::Vector2f position, sf::Vector2f size, sf::Color color, std::s
 	this->button.setSize(size);
 	this->initButton(position);
 	this->color = color;
+	this->sound.setBuffer(SoundManager::getSound("Button"));
 }
 
 sf::Int8 Button::getButtonColor(int mainColor, int secondColor)
@@ -37,7 +38,13 @@ void Button::checkMousePos(sf::Vector2f mousePos, State* state)
 	if (!this->button.getGlobalBounds().contains(mousePos))
 	{
 		this->button.setFillColor(this->color);
+		this->isSoundPlayed = false;
 		return;
+	}
+	
+	if(!this->isSoundPlayed)
+	{
+		this->sound.play();
 	}
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
@@ -50,5 +57,6 @@ void Button::checkMousePos(sf::Vector2f mousePos, State* state)
 		getButtonColor(this->color.b, 255),
 		128)
 	);
+	this->isSoundPlayed = true;
 }		
 

@@ -13,9 +13,7 @@ CaveGeneration::CaveGeneration(int seed, float threshold, sf::Vector2i gridSize,
 	this->generateCave(chunkCoord);
 }
 
-
 //Tänne funktio joka generoi tunneleita????
-
 
 void CaveGeneration::generateCave(sf::Vector2i chunkCoord)
 {

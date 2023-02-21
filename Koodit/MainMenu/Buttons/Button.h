@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "../../Visuals/Texts/Text.h"
 #include "../../GameManager/States/StateMachine.h"
+#include "../../Utils/Sounds/SoundManager.h"
 #include <iostream>
 
 /*
@@ -17,7 +18,9 @@ class Button
 private:
 	sf::RectangleShape button;
 	sf::Color color;
+	bool isSoundPlayed;
 	Text text;
+	sf::Sound sound;
 	sf::Int8 getButtonColor(int mainColor, int secondColor);
 	virtual void buttonFunction(State* state) = 0;
 	void initButton(sf::Vector2f position);

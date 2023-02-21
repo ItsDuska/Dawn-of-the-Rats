@@ -81,7 +81,7 @@ Player::Player() : animationHandler(&this->player,0.1f, sf::Vector2i(16, 16), 6,
 	AssetManager::loadTexture("Player", "Kuvat/NewSprites/PlayerSheet.png");
 	this->player.setTexture(AssetManager::getTexture("Player"));
 	this->player.scale(8.f, 8.f);
-	this->player.setPosition(0, 500);	
+	this->player.setPosition(0, 0);	
 }
 
 Player::~Player()

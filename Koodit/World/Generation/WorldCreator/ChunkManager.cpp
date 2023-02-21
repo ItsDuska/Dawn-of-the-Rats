@@ -2,8 +2,9 @@
 
 void ChunkManager::addChunk(sf::Vector2i chunkPosition)
 { 
+    this->chunkCords.push_back(chunkPosition);
     this->chunks.push_back(new Chunk(this->gridSize, this->seed, this->threshold, this->tileSize,chunkPosition));
-    std::cout << chunkPosition.x << " " << chunkPosition.y << "\n";
+    std::cout << "Added chunk " << chunkPosition.x << " " << chunkPosition.y << "\n";
 }
 
 float ChunkManager::distance(sf::Vector2i currentChunk, sf::Vector2i otherChunk)
@@ -13,8 +14,10 @@ float ChunkManager::distance(sf::Vector2i currentChunk, sf::Vector2i otherChunk)
 
 void ChunkManager::removeChunk(int index)
 {
+    std::cout << "Deleted a chunk at position " << this->chunks[index]->getChunkPosition().x << " " << this->chunks[index]->getChunkPosition().x << "\n";
     delete this->chunks[index];
     this->chunks.erase(this->chunks.begin() + index);
+    this->chunkCords.erase(this->chunkCords.begin() + index); 
 }
 
 bool ChunkManager::isInWindow(sf::View *view, sf::Vector2f chunkPosition)
@@ -24,36 +27,24 @@ bool ChunkManager::isInWindow(sf::View *view, sf::Vector2f chunkPosition)
     return chunkRect.intersects(currentView);
 } 
 
-void ChunkManager::update(sf::View *view)
+void ChunkManager::update(sf::View *view, sf::Vector2f playerPos)
 {
-    this->currentChunk = { (int)(view->getCenter().x / windowSize.x),(int) (view->getCenter().y / windowSize.y) };
+    this->currentChunk = { (int)(playerPos.x / (this->gridSize.x * tileSize.x)),(int) (playerPos.y / (this->gridSize.y * tileSize.y)) };
   
-    for (int i = 0; i < this->chunks.size(); i++)
-    {     
-        this->chunks[i]->setDrawable(this->isInWindow(view, this->chunks[i]->getPosition()));
-        if (this->chunks[i]->getChunkPosition() == this->currentChunk) { continue; }
+    //std::cout << currentChunk.x << " " << currentChunk.y << "\n";
 
-        if (this->distance(currentChunk, this->chunks[i]->getChunkPosition()) > 1)
-        {
-            std::cout << " Deleted a chunk at index " << i << "  ";
-            this->removeChunk(i);
-        }
-    }
-
-    if (this->chunks.size() > 8) { return; }
-
-    for (sf::Vector2i neighborChunk : neighborPositions)
+    if (this->previousChunk != this->currentChunk)
     {
-        for (int i = 0; i<this->chunks.size(); i++)
+        if (!this->loaded)
         {
-            if (this->currentChunk + neighborChunk != this->chunks[i]->getChunkPosition())
-            {
-                this->addChunk(this->currentChunk + neighborChunk);
-                std::cout <<  "    Added a chunk  at index  " << i << "  ";
-                break;
-            }
+            handleChunks();
         }
     }
+    else
+    {
+        this->loaded = false;
+    }
+    this->previousChunk = this->currentChunk;
 }
 
 void ChunkManager::render(sf::RenderTarget* window)
@@ -69,9 +60,9 @@ ChunkManager::ChunkManager(sf::Vector2f windowSize, int seed, float threshold)
     this->windowSize = windowSize;
     this->seed = seed;
     this->threshold = threshold;
-    this->tileSize = { 16.f, 16.f };
+    this->tileSize = { 32.f, 32.f };
     this->gridSize = sf::Vector2i((int)this->windowSize.x / this->BLOCK_SIZE, (int)this->windowSize.y / this->BLOCK_SIZE);
-    this->addChunk({0,0});
+    //this->addChunk({0,0});
 }
 
 ChunkManager::~ChunkManager()
@@ -81,4 +72,61 @@ ChunkManager::~ChunkManager()
         delete this->chunks.back();
         this->chunks.pop_back();
     }
+}
+
+//Checks if chunk cordinate is loaded. Returns the index if its found, otherwise it returns -1 if its not in the list.
+int ChunkManager::getChunkPositionIndex(std::vector<sf::Vector2i>*list, sf::Vector2i position)
+{
+    std::vector<sf::Vector2i>::iterator iteratorThing;
+    iteratorThing = std::find(list->begin(), list->end(), position);
+
+    if (iteratorThing != list->end())
+    {   //löyty 
+        return iteratorThing - list->begin();
+    }
+    else 
+    { // ei löytynyt
+        return -1;
+    }
+}
+
+void ChunkManager::handleChunks()
+{
+    int renderBonds = (this->renderDistance * 2) + 1;
+    std::vector<sf::Vector2i> loadingCoords;
+    sf::Vector2i tempChunkCord;
+
+    for (int x = 0; x < renderBonds; x++)
+    {
+        for (int y = 0; y < renderBonds; y++)
+        {
+            tempChunkCord = { (x + 1) - ((int)std::round(renderBonds / 2)) + currentChunk.x,   (y + 1) - ((int)std::round(renderBonds / 2)) + currentChunk.y };
+            loadingCoords.push_back(tempChunkCord);
+
+            if (this->getChunkPositionIndex(&this->chunkCords,tempChunkCord) == -1)
+            {
+                this->addChunk(tempChunkCord);
+            }
+        }
+    }
+
+    std::vector<sf::Vector2i> deletingChunks;
+
+    for (sf::Vector2i position : this->chunkCords)
+    {
+        //loading cord
+        if (this->getChunkPositionIndex(&loadingCoords, position) == -1)
+        {
+            deletingChunks.push_back(position);
+        }
+    }
+
+    for (sf::Vector2i position : deletingChunks)
+    {
+        std::cout << "amogus";
+        this->removeChunk(this->getChunkPositionIndex(&this->chunkCords,position));
+    }
+
+    this->loaded = true;
+    
 }

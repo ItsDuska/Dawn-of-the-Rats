@@ -15,7 +15,7 @@ void ActualGame::init()
 void ActualGame::update(float dt, State* state)
 {
 	this->camera.setCenter(this->player.getPosition());
-	this->chunkManager.update(&this->camera);
+	this->chunkManager.update(&this->camera, this->player.getPosition());
 	this->player.update();
 }
 
@@ -33,7 +33,7 @@ void ActualGame::render(sf::RenderTarget* window)
 }
 
 ActualGame::ActualGame(sf::Vector2f windowSize)
-	:chunkManager(windowSize,3636,0.45f)
+	:chunkManager(windowSize,47786,0.45f)
 {
 	this->windowSize = windowSize;
 	this->camera.reset(sf::FloatRect(this->player.getPosition(), windowSize));

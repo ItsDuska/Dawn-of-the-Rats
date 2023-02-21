@@ -26,6 +26,7 @@
     <ClCompile Include="Koodit\GameManager\Game.cpp" />
     <ClCompile Include="Koodit\DawnOfTheRats.cpp" />
     <ClCompile Include="Koodit\MainMenu\MainMenu.cpp" />
+    <ClCompile Include="Koodit\Utils\Sounds\SoundManager.h" />
     <ClCompile Include="Koodit\Visuals\Texts\Text.cpp" />
     <ClCompile Include="Koodit\GameManager\States\StateMachine.cpp" />
     <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.cpp" />

@@ -132,7 +132,7 @@ WorldCreator::WorldCreator(sf::VertexArray& tileMap, sf::Vector2i gridSize, int 
 	start = std::chrono::system_clock::now();
 
 	CaveGeneration blockMap(seed, threshold, gridSize, chunkCoord);
-	sf::Vector2f WORLD_POSITION = {(float) chunkCoord.x * (float)gridSize.x, (float)chunkCoord.y * (float) gridSize.y };
+	sf::Vector2f WORLD_POSITION = {(float) ((chunkCoord.x-1) * gridSize.x), (float)((chunkCoord.y - 1) * gridSize.y) };
 	const sf::Vector2i neighborCellPositons[8] = { {-1,-1}, {-1,0}, {-1,1},    {0,-1}, {0,1},     {1,-1},  {1,0}, {1,1} };
 												//vasen ylä -> alas
 	for (int y = 0; y < gridSize.y; y++)

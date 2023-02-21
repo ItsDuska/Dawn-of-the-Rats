@@ -40,6 +40,12 @@
   <ItemGroup>
     <ClInclude Include="Koodit\GameManager\GameState\GameLoop.h" />
     <ClInclude Include="Koodit\GameManager\States\State.h" />
+    <ClInclude Include="Koodit\GUI\Inventory\Inventory.h" />
+    <ClInclude Include="Koodit\GUI\Inventory\Item.h" />
+    <ClInclude Include="Koodit\GUI\Inventory\Items\ItemAccessory.h" />
+    <ClInclude Include="Koodit\GUI\Inventory\Items\ItemSpell.h" />
+    <ClInclude Include="Koodit\GUI\Inventory\Items\ItemStaff.h" />
+    <ClInclude Include="Koodit\Player\PlayerStats.h" />
     <ClInclude Include="Koodit\Utils\Assets\AssetManager.h" />
     <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\ExitButton.h" />
     <ClInclude Include="Koodit\MainMenu\Buttons\Button.h" />

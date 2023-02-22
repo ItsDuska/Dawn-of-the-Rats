@@ -7,7 +7,7 @@ Button::~Button()
 void Button::render(sf::RenderTarget *window)
 {
 	window->draw(this->button);
-	window->draw(this->text.text);
+	window->draw(this->text.getText());
 }
 
 void Button::initButton(sf::Vector2f position)
@@ -19,8 +19,8 @@ void Button::initButton(sf::Vector2f position)
 }
 
 Button::Button(sf::Vector2f position, sf::Vector2f size, sf::Color color, std::string title) 
-	: text(50, title, sf::Vector2f(position.x + position.x / 10, position.y + position.y / 10))
 {
+	this->text.setText(50, title, sf::Vector2f(position.x + size.x / 2, position.y + size.y / 2));
 	this->button.setSize(size);
 	this->initButton(position);
 	this->color = color;

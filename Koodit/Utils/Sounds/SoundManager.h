@@ -23,8 +23,6 @@ public:
 		get().IloadSound(name, fileName);
 	}
 
-	
-
 
 private:
 	std::map<std::string, sf::SoundBuffer> _sounds;

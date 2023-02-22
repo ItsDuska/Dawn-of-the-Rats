@@ -1,14 +1,17 @@
 #pragma once
-#include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include "Fonts.h"
 #include <iostream>
 
 class Text
 {
 private:
-	sf::Font font;
-public:
 	sf::Text text;
-	Text(sf::Int8 charSize, std::string title, sf::Vector2f position);
+public:
+	void setText(sf::Int8 charSize, std::string title, sf::Vector2f position);
+	void changeString(std::string string);
+	sf::Text& getText();
+	
 };
+
 

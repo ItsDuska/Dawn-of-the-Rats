@@ -18,6 +18,7 @@
     <ClCompile Include="Koodit\World\Generation\WorldCreator\ChunkManager.cpp" />
     <ClCompile Include="Koodit\GameManager\GameState\GameLoop.cpp" />
     <ClCompile Include="Koodit\Utils\Sounds\SoundManager.h" />
+    <ClCompile Include="Koodit\GUI\Inventory\Inventory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Koodit\GameManager\States\State.h" />
@@ -38,6 +39,13 @@
     <ClInclude Include="Koodit\World\Generation\WorldCreator\Chunk.h" />
     <ClInclude Include="Koodit\World\Generation\WorldCreator\ChunkManager.h" />
     <ClInclude Include="Koodit\GameManager\GameState\GameLoop.h" />
+    <ClInclude Include="Koodit\GUI\Inventory\Inventory.h" />
+    <ClInclude Include="Koodit\GUI\Inventory\Item.h" />
+    <ClInclude Include="Koodit\GUI\Inventory\Items\ItemAccessory.h" />
+    <ClInclude Include="Koodit\GUI\Inventory\Items\ItemSpell.h" />
+    <ClInclude Include="Koodit\GUI\Inventory\Items\ItemStaff.h" />
+    <ClInclude Include="Koodit\Player\PlayerStats.h" />
+    <ClInclude Include="Koodit\Visuals\Texts\Fonts.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Fonts\yoster.ttf" />

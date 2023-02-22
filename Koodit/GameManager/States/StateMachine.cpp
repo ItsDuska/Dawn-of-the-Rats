@@ -14,13 +14,13 @@ StateMachine::~StateMachine()
 {
 	while (!this->_states.empty())
 	{
-		delete this->_states.top();
+		//delete this->_states.top();
 		this->_states.pop();
 	}
 }
 
 //Add a new state.
-void StateMachine::addState(State *newState, bool isReplacing)
+void StateMachine::addState(std::unique_ptr<State> newState, bool isReplacing)
 {
 	this->_isAdding = true;
 	this->_isReplacing = isReplacing;
@@ -37,7 +37,7 @@ void StateMachine::procssStateChanges()
 {
 	if (this->_isRemoving && !this->_states.empty())
 	{
-		delete this->_states.top();
+		//delete this->_states.top();
 		this->_states.pop();
 		if (!this->_states.empty())
 		{
@@ -52,7 +52,7 @@ void StateMachine::procssStateChanges()
 		{
 			if (this->_isReplacing)
 			{
-				delete this->_states.top();
+				//delete this->_states.top();
 				this->_states.pop();
 			}
 			else

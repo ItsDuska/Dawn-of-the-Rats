@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Koodit\GameManager\GameState\GameLoop.cpp" />
+    <ClCompile Include="Koodit\GUI\Inventory\Inventory.cpp" />
     <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\ExitButton.cpp" />
     <ClCompile Include="Koodit\MainMenu\Buttons\Button.cpp" />
     <ClCompile Include="Koodit\Utils\Animation\AnimationHandler.cpp" />
@@ -53,6 +54,7 @@
     <ClInclude Include="Koodit\MainMenu\Button.h" />
     <ClInclude Include="Koodit\GameManager\Game.h" />
     <ClInclude Include="Koodit\MainMenu\MainMenu.h" />
+    <ClInclude Include="Koodit\Visuals\Texts\Fonts.h" />
     <ClInclude Include="Koodit\Visuals\Texts\Text.h" />
     <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.h" />
     <ClInclude Include="Koodit\GameManager\States\StateMachine.h" />

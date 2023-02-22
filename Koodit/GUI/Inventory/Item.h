@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
-
+#include <SFML/Graphics/Sprite.hpp>
+#include "../../Utils/Assets/AssetManager.h"
 
 // jokaisella raritylla on oma värinsä
 enum Rarity
@@ -20,6 +21,7 @@ class Item
 private:
 	std::string _itemName;
 	Rarity rarity;
+	sf::Sprite itemSprite;
 
 public:
 	void render();

@@ -10,13 +10,13 @@ public:
 	StateMachine();
 	~StateMachine();
 
-	void addState(State *newState, bool isReplacing = true);
+	void addState(std::unique_ptr<State> newState, bool isReplacing = true);
 	void removeState();
 	void procssStateChanges();
 	State &getActiveState();
 private:
-	std::stack<State*> _states;
-	State* _newState;
+	std::stack<std::unique_ptr<State>> _states;
+	std::unique_ptr<State> _newState;
 	bool _isRemoving;
 	bool _isAdding;
 	bool _isReplacing;

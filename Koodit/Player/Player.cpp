@@ -41,8 +41,15 @@ void Player::inputs()
 		this->currentAnimationFrames = this->allAnimationFrames[0];
 	}
 	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Tab))
+	{
+		if (this->clock.getElapsedTime().asSeconds() > this->cooldownTime.asSeconds())
+		{
+			this->_inventory.showInventory = !this->_inventory.showInventory;
+			this->clock.restart();
+		}
+	}
 	
-
 	this->animationHandler.changeAnimation(this->currentAnimationFrames,animationSpeed);
 }
 
@@ -76,7 +83,9 @@ void Player::decelerationHandler()
 	}
 }
 
-Player::Player() : animationHandler(&this->player,0.1f, sf::Vector2i(16, 16), 6, 0)
+Player::Player() 
+	: animationHandler(&this->player,0.1f, sf::Vector2i(16, 16), 6, 0), 
+	_inventory(sf::Vector2f((float)sf::VideoMode::getDesktopMode().width, (float)sf::VideoMode::getDesktopMode().height),stats)
 { 
 	AssetManager::loadTexture("Player", "Kuvat/NewSprites/PlayerSheet.png");
 	this->player.setTexture(AssetManager::getTexture("Player"));
@@ -100,9 +109,16 @@ void Player::update()
 void Player::render(sf::RenderTarget* window)
 {
 	window->draw(this->player);
+	
+}
+
+void Player::renderInventory(sf::RenderTarget* window)
+{
+	this->_inventory.render(window);
 }
 
 sf::Vector2f Player::getPosition()
 {
 	return this->player.getPosition();
 }
+

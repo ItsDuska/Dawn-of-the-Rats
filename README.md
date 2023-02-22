@@ -12,6 +12,8 @@ The basic idea of the game has changed from a small platformer with few levels a
 
 Current progress:
 Chunk generation works for the first few chunks and the textures are temporary. Many things will change, but for now these are just for testing.
+
+
 ![ezgif com-video-to-gif](https://user-images.githubusercontent.com/89298953/220694225-647b6a36-5451-4f4a-8344-ea7df852f9d8.gif)
 
 

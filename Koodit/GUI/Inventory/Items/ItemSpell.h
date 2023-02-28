@@ -30,5 +30,6 @@ class ItemSpell
 private:
 	SpellType _spellType;
 	//Spell type vaikuttaa staffin väriin?
-
+public:
+	void setSpellType();
 };

@@ -1,6 +1,8 @@
 #pragma once
 #include "../Item.h"
 
+
+
 class Accessory : Item
 {
 	float healt;
@@ -8,4 +10,6 @@ class Accessory : Item
 	float armor;
 	float damage;
 	float luck;
+
+	void setAttributes(); // laittaa arvot näille
 };

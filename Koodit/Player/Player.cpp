@@ -100,6 +100,7 @@ Player::~Player()
 void Player::update()
 {
 	this->inputs();
+	this->_inventory.update();
 	this->animationHandler.update(facingLeft);
 	this->accelerationHandler();
 	this->decelerationHandler();

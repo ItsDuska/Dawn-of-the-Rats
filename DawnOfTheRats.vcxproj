@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Koodit\GameManager\GameState\GameLoop.cpp" />
     <ClCompile Include="Koodit\GUI\Inventory\Inventory.cpp" />
+    <ClCompile Include="Koodit\GUI\Inventory\Item.cpp" />
     <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\ExitButton.cpp" />
     <ClCompile Include="Koodit\MainMenu\Buttons\Button.cpp" />
     <ClCompile Include="Koodit\Utils\Animation\AnimationHandler.cpp" />

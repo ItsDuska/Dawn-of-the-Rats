@@ -19,6 +19,7 @@
     <ClCompile Include="Koodit\GameManager\GameState\GameLoop.cpp" />
     <ClCompile Include="Koodit\Utils\Sounds\SoundManager.h" />
     <ClCompile Include="Koodit\GUI\Inventory\Inventory.cpp" />
+    <ClCompile Include="Koodit\GUI\Inventory\Item.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Koodit\GameManager\States\State.h" />

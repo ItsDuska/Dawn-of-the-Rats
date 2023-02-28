@@ -11,20 +11,11 @@
 class Inventory
 {
 private:
-	//window size eli inventory ikkunan koko
-	
-
-	//inventory on  10*16, 9*16
-	//Miinustetaan inventorin koosta sen reunat ja sitten saada sen pos
-
-	//Jokaisen inventory slotin sijainti
 	std::vector<std::unique_ptr<Item>> _items;
-	Text stats;
 	sf::Sprite _inventoryBackground;
-	//Tarvitaan pelaaja classista sen statseja. ehk‰ niille oma class jota voidaan k‰ytt‰‰. 
-	//sit pelaajassa voidaan heitt‰ siit‰ classista refrens eli * merkill‰.
 	std::string statsString; 
 	sf::Vector2f _originalPosition;
+	Text stats;
 	int _selectedItemIndex;
 	bool isSelceted;
 
@@ -35,6 +26,7 @@ private:
 	bool checkNewPosition();
 	void showItemStats(int itemIndex); // n‰ytt‰‰ pienen ikkunan jossa n‰kyy itemin statsit
 	sf::Vector2i getNewPositionIndex();
+
 public:
 	bool showInventory = false;
 	void updateStatText(PlayerStats *stats);

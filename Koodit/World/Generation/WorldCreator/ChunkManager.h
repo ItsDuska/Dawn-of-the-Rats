@@ -1,5 +1,7 @@
 #pragma once
 #include "Chunk.h"
+#include "ThreadHandler.h"
+
 
 //Handles a 2d array of chunks (The whole world)
 class ChunkManager
@@ -15,7 +17,6 @@ private:
 
 	//Settings
 	const int renderDistance = 1;
-
 
 	std::vector<Chunk*> chunks;
 	std::vector<sf::Vector2i> chunkCords;

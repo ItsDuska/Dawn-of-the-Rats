@@ -4,7 +4,7 @@
 void ActualGame::init()
 {
 	this->changeStateTo = 2;
-	AssetManager::loadTexture("Blocks", "Kuvat/NewSprites/Block.png");
+	AssetManager::loadTexture("Blocks", "Kuvat/NewSprites/GrassyBlock.png");
 }
 
 //update function for the game loop.
@@ -29,7 +29,7 @@ void ActualGame::render(sf::RenderTarget* window)
 }
 
 ActualGame::ActualGame(sf::Vector2f windowSize)
-	:chunkManager(windowSize,47786,0.45f)
+	:chunkManager(windowSize, 47786, 0.45f)
 {
 	this->windowSize = windowSize;
 	this->camera.reset(sf::FloatRect(this->player.getPosition(), windowSize));

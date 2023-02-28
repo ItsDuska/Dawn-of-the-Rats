@@ -47,6 +47,7 @@
     <ClInclude Include="Koodit\GUI\Inventory\Items\ItemStaff.h" />
     <ClInclude Include="Koodit\Player\PlayerStats.h" />
     <ClInclude Include="Koodit\Visuals\Texts\Fonts.h" />
+    <ClInclude Include="Koodit\World\Generation\WorldCreator\ThreadHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Fonts\yoster.ttf" />

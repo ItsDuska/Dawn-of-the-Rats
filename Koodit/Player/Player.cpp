@@ -90,7 +90,7 @@ Player::Player()
 	AssetManager::loadTexture("Player", "Kuvat/NewSprites/PlayerSheet.png");
 	this->player.setTexture(AssetManager::getTexture("Player"));
 	this->player.scale(8.f, 8.f);
-	this->player.setPosition(0, 0);	
+	this->player.setPosition(sf::Vector2f((float)sf::VideoMode::getDesktopMode().width/2, (float)sf::VideoMode::getDesktopMode().height));
 }
 
 Player::~Player()

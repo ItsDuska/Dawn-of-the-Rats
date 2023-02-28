@@ -30,7 +30,7 @@ void WorldCreator::removeSpace(std::string& text)
 
 sf::Vector2i WorldCreator::findTexCoord(bool* blocks, sf::Vector2i tileSize)
 {
-	return sf::Vector2i(19, 16);
+	//return sf::Vector2i(19, 16);
 	std::vector<int8_t> possibleOutComes;
 	std::string output, bits;
 	std::ifstream inputfile("Koodit/World/Generation/WorldCreator/MatrixThings.txt");
@@ -72,57 +72,217 @@ sf::Vector2i WorldCreator::findTexCoord(bool* blocks, sf::Vector2i tileSize)
 	return sf::Vector2i(xValue, 16);
 }
 
+/*
+Chunk borderit vois korjata siten ett‰ generatataan 
+cavessa yhden suurempi luola mutta piirret‰‰n vaan se yhden pienempi versio siit‰
+
+*/
+
+
 sf::Vector2i WorldCreator::getTexCoord(bool* blocks)
 {
-	std::vector<std::vector<bool>> possiblities
+	int index = 0;
+	const std::vector<std::vector<bool>> possiblities
 	{
+
 		//  0
-		{0,0,0,0,1,0,1,1}, 
-		{0,0,1,0,1,0,1,1},
-		{0,0,1,0,1,1,1,1},
+		{0,0,0
+		,0  ,1
+		,0,1,1}, 
+
+		{0,0,1,
+		0, 1,
+		0,1,1},
+
+		{0,0,0,
+		0, 1,
+		1,1,1},
+
+		{0,0,1,
+		0,  1,
+		1,1,1},
 
 		// 1
-		{0,0,0,1,0,1,1,0},
-		{1,0,0,1,0,1,1,0},
-		{1,0,0,1,0,1,1,1},
+		{0,0,0,
+		1,   0,
+		1,1,0},
+
+		{1,0,0,
+		1,  0,
+		1,1,0},
+
+		{0,0,0,
+		1,  0,
+		1,1,1},
+
+		{1,0,0,
+		1,   0,
+		1,1,1},
 
 		//2
-		{0,1,1,0,1,0,0,0},
-		{0,1,1,0,1,0,0,1},
+		{0,1,1
+		,0,  1,
+		0,0,0},
+
+		{0,1,1,
+		0,   1,
+		0,0,1},
+
+		{1,1,1,
+		0,   1,
+		0,0,0},
+
 		{1,1,1,0,1,0,0,1},
 
 		//3
-		{1,1,0,1,0,0,0,0},
-		{1,1,0,1,0,1,0,0},
+		{1,1,0
+		,1  ,0,
+		0,0,0},
+
+		{1,1,0,
+		1,  0,
+		1,0,0},
+
+		{1,1,1,
+		1,  0,
+		0,0,0},
+
 		{1,1,1,1,0,1,0,0},
 
 		//4-6
-		{0,0,0,1,1,1,1,1},
+		{0,0,0
+		,1,  1,
+		1,1,1},
+
+		{0,0,1,
+		1, 1,
+		1,1,1},
+
+		{1,0,0,
+		1, 1,
+		1,1,1},
+
+		{1,0,1,
+		1, 1,
+		1,1,1},
 
 		//7-9
-		{1,1,1,1,1,0,0,0},
+		{1,1,1,
+		1   ,1,
+		0,0,0},
+
+		{1,1,1,
+		1   ,1,
+		0,0,1},
+
+		{1,1,1,
+		1   ,1,
+		1,0,0},
+
+		{1,1,1,
+		1   ,1,
+		1,0,1},
 
 		//10
-		{0,1,1,0,1,0,1,1},
+		{0,1,1,
+		0,  1,
+		0,1,1},
+
+		{ 1,1,1,
+		0,  1,
+		0,1,1 },
+
+		{ 0,1,1,
+		0,  1,
+		1,1,1 },
+
+		{ 1,1,1,
+		0,  1,
+		1,1,1 },
 
 		//11
-		{1,1,0,1,0,1,1,0},
+		{1,1,0,
+		1,  0,
+		1,1,0},
+
+		{ 1,1,1,
+		1,  0,
+		1,1,0 },
+
+		{ 1,1,0,
+		1,  0,
+		1,1,1 },
+
+		{ 1,1,1,
+		1,  0,
+		1,1,1 },
+
 
 		//12-14
-		{1,1,1,1,1,1,1,1},
+		{1,1,1,
+		1,  1,
+		1,1,1},
+
+		 //KULMA PALAT
 
 		//15
-		{0,0,0,
-		0,  0,
-		0,0,0
+		{ 1,1,1,
+		1,  1,
+		1,1,0 },
 
-}
+		//16
+		{ 1,1,1,
+		1,  1,
+		0,1,1 },
 
-		
+		//17
+		{ 1,1,0,
+		1,  1,
+		1,1,1 },
+
+		//18
+		{0,1,1,
+		1,  1,
+		1,1,1},
+
+		//19
+		{0,0,0
+		,0,  0,
+		0,0,0}
 	};
 
+	for (int i = 0; i < possiblities.size(); i++)
+	{
+		bool isSame = false;
 
-	return sf::Vector2i();
+		for (int bit = 0; bit < 8; bit++)
+		{
+			if (blocks[bit] != possiblities[i][bit])
+			{
+				isSame = false;
+				break;
+			}
+			isSame = true;
+		}
+		if (isSame) { index = i; break; }
+	}
+
+	if (index >= 0 && index <= 3) { index = 0; } //k1
+	else if (index >= 4 && index <= 7) { index = 1; } //k2
+	else if (index >= 8 && index <= 11) { index = 2; } //k3
+	else if (index >= 12 && index <= 15) { index = 3; } //k4
+	else if (index >= 16 && index <= 19) { index = 4;} //SN
+	else if (index >= 20 && index <= 23) { index = 7; } //SS
+	else if (index >= 24 && index <= 27) { index = 9; } //SW
+	else if (index >= 28 && index <= 31) { index = 11; } //SE
+	else if (index == 32) { index = 12; } //T
+	else if (index == 33) { index = 14; } //L1
+	else if (index == 34) { index = 15; } //L2
+	else if (index == 35) { index = 16; } //L3
+	else if (index == 36) { index = 17; } //L4
+	else { index = 19; } // O
+	
+	return sf::Vector2i(index,16);
 }
 
 //Create a detailed vertex array with every quad that has it's own texture.
@@ -135,9 +295,9 @@ WorldCreator::WorldCreator(sf::VertexArray& tileMap, sf::Vector2i gridSize, int 
 	sf::Vector2f WORLD_POSITION = {(float) ((chunkCoord.x-1) * gridSize.x), (float)((chunkCoord.y - 1) * gridSize.y) };
 	const sf::Vector2i neighborCellPositons[8] = { {-1,-1}, {-1,0}, {-1,1},    {0,-1}, {0,1},     {1,-1},  {1,0}, {1,1} };
 												//vasen yl‰ -> alas
-	for (int y = 0; y < gridSize.y; y++)
+	for (int y = 1; y < gridSize.y; y++)
 	{
-		for (int x = 0; x < gridSize.x; x++)
+		for (int x = 1; x < gridSize.x; x++)
 		{
 			//std::cout << blockMap.getCaveBlock(sf::Vector2i(x, y)) << " ";
 			//BLOCK FINDING
@@ -146,23 +306,21 @@ WorldCreator::WorldCreator(sf::VertexArray& tileMap, sf::Vector2i gridSize, int 
 			bool neighborBlocks[8]{};
 			for (int index = 0; index < 8; index++)
 			{
-				if (!this->isInBounds(sf::Vector2i(x, y) + neighborCellPositons[index], gridSize)) 
+				if (!this->isInBounds(sf::Vector2i(x, y) + neighborCellPositons[index], gridSize))
 				{ 
 					neighborBlocks[index] = true;
+					
 					
 					continue; 
 				}
 
-				neighborBlocks[index] = blockMap.getCaveBlock(sf::Vector2i(x, y) + neighborCellPositons[index]);
-				
+				neighborBlocks[index] = blockMap.getCaveBlock(sf::Vector2i(x, y) + neighborCellPositons[index]);	
 			}
 
-			const sf::Vector2i texCoord = this->findTexCoord(neighborBlocks, sf::Vector2i((int) tileSize.x, (int) tileSize.y));
+			const sf::Vector2i texCoord = this->getTexCoord(neighborBlocks);
 			sf::Vertex *quad = &tileMap[(x + (static_cast<size_t>(y) * gridSize.x)) * 4];
-
 			sf::Vector2f pos(WORLD_POSITION + sf::Vector2f((float)x, (float)y));
 			
-
 			this->createQuad(quad, pos, texCoord, tileSize);
 		}
 	}

@@ -2,6 +2,8 @@
 
 void Item::setTexture(const std::string spriteName, const sf::IntRect itemArea,sf::FloatRect spriteSize)
 {
+
+    //testiä varten on const arvot
     const int xPos = 1;
     const int yPos = 0;
    
@@ -20,14 +22,13 @@ void Item::setTexture(const std::string spriteName, const sf::IntRect itemArea,s
     this->_itemSprite.setPosition(std::floorf((spriteSize.left + xPos* blockSize.x)+blockSize.x/2.f),
         std::floorf((spriteSize.top + (yPos+2) * blockSize.y) + blockSize.x / 2.f));
 
-
     this->_itemSprite.scale(std::floorf(blockSize.x* (14.f/16.f) / this->_itemSprite.getGlobalBounds().width),
         std::floorf(blockSize.x * (14.f / 16.f) / this->_itemSprite.getGlobalBounds().height));
     
     this->SpritePositions = { spriteSize.left,spriteSize.top,blockSize.x,blockSize.y };
 }
 
-Item::Item(const std::string spriteName, const sf::IntRect itemArea, sf::FloatRect spriteSize)
+Item::Item(const std::string spriteName, const sf::IntRect itemArea, sf::FloatRect spriteSize) // itemName, itemRarity, itemType tarvitaan tähän
 {
     //FOR TESTING:
     this->_type = Type::NECKLACE;
@@ -58,7 +59,8 @@ sf::FloatRect Item::getRect()
 
 void Item::setPositionOnGrid(sf::Vector2i indexPos)
 {
-    this->_itemSprite.setPosition(std::floorf((this->SpritePositions.left + indexPos.x * this->SpritePositions.width) - this->SpritePositions.width /2.f),
+    this->_itemSprite.setPosition(
+        std::floorf((this->SpritePositions.left + indexPos.x * this->SpritePositions.width) - this->SpritePositions.width / 2.f),
         std::floorf((this->SpritePositions.top + (indexPos.y + 2) * this->SpritePositions.height) - this->SpritePositions.height / 2.f));
 }
 

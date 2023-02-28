@@ -37,17 +37,15 @@ private:
 	Rarity _rarity;
 	sf::Sprite _itemSprite;
 	sf::FloatRect SpritePositions;
-	//virtual void setType();
-
 public:
 	Item(const std::string spriteName, const sf::IntRect itemArea, sf::FloatRect spriteSize);
 	std::string getName();
 	Rarity getRarity();
 	sf::Sprite getSprite();
 	sf::FloatRect getRect();
+	sf::Vector2f getPosition();
 	void setPositionOnGrid(sf::Vector2i indexPos);
 	void setPosition(sf::Vector2f newPos);
-	sf::Vector2f getPosition();
 	void setTexture(const std::string spriteName, const sf::IntRect itemArea, sf::FloatRect spriteSize);
 	void render(sf::RenderTarget *window);
 };

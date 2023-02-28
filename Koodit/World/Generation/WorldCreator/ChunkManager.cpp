@@ -29,9 +29,7 @@ bool ChunkManager::isInWindow(sf::View *view, sf::Vector2f chunkPosition)
 
 void ChunkManager::update(sf::View *view, sf::Vector2f playerPos)
 {
-    this->currentChunk = { (int)(playerPos.x / (this->gridSize.x * tileSize.x)),(int) (playerPos.y / (this->gridSize.y * tileSize.y)) };
-  
-    //std::cout << currentChunk.x << " " << currentChunk.y << "\n";
+    this->currentChunk = { (int)(playerPos.y / this->windowSize.y),(int)(playerPos.x / this->windowSize.x) };
 
     if (this->previousChunk != this->currentChunk)
     {
@@ -62,7 +60,6 @@ ChunkManager::ChunkManager(sf::Vector2f windowSize, int seed, float threshold)
     this->threshold = threshold;
     this->tileSize = { 32.f, 32.f };
     this->gridSize = sf::Vector2i((int)this->windowSize.x / this->BLOCK_SIZE, (int)this->windowSize.y / this->BLOCK_SIZE);
-    //this->addChunk({0,0});
 }
 
 ChunkManager::~ChunkManager()
@@ -92,7 +89,7 @@ int ChunkManager::getChunkPositionIndex(std::vector<sf::Vector2i>*list, sf::Vect
 
 void ChunkManager::handleChunks()
 {
-    int renderBonds = (this->renderDistance * 2) + 1;
+    const int renderBonds = (this->renderDistance * 2) + 1;
     std::vector<sf::Vector2i> loadingCoords;
     sf::Vector2i tempChunkCord;
 
@@ -100,7 +97,9 @@ void ChunkManager::handleChunks()
     {
         for (int y = 0; y < renderBonds; y++)
         {
-            tempChunkCord = { (x + 1) - ((int)std::round(renderBonds / 2)) + currentChunk.x,   (y + 1) - ((int)std::round(renderBonds / 2)) + currentChunk.y };
+            tempChunkCord = { 
+                (x + 1) - ((int)std::round(renderBonds / 2)) + currentChunk.x,
+                (y + 1) - ((int)std::round(renderBonds / 2)) + currentChunk.y };
             loadingCoords.push_back(tempChunkCord);
 
             if (this->getChunkPositionIndex(&this->chunkCords,tempChunkCord) == -1)

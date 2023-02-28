@@ -1,11 +1,14 @@
 #pragma once
 #include "WorldCreator.h"
+#include "ThreadHandler.h"
+#include <memory>
 //#include <SFML/Graphics.hpp>
 
 //a Tilemap for a chunk.
 class Chunk : public sf::Drawable, public sf::Transformable
 {
 private:
+	const int MAX_THREADS_FOR_CHUNKS = 4;
 	sf::VertexArray chunk;
 	sf::Vector2i gridSize;
 	int seed;
@@ -21,5 +24,6 @@ public:
 	void setDrawable(bool drawable);
 	bool getDrawable();
 	sf::Vector2i getChunkPosition();
+
 };
 

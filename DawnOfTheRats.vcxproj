@@ -62,6 +62,7 @@
     <ClInclude Include="Koodit\World\Generation\PerlinNoice\PerlineNoice.hpp" />
     <ClInclude Include="Koodit\World\Generation\WorldCreator\CaveGenerator.h" />
     <ClInclude Include="Koodit\World\Generation\WorldCreator\ChunkManager.h" />
+    <ClInclude Include="Koodit\World\Generation\WorldCreator\ThreadHandler.h" />
     <ClInclude Include="Koodit\World\Generation\WorldCreator\WorldCreator.h" />
     <ClInclude Include="Koodit\Player\Player.h" />
     <ClInclude Include="Koodit\World\Generation\WorldCreator\Chunk.h" />

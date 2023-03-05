@@ -29,6 +29,7 @@
     <ClCompile Include="Koodit\DawnOfTheRats.cpp" />
     <ClCompile Include="Koodit\MainMenu\MainMenu.cpp" />
     <ClCompile Include="Koodit\Utils\Sounds\SoundManager.h" />
+    <ClCompile Include="Koodit\Utils\ThreadPool\ThreadPool.cpp" />
     <ClCompile Include="Koodit\Visuals\Texts\Text.cpp" />
     <ClCompile Include="Koodit\GameManager\States\StateMachine.cpp" />
     <ClCompile Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.cpp" />
@@ -55,6 +56,7 @@
     <ClInclude Include="Koodit\MainMenu\Button.h" />
     <ClInclude Include="Koodit\GameManager\Game.h" />
     <ClInclude Include="Koodit\MainMenu\MainMenu.h" />
+    <ClInclude Include="Koodit\Utils\ThreadPool\ThreadPool.h" />
     <ClInclude Include="Koodit\Visuals\Texts\Fonts.h" />
     <ClInclude Include="Koodit\Visuals\Texts\Text.h" />
     <ClInclude Include="Koodit\MainMenu\Buttons\ActionButtons\PlayButton.h" />
@@ -62,7 +64,6 @@
     <ClInclude Include="Koodit\World\Generation\PerlinNoice\PerlineNoice.hpp" />
     <ClInclude Include="Koodit\World\Generation\WorldCreator\CaveGenerator.h" />
     <ClInclude Include="Koodit\World\Generation\WorldCreator\ChunkManager.h" />
-    <ClInclude Include="Koodit\World\Generation\WorldCreator\ThreadHandler.h" />
     <ClInclude Include="Koodit\World\Generation\WorldCreator\WorldCreator.h" />
     <ClInclude Include="Koodit\Player\Player.h" />
     <ClInclude Include="Koodit\World\Generation\WorldCreator\Chunk.h" />

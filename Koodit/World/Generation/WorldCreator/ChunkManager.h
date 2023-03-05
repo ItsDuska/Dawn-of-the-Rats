@@ -1,6 +1,5 @@
 #pragma once
 #include "Chunk.h"
-#include "ThreadHandler.h"
 
 
 //Handles a 2d array of chunks (The whole world)
@@ -18,8 +17,9 @@ private:
 	//Settings
 	const int renderDistance = 1;
 
-	std::vector<Chunk*> chunks;
+	std::vector<std::unique_ptr<Chunk>> chunks;
 	std::vector<sf::Vector2i> chunkCords;
+	ThreadPool* threadPool;
 
 	sf::Vector2i currentChunk;
 	sf::Vector2i previousChunk = {-1,0};
@@ -41,7 +41,7 @@ private:
 public:
 	void update(sf::View *view,sf::Vector2f playerPos);
 	void render(sf::RenderTarget* window);
-	ChunkManager(sf::Vector2f windowSize, int seed, float threshold);
+	ChunkManager(sf::Vector2f windowSize, int seed, float threshold,ThreadPool *threadPool);
 	~ChunkManager();
 };
 

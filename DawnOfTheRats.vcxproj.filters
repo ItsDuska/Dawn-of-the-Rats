@@ -20,6 +20,7 @@
     <ClCompile Include="Koodit\Utils\Sounds\SoundManager.h" />
     <ClCompile Include="Koodit\GUI\Inventory\Inventory.cpp" />
     <ClCompile Include="Koodit\GUI\Inventory\Item.cpp" />
+    <ClCompile Include="Koodit\Utils\ThreadPool\ThreadPool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Koodit\GameManager\States\State.h" />
@@ -47,7 +48,7 @@
     <ClInclude Include="Koodit\GUI\Inventory\Items\ItemStaff.h" />
     <ClInclude Include="Koodit\Player\PlayerStats.h" />
     <ClInclude Include="Koodit\Visuals\Texts\Fonts.h" />
-    <ClInclude Include="Koodit\World\Generation\WorldCreator\ThreadHandler.h" />
+    <ClInclude Include="Koodit\Utils\ThreadPool\ThreadPool.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Fonts\yoster.ttf" />

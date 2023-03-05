@@ -7,7 +7,7 @@ CaveGeneration::~CaveGeneration()
 CaveGeneration::CaveGeneration(int seed, float threshold, sf::Vector2i gridSize, sf::Vector2i chunkCoord)
 	: perlinNoice(seed)
 {
-	this->threshold = threshold;
+	this->threshold = (double) threshold;
 	this->gridSize = gridSize;
 	this->cave.resize(gridSize.y);
 	this->generateCave(chunkCoord);
@@ -24,7 +24,7 @@ void CaveGeneration::generateCave(sf::Vector2i chunkCoord)
 		this->cave[y].resize(this->gridSize.x);
 		for (int x = 0; x < this->gridSize.x; x++)
 		{
-			const float noise = this->perlinNoice.noise((WORLD_POSITION.x + x) / 16.0f, (WORLD_POSITION.y + y) / 16.0f, 3);
+			const double noise = this->perlinNoice.noise((double) (WORLD_POSITION.x + x) / 16.0, (double) (WORLD_POSITION.y + y) / 16.0, 3.0);
 			this->cave[y][x] = (noise <= this->threshold);
 		}
 	}

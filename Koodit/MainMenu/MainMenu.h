@@ -6,7 +6,7 @@
 #include "../Utils/Assets/AssetManager.h"
 #include "Buttons/ActionButtons/ExitButton.h"
 #include "Buttons/ActionButtons/PlayButton.h"
-
+//#include <memory>
 
 //The main menu state.
 class MainMenu : public State
@@ -17,12 +17,12 @@ private:
 	sf::Shader shader;
 	sf::Clock clock;
 	sf::RectangleShape background;
-	AnimationHandler *rats;
+	std::unique_ptr<AnimationHandler> rats;
 	//AssetManager assets;
 
 	//Buttons
-	PlayButton* playButton;
-	ExitButton* exitButton;
+	std::unique_ptr <PlayButton> playButton;
+	std::unique_ptr <ExitButton> exitButton;
 
 	sf::Vector2f mousePos = {0,0};
 	sf::Vector2f screenSize;

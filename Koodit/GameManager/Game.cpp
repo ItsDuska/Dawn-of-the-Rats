@@ -10,8 +10,9 @@ void Game::initWindow()
 //Change the state if needed to.
 void Game::changeStates()
 {
-	if (this->states.getActiveState().changeStateTo == this->currentState) { return; }
-	switch (this->states.getActiveState().changeStateTo)
+	int realState = this->states.getActiveState().changeStateTo;
+	if (realState == this->currentState) { return; }
+	switch (realState)
 	{
 	default:
 		break;
@@ -22,7 +23,7 @@ void Game::changeStates()
 	case 2:
 		this->states.addState(std::make_unique<ActualGame>(sf::Vector2f((float)sf::VideoMode::getDesktopMode().width, (float)sf::VideoMode::getDesktopMode().height)));
 	}
-	this->currentState = this->states.getActiveState().changeStateTo;
+	this->currentState = realState;
 }
 
 Game::Game()

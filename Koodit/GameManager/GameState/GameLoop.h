@@ -4,6 +4,7 @@
 #include "../../Utils/Assets/AssetManager.h"
 #include "../../Player/Player.h"
 #include "../../World/Generation/WorldCreator/ChunkManager.h"
+#include "../../Utils/ThreadPool/ThreadPool.h"
 
 
 class ActualGame : public State
@@ -12,6 +13,7 @@ class ActualGame : public State
     sf::View camera;
     ChunkManager chunkManager;
     sf::Vector2f windowSize;
+    ThreadPool threadPool;
 public:
     void init();
     void update(float dt, State* state);

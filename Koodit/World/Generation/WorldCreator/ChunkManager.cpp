@@ -3,8 +3,8 @@
 void ChunkManager::addChunk(sf::Vector2i chunkPosition)
 { 
     this->chunkCords.push_back(chunkPosition);
-    this->chunks.push_back(new Chunk(this->gridSize, this->seed, this->threshold, this->tileSize,chunkPosition));
-    std::cout << "Added chunk " << chunkPosition.x << " " << chunkPosition.y << "\n";
+    this->chunks.push_back(std::make_unique<Chunk>(this->gridSize, this->seed, this->threshold, this->tileSize,chunkPosition,this->threadPool));
+    std::cout << "Added chunk at position " << chunkPosition.x << " " << chunkPosition.y << "\n";
 }
 
 float ChunkManager::distance(sf::Vector2i currentChunk, sf::Vector2i otherChunk)
@@ -15,7 +15,7 @@ float ChunkManager::distance(sf::Vector2i currentChunk, sf::Vector2i otherChunk)
 void ChunkManager::removeChunk(int index)
 {
     std::cout << "Deleted a chunk at position " << this->chunks[index]->getChunkPosition().x << " " << this->chunks[index]->getChunkPosition().x << "\n";
-    delete this->chunks[index];
+    //delete this->chunks[index];
     this->chunks.erase(this->chunks.begin() + index);
     this->chunkCords.erase(this->chunkCords.begin() + index); 
 }
@@ -47,26 +47,26 @@ void ChunkManager::update(sf::View *view, sf::Vector2f playerPos)
 
 void ChunkManager::render(sf::RenderTarget* window)
 {
-    for (Chunk* chunk : this->chunks)
+    for (auto& chunk : this->chunks)
     {
         window->draw(*chunk);
     }
 }
 
-ChunkManager::ChunkManager(sf::Vector2f windowSize, int seed, float threshold)
+ChunkManager::ChunkManager(sf::Vector2f windowSize, int seed, float threshold, ThreadPool *threadPool)
 {
     this->windowSize = windowSize;
     this->seed = seed;
     this->threshold = threshold;
     this->tileSize = { 32.f, 32.f };
     this->gridSize = sf::Vector2i((int)this->windowSize.x / this->BLOCK_SIZE, (int)this->windowSize.y / this->BLOCK_SIZE);
+    this->threadPool = threadPool;
 }
 
 ChunkManager::~ChunkManager()
 {
     while (!this->chunks.empty())
     {
-        delete this->chunks.back();
         this->chunks.pop_back();
     }
 }
@@ -79,7 +79,7 @@ int ChunkManager::getChunkPositionIndex(std::vector<sf::Vector2i>*list, sf::Vect
 
     if (iteratorThing != list->end())
     {   //löyty 
-        return iteratorThing - list->begin();
+        return (int) (iteratorThing - list->begin());
     }
     else 
     { // ei löytynyt
@@ -100,6 +100,7 @@ void ChunkManager::handleChunks()
             tempChunkCord = { 
                 (x + 1) - ((int)std::round(renderBonds / 2)) + currentChunk.x,
                 (y + 1) - ((int)std::round(renderBonds / 2)) + currentChunk.y };
+
             loadingCoords.push_back(tempChunkCord);
 
             if (this->getChunkPositionIndex(&this->chunkCords,tempChunkCord) == -1)
@@ -122,7 +123,6 @@ void ChunkManager::handleChunks()
 
     for (sf::Vector2i position : deletingChunks)
     {
-        std::cout << "amogus";
         this->removeChunk(this->getChunkPositionIndex(&this->chunkCords,position));
     }
 

@@ -21,6 +21,9 @@
     <ClCompile Include="Koodit\GUI\Inventory\Inventory.cpp" />
     <ClCompile Include="Koodit\GUI\Inventory\Item.cpp" />
     <ClCompile Include="Koodit\Utils\ThreadPool\ThreadPool.cpp" />
+    <ClCompile Include="Koodit\Entities\Entity.cpp" />
+    <ClCompile Include="Koodit\Entities\MovableEntity.cpp" />
+    <ClCompile Include="Koodit\Entities\EntityCollisionHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Koodit\GameManager\States\State.h" />
@@ -49,6 +52,10 @@
     <ClInclude Include="Koodit\Player\PlayerStats.h" />
     <ClInclude Include="Koodit\Visuals\Texts\Fonts.h" />
     <ClInclude Include="Koodit\Utils\ThreadPool\ThreadPool.h" />
+    <ClInclude Include="Koodit\Entities\Entity.h" />
+    <ClInclude Include="Koodit\Player\PlayerInputs.h" />
+    <ClInclude Include="Koodit\Entities\MovableEntity.h" />
+    <ClInclude Include="Koodit\Entities\EntityCollisionHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Fonts\yoster.ttf" />

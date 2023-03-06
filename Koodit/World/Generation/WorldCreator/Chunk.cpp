@@ -8,7 +8,6 @@ Chunk::Chunk(sf::Vector2i gridSize, int seed, float threshold, sf::Vector2f tile
 	this->chunk.resize(static_cast<size_t>(gridSize.y) * gridSize.x * 4);
 	
 	threadPool->enqueue([this]() {this->createChunk();});
-	//this->thread.launch();
 }
 
 void Chunk::setDrawable(bool drawable)

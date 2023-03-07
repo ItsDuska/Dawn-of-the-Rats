@@ -9,7 +9,7 @@ class Chunk : public sf::Drawable, public sf::Transformable
 {
 private:
 	//const int MAX_THREADS_FOR_CHUNKS = 4;
-	sf::VertexArray chunk;
+	sf::VertexBuffer chunk;
 	sf::Vector2i gridSize;
 	int seed;
 	float threshold;

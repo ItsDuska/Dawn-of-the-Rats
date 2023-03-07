@@ -2,13 +2,12 @@
 
 // initialize the chunk by creating it with Perlin noise
 Chunk::Chunk(sf::Vector2i gridSize, int seed, float threshold, sf::Vector2f tileSize, sf::Vector2i chunkCoord,ThreadPool *threadPool)
-	: gridSize(gridSize), seed(seed), threshold(threshold), tileSize(tileSize),chunkCoord(chunkCoord), isDrawable(true)//, thread(&Chunk::createChunk, this)
+	: gridSize(gridSize), seed(seed), threshold(threshold), tileSize(tileSize),chunkCoord(chunkCoord), isDrawable(true)
 {
 	this->chunk.setPrimitiveType(sf::Quads);
-	this->chunk.resize(static_cast<size_t>(gridSize.y) * gridSize.x * 4);
-	
+	this->chunk.create(static_cast<size_t>(gridSize.y) * gridSize.x * 4);
+	this->chunk.setUsage(sf::VertexBuffer::Stream);
 	threadPool->enqueue([this]() {this->createChunk();});
-	//this->thread.launch();
 }
 
 void Chunk::setDrawable(bool drawable)
@@ -31,9 +30,9 @@ void Chunk::createChunk()
 
 	std::cout << "Thread Started\n";
 	
-
-	WorldCreator(this->chunk, this->gridSize, this->seed, this->threshold, this->tileSize,this->chunkCoord);
-	
+	WorldCreator worldCreator;
+	worldCreator.buildChunk(&this->chunk,this->gridSize, this->seed, this->threshold, this->tileSize,this->chunkCoord);
+	this->chunk.setUsage(sf::VertexBuffer::Static);
 	std::cout << "Thread Ended\n";
 
 }

@@ -5,6 +5,9 @@
 #include<fstream>
 #include <string>
 #include <sstream>
+#include <SFML/Graphics/VertexBuffer.hpp>
+#include <memory>
+#include <chrono>
 
 //Constructs the tilemap for a Chunk.
 class WorldCreator
@@ -16,6 +19,7 @@ private:
 	sf::Vector2i findTexCoord(bool *blocks, sf::Vector2i tileSize);
 	sf::Vector2i getTexCoord(bool* blocks);
 public:
-	WorldCreator(sf::VertexArray &tileMap,sf::Vector2i gridSize, int seed, float threshold, sf::Vector2f tileSize, sf::Vector2i chunkCoord);
+	~WorldCreator();
+	void buildChunk(sf::VertexBuffer* buffer, sf::Vector2i gridSize, int seed, float threshold, sf::Vector2f tileSize, sf::Vector2i chunkCoord);
 };
 

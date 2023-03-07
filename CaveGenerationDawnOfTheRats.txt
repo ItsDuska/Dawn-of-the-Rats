@@ -227,6 +227,18 @@ Jokaiselle ai.
 boss ai.
 
 
+
+tän hetken rendering aika about:
+
+580-700 micro seconds
+normaali on about 650
+
+VertexBufferilla:
+80-130 micro seconds.
+
+86% nopeus upgrade :)
+
+
 //////////////////////
 MITÄ PITÄÄ SIIS TEHDÄ:
 //////////////////////

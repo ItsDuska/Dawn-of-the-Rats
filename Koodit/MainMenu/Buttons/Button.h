@@ -1,5 +1,6 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Window/Mouse.hpp>
 #include "../../Visuals/Texts/Text.h"
 #include "../../GameManager/States/StateMachine.h"
 #include "../../Utils/Sounds/SoundManager.h"

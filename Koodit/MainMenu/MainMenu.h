@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include "../Utils/Sounds/SoundManager.h"
 #include "../Utils/Animation/AnimationHandler.h"
 #include "../GameManager/States/StateMachine.h"

@@ -5,7 +5,7 @@ PlayButton::PlayButton(sf::Vector2f position, sf::Vector2f size, sf::Color color
 {
 }
 
-void PlayButton::buttonFunction(State* state)
+void PlayButton::buttonFunction(State* state) 
 {
 	state->changeStateTo = 2;
 }

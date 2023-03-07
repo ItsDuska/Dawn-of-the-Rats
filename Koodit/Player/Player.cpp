@@ -53,44 +53,17 @@ void Player::inputs()
 	this->animationHandler.changeAnimation(this->currentAnimationFrames,animationSpeed);
 }
 
-void Player::accelerationHandler()
-{
-	this->velocity.x += this->acceleration * this->direction.x;
 
-	if (this->velocity.x > 0.f && this->velocity.x > this->maxVelocity)
-	{
-		this->velocity.x = this->maxVelocity;
-	}
-	else if (this->velocity.x < 0.f && this->velocity.x < -this->maxVelocity)
-	{
-		this->velocity.x = -this->maxVelocity;
-	}
 
-	// y velocity hommelit tähä
-}
-
-void Player::decelerationHandler()
-{
-	if (this->velocity.x > 0.f)
-	{
-		this->velocity.x -= this->deceleration;
-		if (this->velocity.x < 0.f) { this->velocity.x = 0.f; }
-	}
-	else if (this->velocity.x < 0.f)
-	{
-		this->velocity.x += this->deceleration;
-		if (this->velocity.x > 0.f) { this->velocity.x = 0.f; }
-	}
-}
 
 Player::Player() 
-	: animationHandler(&this->player,0.1f, sf::Vector2i(16, 16), 6, 0), 
+	: animationHandler(&this->sprite,0.1f, sf::Vector2i(16, 16), 6, 0), 
 	_inventory(sf::Vector2f((float)sf::VideoMode::getDesktopMode().width, (float)sf::VideoMode::getDesktopMode().height),stats)
 { 
 	AssetManager::loadTexture("Player", "Kuvat/NewSprites/PlayerSheet.png");
-	this->player.setTexture(AssetManager::getTexture("Player"));
-	this->player.scale(8.f, 8.f);
-	this->player.setPosition(sf::Vector2f((float)sf::VideoMode::getDesktopMode().width/2, (float)sf::VideoMode::getDesktopMode().height));
+	this->setTexture("Player");
+	this->sprite.scale(8.f, 8.f);
+	this->sprite.setPosition(sf::Vector2f((float)sf::VideoMode::getDesktopMode().width/2, (float)sf::VideoMode::getDesktopMode().height));
 }
 
 Player::~Player()
@@ -102,15 +75,14 @@ void Player::update()
 	this->inputs();
 	this->_inventory.update();
 	this->animationHandler.update(facingLeft);
-	this->accelerationHandler();
+	this->accelerationHandler(this->direction);
 	this->decelerationHandler();
-	this->player.move(this->velocity);
+	this->moveEntity(&this->sprite);
 }
 
 void Player::render(sf::RenderTarget* window)
 {
-	window->draw(this->player);
-	
+	window->draw(this->sprite);
 }
 
 void Player::renderInventory(sf::RenderTarget* window)
@@ -118,8 +90,4 @@ void Player::renderInventory(sf::RenderTarget* window)
 	this->_inventory.render(window);
 }
 
-sf::Vector2f Player::getPosition()
-{
-	return this->player.getPosition();
-}
 

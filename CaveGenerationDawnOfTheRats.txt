@@ -275,3 +275,101 @@ Kaikki textuurit.
 Ääänet ja musiikit.
 hieman tarinaa joka yhdistäis paikan yhteen.
 particle system.
+
+
+
+
+
+
+
+
+////////////////
+CollisionHandler
+////////////////
+
+
+input:
+vec2 EntityPos;
+FloatRect entityRect; (voi käyttää)
+
+vector<vector<bool> blockMap;
+näyttää esim tälle:  (1 = block, 0 = air;)
+0,0,0,0,0,0,0
+0,1,1,1,1,0,0
+0,1,1,1,1,0,0
+0,1,1,1,1,0,0
+0,1,1,1,1,0,0
+
+float blockSize; // palikan koot ja ne
+
+output:
+bool Collison tapahtui tai ei
+
+jos collision tapahtuu niin kyseinen entity ei pysty enään liikkumaan siihen suuntaan.
+
+////////
+toteutus:
+////////
+
+ei mitään hajua
+
+
+void checkCollisonSides(velocity); // uus funktio joka tekee nää
+{
+	if velocity.y < 0 ylös; laita se nollaan
+		velocity.0
+	
+	if velocity.y > 0:
+		// ja collidaa
+		bool onGround = true;
+		velocity.y = 0;
+		
+
+
+}
+
+bool collision(entity, blockMap)
+{
+	vec2f entityPosition_InWorld = {
+		std::floorf(chunkCoord.x*(entity.position.x /gridSize)* blockSize), // x
+		std::floorf(chunkCoord.y*(entity.position.y /gridSize)* blockSize)  // y
+	};
+	
+	const naapuri; lista samat vec2 arvot naapureille.
+	
+	for naapuri in naapurit:
+	{
+		if not in blockMap
+			continue;
+							// width height on palikan koko eli blockSize?
+		FloatRect neighborCell = {entityPosition_InWorld.x,entityPosition_InWorld.y,width,height};
+		
+		if !(neighborCell.intersects(entity.rect)
+			continue;
+		
+		checkCollisonSides(velocity); // uus funktio joka tekee nää
+	}
+	//
+	
+	Tää ei tule toimimaan kokonaan.
+	
+	pitää katsoa pelaajan ympräillä olevat palikat eli yhteensä 8 naapuria.
+	for loopissa tehdään jokaiselle naapurille eli cellille. FloatRect arvo ja sit katsotaan onko 
+	entity siinä sisällä
+	
+	
+	
+	//
+	
+	
+	viel chekki että onko velocity 0 vai ei ja sen perusteella myös jotain???
+	
+	
+	
+	sama muille
+	
+	
+	//vois toimia?????
+	
+
+}

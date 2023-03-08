@@ -34,3 +34,8 @@ bool CaveGeneration::getCaveBlock(sf::Vector2i position)
 {
 	return this->cave[position.y][position.x];
 }
+
+std::vector<std::vector<bool>> CaveGeneration::getCaveMap()
+{
+	return this->cave;
+}

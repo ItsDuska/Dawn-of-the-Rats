@@ -15,5 +15,6 @@ private:
 public:
 	~CaveGeneration();
 	CaveGeneration(int seed, float threshold, sf::Vector2i gridSize, sf::Vector2i chunkCoord);
+	std::vector<std::vector<bool>> getCaveMap();
 	bool getCaveBlock(sf::Vector2i position);
 };

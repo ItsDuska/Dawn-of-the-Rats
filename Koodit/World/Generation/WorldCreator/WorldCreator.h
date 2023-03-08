@@ -18,8 +18,10 @@ private:
 	void removeSpace(std::string &text);
 	sf::Vector2i findTexCoord(bool *blocks, sf::Vector2i tileSize);
 	sf::Vector2i getTexCoord(bool* blocks);
+	std::unique_ptr<CaveGeneration> blockMap;
 public:
 	~WorldCreator();
+	const std::vector<std::vector<bool>> getBlockMap();
 	void buildChunk(sf::VertexBuffer* buffer, sf::Vector2i gridSize, int seed, float threshold, sf::Vector2f tileSize, sf::Vector2i chunkCoord);
 };
 

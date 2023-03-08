@@ -33,6 +33,7 @@ void Chunk::createChunk()
 	WorldCreator worldCreator;
 	worldCreator.buildChunk(&this->chunk,this->gridSize, this->seed, this->threshold, this->tileSize,this->chunkCoord);
 	this->chunk.setUsage(sf::VertexBuffer::Static);
+	this->blockMap = worldCreator.getBlockMap();
 	std::cout << "Thread Ended\n";
 
 }

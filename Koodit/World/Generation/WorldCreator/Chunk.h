@@ -16,6 +16,9 @@ private:
 	bool isDrawable;
 	sf::Vector2f tileSize;
 	sf::Vector2i chunkCoord;
+	// get funktio muualla näille ?
+	std::vector<std::vector<bool>> blockMap;
+
 	//sf::Thread thread;
 	void createChunk();
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

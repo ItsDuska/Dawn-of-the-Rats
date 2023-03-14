@@ -371,5 +371,27 @@ bool collision(entity, blockMap)
 	
 	//vois toimia?????
 	
+	
+	
+	Tee class tai struct joka pitää tallessa seedin, gridSize, threshold, tileSizen, ehkä chunkCord
+	
 
 }
+
+
+TO DOOO:
+
+yhdistä hommat
+pitäs olla yks paikka joka hoitaa kaikkien entitien updaten ja semmotteen
+
+
+
+
+
+
+
+
+
+
+
+

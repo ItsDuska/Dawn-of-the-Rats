@@ -5,6 +5,8 @@
 #include "../Utils/Assets/AssetManager.h"
 #include "Buttons/ActionButtons/ExitButton.h"
 #include "Buttons/ActionButtons/PlayButton.h"
+#include <SFML/Graphics/Shader.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 //#include <memory>
 
 //The main menu state.

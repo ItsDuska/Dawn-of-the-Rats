@@ -18,8 +18,8 @@ void ActualGame::update(float dt, State* state)
 //rendering function for the game loop.
 void ActualGame::render(sf::RenderTarget* window)
 {
-	std::chrono::time_point<std::chrono::system_clock> start, end;
-	start = std::chrono::system_clock::now();
+	//std::chrono::time_point<std::chrono::system_clock> start, end;
+	//start = std::chrono::system_clock::now();
 	
 	//World stuff rendering
 	window->setView(this->camera);
@@ -30,8 +30,8 @@ void ActualGame::render(sf::RenderTarget* window)
 	window->setView(window->getDefaultView());
 	this->player.renderInventory(window);
 
-	end = std::chrono::system_clock::now();
-	std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << "[microsecs]" << std::endl;
+	//end = std::chrono::system_clock::now();
+	//std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << "[microsecs]" << std::endl;
 
 }
 

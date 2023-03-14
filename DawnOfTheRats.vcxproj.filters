@@ -24,6 +24,11 @@
     <ClCompile Include="Koodit\Entities\Entity.cpp" />
     <ClCompile Include="Koodit\Entities\MovableEntity.cpp" />
     <ClCompile Include="Koodit\Entities\EntityCollisionHandler.cpp" />
+    <ClCompile Include="Koodit\Entities\EntityManager\EntityManager.cpp" />
+    <ClCompile Include="Koodit\Entities\ComponentManager\ComponentArray.cpp" />
+    <ClCompile Include="Koodit\Entities\ComponentManager\ComponentManager.cpp" />
+    <ClCompile Include="Koodit\Entities\SystemManager\SystemManager.cpp" />
+    <ClCompile Include="Koodit\Entities\Coordinator\Cordinator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Koodit\GameManager\States\State.h" />
@@ -56,6 +61,13 @@
     <ClInclude Include="Koodit\Player\PlayerInputs.h" />
     <ClInclude Include="Koodit\Entities\MovableEntity.h" />
     <ClInclude Include="Koodit\Entities\EntityCollisionHandler.h" />
+    <ClInclude Include="Koodit\Entities\EntityManager\EntityManager.h" />
+    <ClInclude Include="Koodit\Config\EntityComponentSystemConfig.h" />
+    <ClInclude Include="Koodit\Entities\ComponentManager\ComponentArray.h" />
+    <ClInclude Include="Koodit\Entities\ComponentManager\ComponentManager.h" />
+    <ClInclude Include="Koodit\Entities\Systems\System.h" />
+    <ClInclude Include="Koodit\Entities\SystemManager\SystemManager.h" />
+    <ClInclude Include="Koodit\Entities\Coordinator\Cordinator.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Fonts\yoster.ttf" />

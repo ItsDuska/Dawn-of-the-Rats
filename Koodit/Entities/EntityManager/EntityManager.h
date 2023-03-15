@@ -9,14 +9,14 @@ class EntityManager
 {
 public:
 	EntityManager();
-	Entity createEntity();
-	void destroyEntity(Entity entity);
+	uint32_t createEntity();
+	void destroyEntity(uint32_t entity);
 
-	void setSignature(Entity entity, Signature signature);
-	Signature getSignature(Entity entity);
+	void setSignature(uint32_t entity, Signature signature);
+	Signature getSignature(uint32_t entity);
 
 private:
-	std::queue<Entity> _availableEntities{};
+	std::queue<uint32_t> _availableEntities{};
 	std::array<Signature, MAX_ENTITIES> _signatures{};
 	std::uint32_t _livingEntityCount{};
 };

@@ -3,17 +3,17 @@
 
 EntityManager::EntityManager()
 {
-	for (Entity entity = 0; entity < MAX_ENTITIES; ++entity)
+	for (uint32_t entity = 0; entity < MAX_ENTITIES; ++entity)
 	{
 		this->_availableEntities.push(entity);
 	}
 }
 
-Entity EntityManager::createEntity()
+uint32_t EntityManager::createEntity()
 {
 	assert(this->_livingEntityCount < MAX_ENTITIES && "Too many entities in existance.");
 
-	Entity id = this->_availableEntities.front();
+	uint32_t id = this->_availableEntities.front();
 	this->_availableEntities.pop();
 
 	++this->_livingEntityCount;
@@ -21,7 +21,7 @@ Entity EntityManager::createEntity()
 	return id;
 }
 
-void EntityManager::destroyEntity(Entity entity)
+void EntityManager::destroyEntity(uint32_t entity)
 {
 	assert(entity < MAX_ENTITIES && "Entity hyppäs laidan yli (out of range)");
 
@@ -31,14 +31,14 @@ void EntityManager::destroyEntity(Entity entity)
 	--this->_livingEntityCount;
 }
 
-void EntityManager::setSignature(Entity entity, Signature signature)
+void EntityManager::setSignature(uint32_t entity, Signature signature)
 {
 	assert(entity < MAX_ENTITIES && "Entity hyppäs laidan yli (out of range)");
 
 	this->_signatures[entity] = signature;
 }
 
-Signature EntityManager::getSignature(Entity entity)
+Signature EntityManager::getSignature(uint32_t entity)
 {
 	assert(entity < MAX_ENTITIES && "Entity hyppäs laidan yli (out of range)");
 

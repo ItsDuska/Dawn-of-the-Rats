@@ -1,7 +1,7 @@
 #include "ComponentManager.h"
 
 template<typename kys>
-void ComponentManager::registerComponent()
+inline void ComponentManager::registerComponent()
 {
 	const char* typeName = typeid(kys).name();
 
@@ -14,34 +14,34 @@ void ComponentManager::registerComponent()
 }
 
 template<typename kys>
-ComponentType ComponentManager::getComponentType()
+inline uint8_t ComponentManager::getComponentType()
 {
 	const char* typeName = typeid(kys).name();
 	assert(this->_componentTypes.find(typeName) != this->_componentTypes.end() && "Kukas tämäkin herra on.");
 
-	return mComponentTypes[typeName];
+	return this->_componentTypes[typeName];
 }
 
 template<typename kys>
-void ComponentManager::addComponent(Entity entity, kys component)
+inline void ComponentManager::addComponent(uint32_t entity, kys component)
 {
 	this->getComponentArray<kys>()->insertData(entity, component);
 }
 
 template<typename kys>
-void ComponentManager::removeComponent(Entity entity)
+void ComponentManager::removeComponent(uint32_t entity)
 {
 	this->getComponentArray<kys>()->removeData(entity);
 }
 
 template<typename kys>
-kys& ComponentManager::getComponent(Entity entity)
+inline kys& ComponentManager::getComponent(uint32_t entity)
 {
 	return this->getComponentArray<kys>()->GetData(entity);
 }
 
 template<typename kys>
-std::shared_ptr<ComponentArray<kys>> ComponentManager::getComponentArray()
+inline std::shared_ptr<ComponentArray<kys>> ComponentManager::getComponentArray()
 {
 	const char* typeName = typeid(kys).name();
 	assert(this->_componentTypes.find(typeName) != this->_componentTypes.end() && "Kukas tämäkin herra on.");
@@ -49,7 +49,7 @@ std::shared_ptr<ComponentArray<kys>> ComponentManager::getComponentArray()
 	return std::static_pointer_cast<ComponentArray<kys>>(this->_componentArrays[typeName]);
 }
 
-void ComponentManager::entityDestroyed(Entity entity)
+void ComponentManager::entityDestroyed(uint32_t entity)
 {
 	for (auto const& pair : _componentArrays)
 	{

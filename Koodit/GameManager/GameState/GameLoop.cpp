@@ -5,6 +5,13 @@ void ActualGame::init()
 {
 	this->changeStateTo = 2;
 	AssetManager::loadTexture("Blocks", "Kuvat/NewSprites/GrassyBlock.png");
+	AssetManager::loadTexture("Shocked", "Kuvat/NewSprites/SHOCKED.jpg");
+	//entity hämmeli
+	this->entities.resize(MAX_ENTITIES);
+	this->entityManager.init();
+	EntityHelper::initComponents(&this->entityManager);
+	EntityHelper::initSystem(&this->entityManager, &this->systems.render, SystemType::RENDER);
+	EntityHelper::createEntity(&this->entityManager, this->entities);
 }
 
 //update function for the game loop.
@@ -12,6 +19,7 @@ void ActualGame::update(float dt, State* state)
 {
 	this->camera.setCenter(this->player.getPosition());
 	this->chunkManager.update(&this->camera, this->player.getPosition());
+	//this->systems.render.update(this->entityManager);
 	this->player.update();
 }
 
@@ -24,6 +32,7 @@ void ActualGame::render(sf::RenderTarget* window)
 	//World stuff rendering
 	window->setView(this->camera);
 	this->chunkManager.render(window);
+	//this->systems.render.render(this->entityManager,window);
 	this->player.render(window);
 
 	//Piirrä tän jälkeen GUI asiat.

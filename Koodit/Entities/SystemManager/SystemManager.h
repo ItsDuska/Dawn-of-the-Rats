@@ -13,8 +13,8 @@ public:
 	template<typename kys>
 	void setSignature(Signature signature);
 
-	void entityDestroyed(Entity entity);
-	void entitySignatureChanged(Entity entity, Signature entitySignature);
+	void entityDestroyed(uint32_t entity);
+	void entitySignatureChanged(uint32_t entity, Signature entitySignature);
 
 private:
 	std::unordered_map<const char*, Signature> _signatures{};

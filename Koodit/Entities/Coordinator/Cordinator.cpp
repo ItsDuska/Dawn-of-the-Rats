@@ -7,12 +7,12 @@ void Coordinator::init()
 	this->_systemManager = std::make_unique<SystemManager>();
 }
 
-Entity Coordinator::createEntity()
+uint32_t Coordinator::createEntity()
 {
 	return this->_entityManager->createEntity();
 }
 
-void Coordinator::destroyEntity(Entity entity)
+void Coordinator::destroyEntity(uint32_t entity)
 {
 	this->_entityManager->destroyEntity(entity);
 	this->_componentManager->entityDestroyed(entity);
@@ -20,13 +20,13 @@ void Coordinator::destroyEntity(Entity entity)
 }
 
 template<typename kys>
-void Coordinator::registerComponent()
+inline void Coordinator::registerComponent()
 {
-	this->_componentManager->registerComponent<kys>()
+	this->_componentManager->registerComponent<kys>();
 }
 
 template<typename kys>
-void Coordinator::addComponent(Entity entity, kys component)
+inline void Coordinator::addComponent(uint32_t entity, kys component)
 {
 	this->_componentManager->addComponent<kys>(entity, component);
 
@@ -38,7 +38,7 @@ void Coordinator::addComponent(Entity entity, kys component)
 }
 
 template<typename kys>
-void Coordinator::removeComponent(Entity entity)
+inline void Coordinator::removeComponent(uint32_t entity)
 {
 	this->_componentManager->removeComponent<kys>(entity);
 
@@ -50,25 +50,25 @@ void Coordinator::removeComponent(Entity entity)
 }
 
 template<typename kys>
-kys& Coordinator::getComponent(Entity entity)
+inline kys& Coordinator::getComponent(uint32_t entity)
 {
 	return this->_componentManager->getComponent<kys>(entity);
 }
 
 template<typename kys>
-ComponentType Coordinator::GetComponentType()
+inline uint8_t Coordinator::GetComponentType()
 {
 	return this->_componentManager->getComponentType<kys>();
 }
 
 template<typename kys>
-std::shared_ptr<kys> Coordinator::RegisterSystem()
+inline std::shared_ptr<kys> Coordinator::RegisterSystem()
 {
 	return this->_systemManager->registerSystem<kys>();
 }
 
 template<typename kys>
-void Coordinator::SetSystemSignature(Signature signature)
+inline void Coordinator::SetSystemSignature(Signature signature)
 {
 	this->_systemManager->setSignature<kys>(signature);
 }

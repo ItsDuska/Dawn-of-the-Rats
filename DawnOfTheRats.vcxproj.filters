@@ -29,6 +29,7 @@
     <ClCompile Include="Koodit\Entities\ComponentManager\ComponentManager.cpp" />
     <ClCompile Include="Koodit\Entities\SystemManager\SystemManager.cpp" />
     <ClCompile Include="Koodit\Entities\Coordinator\Cordinator.cpp" />
+    <ClCompile Include="Koodit\Entities\Systems\RenderSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Koodit\GameManager\States\State.h" />
@@ -68,6 +69,9 @@
     <ClInclude Include="Koodit\Entities\Systems\System.h" />
     <ClInclude Include="Koodit\Entities\SystemManager\SystemManager.h" />
     <ClInclude Include="Koodit\Entities\Coordinator\Cordinator.h" />
+    <ClInclude Include="Koodit\Entities\Components\Components.h" />
+    <ClInclude Include="Koodit\Entities\Coordinator\CordinatorOperator\CordinatorOperator.h" />
+    <ClInclude Include="Koodit\Entities\Systems\RenderSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Fonts\yoster.ttf" />

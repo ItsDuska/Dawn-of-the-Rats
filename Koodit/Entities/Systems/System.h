@@ -11,5 +11,5 @@ tai movement tai fysiikat
 class System
 {
 public:
-	std::set<Entity> mEntities;
+	std::set<uint32_t> mEntities;
 };

@@ -27,6 +27,7 @@
     <ClCompile Include="Koodit\Entities\EntityManager\EntityManager.cpp" />
     <ClCompile Include="Koodit\Entities\MovableEntity.cpp" />
     <ClCompile Include="Koodit\Entities\SystemManager\SystemManager.cpp" />
+    <ClCompile Include="Koodit\Entities\Systems\RenderSystem.cpp" />
     <ClCompile Include="Koodit\GameManager\GameState\GameLoop.cpp" />
     <ClCompile Include="Koodit\GUI\Inventory\Inventory.cpp" />
     <ClCompile Include="Koodit\GUI\Inventory\Item.cpp" />
@@ -52,12 +53,15 @@
     <ClInclude Include="Koodit\Config\EntityComponentSystemConfig.h" />
     <ClInclude Include="Koodit\Entities\ComponentManager\ComponentArray.h" />
     <ClInclude Include="Koodit\Entities\ComponentManager\ComponentManager.h" />
+    <ClInclude Include="Koodit\Entities\Components\Components.h" />
     <ClInclude Include="Koodit\Entities\Coordinator\Cordinator.h" />
+    <ClInclude Include="Koodit\Entities\Coordinator\CordinatorOperator\CordinatorOperator.h" />
     <ClInclude Include="Koodit\Entities\Entity.h" />
     <ClInclude Include="Koodit\Entities\EntityCollisionHandler.h" />
     <ClInclude Include="Koodit\Entities\EntityManager\EntityManager.h" />
     <ClInclude Include="Koodit\Entities\MovableEntity.h" />
     <ClInclude Include="Koodit\Entities\SystemManager\SystemManager.h" />
+    <ClInclude Include="Koodit\Entities\Systems\RenderSystem.h" />
     <ClInclude Include="Koodit\Entities\Systems\System.h" />
     <ClInclude Include="Koodit\GameManager\GameState\GameLoop.h" />
     <ClInclude Include="Koodit\GameManager\States\State.h" />
@@ -177,6 +181,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\Olli\Desktop\C++ kirjastot\SFML-2.5.1\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-main-d.lib;sfml-audio-d.lib</AdditionalDependencies>
+      <AdditionalOptions>/VERBOSE %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -212,6 +217,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\Olli\Desktop\C++ kirjastot\SFML-2.5.1\lib;C:\Users\olli.sotavalta\Documents\sfmlKansio\SFML-2.5.1\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-main-d.lib;sfml-audio-d.lib</AdditionalDependencies>
+      <AdditionalOptions>/VERBOSE %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

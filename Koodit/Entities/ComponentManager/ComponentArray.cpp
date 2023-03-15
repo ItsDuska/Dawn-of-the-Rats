@@ -1,9 +1,9 @@
 #include "ComponentArray.h"
 
 template<typename kys>
-void ComponentArray<kys>::insertData(Entity entity, kys component)
+void ComponentArray<kys>::insertData(uint32_t entity, kys component)
 {
-	assert(mEntityToIndexMap.find(entity) == mEntityToIndexMap.end() && "Miksi monta componenttia? Eikˆ yks riit‰ :| ");
+	assert(this->_entityToIndexMap.find(entity) == this->_entityToIndexMap.end() && "Miksi monta componenttia? Eikˆ yks riit‰ :| ");
 
 	size_t newIndex = _size;
 	this->_entityToIndexMap[entity] = newIndex;
@@ -13,7 +13,7 @@ void ComponentArray<kys>::insertData(Entity entity, kys component)
 }
 
 template<typename kys>
-void ComponentArray<kys>::removeData(Entity entity)
+void ComponentArray<kys>::removeData(uint32_t entity)
 {
 	assert(this->_entityToIndexMap.find(entity) != this->_entityToIndexMap.end() && "Poistat asiaa jota ei ole olemassa senkin p‰lli!");
 	
@@ -21,7 +21,7 @@ void ComponentArray<kys>::removeData(Entity entity)
 	size_t indexOfLastElement = this->_size - 1;
 	this->_componentArray[indexOfRemovedEntity] = this->_componentArray[indexOfLastElement];
 
-	Entity entityOfLastElement = this->_indexToEntityMap[indexOfLastElement];
+	uint32_t entityOfLastElement = this->_indexToEntityMap[indexOfLastElement];
 	this->_entityToIndexMap[entityOfLastElement] = indexOfRemovedEntity;
 	this->_indexToEntityMap[indexOfRemovedEntity] = entityOfLastElement;
 
@@ -33,7 +33,7 @@ void ComponentArray<kys>::removeData(Entity entity)
 }
 
 template<typename kys>
-kys ComponentArray<kys>::getData(Entity entity)
+kys ComponentArray<kys>::getData(uint32_t entity)
 {
 	assert(this->_entityToIndexMap.find(entity) != this->_entityToIndexMap.end() && 
 		"Valitettavasti t‰h‰n componenttiin ei juuri nyt saada yhteytt‰. Laita tekstiviesti ‰‰nimerkin j‰‰lkeen. :)");
@@ -42,7 +42,7 @@ kys ComponentArray<kys>::getData(Entity entity)
 }
 
 template<typename kys>
-void ComponentArray<kys>::entityDestroyed(Entity entity)
+void ComponentArray<kys>::entityDestroyed(uint32_t entity)
 {
 	if (this->_entityToIndexMap.find(entity) != this->_entityToIndexMap.end())
 	{

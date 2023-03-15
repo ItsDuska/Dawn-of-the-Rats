@@ -11,25 +11,25 @@ public:
 
 
 	template<typename kys>
-	ComponentType getComponentType();
+	uint8_t getComponentType();
 
 	template<typename kys>
-	void addComponent(Entity entity, kys component);
+	void addComponent(uint32_t entity, kys component);
 
 	template<typename kys>
-	void removeComponent(Entity entity);
+	void removeComponent(uint32_t entity);
 
 	template<typename kys>
-	kys& getComponent(Entity entity);
+	kys& getComponent(uint32_t entity);
 
-	void entityDestroyed(Entity entity);
+	void entityDestroyed(uint32_t entity);
 
 private:
-	std::unordered_map<const char*, ComponentType> _componentTypes{};
+	std::unordered_map<const char*, uint8_t> _componentTypes{};
 
 	std::unordered_map<const char*, std::shared_ptr<IComponentArray>> _componentArrays{};
 
-	ComponentType _nextComponentType{};
+	uint8_t _nextComponentType{};
 
 	template<typename kys>
 	std::shared_ptr<ComponentArray<kys>> getComponentArray();

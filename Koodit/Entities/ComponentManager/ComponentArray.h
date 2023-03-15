@@ -7,23 +7,23 @@ class IComponentArray
 {
 public:
 	virtual ~IComponentArray() = default;
-	virtual void entityDestroyed(Entity entity) = 0;
+	virtual void entityDestroyed(uint32_t entity) = 0;
 };
 
 template<typename kys>
 class ComponentArray : public IComponentArray
 {
 public:
-	void insertData(Entity entity, kys component);
-	void removeData(Entity entity);
+	void insertData(uint32_t entity, kys component);
+	void removeData(uint32_t entity);
 
-	kys getData(Entity entity);
+	kys getData(uint32_t entity);
 
-	void entityDestroyed(Entity entity) override;
+	void entityDestroyed(uint32_t entity) override;
 
 private:
 	std::array<kys, MAX_ENTITIES> _componentArray;
-	std::unordered_map<Entity, size_t> _entityToIndexMap;
-	std::unordered_map<size_t, Entity> _indexToEntityMap;
+	std::unordered_map<uint32_t, size_t> _entityToIndexMap;
+	std::unordered_map<size_t, uint32_t> _indexToEntityMap;
 	size_t _size;
 };

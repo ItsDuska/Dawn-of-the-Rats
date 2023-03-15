@@ -2,28 +2,31 @@
 #include "../ComponentManager/ComponentManager.h"
 #include "../EntityManager/EntityManager.h"
 #include "../SystemManager/SystemManager.h"
+#include "../Components/Components.h"	
+
+
 
 class Coordinator
 {
 public:
 	void init();
-	Entity createEntity();
-	void destroyEntity(Entity entity);
+	uint32_t createEntity();
+	void destroyEntity(uint32_t entity);
 
 	template<typename kys>
 	void registerComponent();
 
 	template<typename kys>
-	void addComponent(Entity entity, kys component);
+	void addComponent(uint32_t entity, kys component);
 
 	template<typename kys>
-	void removeComponent(Entity entity);
+	void removeComponent(uint32_t entity);
 
 	template<typename kys>
-	kys& getComponent(Entity entity);
+	kys& getComponent(uint32_t entity);
 
 	template<typename kys>
-	ComponentType GetComponentType();
+	uint8_t GetComponentType();
 
 	template<typename kys>
 	std::shared_ptr<kys> RegisterSystem();

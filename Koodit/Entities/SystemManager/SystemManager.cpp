@@ -8,7 +8,7 @@ std::shared_ptr<kys> SystemManager::registerSystem()
 
 	assert(this->_systems.find(typeName) == this->_systems.end() && "Miksi monta componenttia? Eikö yks riitä :|");
 
-	auto system = std::make_shared<T>();
+	auto system = std::make_shared<kys>();
 	this->_systems.insert({ typeName, system });
 	return system;
 }
@@ -16,7 +16,7 @@ std::shared_ptr<kys> SystemManager::registerSystem()
 template<typename kys>
 void SystemManager::setSignature(Signature signature)
 {
-	const char* typeName = typeid(T).name();
+	const char* typeName = typeid(kys).name();
 
 	assert(this->_systems.find(typeName) != this->_systems.end() && "Kukas tämäkäkin systeemi on?");
 
@@ -24,7 +24,7 @@ void SystemManager::setSignature(Signature signature)
 }
 
 
-void SystemManager::entityDestroyed(Entity entity)
+void SystemManager::entityDestroyed(uint32_t entity)
 {
 	for (auto const& pair : this->_systems)
 	{
@@ -33,7 +33,7 @@ void SystemManager::entityDestroyed(Entity entity)
 	}
 }
 
-void SystemManager::entitySignatureChanged(Entity entity, Signature entitySignature)
+void SystemManager::entitySignatureChanged(uint32_t entity, Signature entitySignature)
 {
 	for (auto const& pair : this->_systems)
 	{

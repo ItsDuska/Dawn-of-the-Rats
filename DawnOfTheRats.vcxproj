@@ -217,7 +217,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Users\Olli\Desktop\C++ kirjastot\SFML-2.5.1\lib;C:\Users\olli.sotavalta\Documents\sfmlKansio\SFML-2.5.1\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-main-d.lib;sfml-audio-d.lib</AdditionalDependencies>
-      <AdditionalOptions>/VERBOSE %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

@@ -1,3 +1,4 @@
+/*
 #include "ComponentManager.h"
 
 template<typename kys>
@@ -57,3 +58,4 @@ void ComponentManager::entityDestroyed(uint32_t entity)
 		component->entityDestroyed(entity);
 	}
 }
+*/

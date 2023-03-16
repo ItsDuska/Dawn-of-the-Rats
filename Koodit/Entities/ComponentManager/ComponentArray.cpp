@@ -1,3 +1,4 @@
+/*
 #include "ComponentArray.h"
 
 template<typename kys>
@@ -49,3 +50,4 @@ void ComponentArray<kys>::entityDestroyed(uint32_t entity)
 		this->removeData(entity);
 	}
 }
+*/

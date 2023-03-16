@@ -1,3 +1,4 @@
+/*
 #include "SystemManager.h"
 
 
@@ -51,3 +52,4 @@ void SystemManager::entitySignatureChanged(uint32_t entity, Signature entitySign
 		}
 	}
 }
+*/

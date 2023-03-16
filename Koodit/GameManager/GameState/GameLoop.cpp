@@ -9,8 +9,10 @@ void ActualGame::init()
 	//entity hämmeli
 	this->entities.resize(MAX_ENTITIES);
 	this->entityManager.init();
+	this->systems.render = this->entityManager.RegisterSystem<RenderSystem>();
+
 	EntityHelper::initComponents(&this->entityManager);
-	EntityHelper::initSystem(&this->entityManager, &this->systems.render, SystemType::RENDER);
+	EntityHelper::initSystem(&this->entityManager, this->systems.render.get(), SystemType::RENDER);
 	EntityHelper::createEntity(&this->entityManager, this->entities);
 }
 
@@ -19,7 +21,7 @@ void ActualGame::update(float dt, State* state)
 {
 	this->camera.setCenter(this->player.getPosition());
 	this->chunkManager.update(&this->camera, this->player.getPosition());
-	//this->systems.render.update(this->entityManager);
+	this->systems.render->update(this->entityManager);
 	this->player.update();
 }
 
@@ -32,7 +34,7 @@ void ActualGame::render(sf::RenderTarget* window)
 	//World stuff rendering
 	window->setView(this->camera);
 	this->chunkManager.render(window);
-	//this->systems.render.render(this->entityManager,window);
+	this->systems.render->render(this->entityManager,window);
 	this->player.render(window);
 
 	//Piirrä tän jälkeen GUI asiat.

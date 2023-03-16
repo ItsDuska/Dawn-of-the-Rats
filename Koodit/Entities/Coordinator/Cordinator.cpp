@@ -1,3 +1,4 @@
+/*
 #include "Cordinator.h"
 
 void Coordinator::init()
@@ -72,3 +73,4 @@ inline void Coordinator::SetSystemSignature(Signature signature)
 {
 	this->_systemManager->setSignature<kys>(signature);
 }
+*/

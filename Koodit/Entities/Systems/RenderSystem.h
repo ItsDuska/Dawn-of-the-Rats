@@ -3,7 +3,7 @@
 #include "../Coordinator/Cordinator.h"
 #include "SFML/Graphics/RenderTarget.hpp"
 
-class RenderSystem : System
+class RenderSystem : public System
 {
 public:
 	void update(Coordinator &entityManager);

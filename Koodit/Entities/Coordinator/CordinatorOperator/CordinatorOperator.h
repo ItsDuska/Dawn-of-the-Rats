@@ -21,7 +21,7 @@ public:
 	}
 
 	template<typename SYSTEM>
-	static void initSystem(Coordinator* entityManager, SYSTEM system,SystemType type)
+	static void initSystem(Coordinator* entityManager, SYSTEM *system, SystemType type)
 	{
 		Signature signature;
 		switch (type)
@@ -47,7 +47,7 @@ public:
 			entity = entityManager->createEntity();
 
 			entityManager->addComponent(entity, Transform{ 
-				sf::Vector2f(500.f + rand() % 200,500.f),
+				sf::Vector2f(500.f + rand() % 1000,500.f),
 				sf::Vector2f(1.f,1.f),
 				0.f });
 

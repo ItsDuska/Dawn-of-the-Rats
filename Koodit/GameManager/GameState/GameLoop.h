@@ -15,7 +15,7 @@
 
 struct Systems
 {
-    RenderSystem render;
+    std::shared_ptr<RenderSystem> render;
     //physic system
     //collision system
 };

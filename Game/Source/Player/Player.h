@@ -9,10 +9,11 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 
-//#include "../Entities/EntityCollisionHandler.h"
+#include "../Entities/EntityCollisionHandler.h"
 
-class Player : public Entity, MovableEntity
+class Player : public Entity, MovableEntity, EntityCollisionHandler
 {
 private:
 	sf::Clock clock;
@@ -32,6 +33,10 @@ private:
 	void inputs();
 	//void accelerationHandler();
 	//void decelerationHandler();
+	
+
+	sf::RectangleShape hitboxes;
+
 public:
 	Player();
 	~Player();

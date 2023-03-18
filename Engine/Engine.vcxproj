@@ -156,13 +156,10 @@
     <ClInclude Include="Source\Assets\Texts\Text.h" />
     <ClInclude Include="Source\System\ECS\ComponentManager\ComponentArray.h" />
     <ClInclude Include="Source\System\ECS\ComponentManager\ComponentManager.h" />
-    <ClInclude Include="Source\System\ECS\Components\Components.h" />
     <ClInclude Include="Source\System\ECS\Config\EntityComponentSystemConfig.h" />
     <ClInclude Include="Source\System\ECS\Coordinator\Cordinator.h" />
-    <ClInclude Include="Source\System\ECS\Coordinator\CordinatorOperator\CordinatorOperator.h" />
     <ClInclude Include="Source\System\ECS\EntityManager\EntityManager.h" />
     <ClInclude Include="Source\System\ECS\SystemManager\SystemManager.h" />
-    <ClInclude Include="Source\System\ECS\Systems\RenderSystem.h" />
     <ClInclude Include="Source\System\ECS\Systems\System.h" />
     <ClInclude Include="Source\System\GameStates\State.h" />
     <ClInclude Include="Source\System\GameStates\StateMachine.h" />
@@ -173,12 +170,7 @@
     <ClCompile Include="Source\Algorhythms\PerlinNoice\PerlineNoise.cpp" />
     <ClCompile Include="Source\Assets\Animation\AnimationHandler.cpp" />
     <ClCompile Include="Source\Assets\Texts\Text.cpp" />
-    <ClCompile Include="Source\System\ECS\ComponentManager\ComponentArray.cpp" />
-    <ClCompile Include="Source\System\ECS\ComponentManager\ComponentManager.cpp" />
-    <ClCompile Include="Source\System\ECS\Coordinator\Cordinator.cpp" />
     <ClCompile Include="Source\System\ECS\EntityManager\EntityManager.cpp" />
-    <ClCompile Include="Source\System\ECS\SystemManager\SystemManager.cpp" />
-    <ClCompile Include="Source\System\ECS\Systems\RenderSystem.cpp" />
     <ClCompile Include="Source\System\GameStates\StateMachine.cpp" />
     <ClCompile Include="Source\System\ThreadPool\ThreadPool.cpp" />
     <ClCompile Include="Source\Window\Game.cpp" />

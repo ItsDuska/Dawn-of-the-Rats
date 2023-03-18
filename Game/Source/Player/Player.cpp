@@ -62,8 +62,24 @@ Player::Player()
 { 
 	AssetManager::loadTexture("Player", "NewSprites/PlayerSheet.png");
 	this->setTexture("Player");
+
+	
+	this->sprite.setOrigin({ this->sprite.getGlobalBounds().width / 2, this->sprite.getGlobalBounds().height / 2 });
 	this->sprite.scale(8.f, 8.f);
 	this->sprite.setPosition(sf::Vector2f((float)sf::VideoMode::getDesktopMode().width/2, (float)sf::VideoMode::getDesktopMode().height));
+
+	//HIIITBOOOOX
+	float newPos = 0.5f * this->sprite.getGlobalBounds().width;
+
+	this->hitboxes.setOrigin({(this->sprite.getGlobalBounds().width / 2)-newPos/2, this->sprite.getGlobalBounds().height / 2 });
+	this->hitboxes.setSize({ newPos, this->sprite.getGlobalBounds().height });
+	//HIIITBOOOOX
+
+	this->hitboxes.setOutlineColor(sf::Color::Red);
+	this->hitboxes.setOutlineThickness(2);
+	this->hitboxes.setFillColor(sf::Color::Transparent);
+	
+
 }
 
 Player::~Player()
@@ -77,12 +93,17 @@ void Player::update()
 	this->animationHandler.update(facingLeft);
 	this->accelerationHandler(this->direction);
 	this->decelerationHandler();
+
+	
+
 	this->moveEntity(&this->sprite);
+	this->hitboxes.setPosition(this->sprite.getPosition());
 }
 
 void Player::render(sf::RenderTarget* window)
 {
 	window->draw(this->sprite);
+	window->draw(this->hitboxes);
 }
 
 void Player::renderInventory(sf::RenderTarget* window)

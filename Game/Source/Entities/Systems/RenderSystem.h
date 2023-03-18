@@ -1,7 +1,7 @@
 #pragma once
-#include "System.h"
-#include "../Coordinator/Cordinator.h"
+#include "System/ECS/Systems/System.h"
 #include "SFML/Graphics/RenderTarget.hpp"
+#include "../Components/Components.h"
 
 class RenderSystem : public System
 {

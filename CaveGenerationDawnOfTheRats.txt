@@ -386,7 +386,7 @@ pitäs olla yks paikka joka hoitaa kaikkien entitien updaten ja semmotteen
 
 
 
-
+Muuta WorldCreator Class nimi --> ChunkBuilder
 
 
 

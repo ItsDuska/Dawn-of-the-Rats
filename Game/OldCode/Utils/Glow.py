@@ -1,0 +1,28 @@
+import pygame
+from pygame.locals import BLEND_RGB_ADD
+from math import sin, pi
+
+class Glow:
+    __slots__ = "amplitude","frequency","x","radius","color","surface"
+    def __init__(self,amplitude,frequency,radius,color) -> None:
+        self.amplitude = amplitude
+        self.frequency = frequency
+        self.x = 0
+        self.radius = radius
+        self.color = list(color)
+        self.surface = pygame.surface.Surface((radius*2,radius*2), pygame.SRCALPHA)
+       
+    def getFlickeringValue(self):
+        value = int(self.amplitude * sin(2*pi*self.frequency*self.x))
+        return (self.color[0]+value-self.amplitude,self.color[1]+value-self.amplitude,self.color[2]+value-self.amplitude,self.color[3])
+            
+    def update(self,screen):
+        self.getFlickeringValue()
+        self.surface.fill((0,0,0,0))
+        self.surface.set_alpha(255)
+        pygame.draw.circle(self.surface, self.getFlickeringValue(), (self.radius,self.radius), self.radius)
+        screen.blit(self.surface,(0,0), special_flags=BLEND_RGB_ADD)
+        self.surface.set_colorkey((0,0,0))
+        if self.x > 100:
+            self.x = 0
+        self.x += 1

@@ -2,7 +2,7 @@
 
 void MainMenu::initBackGround()
 {
-	if (!this->shader.loadFromFile("Source/Shaders/MainMenuShaders/background.vert", "Source/Shaders/MainMenuShaders/background.frag")) {std::cout << "Error while loading shaders!";}
+	if (!this->shader.loadFromFile("SourceGame/Shaders/MainMenuShaders/background.vert", "SourceGame/Shaders/MainMenuShaders/background.frag")) {std::cout << "Error while loading shaders!";}
 	this->shader.setUniform("u_resolution", this->screenSize);
 	this->rats = std::make_unique<AnimationHandler>(&this->rat, 0.1f, sf::Vector2i(32, 32), 18);
 	this->rat.setPosition(sf::Vector2f(this->screenSize.x - this->screenSize.x / 2.0f, this->screenSize.y - this->screenSize.y / 2.0f ));

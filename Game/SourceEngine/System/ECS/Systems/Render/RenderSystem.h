@@ -1,6 +1,6 @@
 #pragma once
-#include "System.h"
-#include "../Coordinator/Cordinator.h"
+#include "../System.h"
+#include "../../Coordinator/Cordinator.h"
 #include "SFML/Graphics/RenderTarget.hpp"
 
 class RenderSystem : public System

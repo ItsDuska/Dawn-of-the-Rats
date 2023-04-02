@@ -1,5 +1,7 @@
 #include "RenderSystem.h"
 
+
+
 void RenderSystem::update(Coordinator& entityManager)
 {
 	for (auto const& entity : this->mEntities)

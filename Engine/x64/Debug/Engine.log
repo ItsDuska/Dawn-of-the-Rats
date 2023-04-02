@@ -1,6 +1,0 @@
-﻿  Text.cpp
-sfml-graphics-d.lib(sfml-graphics-d-2.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in opengl32.lib(OPENGL32.dll); second definition ignored
-sfml-window-d.lib(sfml-window-d-2.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in opengl32.lib(OPENGL32.dll); second definition ignored
-sfml-system-d.lib(sfml-system-d-2.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in opengl32.lib(OPENGL32.dll); second definition ignored
-sfml-audio-d.lib(sfml-audio-d-2.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in opengl32.lib(OPENGL32.dll); second definition ignored
-  Engine.vcxproj -> C:\Users\Olli\Documents\KoodiJutut\c++ kämät\DawnOfTheRats\DawnOfTheRats\x64\Debug\Engine.lib

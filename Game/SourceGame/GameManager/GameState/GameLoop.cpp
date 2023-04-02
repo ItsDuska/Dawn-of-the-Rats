@@ -1,5 +1,4 @@
 #include "GameLoop.h"
-
 //funny init function that represents a constructor.
 void ActualGame::init()
 {

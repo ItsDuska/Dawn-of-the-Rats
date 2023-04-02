@@ -21,6 +21,9 @@ void Game::changeStates()
 Game::~Game()
 {
 	delete this->window;
+	SoundManager::clear();
+	AssetManager::clear();
+
 }
 
 void Game::updateSFMLEvents()

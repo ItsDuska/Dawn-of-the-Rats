@@ -3,7 +3,8 @@
 #include "SFML/Window/Event.hpp"
 #include <chrono> 
 #include <memory>
-
+#include "Assets/Sounds/SoundManager.h"
+#include "Assets/Textures/AssetManager.h"
 
 
 

@@ -8,20 +8,28 @@ void ActualGame::init()
 	//entity hämmeli
 	this->entities.resize(MAX_ENTITIES);
 	this->entityManager.init();
-	this->systems.render = this->entityManager.RegisterSystem<RenderSystem>();
-
-	EntityHelper::initComponents(&this->entityManager);
-	EntityHelper::initSystem(&this->entityManager, this->systems.render.get(), SystemType::RENDER);
+	
+	EntityHelper::initComponents(this->entityManager);
+	EntityHelper::initSystem(this->entityManager, this->systems);
+	PlayerPreFab::createPlayer(this->entityManager, this->entities[0]);
 	EntityHelper::createEntity(&this->entityManager, this->entities);
 }
 
 //update function for the game loop.
 void ActualGame::update(float dt, State* state)
 {
-	this->camera.setCenter(this->player.getPosition());
-	this->chunkManager.update(&this->camera, this->player.getPosition());
+	//this->camera.setCenter(this->player.getPosition());
+	this->camera.setCenter(this->entityManager.getComponent<Component::Transform>(this->entities[0]).position);
+	this->chunkManager.update(&this->camera, this->entityManager.getComponent<Component::Transform>(this->entities[0]).position);
+
+	////////
+	this->systems.playerInput->update(this->entityManager);
+	this->systems.movement->update(this->entityManager);
+	this->systems.animation->update(this->entityManager);
 	this->systems.render->update(this->entityManager);
-	this->player.update();
+	////////
+
+	//this->player.update();
 }
 
 //rendering function for the game loop.
@@ -33,11 +41,11 @@ void ActualGame::render(sf::RenderTarget* window)
 	window->setView(this->camera);
 	this->chunkManager.render(window);
 	this->systems.render->render(this->entityManager,window);
-	this->player.render(window);
+	//this->player.render(window);
 
 	//Piirrä tän jälkeen GUI asiat.
 	window->setView(window->getDefaultView());
-	this->player.renderInventory(window);
+	//this->player.renderInventory(window);
 
 	//end = std::chrono::system_clock::now();
 	//std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << "[microsecs]" << std::endl;

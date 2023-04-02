@@ -33,7 +33,7 @@ void Chunk::createChunk()
 	ChunkBuilder chunkBuilder;
 	chunkBuilder.buildChunk(this->chunk,this->gridSize, this->seed, this->threshold, this->tileSize,this->chunkCoord);
 	this->chunk.setUsage(sf::VertexBuffer::Static);
-	this->blockMap = chunkBuilder.getBlockMap();
+	this->blockMap = chunkBuilder.getBlockMap(); // tää heitti erroria
 	this->isDrawable = true;
 	std::cout << "Thread Ended\n";
 

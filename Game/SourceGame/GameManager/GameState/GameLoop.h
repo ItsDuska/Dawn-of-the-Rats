@@ -5,20 +5,15 @@
 #include "../../Player/Player.h"
 #include "../../World/Generation/Chunks/ChunkManager/ChunkManager.h"
 #include "System/ThreadPool/ThreadPool.h"
-#include "System/ECS/Coordinator/Cordinator.h"
+//#include "System/ECS/Coordinator/Cordinator.h"
 #include "System/ECS/Coordinator/CordinatorOperator/CordinatorOperator.h"
-#include "System/ECS/Systems/Render/RenderSystem.h"
+#include "System/ECS/Systems/Systems.h"
+
+#include "Entities/Prefabs/PlayerPrefab/PlayerPrefab.h"
 
 #include <chrono>
 
 
-
-struct Systems
-{
-    std::shared_ptr<RenderSystem> render;
-    //physic system
-    //collision system
-};
 
 class ActualGame : public State
 {

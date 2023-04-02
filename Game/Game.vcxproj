@@ -143,6 +143,9 @@
     <ClCompile Include="SourceEngine\Assets\Animation\AnimationHandler.cpp" />
     <ClCompile Include="SourceEngine\Assets\Texts\Text.cpp" />
     <ClCompile Include="SourceEngine\System\ECS\EntityManager\EntityManager.cpp" />
+    <ClCompile Include="SourceEngine\System\ECS\Systems\Animation\AnimationSystem.cpp" />
+    <ClCompile Include="SourceEngine\System\ECS\Systems\Movement\MovementSystem.cpp" />
+    <ClCompile Include="SourceEngine\System\ECS\Systems\PlayerInput\PlayerInputSystem.cpp" />
     <ClCompile Include="SourceEngine\System\ECS\Systems\Render\RenderSystem.cpp" />
     <ClCompile Include="SourceEngine\System\GameStates\StateMachine.cpp" />
     <ClCompile Include="SourceEngine\System\ThreadPool\ThreadPool.cpp" />
@@ -181,8 +184,12 @@
     <ClInclude Include="SourceEngine\System\ECS\Coordinator\CordinatorOperator\CordinatorOperator.h" />
     <ClInclude Include="SourceEngine\System\ECS\EntityManager\EntityManager.h" />
     <ClInclude Include="SourceEngine\System\ECS\SystemManager\SystemManager.h" />
+    <ClInclude Include="SourceEngine\System\ECS\Systems\Animation\AnimationSystem.h" />
+    <ClInclude Include="SourceEngine\System\ECS\Systems\Movement\MovementSystem.h" />
+    <ClInclude Include="SourceEngine\System\ECS\Systems\PlayerInput\PlayerInputSystem.h" />
     <ClInclude Include="SourceEngine\System\ECS\Systems\Render\RenderSystem.h" />
     <ClInclude Include="SourceEngine\System\ECS\Systems\System.h" />
+    <ClInclude Include="SourceEngine\System\ECS\Systems\Systems.h" />
     <ClInclude Include="SourceEngine\System\GameStates\State.h" />
     <ClInclude Include="SourceEngine\System\GameStates\StateMachine.h" />
     <ClInclude Include="SourceEngine\System\ThreadPool\ThreadPool.h" />
@@ -190,6 +197,7 @@
     <ClInclude Include="SourceGame\Entities\Entity.h" />
     <ClInclude Include="SourceGame\Entities\EntityCollisionHandler.h" />
     <ClInclude Include="SourceGame\Entities\MovableEntity.h" />
+    <ClInclude Include="SourceGame\Entities\Prefabs\PlayerPrefab\PlayerPrefab.h" />
     <ClInclude Include="SourceGame\GameManager\GameState\GameLoop.h" />
     <ClInclude Include="SourceGame\GUI\Inventory\Inventory.h" />
     <ClInclude Include="SourceGame\GUI\Inventory\Item.h" />

@@ -24,6 +24,10 @@ public:
 		get().IloadSound(name, fileName);
 	}
 
+	static void clear()
+	{
+		get().IClear();
+	}
 
 private:
 	std::map<std::string, sf::SoundBuffer> _sounds;
@@ -47,5 +51,10 @@ private:
 	
 		
 		this->_sounds[name] = soundBuffer;
+	}
+
+	void IClear()
+	{
+		this->_sounds.clear();
 	}
 };

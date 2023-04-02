@@ -34,14 +34,14 @@ void AnimationHandler::update(bool facingLeft)
 	{
 		if (this->sprite->getScale().x > 0)
 		{
-			this->sprite->setOrigin(10, 0);
+			//this->sprite->setOrigin(10, 0);
 			this->sprite->scale(-1.f, 1);
 		}
 	}
 	else {
 		if (this->sprite->getScale().x < 0)
 		{
-			this->sprite->setOrigin(0, 0);
+			//this->sprite->setOrigin(0, 0);
 			this->sprite->scale(-1.f, 1);
 		}
 	}

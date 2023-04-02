@@ -65,19 +65,19 @@ public:
 	}
 
 	template<typename kys>
-	uint8_t GetComponentType()
+	uint8_t getComponentType()
 	{
 		return this->_componentManager->getComponentType<kys>();
 	}
 
 	template<typename kys>
-	std::shared_ptr<kys> RegisterSystem()
+	std::shared_ptr<kys> registerSystem()
 	{
 		return this->_systemManager->registerSystem<kys>();
 	}
 
 	template<typename kys>
-	void SetSystemSignature(Signature signature)
+	void setSystemSignature(Signature signature)
 	{
 		this->_systemManager->setSignature<kys>(signature);
 	}

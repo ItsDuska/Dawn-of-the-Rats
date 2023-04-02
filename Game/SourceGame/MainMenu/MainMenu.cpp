@@ -15,7 +15,7 @@ MainMenu::MainMenu(sf::Vector2f screenSize)
 {
 	this->changeStateTo = 1;
 	this->screenSize = screenSize;
-	SoundManager::loadSound("Button", "Sounds/ButtonSound.wav");
+	SoundManager::loadSound("Button", "Sounds/ButtonSound.ogg");
 	AssetManager::loadTexture("Rat", this->ratPath);
 	this->rat.setTexture(AssetManager::getTexture("Rat"));
 	this->initBackGround();

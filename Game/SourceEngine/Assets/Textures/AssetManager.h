@@ -28,6 +28,11 @@ public:
 		return get().IgetframeIndexes(name);
 	}
 
+	static void clear()
+	{
+		get().IClear();
+	}
+
 private:
 	std::map<std::string, sf::Texture> _textures;
 	AssetManager(){}
@@ -47,6 +52,14 @@ private:
 		}
 		this->_textures[name] = texture;
 	}
+
+
+	void IClear()
+	{
+		this->_textures.clear();
+		this->_frameCounts.clear();
+	}
+
 
 	std::vector<sf::Vector2i> IgetframeIndexes(std::string name)
 	{

@@ -2,6 +2,7 @@
 
 Button::~Button()
 {
+	this->sound.stop();
 }
 
 void Button::render(sf::RenderTarget *window)
@@ -42,11 +43,11 @@ void Button::checkMousePos(sf::Vector2f mousePos, State* state)
 		return;
 	}
 	
-	if(!this->isSoundPlayed)
+	if(!this->isSoundPlayed && this->sound.getStatus() == sf::Sound::Stopped)
 	{
 		this->sound.play();
 	}
-
+	
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		this->buttonFunction(state);

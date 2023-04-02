@@ -9,6 +9,7 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 
 //#include "../Entities/EntityCollisionHandler.h"
 
@@ -27,6 +28,9 @@ private:
 	//const float maxVelocity = 9.f;
 	//const float deceleration = 0.7f;
 	//sf::Vector2f velocity = {0.f,0.f};
+
+	sf::RectangleShape hitboxes;
+
 	sf::Vector2i currentAnimationFrames = {0,6};
 	std::vector< sf::Vector2i> allAnimationFrames = AssetManager::getframeIndexes("Player");
 	void inputs();

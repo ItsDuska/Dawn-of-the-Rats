@@ -12,7 +12,7 @@ void ActualGame::init()
 	this->systems.render = this->entityManager.RegisterSystem<RenderSystem>();
 
 	EntityHelper::initComponents(&this->entityManager);
-	EntityHelper::initSystem(this->entityManager, this->systems.render.get(), SystemType::RENDER);
+	EntityHelper::initSystem(&this->entityManager, this->systems.render.get(), SystemType::RENDER);
 	EntityHelper::createEntity(&this->entityManager, this->entities);
 }
 
@@ -49,7 +49,7 @@ ActualGame::ActualGame(sf::Vector2f windowSize)
 	:chunkManager(windowSize, 47786, 0.45f, &threadPool)
 {
 	this->windowSize = windowSize;
-	this->camera.reset(sf::FloatRect(this->player.getPosition(), windowSize+windowSize));
+	this->camera.reset(sf::FloatRect(this->player.getPosition(), windowSize));
 	
 }
 

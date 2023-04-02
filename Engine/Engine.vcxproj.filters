@@ -51,10 +51,19 @@
     <ClInclude Include="Source\System\ECS\SystemManager\SystemManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\System\ECS\Systems\RenderSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Source\System\ECS\Systems\System.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\System\ECS\Coordinator\CordinatorOperator\CordinatorOperator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Source\System\ECS\Coordinator\Cordinator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\ECS\Components\Components.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\System\ECS\ComponentManager\ComponentArray.h">
@@ -90,6 +99,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\System\ECS\EntityManager\EntityManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\ECS\SystemManager\SystemManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\ECS\Systems\RenderSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\ECS\Coordinator\Cordinator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\ECS\ComponentManager\ComponentArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\ECS\ComponentManager\ComponentManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

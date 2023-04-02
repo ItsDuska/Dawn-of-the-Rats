@@ -5,9 +5,9 @@
 #include "../../Player/Player.h"
 #include "../../World/Generation/Chunks/ChunkManager/ChunkManager.h"
 #include "System/ThreadPool/ThreadPool.h"
-#include "../../Entities/ECSManager/CordinatorOperator.h"
-#include "../../Entities/Components/Components.h"
-#include "../../Entities/Systems/RenderSystem.h"
+#include "System/ECS/Coordinator/Cordinator.h"
+#include "System/ECS/Coordinator/CordinatorOperator/CordinatorOperator.h"
+#include "System/ECS/Systems/RenderSystem.h"
 
 #include <chrono>
 

@@ -148,9 +148,6 @@
     <ClCompile Include="Source\Entities\Entity.cpp" />
     <ClCompile Include="Source\Entities\EntityCollisionHandler.cpp" />
     <ClCompile Include="Source\Entities\MovableEntity.cpp" />
-    <ClCompile Include="Source\Entities\Systems\Moving\MovingSystem.cpp" />
-    <ClCompile Include="Source\Entities\Systems\PlayerInput\PlayerInputSystem.cpp" />
-    <ClCompile Include="Source\Entities\Systems\RenderSystem.cpp" />
     <ClCompile Include="Source\GameManager\GameState\GameLoop.cpp" />
     <ClCompile Include="Source\GUI\Inventory\Inventory.cpp" />
     <ClCompile Include="Source\GUI\Inventory\Item.cpp" />
@@ -166,16 +163,9 @@
     <ClCompile Include="Source\World\Generation\Chunks\ChunkBuilder\ChunkBuilder.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Entities\Components\Components.h" />
-    <ClInclude Include="Source\Entities\ECSManager\CordinatorOperator.h" />
     <ClInclude Include="Source\Entities\Entity.h" />
     <ClInclude Include="Source\Entities\EntityCollisionHandler.h" />
     <ClInclude Include="Source\Entities\MovableEntity.h" />
-    <ClInclude Include="Source\Entities\Prefabs\PlayerPrefab.h" />
-    <ClInclude Include="Source\Entities\Prefabs\Prefab.h" />
-    <ClInclude Include="Source\Entities\Systems\Moving\MovingSystem.h" />
-    <ClInclude Include="Source\Entities\Systems\PlayerInput\PlayerInputSystem.h" />
-    <ClInclude Include="Source\Entities\Systems\RenderSystem.h" />
     <ClInclude Include="Source\GameManager\GameState\GameLoop.h" />
     <ClInclude Include="Source\GUI\Inventory\Inventory.h" />
     <ClInclude Include="Source\GUI\Inventory\Item.h" />

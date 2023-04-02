@@ -21,14 +21,13 @@ void EntityCollisionHandler::checkCollisionSides(sf::Vector2f& veclocity)
 }
 
 void EntityCollisionHandler::blockCollisions(
-	sf::FloatRect entity,  std::vector<std::vector<bool>>  &blockMap, 
-	sf::Vector2f *velocity, sf::Vector2f tileSize, sf::Vector2i gridSize, sf::Vector2i chunkCoord)
+	sf::FloatRect entity,  std::vector<std::vector<bool>>  &blockMap, sf::Vector2f *velocity, sf::Vector2f tileSize, sf::Vector2i gridSize, sf::Vector2i chunkCoord)
 {
 	for (auto neighbor : this->neighborCellPositons)
 	{
 		const sf::Vector2i gridPosition(
-			(int)(tileSize.x * chunkCoord.x * std::floor((entity.left / gridSize.x) + neighbor.x)),
-			(int)(tileSize.y * chunkCoord.y * std::floor((entity.top  / gridSize.y) + neighbor.y))
+			std::floor(tileSize.x * chunkCoord.x * (entity.left / gridSize.x)+neighbor.x),
+			std::floor(tileSize.y * chunkCoord.y * (entity.top / gridSize.y) + neighbor.y)
 		);
 
 		if (!isInBounds(gridPosition, gridSize))

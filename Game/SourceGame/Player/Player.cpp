@@ -45,7 +45,7 @@ void Player::inputs()
 	{
 		if (this->clock.getElapsedTime().asSeconds() > this->cooldownTime.asSeconds())
 		{
-			this->_inventory.showInventory = !this->_inventory.showInventory;
+			//this->_inventory.showInventory = !this->_inventory.showInventory;
 			this->clock.restart();
 		}
 	}
@@ -57,8 +57,8 @@ void Player::inputs()
 
 
 Player::Player() 
-	: animationHandler(&this->sprite,0.1f, sf::Vector2i(16, 16), 6, 0), 
-	_inventory(sf::Vector2f((float)sf::VideoMode::getDesktopMode().width, (float)sf::VideoMode::getDesktopMode().height),stats)
+	: animationHandler(&this->sprite,0.1f, sf::Vector2i(16, 16), 6, 0)
+	//_inventory(sf::Vector2f((float)sf::VideoMode::getDesktopMode().width, (float)sf::VideoMode::getDesktopMode().height),stats)
 { 
 	AssetManager::loadTexture("Player", "NewSprites/PlayerSheet.png");
 	this->setTexture("Player");
@@ -88,7 +88,7 @@ Player::~Player()
 void Player::update()
 {
 	this->inputs();
-	this->_inventory.update();
+	//this->_inventory.update();
 	this->animationHandler.update(facingLeft);
 	this->accelerationHandler(this->direction);
 	this->decelerationHandler();
@@ -104,7 +104,7 @@ void Player::render(sf::RenderTarget* window)
 
 void Player::renderInventory(sf::RenderTarget* window)
 {
-	this->_inventory.render(window);
+	//this->_inventory.render(window);
 }
 
 

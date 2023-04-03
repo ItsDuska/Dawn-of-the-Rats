@@ -13,6 +13,7 @@ void ActualGame::init()
 	EntityHelper::initSystem(this->entityManager, this->systems);
 	PlayerPreFab::createPlayer(this->entityManager, this->entities[0]);
 	EntityHelper::createEntity(&this->entityManager, this->entities);
+	this->systems.inventory->addNewItem(this->entityManager);
 }
 
 //update function for the game loop.
@@ -27,6 +28,7 @@ void ActualGame::update(float dt, State* state)
 	this->systems.movement->update(this->entityManager);
 	this->systems.animation->update(this->entityManager);
 	this->systems.render->update(this->entityManager);
+	this->systems.inventory->update(this->entityManager);
 	////////
 
 	//this->player.update();
@@ -46,7 +48,7 @@ void ActualGame::render(sf::RenderTarget* window)
 	//Piirrä tän jälkeen GUI asiat.
 	window->setView(window->getDefaultView());
 	//this->player.renderInventory(window);
-
+	this->systems.inventory->render(this->entityManager, window);
 	//end = std::chrono::system_clock::now();
 	//std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << "[microsecs]" << std::endl;
 
@@ -56,7 +58,7 @@ ActualGame::ActualGame(sf::Vector2f windowSize)
 	:chunkManager(windowSize, 47786, 0.45f, &threadPool)
 {
 	this->windowSize = windowSize;
-	this->camera.reset(sf::FloatRect(this->player.getPosition(), windowSize));
+	this->camera.reset(sf::FloatRect(sf::Vector2f(0,0), windowSize));
 	
 }
 

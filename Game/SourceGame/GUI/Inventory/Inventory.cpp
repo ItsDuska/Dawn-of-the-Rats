@@ -8,11 +8,11 @@ std::string roundTwo(const float x) {
 	return ss.str();
 }
 
-void Inventory::deleteItem()
+void GUI::Inventory::deleteItem()
 {
 }
 
-void Inventory::placeItem()
+void GUI::Inventory::placeItem()
 {
 	if (this->checkNewPosition())
 	{
@@ -26,16 +26,16 @@ void Inventory::placeItem()
 	this->isSelceted = false;
 }
 
-bool Inventory::hasClicked()
+bool GUI::Inventory::hasClicked()
 {
 	return sf::Mouse::isButtonPressed(sf::Mouse::Left);
 }
 
-void Inventory::showItemStats(int itemIndex)
+void GUI::Inventory::showItemStats(int itemIndex)
 {
 }
 
-void Inventory::selectItem()
+void GUI::Inventory::selectItem()
 {
 	for (int index = 0; index < this->_items.size(); index++)
 	{
@@ -48,20 +48,27 @@ void Inventory::selectItem()
 		}
 	}
 }
-
-void Inventory::updateStatText(PlayerStats* stats)
+/*
+void GUI::Inventory::updateStatText(Component::Healt health, Component::Mana mana, Component::Speed speed,
+	Component::Damage damage, Component::Defence defence, Component::Luck luck)
 {
-	this->statsString = "Max Healt : " +  roundTwo(stats->MAXHEALT) + "\nMax Mana : " + roundTwo(stats->MAXMANA)
-		+ "\nCurrent Healt : " + roundTwo(stats->currentHealt)
-		+ "\nCurrent Mana : " + roundTwo(stats->currentMana)
-		+ "\nAttack : " + roundTwo(stats->damage)
-		+ "\nDefense : " + roundTwo(stats->defense)
-		+ "\nSpeed : " + roundTwo(stats->speed)
-		+ "\nLuck : " + roundTwo(stats->luck);
+	this->statsString = "Max Healt : " + std::to_string(health.maxHealt)
+		+ "\nCurrent Healt : " + std::to_string(health.currentHealt)
+		+ "\nHealt Regeneration : " + std::to_string(health.healtRegen)
+		+ "\nMax Mana : " + std::to_string(mana.maxMana)
+		+ "\nCurrent Mana : " + std::to_string(mana.currentMana)
+		+ "\nMana Regeneration : " + std::to_string(mana.manaRegen)
+		+ "\nMelee Damage : " + std::to_string(damage.meleeDamage)
+		+ "\nMagic Damage : " + std::to_string(damage.magicDamage)
+		+ "\nMelee Defense : " + std::to_string(defence.meleeDefence)
+		+ "\nMagic Defense : " + std::to_string(defence.magicDefence)
+		+ "\nSpeed : " + roundTwo(speed.speed)
+		+ "\nLuck : " + std::to_string(luck.luck);
 	this->stats.changeString(this->statsString);
 }
+*/
 
-Inventory::Inventory(sf::Vector2f windowSize, PlayerStats& stats)
+GUI::Inventory::Inventory(sf::Vector2f windowSize)
 {
 	AssetManager::loadTexture("Inventory", "NewSprites/Inventory.png");
 	AssetManager::loadTexture("InventoryItems", "NewSprites/GUI_ITEM_SPRITES.png");
@@ -79,13 +86,13 @@ Inventory::Inventory(sf::Vector2f windowSize, PlayerStats& stats)
 	this->stats.setText(30, "TempText", sf::Vector2f(windowSize.x/2.25f,
 		this->_inventoryBackground.getPosition().y / 2.f));
 
-	updateStatText(&stats);
+	//updateStatText(&stats);
 	this->addNewItem();
 }
 
-void Inventory::update()
+void GUI::Inventory::update()
 {
-	if (!this->showInventory) { return; }
+	//if (!this->showInventory) { return; }
 
 	if (!this->hasClicked())
 	{ 
@@ -110,9 +117,9 @@ void Inventory::update()
 	}
 }
 
-void Inventory::render(sf::RenderTarget* window)
+void GUI::Inventory::render(sf::RenderTarget* window)
 {
-	if (!this->showInventory) { return; }
+	//if (!this->showInventory) { return; }
 	window->draw(this->_inventoryBackground);
 	window->draw(this->stats.getText());
 	
@@ -123,19 +130,19 @@ void Inventory::render(sf::RenderTarget* window)
 }
 
 
-void Inventory::addNewItem()
+void GUI::Inventory::addNewItem()
 {
 	this->_items.push_back(std::make_unique<Item>("InventoryItems",
 		sf::IntRect(48, 16, 16, 16), this->_inventoryBackground.getGlobalBounds()));
 }
 
-bool Inventory::checkNewPosition()
+bool GUI::Inventory::checkNewPosition()
 {
 	sf::Vector2i newPos = this->getNewPositionIndex();
 	return ( (newPos.x == 2 || newPos.x == 9) && (newPos.y >= 0 && newPos.y <= 6) );
 }
 
-sf::Vector2i Inventory::getNewPositionIndex()
+sf::Vector2i GUI::Inventory::getNewPositionIndex()
 {	
 	sf::Vector2f blockSize(this->_inventoryBackground.getGlobalBounds().width / 10.f, 
 		this->_inventoryBackground.getGlobalBounds().height / 9.f);

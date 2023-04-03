@@ -2,6 +2,9 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Clock.hpp>
+#include "GUI/Inventory/Item.h"
+#include "Assets/Texts/Text.h"
+#include <memory>
 
 namespace Component
 { 
@@ -49,7 +52,7 @@ namespace Component
 		float speed;
 	};
 
-	struct Healt
+	struct Health
 	{
 		int maxHealt;
 		int currentHealt;
@@ -92,8 +95,17 @@ namespace Component
 
 	struct Inventory
 	{
+		sf::Sprite background;
+		std::string statsString;
+		sf::Vector2f _originalPosition;
+		engine::Text stats;
+		int _selectedItemIndex;
+		bool isSelceted;
 		sf::Clock clock;
 		bool showInventory;
-		sf::Time cooldownTime = sf::seconds(0.4f);
+		sf::Time cooldownTime;
+		std::vector<std::shared_ptr<Item>> _items{ };
 	};
+	
+
 }

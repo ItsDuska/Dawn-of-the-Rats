@@ -144,6 +144,7 @@
     <ClCompile Include="SourceEngine\Assets\Texts\Text.cpp" />
     <ClCompile Include="SourceEngine\System\ECS\EntityManager\EntityManager.cpp" />
     <ClCompile Include="SourceEngine\System\ECS\Systems\Animation\AnimationSystem.cpp" />
+    <ClCompile Include="SourceEngine\System\ECS\Systems\Inventory\InventorySystem.cpp" />
     <ClCompile Include="SourceEngine\System\ECS\Systems\Movement\MovementSystem.cpp" />
     <ClCompile Include="SourceEngine\System\ECS\Systems\PlayerInput\PlayerInputSystem.cpp" />
     <ClCompile Include="SourceEngine\System\ECS\Systems\Render\RenderSystem.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="SourceEngine\System\ECS\EntityManager\EntityManager.h" />
     <ClInclude Include="SourceEngine\System\ECS\SystemManager\SystemManager.h" />
     <ClInclude Include="SourceEngine\System\ECS\Systems\Animation\AnimationSystem.h" />
+    <ClInclude Include="SourceEngine\System\ECS\Systems\Inventory\InventorySystem.h" />
     <ClInclude Include="SourceEngine\System\ECS\Systems\Movement\MovementSystem.h" />
     <ClInclude Include="SourceEngine\System\ECS\Systems\PlayerInput\PlayerInputSystem.h" />
     <ClInclude Include="SourceEngine\System\ECS\Systems\Render\RenderSystem.h" />

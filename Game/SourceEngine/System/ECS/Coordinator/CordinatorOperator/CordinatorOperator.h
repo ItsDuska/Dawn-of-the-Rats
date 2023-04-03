@@ -28,6 +28,11 @@ public:
 		entityManager.registerComponent<Component::Speed>();
 		entityManager.registerComponent<Component::TextureCoord>();
 		entityManager.registerComponent<Component::Inventory>();
+		entityManager.registerComponent<Component::Health>();
+		entityManager.registerComponent<Component::Mana>();
+		entityManager.registerComponent<Component::Damage>();
+		entityManager.registerComponent<Component::Defence>();
+		entityManager.registerComponent<Component::Luck>();
 	}
 
 	
@@ -95,11 +100,20 @@ private:
 			signature.set(entityManager.getComponentType<Component::Transform>());
 			signature.set(entityManager.getComponentType<Component::Animation>());
 			signature.set(entityManager.getComponentType<Component::Speed>());
-			//signature.set(entityManager.getComponentType<Component::Inventory>());
+			signature.set(entityManager.getComponentType<Component::Inventory>());
 			break;
 		case SystemType::PHYSICS:
 			break;
 		case SystemType::COLLISION:
+			break;
+		case SystemType::INVENTORY:
+			signature.set(entityManager.getComponentType<Component::Inventory>());
+			signature.set(entityManager.getComponentType<Component::Health>());
+			signature.set(entityManager.getComponentType<Component::Mana>());
+			signature.set(entityManager.getComponentType<Component::Damage>());
+			signature.set(entityManager.getComponentType<Component::Defence>());
+			signature.set(entityManager.getComponentType<Component::Speed>());
+			signature.set(entityManager.getComponentType<Component::Luck>());
 			break;
 		default:
 			break;

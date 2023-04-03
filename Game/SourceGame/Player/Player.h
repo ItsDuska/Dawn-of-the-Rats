@@ -19,7 +19,7 @@ private:
 	sf::Clock clock;
 	PlayerStats stats;
 	AnimationHandler animationHandler;
-	Inventory _inventory;
+	//Inventory _inventory;
 	bool facingLeft = false;
 	const sf::Time cooldownTime = sf::seconds(0.4f);
 	sf::Vector2f direction = { 0.f,0.f };

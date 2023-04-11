@@ -11,7 +11,7 @@ void AnimationSystem::update(Coordinator& entityManager)
 		if (animation.currentAnimationRange.y != animation.lastAnimationFrameCheck)
 		{
 			animation.lastAnimationFrameCheck = animation.currentAnimationRange.y;
-			animation.totalProgress = animation.currentAnimationRange.x;
+			animation.totalProgress = static_cast<float>(animation.currentAnimationRange.x);
 		}
 
 
@@ -19,7 +19,7 @@ void AnimationSystem::update(Coordinator& entityManager)
 
 		if (animation.totalProgress >= animation.currentAnimationRange.y)
 		{
-			animation.totalProgress = animation.currentAnimationRange.x;
+			animation.totalProgress = static_cast<float>(animation.currentAnimationRange.x);
 		}
 
 		if (animation.lastAnimationFrame == (int)animation.totalProgress)

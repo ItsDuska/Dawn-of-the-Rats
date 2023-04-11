@@ -102,6 +102,9 @@
     <ClCompile Include="SourceEngine\System\ECS\Systems\Inventory\InventorySystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SourceEngine\System\ECS\Systems\Collisions\CollisionSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceEngine\Algorhythms\PerlinNoice\PerlineNoice.hpp">
@@ -246,6 +249,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SourceEngine\System\ECS\Systems\Inventory\InventorySystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceEngine\System\ECS\Systems\Collisions\CollisionSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

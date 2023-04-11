@@ -107,5 +107,9 @@ namespace Component
 		std::vector<std::shared_ptr<Item>> _items{ };
 	};
 	
-
+	struct Collider
+	{
+		bool blockCollision;
+		bool entityCollision;
+	};
 }

@@ -2,7 +2,7 @@
 #include <map>
 #include <SFML/Audio.hpp>
 #include <iostream>
-#include "../AssetConfig.h"
+#include "Assets/AssetConfig.h"
 
 class SoundManager
 {

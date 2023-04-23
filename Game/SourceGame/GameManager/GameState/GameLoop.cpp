@@ -1,11 +1,11 @@
-#include "GameLoop.h"
+ï»¿#include "GameLoop.h"
 //funny init function that represents a constructor.
 void ActualGame::init()
 {
 	this->changeStateTo = 2;
 	AssetManager::loadTexture("Blocks", "NewSprites/GrassyBlock.png");
 	AssetManager::loadTexture("Shocked", "NewSprites/SHOCKED.jpg");
-	//entity hämmeli
+	//entity hÃ¤mmeli
 	this->entities.resize(MAX_ENTITIES);
 	this->entityManager.init();
 	
@@ -19,6 +19,9 @@ void ActualGame::init()
 //update function for the game loop.
 void ActualGame::update(float dt, State* state)
 {
+	//std::chrono::time_point<std::chrono::system_clock> start, end;
+	//start = std::chrono::system_clock::now();
+
 	//this->camera.setCenter(this->player.getPosition());
 	this->camera.setCenter(this->entityManager.getComponent<Component::Transform>(this->entities[0]).position);
 	this->chunkManager.update(&this->camera, this->entityManager.getComponent<Component::Transform>(this->entities[0]).position);
@@ -30,6 +33,9 @@ void ActualGame::update(float dt, State* state)
 	this->systems.render->update(this->entityManager);
 	this->systems.inventory->update(this->entityManager);
 	////////
+
+	//end = std::chrono::system_clock::now();
+	//std::cout << "Update logic = " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << " microseconds" << std::endl;
 
 	//this->player.update();
 }
@@ -45,12 +51,12 @@ void ActualGame::render(sf::RenderTarget* window)
 	this->systems.render->render(this->entityManager,window);
 	//this->player.render(window);
 
-	//Piirrä tän jälkeen GUI asiat.
+	//PiirrÃ¤ tÃ¤n jÃ¤lkeen GUI asiat.
 	window->setView(window->getDefaultView());
 	//this->player.renderInventory(window);
 	this->systems.inventory->render(this->entityManager, window);
 	//end = std::chrono::system_clock::now();
-	//std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << "[microsecs]" << std::endl;
+	//std::cout << "Rendering logic = " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << " microseconds" << std::endl;
 
 }
 
@@ -58,7 +64,7 @@ ActualGame::ActualGame(sf::Vector2f windowSize)
 	:chunkManager(windowSize, 47786, 0.45f, &threadPool)
 {
 	this->windowSize = windowSize;
-	this->camera.reset(sf::FloatRect(sf::Vector2f(0,0), windowSize));
+	this->camera.reset(sf::FloatRect(sf::Vector2f(0,0), windowSize+windowSize));
 	
 }
 

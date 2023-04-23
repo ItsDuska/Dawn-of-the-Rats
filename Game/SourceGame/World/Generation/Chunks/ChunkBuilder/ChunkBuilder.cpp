@@ -259,7 +259,7 @@ void ChunkBuilder::buildChunk(sf::VertexBuffer& buffer, sf::Vector2i gridSize, i
 
 
 	blockMap = std::make_unique<CaveGeneration>(seed, threshold, gridSize, chunkCoord);
-	const sf::Vector2f WORLD_POSITION = { (float)((chunkCoord.x - 1) * gridSize.x), (float)((chunkCoord.y - 1) * gridSize.y) };
+	const sf::Vector2f WORLD_POSITION = { (float)((chunkCoord.x -1) * gridSize.x), (float)((chunkCoord.y - 1) * gridSize.y) };
 	const sf::Vector2i neighborCellPositons[8] = { {-1,-1}, {-1,0}, {-1,1},    {0,-1}, {0,1},     {1,-1},  {1,0}, {1,1} };
 	//vasen ylä -> alas
 	for (int y = 0; y < gridSize.y; y++)

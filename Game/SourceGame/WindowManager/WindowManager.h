@@ -1,8 +1,11 @@
 #pragma once
+
+
 #include "Window/Game.h"
 
-#include "../MainMenu/MainMenu.h"
-#include "../GameManager/GameState/GameLoop.h"
+
+#include "MainMenu/MainMenu.h"
+#include "GameManager/GameState/GameLoop.h"
 
 
 

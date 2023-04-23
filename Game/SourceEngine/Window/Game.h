@@ -1,6 +1,6 @@
 #pragma once
-#include "../System/GameStates/StateMachine.h"
-#include "SFML/Window/Event.hpp"
+#include "System/GameStates/StateMachine.h"
+#include <SFML/Window/Event.hpp>
 #include <chrono> 
 #include <memory>
 #include "Assets/Sounds/SoundManager.h"

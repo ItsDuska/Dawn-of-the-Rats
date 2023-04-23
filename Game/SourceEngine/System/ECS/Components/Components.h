@@ -112,4 +112,5 @@ namespace Component
 		bool blockCollision;
 		bool entityCollision;
 	};
+
 }

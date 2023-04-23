@@ -55,7 +55,7 @@ void Chunk::createChunk()
 
 
 
-	this->rect.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255, 128));
+	this->rect.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255, 20));
 	this->rect.setOutlineColor(sf::Color::White);
 	this->rect.setOutlineThickness(1);
 
@@ -70,5 +70,5 @@ void Chunk::draw(sf::RenderTarget& target, sf::RenderStates states) const
     //states.transform *= getTransform();
     states.texture = &AssetManager::getTexture("Blocks");
     target.draw(chunk, states);
-	target.draw(this->rect);
+	//target.draw(this->rect);
 }

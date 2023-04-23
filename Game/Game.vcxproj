@@ -226,6 +226,7 @@
     <Text Include="SourceGame\World\Generation\Chunks\MatrixThings.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="SourceGame\Shaders\Darkness\Darkness.vert" />
     <None Include="SourceGame\Shaders\MainMenuShaders\Background.frag" />
     <None Include="SourceGame\Shaders\MainMenuShaders\Background.vert" />
   </ItemGroup>

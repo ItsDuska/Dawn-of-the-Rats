@@ -16,7 +16,7 @@ private:
 	const int chunkSize = 200;
 
 	//Settings
-	const int renderDistance = 1;
+	const int renderDistance = 3;
 
 	std::vector<std::unique_ptr<Chunk>> chunks;
 	std::vector<sf::Vector2i> chunkCords;

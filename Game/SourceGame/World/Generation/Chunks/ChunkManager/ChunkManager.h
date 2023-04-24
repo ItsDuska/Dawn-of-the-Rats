@@ -13,9 +13,10 @@ private:
 	const int8_t BLOCK_SIZE = 16;
 	//const sf::Vector2i mapSize = { 5,11 };
 	sf::Vector2i gridSize;
+	const int chunkSize = 200;
 
 	//Settings
-	const int renderDistance = 1;
+	const int renderDistance = 3;
 
 	std::vector<std::unique_ptr<Chunk>> chunks;
 	std::vector<sf::Vector2i> chunkCords;

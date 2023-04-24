@@ -9,7 +9,7 @@ CaveGeneration::CaveGeneration(int seed, float threshold, sf::Vector2i gridSize,
 {
 	this->threshold = (double) threshold;
 	this->gridSize = gridSize;
-	this->cave.resize(gridSize.y);
+	this->cave.resize(size_t(gridSize.y+2));
 	this->generateCave(chunkCoord);
 }
 
@@ -19,12 +19,12 @@ void CaveGeneration::generateCave(sf::Vector2i chunkCoord)
 {
 	const sf::Vector2i WORLD_POSITION = { chunkCoord.x * gridSize.x, chunkCoord.y * gridSize.y };
 
-	for (int y = 0; y < this->gridSize.y; y++)
+	for (int y = 0; y < this->gridSize.y+2; y++)
 	{
-		this->cave[y].resize(this->gridSize.x);
-		for (int x = 0; x < this->gridSize.x; x++)
+		this->cave[y].resize(size_t(this->gridSize.x+2));
+		for (int x = 0; x < this->gridSize.x+2; x++)
 		{
-			const double noise = this->perlinNoice.noise((double) (WORLD_POSITION.x + x) / 16.0, (double) (WORLD_POSITION.y + y) / 16.0, 3.0);
+			const double noise = this->perlinNoice.noise((double) (WORLD_POSITION.x + x-1) / 16.0, (double) (WORLD_POSITION.y + y-1) / 16.0, 3.0);
 			this->cave[y][x] = (noise <= this->threshold);
 		}
 	}

@@ -16,7 +16,7 @@ public:
 		entity = entityManager.createEntity(); 
 
 		entityManager.addComponent(entity, Component::Transform{
-			sf::Vector2f(1000,500),
+			sf::Vector2f(0,500),
 			sf::Vector2f(0,0),
 			false});
 		entityManager.addComponent(entity, Component::RigidBody{

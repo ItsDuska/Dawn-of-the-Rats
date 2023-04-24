@@ -12,6 +12,7 @@
 #include "Entities/Prefabs/PlayerPrefab/PlayerPrefab.h"
 
 #include <chrono>
+#include <cmath>
 
 
 
@@ -26,6 +27,9 @@ private:
     Coordinator entityManager;
     std::vector<uint32_t> entities;
     Systems systems;
+    sf::RenderTexture fakeWindow;
+    sf::Shader shader;
+    sf::Clock clock;
     // class jolla on tallessa jokainen System
 public:
     void init();

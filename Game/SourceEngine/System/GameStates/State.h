@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics/RenderWindow.hpp>
+
 class State 
 {
 public: // 0 = current, 1 = main menu, 2 = Game

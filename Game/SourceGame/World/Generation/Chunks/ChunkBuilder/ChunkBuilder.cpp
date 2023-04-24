@@ -203,7 +203,43 @@ sf::Vector2i ChunkBuilder::getTexCoord(bool* blocks)
 		//19
 		{0,0,0
 		,0,  0,
-		0,0,0}
+		0,0,0},
+
+		
+		//Hassut piippu palat
+
+		{0, 0, 0,
+		0,    0,
+		1, 1, 1},
+		
+		{ 1, 1, 1,
+		0,    0,
+		0, 0, 0 },
+
+		{ 0, 0, 1,
+		0,    1,
+		0, 0, 1 },
+
+		{ 1, 0, 0,
+		1,    0,
+		1, 0, 0 },
+
+		{ 1, 1, 0,  // putken ala osa
+		1,    1,
+		1, 1, 0 },
+
+
+		{ 0, 1, 1,  
+		1,    1,
+		0, 1, 1 },
+
+		{ 0, 1, 0,
+		1,    1,
+		1, 1, 1 },
+
+		{ 1, 1, 1,
+		1,    1,
+		0, 1, 0 },
 	};
 
 	for (int i = 0; i < possiblities.size(); i++)
@@ -235,7 +271,16 @@ sf::Vector2i ChunkBuilder::getTexCoord(bool* blocks)
 	else if (index == 34) { index = 15; } //L2
 	else if (index == 35) { index = 16; } //L3
 	else if (index == 36) { index = 17; } //L4
-	else { index = 19; } // O
+	else if (index == 37) { index = 26; }  // putki palikat
+	else if (index == 38) { index = 25; }
+	else if (index == 39) { index = 24; }
+	else if (index == 40) { index = 23; }
+	else if (index == 41) { index = 22; } // putken ala osa
+	else if (index == 42) { index = 21; }
+	else if (index == 43) { index = 20; }
+	else if (index == 44) { index = 19; }
+
+	else { index = 26; } // O
 	
 	return sf::Vector2i(index,16);
 }
@@ -259,29 +304,31 @@ void ChunkBuilder::buildChunk(sf::VertexBuffer& buffer, sf::Vector2i gridSize, i
 
 
 	blockMap = std::make_unique<CaveGeneration>(seed, threshold, gridSize, chunkCoord);
-	const sf::Vector2f WORLD_POSITION = { (float)((chunkCoord.x - 1) * gridSize.x), (float)((chunkCoord.y - 1) * gridSize.y) };
+	const sf::Vector2f WORLD_POSITION = { (float)((chunkCoord.x -1) * gridSize.x), (float)((chunkCoord.y - 1) * gridSize.y) };
 	const sf::Vector2i neighborCellPositons[8] = { {-1,-1}, {-1,0}, {-1,1},    {0,-1}, {0,1},     {1,-1},  {1,0}, {1,1} };
 	//vasen ylä -> alas
-	for (int y = 0; y < gridSize.y; y++)
+	for (int y = 1; y < gridSize.y+1; y++)
 	{
-		for (int x = 0; x < gridSize.x; x++)
+		for (int x = 1; x < gridSize.x+1; x++)
 		{
 			//std::cout << blockMap.getCaveBlock(sf::Vector2i(x, y)) << " ";
 			//BLOCK FINDING
 			//muutetaan 8 bittistä inttiä sen biteillä. esittää samaa kuin listaa kahdeksasta paikasta.
 			if (!blockMap.get()->getCaveBlock(sf::Vector2i(x, y))) { continue; } // tähän arvo joka vaihdaa moden ruohon ja läpi mentävien kohdalle
 			bool neighborBlocks[8]{};
-
+			
 			int airBlockCounter = 0;
 
 			for (int index = 0; index < 8; index++)
 			{
-				if (!this->isInBounds(sf::Vector2i(x, y) + neighborCellPositons[index], gridSize))
+				/*
+				if (!this->isInBounds(sf::Vector2i(x, y) + neighborCellPositons[index], sf::Vector2i(gridSize.x+2, gridSize.y + 2)))
 				{
 					neighborBlocks[index] = true;
+					std::cout << x + neighborCellPositons[index].x << "  " << y + neighborCellPositons[index].y << "\n";
 					continue;
 				}
-
+				*/
 				neighborBlocks[index] = blockMap.get()->getCaveBlock(sf::Vector2i(x, y) + neighborCellPositons[index]);
 
 				if (neighborBlocks[index] == 0)
@@ -293,8 +340,8 @@ void ChunkBuilder::buildChunk(sf::VertexBuffer& buffer, sf::Vector2i gridSize, i
 			if (airBlockCounter == 8) { continue; }
 
 			const sf::Vector2i texCoord = this->getTexCoord(neighborBlocks);
-			sf::Vertex* quad = &chunkVerticies.get()[(x + (static_cast<size_t>(y) * gridSize.x)) * 4];
-			const sf::Vector2f pos(WORLD_POSITION + sf::Vector2f((float)x, (float)y));
+			sf::Vertex* quad = &chunkVerticies.get()[(size_t(x-1) + (static_cast<size_t>(y-1) * gridSize.x)) * 4];
+			const sf::Vector2f pos(WORLD_POSITION + sf::Vector2f((float)x-1, (float)y-1));
 
 			this->createQuad(quad, pos, texCoord, tileSize);
 		}

@@ -102,7 +102,7 @@
     <ClCompile Include="SourceEngine\System\ECS\Systems\Inventory\InventorySystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SourceEngine\System\ECS\Systems\Collisions\CollisionSystem.cpp">
+    <ClCompile Include="SourceEngine\System\ECS\Systems\Collision\CollisionSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -251,7 +251,10 @@
     <ClInclude Include="SourceEngine\System\ECS\Systems\Inventory\InventorySystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SourceEngine\System\ECS\Systems\Collisions\CollisionSystem.h">
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceEngine\System\ECS\Systems\Collision\CollisionSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -261,5 +264,16 @@
   <ItemGroup>
     <None Include="SourceGame\Shaders\MainMenuShaders\Background.frag" />
     <None Include="SourceGame\Shaders\MainMenuShaders\Background.vert" />
+    <None Include="SourceGame\Shaders\Darkness\Darkness.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Game.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Assets\Sprites\GameIcon\RottaTausta.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -8,24 +8,17 @@ bool ChunkBuilder::isInBounds(sf::Vector2i currentPosition, sf::Vector2i gridSiz
 }
 
 //Create a quad for the vertex array by giving the vertex it's position and texture cordinate.
-void ChunkBuilder::createQuad(sf::Vertex *quad, sf::Vector2f position, sf::Vector2i texCoord, sf::Vector2f tileSize)
+void ChunkBuilder::createQuad(sf::Vertex *quad, sf::Vector2f position, sf::Vector2f texCoord, sf::Vector2f tileSize)
 {
-	const float sizeInTexture = 16.f;
-
-	quad[0].position = sf::Vector2f(position.y * tileSize.x, position.x * tileSize.y);
-	quad[1].position = sf::Vector2f((position.y+1) * tileSize.x, position.x * tileSize.y);
-	quad[2].position = sf::Vector2f((position.y + 1 ) * tileSize.x, (position.x + 1) * tileSize.y);
-	quad[3].position = sf::Vector2f(position.y * tileSize.x, (position.x + 1) * tileSize.y);
+	quad[0].position = sf::Vector2f( position.y *	   tileSize.x,  position.x *	  tileSize.y);
+	quad[1].position = sf::Vector2f((position.y + 1) * tileSize.x,  position.x *	  tileSize.y);
+	quad[2].position = sf::Vector2f((position.y + 1) * tileSize.x, (position.x + 1) * tileSize.y);
+	quad[3].position = sf::Vector2f( position.y *	   tileSize.x, (position.x + 1) * tileSize.y);
 	
-	quad[0].texCoords = sf::Vector2f((float)texCoord.x * sizeInTexture, 0 * (float)texCoord.y);
-	quad[1].texCoords = sf::Vector2f(((float)texCoord.x +1) * sizeInTexture, 0 * (float)texCoord.y);
-	quad[2].texCoords = sf::Vector2f(((float)texCoord.x +1) * sizeInTexture,  (float)texCoord.y);
-	quad[3].texCoords = sf::Vector2f((float)texCoord.x * sizeInTexture,  (float)texCoord.y);
-}
-
-void ChunkBuilder::removeSpace(std::string& text)
-{
-	text.erase(std::remove_if(text.begin(), text.end(), isspace), text.end());
+	quad[0].texCoords = sf::Vector2f( texCoord.x *      this->TEX_SIZE,  texCoord.y *	   this->TEX_SIZE);
+	quad[1].texCoords = sf::Vector2f((texCoord.x + 1) * this->TEX_SIZE,  texCoord.y *	   this->TEX_SIZE);
+	quad[2].texCoords = sf::Vector2f((texCoord.x + 1) * this->TEX_SIZE, (texCoord.y + 1) * this->TEX_SIZE);
+	quad[3].texCoords = sf::Vector2f( texCoord.x *		this->TEX_SIZE, (texCoord.y + 1) * this->TEX_SIZE);
 }
 
 /*
@@ -34,264 +27,18 @@ cavessa yhden suurempi luola mutta piirret‰‰n vaan se yhden pienempi versio siit
 
 */
 
-sf::Vector2i ChunkBuilder::getTexCoord(bool* blocks)
-{
-	int index = 0;
-	const std::vector<std::vector<bool>> possiblities
-	{
-
-		//  0
-		{0,0,0
-		,0  ,1
-		,0,1,1}, 
-
-		{0,0,1,
-		0, 1,
-		0,1,1},
-
-		{0,0,0,
-		0, 1,
-		1,1,1},
-
-		{0,0,1,
-		0,  1,
-		1,1,1},
-
-		// 1
-		{0,0,0,
-		1,   0,
-		1,1,0},
-
-		{1,0,0,
-		1,  0,
-		1,1,0},
-
-		{0,0,0,
-		1,  0,
-		1,1,1},
-
-		{1,0,0,
-		1,   0,
-		1,1,1},
-
-		//2
-		{0,1,1
-		,0,  1,
-		0,0,0},
-
-		{0,1,1,
-		0,   1,
-		0,0,1},
-
-		{1,1,1,
-		0,   1,
-		0,0,0},
-
-		{1,1,1,0,1,0,0,1},
-
-		//3
-		{1,1,0
-		,1  ,0,
-		0,0,0},
-
-		{1,1,0,
-		1,  0,
-		1,0,0},
-
-		{1,1,1,
-		1,  0,
-		0,0,0},
-
-		{1,1,1,1,0,1,0,0},
-
-		//4-6
-		{0,0,0
-		,1,  1,
-		1,1,1},
-
-		{0,0,1,
-		1, 1,
-		1,1,1},
-
-		{1,0,0,
-		1, 1,
-		1,1,1},
-
-		{1,0,1,
-		1, 1,
-		1,1,1},
-
-		//7-9
-		{1,1,1,
-		1   ,1,
-		0,0,0},
-
-		{1,1,1,
-		1   ,1,
-		0,0,1},
-
-		{1,1,1,
-		1   ,1,
-		1,0,0},
-
-		{1,1,1,
-		1   ,1,
-		1,0,1},
-
-		//10
-		{0,1,1,
-		0,  1,
-		0,1,1},
-
-		{ 1,1,1,
-		0,  1,
-		0,1,1 },
-
-		{ 0,1,1,
-		0,  1,
-		1,1,1 },
-
-		{ 1,1,1,
-		0,  1,
-		1,1,1 },
-
-		//11
-		{1,1,0,
-		1,  0,
-		1,1,0},
-
-		{ 1,1,1,
-		1,  0,
-		1,1,0 },
-
-		{ 1,1,0,
-		1,  0,
-		1,1,1 },
-
-		{ 1,1,1,
-		1,  0,
-		1,1,1 },
-
-
-		//12-14
-		{1,1,1,
-		1,  1,
-		1,1,1},
-
-		 //KULMA PALAT
-
-		//15
-		{ 1,1,1,
-		1,  1,
-		1,1,0 },
-
-		//16
-		{ 1,1,1,
-		1,  1,
-		0,1,1 },
-
-		//17
-		{ 1,1,0,
-		1,  1,
-		1,1,1 },
-
-		//18
-		{0,1,1,
-		1,  1,
-		1,1,1},
-
-		//19
-		{0,0,0
-		,0,  0,
-		0,0,0},
-
-		
-		//Hassut piippu palat
-
-		{0, 0, 0,
-		0,    0,
-		1, 1, 1},
-		
-		{ 1, 1, 1,
-		0,    0,
-		0, 0, 0 },
-
-		{ 0, 0, 1,
-		0,    1,
-		0, 0, 1 },
-
-		{ 1, 0, 0,
-		1,    0,
-		1, 0, 0 },
-
-		{ 1, 1, 0,  // putken ala osa
-		1,    1,
-		1, 1, 0 },
-
-
-		{ 0, 1, 1,  
-		1,    1,
-		0, 1, 1 },
-
-		{ 0, 1, 0,
-		1,    1,
-		1, 1, 1 },
-
-		{ 1, 1, 1,
-		1,    1,
-		0, 1, 0 },
-	};
-
-	for (int i = 0; i < possiblities.size(); i++)
-	{
-		bool isSame = false;
-
-		for (int bit = 0; bit < 8; bit++)
-		{
-			if (blocks[bit] != possiblities[i][bit])
-			{
-				isSame = false;
-				break;
-			}
-			isSame = true;
-		}
-		if (isSame) { index = i; break; }
-	}
-
-	if (index == 32) { index = 12; } //T
-	else if (index >= 0 && index <= 3) { index = 0; } //k1
-	else if (index >= 4 && index <= 7) { index = 1; } //k2
-	else if (index >= 8 && index <= 11) { index = 2; } //k3
-	else if (index >= 12 && index <= 15) { index = 3; } //k4
-	else if (index >= 16 && index <= 19) { index = 4;} //SN
-	else if (index >= 20 && index <= 23) { index = 7; } //SS
-	else if (index >= 24 && index <= 27) { index = 9; } //SW
-	else if (index >= 28 && index <= 31) { index = 11; } //SE
-	else if (index == 33) { index = 14; } //L1
-	else if (index == 34) { index = 15; } //L2
-	else if (index == 35) { index = 16; } //L3
-	else if (index == 36) { index = 17; } //L4
-	else if (index == 37) { index = 26; }  // putki palikat
-	else if (index == 38) { index = 25; }
-	else if (index == 39) { index = 24; }
-	else if (index == 40) { index = 23; }
-	else if (index == 41) { index = 22; } // putken ala osa
-	else if (index == 42) { index = 21; }
-	else if (index == 43) { index = 20; }
-	else if (index == 44) { index = 19; }
-
-	else { index = 26; } // O
-	
-	return sf::Vector2i(index,16);
-}
 
 ChunkBuilder::~ChunkBuilder()
 {
 }
 
-const std::vector<std::vector<bool>> ChunkBuilder::getBlockMap()
+ChunkBuilder::ChunkBuilder()
 {
-	return this->blockMap.get()->getCaveMap();
+}
+
+const std::vector<std::vector<bool>>& ChunkBuilder::getBlockMap()
+{
+	return std::move(this->blockMap->getCaveMap());
 }
 //Create a detailed vertex array with every quad that has it's own texture.
 void ChunkBuilder::buildChunk(sf::VertexBuffer& buffer, sf::Vector2i gridSize, int seed, float threshold, sf::Vector2f tileSize, sf::Vector2i chunkCoord)
@@ -303,9 +50,9 @@ void ChunkBuilder::buildChunk(sf::VertexBuffer& buffer, sf::Vector2i gridSize, i
 	std::unique_ptr<sf::Vertex[]> chunkVerticies = std::make_unique<sf::Vertex[]>(static_cast<size_t>(gridSize.y) * gridSize.x * 4);
 
 
-	blockMap = std::make_unique<CaveGeneration>(seed, threshold, gridSize, chunkCoord);
+	this->blockMap = std::make_unique<CaveGeneration>(seed, threshold, gridSize, chunkCoord);
 	const sf::Vector2f WORLD_POSITION = { (float)((chunkCoord.x -1) * gridSize.x), (float)((chunkCoord.y - 1) * gridSize.y) };
-	const sf::Vector2i neighborCellPositons[8] = { {-1,-1}, {-1,0}, {-1,1},    {0,-1}, {0,1},     {1,-1},  {1,0}, {1,1} };
+	
 	//vasen yl‰ -> alas
 	for (int y = 1; y < gridSize.y+1; y++)
 	{
@@ -314,10 +61,10 @@ void ChunkBuilder::buildChunk(sf::VertexBuffer& buffer, sf::Vector2i gridSize, i
 			//std::cout << blockMap.getCaveBlock(sf::Vector2i(x, y)) << " ";
 			//BLOCK FINDING
 			//muutetaan 8 bittist‰ intti‰ sen biteill‰. esitt‰‰ samaa kuin listaa kahdeksasta paikasta.
-			if (!blockMap.get()->getCaveBlock(sf::Vector2i(x, y))) { continue; } // t‰h‰n arvo joka vaihdaa moden ruohon ja l‰pi ment‰vien kohdalle
+			if (!blockMap->getCaveBlock(sf::Vector2i(x, y))) { continue; } // t‰h‰n arvo joka vaihdaa moden ruohon ja l‰pi ment‰vien kohdalle
 			bool neighborBlocks[8]{};
 			
-			int airBlockCounter = 0;
+			//int airBlockCounter = 0;
 
 			for (int index = 0; index < 8; index++)
 			{
@@ -329,17 +76,20 @@ void ChunkBuilder::buildChunk(sf::VertexBuffer& buffer, sf::Vector2i gridSize, i
 					continue;
 				}
 				*/
-				neighborBlocks[index] = blockMap.get()->getCaveBlock(sf::Vector2i(x, y) + neighborCellPositons[index]);
+				neighborBlocks[index] = blockMap->getCaveBlock(sf::Vector2i(x, y) + this->neighborBlockPositons[index]);
 
-				if (neighborBlocks[index] == 0)
-				{
-					airBlockCounter++;
-				}
+				//if (neighborBlocks[index] == 0)
+				//{
+					//airBlockCounter++;
+				//}
 			}
 
-			if (airBlockCounter == 8) { continue; }
-
-			const sf::Vector2i texCoord = this->getTexCoord(neighborBlocks);
+			//if (airBlockCounter == 8) 
+			//{
+				//continue;
+			//}
+			
+			const sf::Vector2f texCoord = this->blockBuilder.getTexCoord(neighborBlocks);
 			sf::Vertex* quad = &chunkVerticies.get()[(size_t(x-1) + (static_cast<size_t>(y-1) * gridSize.x)) * 4];
 			const sf::Vector2f pos(WORLD_POSITION + sf::Vector2f((float)x-1, (float)y-1));
 

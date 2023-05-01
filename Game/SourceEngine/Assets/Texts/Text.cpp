@@ -11,7 +11,7 @@ void engine::Text::setText(sf::Int8 charSize,std::string title,sf::Vector2f posi
 	this->text.setPosition(position);
 }
 
-void engine::Text::changeString(std::string string)
+void engine::Text::changeString(std::string& string)
 {
 	this->text.setString(string);
 }

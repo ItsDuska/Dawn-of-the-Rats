@@ -45,7 +45,6 @@ void ChunkManager::update(sf::View *view, sf::Vector2f playerPos)
     }
     this->previousChunk = this->currentChunk;
 
-
     //tähän kato että onko ikkunan sisällä
     
 }

@@ -42,23 +42,6 @@ void Chunk::createChunk()
 	this->blockMap = chunkBuilder.getBlockMap(); // tää heitti erroria
 	this->isDrawable = true;
 
-	//FOR DEBUGIN
-
-	this->rect.setPosition(
-		((this->chunkCoord.y - 1) * gridSize.y) * tileSize.y,
-		((this->chunkCoord.x - 1) * gridSize.x)* tileSize.x);
-
-	this->rect.setSize(
-		sf::Vector2f((float)gridSize.x * tileSize.x,
-		(float)gridSize.y * tileSize.y));
-
-
-
-
-	this->rect.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255, 20));
-	this->rect.setOutlineColor(sf::Color::White);
-	this->rect.setOutlineThickness(1);
-
 	std::cout << "Thread Ended\n";
 
 }

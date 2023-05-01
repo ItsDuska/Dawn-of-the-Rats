@@ -14,13 +14,16 @@ void ActualGame::init()
 	PlayerPreFab::createPlayer(this->entityManager, this->entities[0]);
 	EntityHelper::createEntity(&this->entityManager, this->entities);
 	this->systems.inventory->addNewItem(this->entityManager);
+
+	this->frameTime.setText(50,"", sf::Vector2f(0,0));
+
 }
 
 //update function for the game loop.
 void ActualGame::update(float dt, State* state)
 {
-	//std::chrono::time_point<std::chrono::system_clock> start, end;
-	//start = std::chrono::system_clock::now();
+	std::chrono::time_point<std::chrono::system_clock> start, end;
+	start = std::chrono::system_clock::now();
 
 	
 	this->camera.setCenter(this->entityManager.getComponent<Component::Transform>(this->entities[0]).position);
@@ -34,7 +37,10 @@ void ActualGame::update(float dt, State* state)
 	this->systems.inventory->update(this->entityManager);
 	////////
 
-	//end = std::chrono::system_clock::now();
+	end = std::chrono::system_clock::now();
+
+	if (this->updateText)
+		this->updateTime = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 	//std::cout << "Update logic = " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << " microseconds" << std::endl;
 
 	//this->player.update();
@@ -43,48 +49,50 @@ void ActualGame::update(float dt, State* state)
 //rendering function for the game loop.
 void ActualGame::render(sf::RenderTarget* window)
 {
-	//std::chrono::time_point<std::chrono::system_clock> start, end;
-	//start = std::chrono::system_clock::now();
+	std::chrono::time_point<std::chrono::system_clock> start, end;
+	start = std::chrono::system_clock::now();
 	//World stuff rendering
 
 	
-	this->fakeWindow.clear();
+	//this->fakeWindow.clear();
 
 
-	fakeWindow.setView(this->camera);
-	this->chunkManager.render(&fakeWindow);
-	this->systems.render->render(this->entityManager,&fakeWindow);
+	window->setView(this->camera);
+	this->chunkManager.render(window);
+	this->systems.render->render(this->entityManager, window);
 	//this->player.render(window);
 
 	//Piirrä tän jälkeen GUI asiat.
-	fakeWindow.setView(fakeWindow.getDefaultView());
+	window->setView(window->getDefaultView());
 	//this->player.renderInventory(window);
 	this->systems.inventory->render(this->entityManager, window);
-	//end = std::chrono::system_clock::now();
-	//std::cout << "Rendering logic = " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << " microseconds" << std::endl;
-	this->fakeWindow.display();
-	sf::Sprite newWindow(fakeWindow.getTexture());
+	end = std::chrono::system_clock::now();
+	std::ostringstream oss;
 
-	auto radius = 2000 + std::sin((float)this->clock.getElapsedTime().asSeconds()+100);
-	this->shader.setUniform("pos", sf::Vector2f(this->camera.getCenter().x + (rand() % 200), this->camera.getCenter().y + (rand() % 145)));
-	this->shader.setUniform("storm_inner_radius", radius / 3);
-	this->shader.setUniform("storm_total_radius", radius);
-	
-	window->draw(newWindow, &shader);
+	if (this->updateText)
+	{
+		oss << "Game logic: " << this->updateTime.count() << " microseconds\n"
+			<< "Rendering logic: " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << " microseconds";
+		this->tempString = oss.str();
+		this->frameTime.changeString(this->tempString);
+	}
+
+
+		//this->frameTime.changeString("Game logic: " + this->updateTime + " mircoseconds\nRendering logic : " + 
+			//std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()) + " mircoseconds");
+
+	this->updateText = !this->updateText;
+	window->draw(this->frameTime.getText());
+
+
 }
 
 ActualGame::ActualGame(sf::Vector2f windowSize)
 	:chunkManager(windowSize, 47786, 0.45f, &threadPool)
 {
 	this->windowSize = windowSize;
-	fakeWindow.create(windowSize.x,windowSize.y);
-	if (!this->shader.loadFromFile("SourceGame/Shaders/Darkness/Darkness.vert",sf::Shader::Vertex))
-	{ std::cout << "Error while loading shaders!"; }
-	this->clock.restart();
-	//this->shader.setUniform("u_resolution", this->windowSize);
-	
-
-	this->camera.reset(sf::FloatRect(sf::Vector2f(0,0), windowSize+windowSize));
+	this->updateTime = std::chrono::microseconds(0);
+	this->camera.reset(sf::FloatRect(sf::Vector2f(0,0), windowSize));
 	
 }
 

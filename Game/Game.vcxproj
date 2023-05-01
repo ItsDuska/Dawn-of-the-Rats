@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SourceGame\World\Generation\Chunks\ChunkBuilder\BlockBuilder\BlockBuilder.cpp" />
     <ClCompile Include="SourceEngine\System\ECS\Systems\Collision\CollisionSystem.cpp" />
     <ClCompile Include="SourceEngine\Algorhythms\PerlinNoice\PerlineNoise.cpp" />
     <ClCompile Include="SourceEngine\Assets\Animation\AnimationHandler.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="SourceGame\World\Generation\Chunks\Chunk\Chunk.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SourceGame\World\Generation\Chunks\ChunkBuilder\BlockBuilder\BlockBuilder.h" />
     <ClInclude Include="SourceEngine\System\ECS\Systems\Collision\CollisionSystem.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SourceEngine\Algorhythms\PerlinNoice\PerlineNoice.hpp" />
@@ -221,6 +223,7 @@
     <ClInclude Include="SourceGame\World\Generation\Chunks\ChunkBuilder\ChunkBuilder.h" />
     <ClInclude Include="SourceGame\World\Generation\Chunks\ChunkManager\ChunkManager.h" />
     <ClInclude Include="SourceGame\World\Generation\Chunks\Chunk\Chunk.h" />
+    <ClInclude Include="SourceGame\World\WorldData\WorldData.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="SourceGame\World\Generation\Chunks\MatrixThings.txt" />

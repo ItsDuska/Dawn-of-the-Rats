@@ -10,7 +10,7 @@
 #include "System/ECS/Systems/Systems.h"
 
 #include "Entities/Prefabs/PlayerPrefab/PlayerPrefab.h"
-
+#include <sstream>
 #include <chrono>
 #include <cmath>
 
@@ -27,9 +27,14 @@ private:
     Coordinator entityManager;
     std::vector<uint32_t> entities;
     Systems systems;
-    sf::RenderTexture fakeWindow;
+    //sf::RenderTexture fakeWindow;
     sf::Shader shader;
     sf::Clock clock;
+    bool updateText = true;
+    std::chrono::microseconds updateTime;
+    engine::Text frameTime;
+    std::string tempString;
+
     // class jolla on tallessa jokainen System
 public:
     void init();

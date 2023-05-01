@@ -3,6 +3,7 @@
 #include "System/ThreadPool/ThreadPool.h"
 #include <memory>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include "World/WorldData/WorldData.h"
 //#include <SFML/Graphics.hpp>
 
 //a Tilemap for a chunk.
@@ -30,7 +31,6 @@ public:
 	sf::Vector2i gridSize;
 	sf::Vector2f tileSize;
 	sf::Vector2i chunkCoord;
-	sf::RectangleShape rect;
 
 };
 

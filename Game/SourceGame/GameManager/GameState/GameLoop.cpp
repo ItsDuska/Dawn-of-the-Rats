@@ -25,9 +25,10 @@ void ActualGame::update(float dt, State* state)
 	std::chrono::time_point<std::chrono::system_clock> start, end;
 	start = std::chrono::system_clock::now();
 
+	sf::Vector2f tempPos = this->entityManager.getComponent<Component::Transform>(this->entities[0]).position;
 	
-	this->camera.setCenter(this->entityManager.getComponent<Component::Transform>(this->entities[0]).position);
-	this->chunkManager.update(&this->camera, this->entityManager.getComponent<Component::Transform>(this->entities[0]).position);
+	this->camera.setCenter(sf::Vector2f((int)tempPos.x,tempPos.y));
+	this->chunkManager.update(&this->camera, tempPos);
 
 	////////
 	this->systems.playerInput->update(this->entityManager);

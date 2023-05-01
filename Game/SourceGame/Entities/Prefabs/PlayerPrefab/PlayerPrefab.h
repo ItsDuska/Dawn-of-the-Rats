@@ -22,7 +22,7 @@ public:
 		entityManager.addComponent(entity, Component::RigidBody{
 			9.f,
 			1.8f,
-			0.7f,
+			0.6f,
 			{0.f,0.f},
 			{0.f,0.f}});
 		entityManager.addComponent(entity, Component::Image{});

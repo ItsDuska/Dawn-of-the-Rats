@@ -12,12 +12,10 @@ private:
 	sf::Vector2f tileSize;
 	sf::Vector2f windowSize;
 	const int8_t BLOCK_SIZE = 16;
-	//const sf::Vector2i mapSize = { 5,11 };
 	sf::Vector2i gridSize;
 	const int chunkSize = 200;
-
-	//Settings
-	const int renderDistance = 3;
+	const int renderDistance = 2;
+	sf::Vector2f calcChunkSize;
 
 	std::vector<std::unique_ptr<Chunk>> chunks;
 	std::vector<sf::Vector2i> chunkCords;
@@ -27,22 +25,22 @@ private:
 	sf::Vector2i previousChunk = {-1,0};
 
 	bool loaded = false;
-	//void save();
-	//void load();
+
+
+
 	float distance(sf::Vector2i currentChunk, sf::Vector2i otherChunk);
 	void addChunk(sf::Vector2i chunkPosition);
 	void removeChunk(int index);
 	void buildChunk(Chunk *chunk);
-	bool isInWindow(sf::View *view, sf::Vector2f chunkPosition);
+	bool isInWindow(sf::View *view, sf::Vector2i chunkPosition);
 
-	// new way
 	int getChunkPositionIndex(std::vector<sf::Vector2i>*list, sf::Vector2i position);
 	void handleChunks();
 	
 public:
 	void update(sf::View *view,sf::Vector2f playerPos);
 	
-	virtual void render(sf::RenderTarget& target ) const;
+	virtual void render(sf::RenderTarget& target );
 	ChunkManager(sf::Vector2f windowSize, int seed, float threshold,ThreadPool *threadPool);
 	~ChunkManager();
 };

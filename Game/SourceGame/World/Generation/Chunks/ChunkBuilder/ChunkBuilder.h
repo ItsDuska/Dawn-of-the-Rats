@@ -12,7 +12,6 @@
 class ChunkBuilder
 {
 private:
-	bool isInBounds(sf::Vector2i currentPosition,sf::Vector2i gridSize);
 	void createQuad(sf::Vertex *quad,sf::Vector2f position, sf::Vector2f texCoord, sf::Vector2f tileSize);
 
 

@@ -18,7 +18,7 @@ void ChunkManager::addChunk(sf::Vector2i chunkPosition)
 
 float ChunkManager::distance(sf::Vector2i currentChunk, sf::Vector2i otherChunk)
 {
-    return (float) std::sqrt(std::pow((otherChunk.x - currentChunk.x), 2.f) + std::pow((otherChunk.y - currentChunk.y), 2.f));
+    return (float) std::sqrt(std::pow((otherChunk.y - currentChunk.y), 2.f) + std::pow((otherChunk.x - currentChunk.x), 2.f));
 }
 
 void ChunkManager::removeChunk(int index)
@@ -44,10 +44,10 @@ void ChunkManager::buildChunk(Chunk* chunk)
     std::cout << "Thread Ended\n";
 }
 
-bool ChunkManager::isInWindow(sf::View *view, sf::Vector2f chunkPosition)
+bool ChunkManager::isInWindow(sf::View *view, sf::Vector2i chunkPosition)
 {
     sf::FloatRect currentView(view->getCenter() - view->getSize() / 2.f, view->getSize());
-    sf::FloatRect chunkRect(chunkPosition, view->getSize());
+    sf::FloatRect chunkRect( chunkPosition.y *calcChunkSize.y, chunkPosition.x * calcChunkSize.x, calcChunkSize.y, calcChunkSize.x);
     return chunkRect.intersects(currentView);
 } 
 
@@ -73,10 +73,14 @@ void ChunkManager::update(sf::View *view, sf::Vector2f playerPos)
     
 }
 
-void ChunkManager::render(sf::RenderTarget& target) const
+void ChunkManager::render(sf::RenderTarget& target) 
 {
+
+    
     for (const auto& chunk : this->chunks)
     {
+       
+
         if (!chunk->isDrawable) { continue; }
         target.draw(chunk->chunk, &AssetManager::getTexture("Blocks"));
     }
@@ -87,12 +91,13 @@ ChunkManager::ChunkManager(sf::Vector2f windowSize, int seed, float threshold, T
     this->windowSize = windowSize;
     this->seed = seed;
     this->threshold = threshold;
-    this->tileSize = { 32.f, 32.f };
+    this->tileSize = { 64.f, 64.f };
     //this->gridSize = sf::Vector2i((int)this->windowSize.x / this->BLOCK_SIZE, (int)this->windowSize.y / this->BLOCK_SIZE);
 
     this->gridSize = sf::Vector2i(std::floor(chunkSize / this->BLOCK_SIZE), std::floor(chunkSize / this->BLOCK_SIZE));
 
     this->threadPool = threadPool;
+    this->calcChunkSize =  sf::Vector2f(gridSize.x * gridSize.x, gridSize.y * gridSize.y );
 }
 
 ChunkManager::~ChunkManager()
@@ -158,6 +163,17 @@ void ChunkManager::handleChunks()
         this->removeChunk(this->getChunkPositionIndex(&this->chunkCords,position));
     }
 
-    this->loaded = true;
     
+    for (const auto& chunk : this->chunks)
+    {
+        //std::cout << "  " << (this->distance(this->currentChunk, chunk.get()->chunkCoord)) << "  ";
+        if (std::fabs(this->distance(this->currentChunk, chunk.get()->chunkCoord)) < 2)
+        {
+            
+            chunk.get()->isDrawable = true;
+        }
+    }
+    
+
+    this->loaded = true;
 }

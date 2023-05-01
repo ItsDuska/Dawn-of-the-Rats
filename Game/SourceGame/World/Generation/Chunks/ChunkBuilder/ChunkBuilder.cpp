@@ -1,12 +1,6 @@
 #include "ChunkBuilder.h"
 
 
-//Checks if given cordinates are in a array.
-bool ChunkBuilder::isInBounds(sf::Vector2i currentPosition, sf::Vector2i gridSize)
-{
-	return currentPosition.x > 0 && currentPosition.x < gridSize.x && currentPosition.y > 0 && currentPosition.y < gridSize.y;
-}
-
 //Create a quad for the vertex array by giving the vertex it's position and texture cordinate.
 void ChunkBuilder::createQuad(sf::Vertex *quad, sf::Vector2f position, sf::Vector2f texCoord, sf::Vector2f tileSize)
 {
@@ -58,36 +52,16 @@ void ChunkBuilder::buildChunk(sf::VertexBuffer& buffer, sf::Vector2i gridSize, i
 	{
 		for (int x = 1; x < gridSize.x+1; x++)
 		{
-			//std::cout << blockMap.getCaveBlock(sf::Vector2i(x, y)) << " ";
-			//BLOCK FINDING
-			//muutetaan 8 bittistä inttiä sen biteillä. esittää samaa kuin listaa kahdeksasta paikasta.
-			if (!blockMap->getCaveBlock(sf::Vector2i(x, y))) { continue; } // tähän arvo joka vaihdaa moden ruohon ja läpi mentävien kohdalle
+			if (!blockMap->getCaveBlock(sf::Vector2i(x, y))) 
+			{
+				continue; // tähän arvo joka vaihdaa moden ruohon ja läpi mentävien kohdalle
+			} 
 			bool neighborBlocks[8]{};
-			
-			//int airBlockCounter = 0;
 
 			for (int index = 0; index < 8; index++)
 			{
-				/*
-				if (!this->isInBounds(sf::Vector2i(x, y) + neighborCellPositons[index], sf::Vector2i(gridSize.x+2, gridSize.y + 2)))
-				{
-					neighborBlocks[index] = true;
-					std::cout << x + neighborCellPositons[index].x << "  " << y + neighborCellPositons[index].y << "\n";
-					continue;
-				}
-				*/
 				neighborBlocks[index] = blockMap->getCaveBlock(sf::Vector2i(x, y) + this->neighborBlockPositons[index]);
-
-				//if (neighborBlocks[index] == 0)
-				//{
-					//airBlockCounter++;
-				//}
 			}
-
-			//if (airBlockCounter == 8) 
-			//{
-				//continue;
-			//}
 			
 			const sf::Vector2f texCoord = this->blockBuilder.getTexCoord(neighborBlocks);
 			sf::Vertex* quad = &chunkVerticies.get()[(size_t(x-1) + (static_cast<size_t>(y-1) * gridSize.x)) * 4];
@@ -97,11 +71,6 @@ void ChunkBuilder::buildChunk(sf::VertexBuffer& buffer, sf::Vector2i gridSize, i
 		}
 	}
 
-	/*
-	Ruoho palikat voitaisinn vetää myös samalla vertex arraylla,
-	mutta collisionissa katsottaisiin myös
-	jokaisen texCoord jas sen perusteella pääteellää collidetaanko vai ei
-	*/
 	buffer.update(chunkVerticies.get());
 	end = std::chrono::system_clock::now();
 	std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << " [microsecs]" << std::endl;

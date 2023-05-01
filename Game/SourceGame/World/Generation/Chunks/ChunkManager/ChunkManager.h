@@ -1,6 +1,7 @@
 #pragma once
-#include "../Chunk/Chunk.h"
-
+#include "World/Generation/Chunks/Chunk/Chunk.h"
+#include "World/Generation/Chunks/ChunkBuilder/ChunkBuilder.h"
+#include "System/ThreadPool/ThreadPool.h"
 
 //Handles a 2d array of chunks (The whole world)
 class ChunkManager
@@ -26,13 +27,12 @@ private:
 	sf::Vector2i previousChunk = {-1,0};
 
 	bool loaded = false;
-	const sf::Vector2i neighborPositions[8] = {  {-1,-1}, {-1,0}, {-1,1},    {0,-1}, {0,1},     {1,-1},  {1,0}, {1,1}  };
-
 	//void save();
 	//void load();
 	float distance(sf::Vector2i currentChunk, sf::Vector2i otherChunk);
 	void addChunk(sf::Vector2i chunkPosition);
 	void removeChunk(int index);
+	void buildChunk(Chunk *chunk);
 	bool isInWindow(sf::View *view, sf::Vector2f chunkPosition);
 
 	// new way
@@ -41,7 +41,8 @@ private:
 	
 public:
 	void update(sf::View *view,sf::Vector2f playerPos);
-	void render(sf::RenderTarget* window);
+	
+	virtual void render(sf::RenderTarget& target ) const;
 	ChunkManager(sf::Vector2f windowSize, int seed, float threshold,ThreadPool *threadPool);
 	~ChunkManager();
 };

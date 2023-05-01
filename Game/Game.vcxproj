@@ -169,7 +169,6 @@
     <ClCompile Include="SourceGame\World\Generation\Cave\CaveGenerator.cpp" />
     <ClCompile Include="SourceGame\World\Generation\Chunks\ChunkBuilder\ChunkBuilder.cpp" />
     <ClCompile Include="SourceGame\World\Generation\Chunks\ChunkManager\ChunkManager.cpp" />
-    <ClCompile Include="SourceGame\World\Generation\Chunks\Chunk\Chunk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceGame\World\Generation\Chunks\ChunkBuilder\BlockBuilder\BlockBuilder.h" />

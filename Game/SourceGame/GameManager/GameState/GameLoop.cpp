@@ -58,7 +58,7 @@ void ActualGame::render(sf::RenderTarget* window)
 
 
 	window->setView(this->camera);
-	this->chunkManager.render(window);
+	this->chunkManager.render(*window);
 	this->systems.render->render(this->entityManager, window);
 	//this->player.render(window);
 

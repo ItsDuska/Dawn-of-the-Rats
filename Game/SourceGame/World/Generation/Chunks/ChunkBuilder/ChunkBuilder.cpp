@@ -38,7 +38,7 @@ ChunkBuilder::ChunkBuilder()
 
 const std::vector<std::vector<bool>>& ChunkBuilder::getBlockMap()
 {
-	return std::move(this->blockMap->getCaveMap());
+	return this->blockMap->getCaveMap();
 }
 //Create a detailed vertex array with every quad that has it's own texture.
 void ChunkBuilder::buildChunk(sf::VertexBuffer& buffer, sf::Vector2i gridSize, int seed, float threshold, sf::Vector2f tileSize, sf::Vector2i chunkCoord)

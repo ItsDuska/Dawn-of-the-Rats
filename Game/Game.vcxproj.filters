@@ -45,9 +45,6 @@
     <ClCompile Include="SourceGame\World\Generation\Cave\CaveGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SourceGame\World\Generation\Chunks\Chunk\Chunk.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SourceGame\World\Generation\Chunks\ChunkBuilder\ChunkBuilder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

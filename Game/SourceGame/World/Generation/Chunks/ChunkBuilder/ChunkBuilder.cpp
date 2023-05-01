@@ -30,7 +30,7 @@ ChunkBuilder::ChunkBuilder()
 {
 }
 
-const std::vector<std::vector<bool>>& ChunkBuilder::getBlockMap()
+const std::vector<std::vector<Block>>& ChunkBuilder::getBlockMap()
 {
 	return this->blockMap->getCaveMap();
 }
@@ -52,18 +52,49 @@ void ChunkBuilder::buildChunk(sf::VertexBuffer& buffer, sf::Vector2i gridSize, i
 	{
 		for (int x = 1; x < gridSize.x+1; x++)
 		{
-			if (!blockMap->getCaveBlock(sf::Vector2i(x, y))) 
+			if (!blockMap->getCaveBlock(sf::Vector2i(x, y)).isBlock) 
 			{
-				continue; // tähän arvo joka vaihdaa moden ruohon ja läpi mentävien kohdalle
+				blockMap->getCaveBlock(sf::Vector2i(x, y)).isSolid = false; // tähän arvo joka vaihdaa moden ruohon ja läpi mentävien kohdalle
 			} 
+			else
+			{
+				blockMap->getCaveBlock(sf::Vector2i(x, y)).isSolid = true;
+			}
+			
 			bool neighborBlocks[8]{};
+			int airBlocks = 0;
 
 			for (int index = 0; index < 8; index++)
 			{
-				neighborBlocks[index] = blockMap->getCaveBlock(sf::Vector2i(x, y) + this->neighborBlockPositons[index]);
+				neighborBlocks[index] = blockMap->getCaveBlock(sf::Vector2i(x, y) + this->neighborBlockPositons[index]).isBlock;
+				if (!neighborBlocks[index])
+				{
+					airBlocks++;
+				}
+			}
+
+			if (airBlocks == 8)
+			{
+				continue;
+			}
+
+			sf::Vector2f texCoord;
+
+			if (!blockMap->getCaveBlock(sf::Vector2i(x, y)).isSolid)
+			{
+				if (!neighborBlocks[1] && !neighborBlocks[3] && !neighborBlocks[4] && !neighborBlocks[6])
+				{
+					continue;
+				}
+				std::cout << "\n HEI OLEN ELOSSA!!!!! \n";
+				bool neighborBlocksGrass[4] = { neighborBlocks[1],neighborBlocks[3],neighborBlocks[4],neighborBlocks[6] };
+				texCoord = this->blockBuilder.getGrassTexCoord(neighborBlocksGrass);
+			}
+			else
+			{
+				texCoord = this->blockBuilder.getTexCoord(neighborBlocks);
 			}
 			
-			const sf::Vector2f texCoord = this->blockBuilder.getTexCoord(neighborBlocks);
 			sf::Vertex* quad = &chunkVerticies.get()[(size_t(x-1) + (static_cast<size_t>(y-1) * gridSize.x)) * 4];
 			const sf::Vector2f pos(WORLD_POSITION + sf::Vector2f((float)x-1, (float)y-1));
 

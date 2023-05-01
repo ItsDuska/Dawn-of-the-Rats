@@ -11,6 +11,7 @@ enum class Biome : int8_t
 
 enum class BlockType : int8_t
 {
+	Air,
 	Grass,
 	Rock
 };
@@ -18,6 +19,7 @@ enum class BlockType : int8_t
 
 struct Block
 {
+	bool isBlock;
 	bool isSolid;
 	BlockType blockType;
 };

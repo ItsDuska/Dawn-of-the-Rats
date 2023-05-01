@@ -12,11 +12,36 @@ jokainen iso luola luodaan perlin noisen avulla ja se antaa jokaisen palikan koh
 
 pienet luolat luodaan kahden pisteen avulla eli suora viiva ja siihen päälle sin wave arvoja.
 
+void smolCave(vec2f cave1, vec2f cave2)
+{
+	laske pituus ja jana näiden välillä.
+	
+	suora = kahdeesta pisteestä tehty suoran yhtälö
+	
+	for (suoran pituus)
+	{
+		x,y = sini aalto offset
+		
+		x,y = random offset (yleensä 1 - 3 palikkaa)
+	
+		caveList[x][y] = true
+		
+		
+	}
+
+}
+
+
 käyttäen listaa joka sisältää 1 tai nollan, valitsemme minkä textuurin laitamme kohtaan. biomeita voidaan käyttää eri palikoille tai random arvoa.
 
 palikoiden päälle pystyy laittamaan toisia palikoita. esim yhdessä palikassa on ruohoa ja lampun jalka.
 
 tutkitut chunkit jotka unloadataan tallennetaan tiedostoon ja ladataan uudelleen sieltä jos pelaaja palaa alueelle.
+
+
+
+
+
 
 
 collisioniin vaan pelaajan ympärillä olevat palikat eli grid size ois 3x3
@@ -249,7 +274,7 @@ isojen luolien generaatio.
 luolien yhdistyminen toisiinsta pienillä luolilla.
 luolien outojen muotojen generoituminen.
 texture generation for the blocks.
-Inventory system
+Inventory system           
 sound system
 Enemies and the ai
 collisions.
@@ -316,39 +341,77 @@ ei mitään hajua
 
 void checkCollisonSides(velocity); // uus funktio joka tekee nää
 {
-	if velocity.y < 0 ylös; laita se nollaan
+	if velocity.y < 0 ylös: laita se nollaan
 		velocity.0
 	
-	if velocity.y > 0:
+	else if velocity.y > 0:
 		// ja collidaa
 		bool onGround = true;
 		velocity.y = 0;
 		
-
-
+	if velocity.x > 0: 
+		//collidaa oikealle puolelle
+		velocity.x = 0;
+	
+	else if velocity.x < 0:
+		//collidaa oikealle puolelle
+		velocity.x = 0;
 }
 
-bool collision(entity, blockMap)
-{
-	vec2f entityPosition_InWorld = {
-		std::floorf(chunkCoord.x*(entity.position.x /gridSize)* blockSize), // x
-		std::floorf(chunkCoord.y*(entity.position.y /gridSize)* blockSize)  // y
-	};
-	
-	const naapuri; lista samat vec2 arvot naapureille.
-	
-	for naapuri in naapurit:
+
+collisionin hommat:
+Muuta pelaajan cord chunkmapin indexeiksi.
+-> Katso pelaajan vieressa olevat 8 naapuri palikkaa.
+ 		-> onko naapuri solid vai ei.
+			-> jos naapuri on out of bounds, älä tee mitään.
+			-> jos ei ole solid niin älä tee mitään
+			-> katso collisionit AABB:llä. 
+				-> jos ei collidaa niin älä tee mitään.
+				-> jos collidiaa niin:
+					-> // collisionin suunta voidaan arvata naapurin vektorista, sillä vektori esittää yhden palikan etäisyyttä xy akselilla pelaajasta
+					-> katso pelaajan velocity eli suunta mihin se on liikkumassa
+					-> suunnan perusteella estä pelaajan liikkuminen siihen suuntaan.
+
+entityille on oma collision funktio, sillå ne eivät ole chunkmapissa.
+
+
+
+
+bool collision(Coordinator &entityManager, &blockMap)
+{	
+	for (auto& entity : this->mEntities)
 	{
-		if not in blockMap
-			continue;
-							// width height on palikan koko eli blockSize?
-		FloatRect neighborCell = {entityPosition_InWorld.x,entityPosition_InWorld.y,width,height};
+	
+		auto& rigidBody = entityManager.getComponent<Component::RigidBody>(entity);
+		auto& transform = entityManager.getComponent<Component::Transition>(entity);
 		
-		if !(neighborCell.intersects(entity.rect)
-			continue;
+		vec2f entityPosition_InWorld = {
+			std::floorf(chunkCoord.x*(transform.position.x / gridSize) * blockSize), // x
+			std::floorf(chunkCoord.y*(transform.position.y / gridSize) * blockSize)  // y
+		};
 		
-		checkCollisonSides(velocity); // uus funktio joka tekee nää
+		const vector2f[8] naapurit; lista samat vec2 arvot naapureille.
+		
+		for naapuri in naapurit:
+		{
+			if not in blockMap
+				continue;
+								// width height on palikan koko eli blockSize?
+			FloatRect neighborCell = {entityPosition_InWorld.x,entityPosition_InWorld.y,width,height};
+			
+			if (!neighborCell.intersects(entity.rect)
+			{
+				continue;
+			}
+			
+			//checkCollisonSides(velocity); // uus funktio joka tekee nää
+		}
 	}
+}
+
+
+
+
 	//
 	
 	Tää ei tule toimimaan kokonaan.
@@ -390,8 +453,91 @@ Muuta WorldCreator Class nimi --> ChunkBuilder
 
 
 
+////////////////////////////////
+  Menu / Button System rewrtie
+////////////////////////////////
+
+TabMenu class voi olla esim Settings tab tai stats tab tai semmone.
+ Tabin sisällä on siis lista muista napeista.
+
+Tabit ehkä vittuun?
+
+
+Tabin sijaan luodaan uusi Button class esim Tab:
+
+class Tab : Button
+{
+  	vector<Buttons> Buttos
+	Transition transition;
+
+}
+
+
+class Menu
+{
+	vector<Button> buttons;
+
+	void init();
+}
+
+
+// hoitaa tabiin siirymisen 
+
+Main menussa vois liikuttaa taustaa eteen tai taakke.
+
+Muualla Himmentää valmiina olevat napit ja vetää ne alas.
+Uudet pompahtaa ylhäältä ja tai vasemmalta
+
+// Voidaan saada main menun hommat vaihtamalla shaderin resoluutiota? 
+
+class Transition
+{
+	// Tapahtuu vain kaksi kertaa. eli eteen tai taakke.
+	
+	
+}
 
 
 
+Asioita mitä generaalisti pitää tehdä:
+Muuta  buttonin checkMousePos funktion nimi -> update()
+
+Button classiin isTab boolean?
+
+vois kaiken tämän tilalla käyttää template kamaa
+eli näin:
+
+template<typename T>
+void esimFunktio(T amogus){}
 
 
+////////////////////////////////
+       Muuta hommaa
+////////////////////////////////	 
+
+- Muuta SoundManageria siten että äänet voidaan
+   soittaa sieltä eikä jokaisesta objektista.
+    (Säästäis muistia koska ei tarvisi antaa muista sf::Sound objektille)
+	
+- SoundManageriin voidaan luoda uusi hashmap, johon tallennetaan
+   jokainen Sound objekti.
+
+- Inventoriin uusi kohta (roskakori), jolla voidaan tuhota turhia tavaroita.
+ Pelaajan täytyy siis vetää hiirellään valitsemansa tavara roskakorin kohdalle
+  ja vapauttaa tavara sen kohdalla.
+
+
+
+////////////////////////
+ChunkBorder hommelit
+////////////////////////
+
+Jos lisäät jotain grapling hookkia tai muuta niin ammutaan ray
+ray laskee missä chunkissa se on aina ja sen avulla käyttää sitä chunk indexinä
+
+class Ray
+{
+	vec2f pos
+	vec2i chunkpos kautta id;
+	bool hit;
+}

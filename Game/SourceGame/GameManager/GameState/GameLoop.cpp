@@ -32,6 +32,7 @@ void ActualGame::update(float dt, State* state)
 
 	////////
 	this->systems.playerInput->update(this->entityManager);
+	this->systems.collision->update(this->entityManager, this->chunkManager.getLoadedChunks(), this->chunkManager.settings, this->chunkManager.chunkCords);
 	this->systems.movement->update(this->entityManager);
 	this->systems.animation->update(this->entityManager);
 	this->systems.render->update(this->entityManager);

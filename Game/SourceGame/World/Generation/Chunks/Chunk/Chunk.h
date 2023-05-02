@@ -9,7 +9,7 @@
 struct Chunk
 {	
 	sf::Vector2i chunkCoord;
-	bool isDrawable;
+	bool isDrawable = NULL;
 	std::vector<std::vector<Block>> blockMap;
 	sf::VertexBuffer chunk;
 };

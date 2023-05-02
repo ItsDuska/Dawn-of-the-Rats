@@ -30,7 +30,7 @@ ChunkBuilder::ChunkBuilder()
 {
 }
 
-const std::vector<std::vector<Block>>& ChunkBuilder::getBlockMap()
+const std::vector<std::vector<Block>> ChunkBuilder::getBlockMap()
 {
 	return this->blockMap->getCaveMap();
 }
@@ -86,7 +86,6 @@ void ChunkBuilder::buildChunk(sf::VertexBuffer& buffer, sf::Vector2i gridSize, i
 				{
 					continue;
 				}
-				std::cout << "\n HEI OLEN ELOSSA!!!!! \n";
 				bool neighborBlocksGrass[4] = { neighborBlocks[1],neighborBlocks[3],neighborBlocks[4],neighborBlocks[6] };
 				texCoord = this->blockBuilder.getGrassTexCoord(neighborBlocksGrass);
 			}

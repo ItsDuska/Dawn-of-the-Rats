@@ -33,6 +33,8 @@ public:
 		entityManager.registerComponent<Component::Damage>();
 		entityManager.registerComponent<Component::Defence>();
 		entityManager.registerComponent<Component::Luck>();
+		entityManager.registerComponent<Component::Hitbox>();
+		entityManager.registerComponent<Component::Collider>();
 	}
 
 	
@@ -43,6 +45,7 @@ public:
 		entitySystems.playerInput = entityManager.registerSystem<PlayerInputSystem>();
 		entitySystems.animation = entityManager.registerSystem<AnimationSystem>();
 		entitySystems.inventory = entityManager.registerSystem<InventorySystem>();
+		entitySystems.collision = entityManager.registerSystem<CollisionSystem>();
 
 
 
@@ -52,6 +55,7 @@ public:
 		setSignature(entityManager, *entitySystems.playerInput.get(), SystemType::PLAYER_INPUT);
 		setSignature(entityManager, *entitySystems.animation.get(), SystemType::ANIMATION);
 		setSignature(entityManager, *entitySystems.inventory.get(), SystemType::INVENTORY);
+		setSignature(entityManager, *entitySystems.collision.get(), SystemType::COLLISION);
 		
 	}
 
@@ -105,6 +109,10 @@ private:
 		case SystemType::PHYSICS:
 			break;
 		case SystemType::COLLISION:
+			signature.set(entityManager.getComponentType<Component::RigidBody>());
+			signature.set(entityManager.getComponentType<Component::Transform>());
+			signature.set(entityManager.getComponentType<Component::Hitbox>());
+			signature.set(entityManager.getComponentType<Component::Collider>());
 			break;
 		case SystemType::INVENTORY:
 			signature.set(entityManager.getComponentType<Component::Inventory>());

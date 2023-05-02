@@ -26,10 +26,10 @@ public:
 			{0.f,0.f},
 			{0.f,0.f}});
 		entityManager.addComponent(entity, Component::Image{});
-
-		//entityManager.addComponent(entity, Component::Hitbox{});
+		
 
 		entityManager.addComponent(entity, Component::Speed{ 0.5f });
+		entityManager.addComponent(entity, Component::Collider{});
 		entityManager.addComponent(entity, Component::Animation{
 			{0,6},
 			AssetManager::getframeIndexes("Player"),
@@ -55,7 +55,10 @@ public:
 		image.sprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
 		image.sprite.setOrigin({ image.sprite.getGlobalBounds().width / 2, image.sprite.getGlobalBounds().height / 2 });
 		image.sprite.scale(8.f, 8.f);
-		
+
+		entityManager.addComponent(entity, Component::Hitbox{ sf::Vector2f(image.sprite.getGlobalBounds().width, image.sprite.getGlobalBounds().height) });
+
+
 		auto& inventory = entityManager.getComponent<Component::Inventory>(entity);
 
 		inventory.background.setTexture(AssetManager::getTexture("Inventory"));

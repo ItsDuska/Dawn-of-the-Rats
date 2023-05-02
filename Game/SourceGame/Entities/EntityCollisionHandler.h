@@ -3,6 +3,7 @@
 #include <SFML/Graphics/Rect.hpp>
 #include <vector>
 #include <cmath>
+#include "World/WorldData/WorldData.h"
 
 class EntityCollisionHandler
 {
@@ -12,7 +13,7 @@ class EntityCollisionHandler
 protected:
 	bool _onGround = false;
 
-	void blockCollisions(sf::FloatRect entity, std::vector<std::vector<bool>> &blockMap,sf::Vector2f *velocity,sf::Vector2f tileSize,sf::Vector2i gridSize, sf::Vector2i chunkCoord);
+	void blockCollisions(std::vector<std::vector<Block>> &blockMap,sf::Vector2f tileSize,sf::Vector2i gridSize, sf::Vector2i chunkCoord);
 	bool spriteCollisions(sf::FloatRect *firstSprite, sf::FloatRect *secondSprite);
 	
 };

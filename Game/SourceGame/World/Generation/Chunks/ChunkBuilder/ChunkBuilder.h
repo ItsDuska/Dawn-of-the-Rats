@@ -26,7 +26,7 @@ private:
 public:
 	~ChunkBuilder();
 	ChunkBuilder();
-	const std::vector<std::vector<Block>>& getBlockMap();
+	const std::vector<std::vector<Block>> getBlockMap();
 	void buildChunk(sf::VertexBuffer& buffer, sf::Vector2i gridSize, int seed, float threshold, sf::Vector2f tileSize, sf::Vector2i chunkCoord);
 };
 

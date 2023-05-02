@@ -374,7 +374,13 @@ Muuta pelaajan cord chunkmapin indexeiksi.
 
 entityille on oma collision funktio, sillå ne eivät ole chunkmapissa.
 
+jostakin syystä chunkCord (-1y, -5x), (1y, -5x), (3y, -5x), (0y, -5x), (2y, -5x) ja 
 
+(-1y, 5x), (1y, 5x), (3y, 5x), (0y, 5x), (2y, 5x)
+
+
+WorldPos -> worldmapIndex = pos / blockSize
+WorldPos -> chunkcord = mod((pos / blockSize);12) eli koodilla -> std::floor((pos / blockSize) % 12)
 
 
 bool collision(Coordinator &entityManager, &blockMap)
@@ -410,6 +416,7 @@ bool collision(Coordinator &entityManager, &blockMap)
 }
 
 
+ChunkManagerista pitää saada chunk arrayn pointteri
 
 
 	//
@@ -541,3 +548,4 @@ class Ray
 	vec2i chunkpos kautta id;
 	bool hit;
 }
+

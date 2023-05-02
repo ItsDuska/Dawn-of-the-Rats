@@ -8,7 +8,7 @@ void ChunkManager::addChunk(sf::Vector2i chunkPosition)
     chunk->chunkCoord = chunkPosition;
     chunk->isDrawable = false;
     chunk->chunk.setPrimitiveType(sf::Quads);
-    chunk->chunk.create(static_cast<size_t>(this->gridSize.y) * gridSize.x * 4);
+    chunk->chunk.create(static_cast<size_t>(this->settings.gridSize.y) * this->settings.gridSize.x * 4);
     chunk->chunk.setUsage(sf::VertexBuffer::Stream);
     this->chunks.push_back(std::move(chunk));
     
@@ -33,8 +33,8 @@ void ChunkManager::buildChunk(Chunk* chunk)
     std::cout << "Thread Started\n";
 
     ChunkBuilder chunkBuilder;
-    chunkBuilder.buildChunk(chunk->chunk, this->gridSize,
-        this->seed, this->threshold,this->tileSize, chunk->chunkCoord);
+    chunkBuilder.buildChunk(chunk->chunk, this->settings.gridSize,
+        this->seed, this->threshold,this->settings.tileSize, chunk->chunkCoord);
 
     chunk->chunk.setUsage(sf::VertexBuffer::Static);
     std::cout << "amogus";
@@ -53,7 +53,8 @@ bool ChunkManager::isInWindow(sf::View *view, sf::Vector2i chunkPosition)
 
 void ChunkManager::update(sf::View *view, sf::Vector2f playerPos)
 {
-    this->currentChunk = {(int) std::floor((playerPos.y / (gridSize.y*tileSize.y))),(int)std::floor((playerPos.x / (gridSize.x*tileSize.x))) };
+    this->currentChunk = {(int) std::floor((playerPos.y / (this->settings.gridSize.y*this->settings.tileSize.y))),
+        (int) std::floor((playerPos.x / (this->settings.gridSize.x*this->settings.tileSize.x))) };
 
     if (this->previousChunk != this->currentChunk)
     {
@@ -75,29 +76,30 @@ void ChunkManager::update(sf::View *view, sf::Vector2f playerPos)
 
 void ChunkManager::render(sf::RenderTarget& target) 
 {
-
-    
     for (const auto& chunk : this->chunks)
     {
-       
-
         if (!chunk->isDrawable) { continue; }
         target.draw(chunk->chunk, &AssetManager::getTexture("Blocks"));
     }
 }
 
 ChunkManager::ChunkManager(sf::Vector2f windowSize, int seed, float threshold, ThreadPool *threadPool)
+    : renderBonds((this->settings.RENDERDISTANCE * 2) + 1)
 {
     this->windowSize = windowSize;
     this->seed = seed;
     this->threshold = threshold;
-    this->tileSize = { 64.f, 64.f };
+    this->settings.tileSize = { 64.f, 64.f };
+   
     //this->gridSize = sf::Vector2i((int)this->windowSize.x / this->BLOCK_SIZE, (int)this->windowSize.y / this->BLOCK_SIZE);
 
-    this->gridSize = sf::Vector2i(std::floor(chunkSize / this->BLOCK_SIZE), std::floor(chunkSize / this->BLOCK_SIZE));
+    this->settings.gridSize = sf::Vector2i(
+        std::floor(this->settings.CHUNK_SIZE / this->settings.BLOCK_SIZE),
+        std::floor(this->settings.CHUNK_SIZE / this->settings.BLOCK_SIZE)
+    );
 
     this->threadPool = threadPool;
-    this->calcChunkSize =  sf::Vector2f(gridSize.x * gridSize.x, gridSize.y * gridSize.y );
+    this->calcChunkSize =  sf::Vector2f(this->settings.gridSize.x * this->settings.gridSize.x, this->settings.gridSize.y * this->settings.gridSize.y );
 }
 
 ChunkManager::~ChunkManager()
@@ -124,9 +126,14 @@ int ChunkManager::getChunkPositionIndex(std::vector<sf::Vector2i>*list, sf::Vect
     }
 }
 
+std::vector<std::unique_ptr<Chunk>>* ChunkManager::getLoadedChunks()
+{
+    return &this->chunks;
+}
+
 void ChunkManager::handleChunks()
 {
-    const int renderBonds = (this->renderDistance * 2) + 1;
+    
     std::vector<sf::Vector2i> loadingCoords;
     sf::Vector2i tempChunkCord;
 

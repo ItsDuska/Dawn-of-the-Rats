@@ -17,10 +17,11 @@ MainMenu::MainMenu(sf::Vector2f screenSize)
 	this->screenSize = screenSize;
 	SoundManager::loadSound("Button", "Sounds/ButtonSound.ogg");
 	AssetManager::loadTexture("Rat", this->ratPath);
+	AssetManager::loadTexture("Button", "NewSprites/Button.png");
 	this->rat.setTexture(AssetManager::getTexture("Rat"));
 	this->initBackGround();
-	this->exitButton = std::make_unique< ExitButton>(sf::Vector2f(300, 600), sf::Vector2f(300, 200), sf::Color(79, 121, 66,128), "Quit");
-	this->playButton = std::make_unique< PlayButton>(sf::Vector2f(300, 300), sf::Vector2f(300, 200), sf::Color(79, 121, 66,128), "Play");
+	this->exitButton = std::make_unique< ExitButton>(sf::Vector2f(300, 600), sf::Vector2f(300, 200), sf::Color(200, 200, 200,128), "Quit");
+	this->playButton = std::make_unique< PlayButton>(sf::Vector2f(300, 300), sf::Vector2f(300, 200), sf::Color(200, 200, 200,128), "Play");
 	std::cout << "done";
 }
 

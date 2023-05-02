@@ -2,10 +2,9 @@
 #include "Assets/Sounds/SoundManager.h"
 #include "Assets/Animation/AnimationHandler.h"
 #include "System/GameStates/StateMachine.h"
-#include "Assets/Textures/AssetManager.h"
 #include "Buttons/ActionButtons/ExitButton.h"
 #include "Buttons/ActionButtons/PlayButton.h"
-
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Shader.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 //#include <memory>

@@ -63,9 +63,9 @@ bool ChunkManager::isInWindow(sf::View *view, sf::Vector2i chunkPosition)
 void ChunkManager::update(sf::View *view, sf::Vector2f playerPos)
 {
     this->currentChunk = {(int) std::floor((playerPos.y / (this->settings.gridSize.y*this->settings.tileSize.y))),
-        (int) std::floor((playerPos.x / (this->settings.gridSize.x*this->settings.tileSize.x+this->settings.RENDERDISTANCE))) };
+        (int) std::floor((playerPos.x / (this->settings.gridSize.x*this->settings.tileSize.x))) };
 
-    //std::cout << "\n\nCurrent chunk position : " << this->currentChunk.y << "x  " << this->currentChunk.x << "y\n\n";
+   // std::cout << "\n\nCurrent chunk position : " << this->currentChunk.y << "x  " << this->currentChunk.x << "y\n\n";
 
 
     if (this->previousChunk != this->currentChunk)

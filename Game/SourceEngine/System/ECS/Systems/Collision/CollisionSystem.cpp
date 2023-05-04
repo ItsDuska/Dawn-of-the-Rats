@@ -14,23 +14,7 @@ void CollisionSystem::update(Coordinator& entityManager,
 			Hassu hassu collisoion check tähän
 			Oma func block ja entity collisiolle
 			Block collisioniin tarvitaan ChunkMap
-		*/
-		/*
-		for (int s = 0; s < 9; s++)
-		{
-			std::cout << "\n" << s <<"\n";
-			for (int a = 0; a < 14; a++)
-			{
-				for (int b = 0; b < 14; b++)
-				{
-					std::cout << chunks->at(s).get()->blockMap[b][a].isBlock << " ";
-				}
-				std::cout << std::endl;
-			}
-		}
-		return;
-		*/
-		
+		*/	
 
 		this->colliding = false;
 
@@ -47,15 +31,11 @@ void CollisionSystem::update(Coordinator& entityManager,
 
 		//jostakin syystä arvot on flipattu toiste päin
 		sf::Vector2i chunkPosition(
-			(entityPositionInArray.y / chunkSettings.gridSize.x)+1,
-			(entityPositionInArray.x / chunkSettings.gridSize.y)+1
+			(entityPositionInArray.y / chunkSettings.gridSize.x) + chunkSettings.RENDERDISTANCE,
+			(entityPositionInArray.x / chunkSettings.gridSize.y) + chunkSettings.RENDERDISTANCE
 		);
 
 		const int chunkIndex = this->getChunkIndex(chunkCords,chunkPosition);
-
-
-		//std::cout << "\n\nCurrent chunk by math : " << chunkPosition.y << "x  " << chunkPosition.x << "y\n";
-
 
 		if (chunkIndex == -1)
 		{
@@ -87,9 +67,11 @@ bool CollisionSystem::blockCollision(Coordinator& entityManager,
 
 	//std::cout << "\nplayerPosInChunk : " << entityPositionInChunk.x << "  " << entityPositionInChunk.y << "\n";
 	//std::cout << "\n" << chunk.get()->blockMap[entityPositionInChunk.y][entityPositionInChunk.x].isBlock << "\n";
+	int i = -1;
 
 	for (sf::Vector2i neighborBlock : this->neighborBlockPositons)
 	{
+		i++;
 		sf::Vector2i newBlockPosition(entityPositionInChunk.x + neighborBlock.x, entityPositionInChunk.y + neighborBlock.y);
 
 		if (!this->inBounds(newBlockPosition, chunkSettings.gridSize))
@@ -97,18 +79,16 @@ bool CollisionSystem::blockCollision(Coordinator& entityManager,
 			continue;
 		}
 
-		//std::cout << "\nplayerPosInChunk : " << newBlockPosition.x << "  " << newBlockPosition.y << "\n";
-
 		if (!chunk.get()->blockMap[newBlockPosition.x][newBlockPosition.y].isBlock)
 		{
 			continue;
 		}
-		/*
+		
 		if (!chunk.get()->blockMap[newBlockPosition.x][newBlockPosition.y].isSolid)
 		{
 			continue;
 		}
-		*/
+		
 
 		// On olemassa palikka
 		sf::Vector2f blockPositionInWorld(
@@ -126,23 +106,9 @@ bool CollisionSystem::blockCollision(Coordinator& entityManager,
 			std::cout << "\n\nBlock position : " << blockPositionInWorld.x << "x  " << blockPositionInWorld.y << "y\n";
 			std::cout << "\n\narrayIndex : " << newBlockPosition.x << "x  " << newBlockPosition.y << "y\n";
 			std::cout << "\nChunk index :" << chunk.get()->chunkCoord.y << "x  " << chunk.get()->chunkCoord.x << "y\n";
-			this->palikka.setPosition(blockPositionInWorld);
+			this->palikka[i].setPosition(blockPositionInWorld);
 			this->colliding = true;
-			//std::cout << "\nCOLLISION!!\n";
-
-			/*
-			for (int a = 0; a < 14; a++)
-			{
-				for (int b = 0; b < 14; b++)
-				{
-
-					std::cout << chunk.get()->blockMap[b][a].isBlock << " ";
-				}
-				std::cout << std::endl;
-			}
-			
-			*/
-			
+			std::cout << "\nCOLLISION!!\n";
 		}
 	}
 
@@ -156,8 +122,14 @@ bool CollisionSystem::entityCollision(Coordinator& entityManager)
 
 void CollisionSystem::render(sf::RenderTarget* window)
 {
-	if (this->colliding)
-		window->draw(this->palikka);
+	if (!this->colliding)
+	{
+		return;
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		window->draw(this->palikka[i]);
+	}
 }
 
 bool CollisionSystem::collide(sf::FloatRect entity, sf::FloatRect block)
@@ -187,13 +159,16 @@ int CollisionSystem::getChunkIndex(std::vector<sf::Vector2i> list, sf::Vector2i 
 
 CollisionSystem::CollisionSystem()
 {
-	this->palikka.setFillColor(sf::Color::Red);
-	this->palikka.setOutlineColor(sf::Color::White);
-	this->palikka.setOutlineThickness(1);
-	this->palikka.setSize(sf::Vector2f(64, 64));
+	for (int i = 0; i < 8; i++)
+	{
+		this->palikka[i].setFillColor(sf::Color(255, 0, 0, 128));
+		this->palikka[i].setOutlineColor(sf::Color::White);
+		this->palikka[i].setOutlineThickness(1);
+		this->palikka[i].setSize(sf::Vector2f(64, 64));
+	}
 }
 
 bool CollisionSystem::inBounds(sf::Vector2i pos, sf::Vector2i bounds)
 {
-	return pos.x >= 0 && pos.x <= bounds.x+2 && pos.y >= 0 && pos.x <= bounds.y+2;
+	return pos.x >= 0 && pos.x <= bounds.x+3 && pos.y >= 0 && pos.x <= bounds.y+3;
 }

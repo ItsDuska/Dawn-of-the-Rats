@@ -37,7 +37,7 @@ private:
 	int getChunkIndex(std::vector<sf::Vector2i> list, sf::Vector2i position);
 
 	bool colliding;
-	sf::RectangleShape palikka;
+	sf::RectangleShape palikka[8];
 	const sf::Vector2i neighborBlockPositons[8] = { {-1,-1}, {-1,0}, {-1,1},    {0,-1}, {0,1},     {1,-1},  {1,0}, {1,1} };
 };
 

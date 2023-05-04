@@ -16,15 +16,15 @@ void ActualGame::init()
 	this->systems.inventory->addNewItem(this->entityManager);
 
 	this->frameTime.setText(50,"", sf::Vector2f(0,0));
-
+	auto sus = this->entityManager.getComponent < Component::Image>(this->entities[0]).sprite.getGlobalBounds();
+	float newPos = 0.5f * sus.width;
+	auto& amog = this->entityManager.getComponent < Component::Hitbox>(this->entities[0]);
 
 	this->pelaajaHitBox.setFillColor(sf::Color(0, 0, 255, 128));
 	this->pelaajaHitBox.setOutlineColor(sf::Color::White);
 	this->pelaajaHitBox.setOutlineThickness(1);
 	
-	auto sus = this->entityManager.getComponent < Component::Image>(this->entities[0]).sprite.getGlobalBounds();
-	float newPos = 0.5f * sus.width;
-	auto& amog = this->entityManager.getComponent < Component::Hitbox>(this->entities[0]);
+	
 	//this->pelaajaHitBox.setOrigin({ (sus.width / 2) - newPos / 2, sus.height / 2 });
 	//this->pelaajaHitBox.setSize(sf::Vector2f(newPos, sus.height));
 	this->pelaajaHitBox.setSize(amog.size);

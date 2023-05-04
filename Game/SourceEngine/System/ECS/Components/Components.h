@@ -44,7 +44,8 @@ namespace Component
 
 	struct Hitbox
 	{
-		sf::Vector2f hitbox;
+		sf::Vector2f size;
+		sf::Vector2f pos;
 	};
 
 	struct Speed

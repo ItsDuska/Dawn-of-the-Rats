@@ -17,6 +17,17 @@ void ActualGame::init()
 
 	this->frameTime.setText(50,"", sf::Vector2f(0,0));
 
+
+	this->pelaajaHitBox.setFillColor(sf::Color(0, 0, 255, 128));
+	this->pelaajaHitBox.setOutlineColor(sf::Color::White);
+	this->pelaajaHitBox.setOutlineThickness(1);
+	
+	auto sus = this->entityManager.getComponent < Component::Image>(this->entities[0]).sprite.getGlobalBounds();
+	float newPos = 0.5f * sus.width;
+	auto& amog = this->entityManager.getComponent < Component::Hitbox>(this->entities[0]);
+	//this->pelaajaHitBox.setOrigin({ (sus.width / 2) - newPos / 2, sus.height / 2 });
+	//this->pelaajaHitBox.setSize(sf::Vector2f(newPos, sus.height));
+	this->pelaajaHitBox.setSize(amog.size);
 }
 
 //update function for the game loop.
@@ -29,6 +40,8 @@ void ActualGame::update(float dt, State* state)
 	
 	this->camera.setCenter(sf::Vector2f((int)tempPos.x,tempPos.y));
 	this->chunkManager.update(&this->camera, tempPos);
+	
+	this->pelaajaHitBox.setPosition(this->entityManager.getComponent<Component::Hitbox>(this->entities[0]).pos);
 
 	////////
 	this->systems.playerInput->update(this->entityManager);
@@ -62,12 +75,18 @@ void ActualGame::render(sf::RenderTarget* window)
 	window->setView(this->camera);
 	this->chunkManager.render(*window);
 	this->systems.render->render(this->entityManager, window);
+
+	window->draw(this->pelaajaHitBox);
 	//this->player.render(window);
+	this->systems.collision->render(window);
 
 	//Piirrä tän jälkeen GUI asiat.
 	window->setView(window->getDefaultView());
 	//this->player.renderInventory(window);
 	this->systems.inventory->render(this->entityManager, window);
+	
+
+
 	end = std::chrono::system_clock::now();
 	std::ostringstream oss;
 

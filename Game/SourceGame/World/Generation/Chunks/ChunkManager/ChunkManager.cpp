@@ -4,7 +4,16 @@ void ChunkManager::addChunk(sf::Vector2i chunkPosition)
 { 
     this->chunkCords.push_back(chunkPosition);
 
-    std::unique_ptr<Chunk> chunk = std::make_unique<Chunk>();
+    std::unique_ptr<Chunk> chunk = std::make_unique<Chunk>();  
+    
+    chunk->rect.setFillColor(sf::Color(0, 255, 0, 128));
+    
+       
+    chunk->rect.setSize(sf::Vector2f(12 * 64, 12 * 64));
+    chunk->rect.setPosition(sf::Vector2f((chunkPosition.y * 12) * 64, (chunkPosition.x * 12) * 64));
+    chunk->rect.setOutlineColor(sf::Color::White);
+    chunk->rect.setOutlineThickness(1);
+
     chunk->chunkCoord = chunkPosition;
     chunk->isDrawable = false;
     chunk->chunk.setPrimitiveType(sf::Quads);
@@ -13,7 +22,7 @@ void ChunkManager::addChunk(sf::Vector2i chunkPosition)
     this->chunks.push_back(std::move(chunk));
     
     threadPool->enqueue([this,x = this->chunks.back().get()]() {this->buildChunk(x); });
-    std::cout << "Added chunk at position " << chunkPosition.x << " Y  " << chunkPosition.y <<" X" "\n";
+    //std::cout << "Added chunk at position " << chunkPosition.x << " Y  " << chunkPosition.y <<" X" "\n";
 }
 
 float ChunkManager::distance(sf::Vector2i currentChunk, sf::Vector2i otherChunk)
@@ -30,18 +39,18 @@ void ChunkManager::removeChunk(int index)
 
 void ChunkManager::buildChunk(Chunk* chunk)
 {
-    std::cout << "Thread Started\n";
+    //std::cout << "Thread Started\n";
 
     ChunkBuilder chunkBuilder;
     chunkBuilder.buildChunk(chunk->chunk, this->settings.gridSize,
         this->seed, this->threshold,this->settings.tileSize, chunk->chunkCoord);
 
     chunk->chunk.setUsage(sf::VertexBuffer::Static);
-    std::cout << "amogus";
+   // std::cout << "amogus";
     chunk->blockMap = chunkBuilder.getBlockMap();
     chunk->isDrawable = true;
 
-    std::cout << "Thread Ended\n";
+   // std::cout << "Thread Ended\n";
 }
 
 bool ChunkManager::isInWindow(sf::View *view, sf::Vector2i chunkPosition)
@@ -54,7 +63,10 @@ bool ChunkManager::isInWindow(sf::View *view, sf::Vector2i chunkPosition)
 void ChunkManager::update(sf::View *view, sf::Vector2f playerPos)
 {
     this->currentChunk = {(int) std::floor((playerPos.y / (this->settings.gridSize.y*this->settings.tileSize.y))),
-        (int) std::floor((playerPos.x / (this->settings.gridSize.x*this->settings.tileSize.x))) };
+        (int) std::floor((playerPos.x / (this->settings.gridSize.x*this->settings.tileSize.x+this->settings.RENDERDISTANCE))) };
+
+    //std::cout << "\n\nCurrent chunk position : " << this->currentChunk.y << "x  " << this->currentChunk.x << "y\n\n";
+
 
     if (this->previousChunk != this->currentChunk)
     {
@@ -80,6 +92,7 @@ void ChunkManager::render(sf::RenderTarget& target)
     {
         if (!chunk->isDrawable) { continue; }
         target.draw(chunk->chunk, &AssetManager::getTexture("Blocks"));
+        target.draw(chunk->rect);
     }
 }
 

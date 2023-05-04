@@ -29,10 +29,12 @@ void CaveGeneration::generateCave(sf::Vector2i chunkCoord)
 			{
 				this->cave[y][x].blockType = BlockType::Grass;
 				this->cave[y][x].isBlock = true;
+				this->cave[y][x].isSolid = true;
 			}
 			else {
 				this->cave[y][x].blockType = BlockType::Air;
 				this->cave[y][x].isBlock = false;
+				this->cave[y][x].isSolid = false;
 			}
 		}
 	}

@@ -379,6 +379,10 @@ jostakin syystä chunkCord (-1y, -5x), (1y, -5x), (3y, -5x), (0y, -5x), (2y, -5x
 (-1y, 5x), (1y, 5x), (3y, 5x), (0y, 5x), (2y, 5x)
 
 
+render distance 1 Alotus chunkki on index 4;
+eli 1x 1y
+
+
 WorldPos -> worldmapIndex = pos / blockSize
 WorldPos -> chunkcord = mod((pos / blockSize);12) eli koodilla -> std::floor((pos / blockSize) % 12)
 
@@ -551,3 +555,6 @@ class Ray
 
 
 Lisää rod of discord eli teleportti sauva
+
+
+

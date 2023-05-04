@@ -90,6 +90,7 @@ private:
 			signature.set(entityManager.getComponentType<Component::Transform>());
 			signature.set(entityManager.getComponentType<Component::Image>());
 			signature.set(entityManager.getComponentType<Component::TextureCoord>());
+			signature.set(entityManager.getComponentType<Component::Hitbox>());
 			break;
 		case SystemType::MOVEMENT:
 			signature.set(entityManager.getComponentType<Component::RigidBody>());

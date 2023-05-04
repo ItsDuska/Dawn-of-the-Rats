@@ -16,8 +16,8 @@ public:
 		entity = entityManager.createEntity(); 
 
 		entityManager.addComponent(entity, Component::Transform{
-			sf::Vector2f(0,500),
-			sf::Vector2f(0,0),
+			sf::Vector2f(0,600),
+			sf::Vector2f(100,100),
 			false});
 		entityManager.addComponent(entity, Component::RigidBody{
 			9.f,
@@ -56,7 +56,10 @@ public:
 		image.sprite.setOrigin({ image.sprite.getGlobalBounds().width / 2, image.sprite.getGlobalBounds().height / 2 });
 		image.sprite.scale(8.f, 8.f);
 
-		entityManager.addComponent(entity, Component::Hitbox{ sf::Vector2f(image.sprite.getGlobalBounds().width, image.sprite.getGlobalBounds().height) });
+		float newPos = 0.5f *image.sprite.getGlobalBounds().width;
+
+		entityManager.addComponent(entity, Component::Hitbox{ sf::Vector2f(newPos, image.sprite.getGlobalBounds().height)
+			,sf::Vector2f((image.sprite.getGlobalBounds().width / 2) - newPos, image.sprite.getGlobalBounds().height / 2)});
 
 
 		auto& inventory = entityManager.getComponent<Component::Inventory>(entity);

@@ -14,27 +14,48 @@ void ActualGame::init()
 	PlayerPreFab::createPlayer(this->entityManager, this->entities[0]);
 	EntityHelper::createEntity(&this->entityManager, this->entities);
 	this->systems.inventory->addNewItem(this->entityManager);
+
+	this->frameTime.setText(50,"", sf::Vector2f(0,0));
+	auto sus = this->entityManager.getComponent < Component::Image>(this->entities[0]).sprite.getGlobalBounds();
+	float newPos = 0.5f * sus.width;
+	auto& amog = this->entityManager.getComponent < Component::Hitbox>(this->entities[0]);
+
+	this->pelaajaHitBox.setFillColor(sf::Color(0, 0, 255, 128));
+	this->pelaajaHitBox.setOutlineColor(sf::Color::White);
+	this->pelaajaHitBox.setOutlineThickness(1);
+	
+	
+	//this->pelaajaHitBox.setOrigin({ (sus.width / 2) - newPos / 2, sus.height / 2 });
+	//this->pelaajaHitBox.setSize(sf::Vector2f(newPos, sus.height));
+	this->pelaajaHitBox.setSize(amog.size);
 }
 
 //update function for the game loop.
 void ActualGame::update(float dt, State* state)
 {
-	//std::chrono::time_point<std::chrono::system_clock> start, end;
-	//start = std::chrono::system_clock::now();
+	std::chrono::time_point<std::chrono::system_clock> start, end;
+	start = std::chrono::system_clock::now();
 
+	sf::Vector2f tempPos = this->entityManager.getComponent<Component::Transform>(this->entities[0]).position;
 	
-	this->camera.setCenter(this->entityManager.getComponent<Component::Transform>(this->entities[0]).position);
-	this->chunkManager.update(&this->camera, this->entityManager.getComponent<Component::Transform>(this->entities[0]).position);
+	this->camera.setCenter(sf::Vector2f((int)tempPos.x,tempPos.y));
+	this->chunkManager.update(&this->camera, tempPos);
+	
+	this->pelaajaHitBox.setPosition(this->entityManager.getComponent<Component::Hitbox>(this->entities[0]).pos);
 
 	////////
 	this->systems.playerInput->update(this->entityManager);
+	this->systems.collision->update(this->entityManager, this->chunkManager.getLoadedChunks(), this->chunkManager.settings, this->chunkManager.chunkCords);
 	this->systems.movement->update(this->entityManager);
 	this->systems.animation->update(this->entityManager);
 	this->systems.render->update(this->entityManager);
 	this->systems.inventory->update(this->entityManager);
 	////////
 
-	//end = std::chrono::system_clock::now();
+	end = std::chrono::system_clock::now();
+
+	if (this->updateText)
+		this->updateTime = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
 	//std::cout << "Update logic = " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << " microseconds" << std::endl;
 
 	//this->player.update();
@@ -43,48 +64,56 @@ void ActualGame::update(float dt, State* state)
 //rendering function for the game loop.
 void ActualGame::render(sf::RenderTarget* window)
 {
-	//std::chrono::time_point<std::chrono::system_clock> start, end;
-	//start = std::chrono::system_clock::now();
+	std::chrono::time_point<std::chrono::system_clock> start, end;
+	start = std::chrono::system_clock::now();
 	//World stuff rendering
 
 	
-	this->fakeWindow.clear();
+	//this->fakeWindow.clear();
 
 
-	fakeWindow.setView(this->camera);
-	this->chunkManager.render(&fakeWindow);
-	this->systems.render->render(this->entityManager,&fakeWindow);
+	window->setView(this->camera);
+	this->chunkManager.render(*window);
+	this->systems.render->render(this->entityManager, window);
+
+	window->draw(this->pelaajaHitBox);
 	//this->player.render(window);
+	this->systems.collision->render(window);
 
 	//Piirrä tän jälkeen GUI asiat.
-	fakeWindow.setView(fakeWindow.getDefaultView());
+	window->setView(window->getDefaultView());
 	//this->player.renderInventory(window);
 	this->systems.inventory->render(this->entityManager, window);
-	//end = std::chrono::system_clock::now();
-	//std::cout << "Rendering logic = " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << " microseconds" << std::endl;
-	this->fakeWindow.display();
-	sf::Sprite newWindow(fakeWindow.getTexture());
-
-	auto radius = 2000 + std::sin((float)this->clock.getElapsedTime().asSeconds()+100);
-	this->shader.setUniform("pos", sf::Vector2f(this->camera.getCenter().x + (rand() % 200), this->camera.getCenter().y + (rand() % 145)));
-	this->shader.setUniform("storm_inner_radius", radius / 3);
-	this->shader.setUniform("storm_total_radius", radius);
 	
-	window->draw(newWindow, &shader);
+
+
+	end = std::chrono::system_clock::now();
+	std::ostringstream oss;
+
+	if (this->updateText)
+	{
+		oss << "Game logic: " << this->updateTime.count() << " microseconds\n"
+			<< "Rendering logic: " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << " microseconds";
+		this->tempString = oss.str();
+		this->frameTime.changeString(this->tempString);
+	}
+
+
+		//this->frameTime.changeString("Game logic: " + this->updateTime + " mircoseconds\nRendering logic : " + 
+			//std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()) + " mircoseconds");
+
+	this->updateText = !this->updateText;
+	window->draw(this->frameTime.getText());
+
+
 }
 
 ActualGame::ActualGame(sf::Vector2f windowSize)
 	:chunkManager(windowSize, 47786, 0.45f, &threadPool)
 {
 	this->windowSize = windowSize;
-	fakeWindow.create(windowSize.x,windowSize.y);
-	if (!this->shader.loadFromFile("SourceGame/Shaders/Darkness/Darkness.vert",sf::Shader::Vertex))
-	{ std::cout << "Error while loading shaders!"; }
-	this->clock.restart();
-	//this->shader.setUniform("u_resolution", this->windowSize);
-	
-
-	this->camera.reset(sf::FloatRect(sf::Vector2f(0,0), windowSize+windowSize));
+	this->updateTime = std::chrono::microseconds(0);
+	this->camera.reset(sf::FloatRect(sf::Vector2f(0,0), windowSize));
 	
 }
 

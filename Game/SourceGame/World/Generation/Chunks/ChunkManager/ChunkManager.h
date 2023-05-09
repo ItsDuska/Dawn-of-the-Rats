@@ -1,47 +1,43 @@
 #pragma once
-#include "../Chunk/Chunk.h"
-
+#include "World/Generation/Chunks/Chunk/Chunk.h"
+#include "World/Generation/Chunks/ChunkBuilder/ChunkBuilder.h"
+#include "System/ThreadPool/ThreadPool.h"
 
 //Handles a 2d array of chunks (The whole world)
 class ChunkManager
 {
+public:
+	ChunkSettings settings;
+	std::vector<sf::Vector2i> chunkCords;
 private:
 	int seed;
 	float threshold;
-	sf::Vector2f tileSize;
-	sf::Vector2f windowSize;
-	const int8_t BLOCK_SIZE = 16;
-	//const sf::Vector2i mapSize = { 5,11 };
-	sf::Vector2i gridSize;
-	const int chunkSize = 200;
+	const int renderBonds;
 
-	//Settings
-	const int renderDistance = 3;
+	sf::Vector2f windowSize;
+	sf::Vector2f calcChunkSize;
 
 	std::vector<std::unique_ptr<Chunk>> chunks;
-	std::vector<sf::Vector2i> chunkCords;
-	ThreadPool* threadPool;
 
+	ThreadPool* threadPool;
 	sf::Vector2i currentChunk;
 	sf::Vector2i previousChunk = {-1,0};
-
 	bool loaded = false;
-	const sf::Vector2i neighborPositions[8] = {  {-1,-1}, {-1,0}, {-1,1},    {0,-1}, {0,1},     {1,-1},  {1,0}, {1,1}  };
 
-	//void save();
-	//void load();
 	float distance(sf::Vector2i currentChunk, sf::Vector2i otherChunk);
 	void addChunk(sf::Vector2i chunkPosition);
 	void removeChunk(int index);
-	bool isInWindow(sf::View *view, sf::Vector2f chunkPosition);
-
-	// new way
-	int getChunkPositionIndex(std::vector<sf::Vector2i>*list, sf::Vector2i position);
+	void buildChunk(Chunk *chunk);
+	bool isInWindow(sf::View *view, sf::Vector2i chunkPosition);
 	void handleChunks();
 	
 public:
 	void update(sf::View *view,sf::Vector2f playerPos);
-	void render(sf::RenderTarget* window);
+	int getChunkPositionIndex(std::vector<sf::Vector2i>* list, sf::Vector2i position);
+	std::vector<std::unique_ptr<Chunk>>* getLoadedChunks();
+
+
+	virtual void render(sf::RenderTarget& target );
 	ChunkManager(sf::Vector2f windowSize, int seed, float threshold,ThreadPool *threadPool);
 	~ChunkManager();
 };

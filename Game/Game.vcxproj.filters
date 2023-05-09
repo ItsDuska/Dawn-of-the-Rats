@@ -45,9 +45,6 @@
     <ClCompile Include="SourceGame\World\Generation\Cave\CaveGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SourceGame\World\Generation\Chunks\Chunk\Chunk.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SourceGame\World\Generation\Chunks\ChunkBuilder\ChunkBuilder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -103,6 +100,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SourceEngine\System\ECS\Systems\Collision\CollisionSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceGame\World\Generation\Chunks\ChunkBuilder\BlockBuilder\BlockBuilder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -255,6 +255,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SourceEngine\System\ECS\Systems\Collision\CollisionSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceGame\World\Generation\Chunks\ChunkBuilder\BlockBuilder\BlockBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceGame\World\WorldData\WorldData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,33 +3,70 @@
 void ChunkManager::addChunk(sf::Vector2i chunkPosition)
 { 
     this->chunkCords.push_back(chunkPosition);
-    this->chunks.push_back(std::make_unique<Chunk>(this->gridSize, this->seed, this->threshold, this->tileSize,chunkPosition,this->threadPool));
-    std::cout << "Added chunk at position " << chunkPosition.x << " Y  " << chunkPosition.y <<" X" "\n";
+
+    std::unique_ptr<Chunk> chunk = std::make_unique<Chunk>();  
+    
+    chunk->rect.setFillColor(sf::Color(0, 255, 0, 128));
+    
+       
+    chunk->rect.setSize(sf::Vector2f(12 * 64, 12 * 64));
+    chunk->rect.setPosition(sf::Vector2f((chunkPosition.y * 12) * 64, (chunkPosition.x * 12) * 64));
+    chunk->rect.setOutlineColor(sf::Color::White);
+    chunk->rect.setOutlineThickness(1);
+
+    chunk->chunkCoord = chunkPosition;
+    chunk->isDrawable = false;
+    chunk->chunk.setPrimitiveType(sf::Quads);
+    chunk->chunk.create(static_cast<size_t>(this->settings.gridSize.y) * this->settings.gridSize.x * 4);
+    chunk->chunk.setUsage(sf::VertexBuffer::Stream);
+    this->chunks.push_back(std::move(chunk));
+    
+    threadPool->enqueue([this,x = this->chunks.back().get()]() {this->buildChunk(x); });
+    //std::cout << "Added chunk at position " << chunkPosition.x << " Y  " << chunkPosition.y <<" X" "\n";
 }
 
 float ChunkManager::distance(sf::Vector2i currentChunk, sf::Vector2i otherChunk)
 {
-    return (float) std::sqrt(std::pow((otherChunk.x - currentChunk.x), 2.f) + std::pow((otherChunk.y - currentChunk.y), 2.f));
+    return (float) std::sqrt(std::pow((otherChunk.y - currentChunk.y), 2.f) + std::pow((otherChunk.x - currentChunk.x), 2.f));
 }
 
 void ChunkManager::removeChunk(int index)
 {
-    std::cout << "Deleted a chunk at position " << this->chunks[index]->getChunkPosition().x << " Y  " << this->chunks[index]->getChunkPosition().y << " X\n";
-    //delete this->chunks[index];
+    std::cout << "Deleted a chunk at position " << this->chunks[index]->chunkCoord.x << " Y  " << this->chunks[index]->chunkCoord.y << " X\n";
     this->chunks.erase(this->chunks.begin() + index);
     this->chunkCords.erase(this->chunkCords.begin() + index); 
 }
 
-bool ChunkManager::isInWindow(sf::View *view, sf::Vector2f chunkPosition)
+void ChunkManager::buildChunk(Chunk* chunk)
+{
+    //std::cout << "Thread Started\n";
+
+    ChunkBuilder chunkBuilder;
+    chunkBuilder.buildChunk(chunk->chunk, this->settings.gridSize,
+        this->seed, this->threshold,this->settings.tileSize, chunk->chunkCoord);
+
+    chunk->chunk.setUsage(sf::VertexBuffer::Static);
+   // std::cout << "amogus";
+    chunk->blockMap = chunkBuilder.getBlockMap();
+    chunk->isDrawable = true;
+
+   // std::cout << "Thread Ended\n";
+}
+
+bool ChunkManager::isInWindow(sf::View *view, sf::Vector2i chunkPosition)
 {
     sf::FloatRect currentView(view->getCenter() - view->getSize() / 2.f, view->getSize());
-    sf::FloatRect chunkRect(chunkPosition, view->getSize());
+    sf::FloatRect chunkRect( chunkPosition.y *calcChunkSize.y, chunkPosition.x * calcChunkSize.x, calcChunkSize.y, calcChunkSize.x);
     return chunkRect.intersects(currentView);
 } 
 
 void ChunkManager::update(sf::View *view, sf::Vector2f playerPos)
 {
-    this->currentChunk = {(int) std::floor((playerPos.y / (gridSize.y*tileSize.y))),(int)std::floor((playerPos.x / (gridSize.x*tileSize.x))) };
+    this->currentChunk = {(int) std::floor((playerPos.y / (this->settings.gridSize.y*this->settings.tileSize.y))),
+        (int) std::floor((playerPos.x / (this->settings.gridSize.x*this->settings.tileSize.x))) };
+
+   // std::cout << "\n\nCurrent chunk position : " << this->currentChunk.y << "x  " << this->currentChunk.x << "y\n\n";
+
 
     if (this->previousChunk != this->currentChunk)
     {
@@ -45,30 +82,37 @@ void ChunkManager::update(sf::View *view, sf::Vector2f playerPos)
     }
     this->previousChunk = this->currentChunk;
 
-
     //tähän kato että onko ikkunan sisällä
     
 }
 
-void ChunkManager::render(sf::RenderTarget* window)
+void ChunkManager::render(sf::RenderTarget& target) 
 {
-    for (auto& chunk : this->chunks)
+    for (const auto& chunk : this->chunks)
     {
-        window->draw(*chunk);
+        if (!chunk->isDrawable) { continue; }
+        target.draw(chunk->chunk, &AssetManager::getTexture("Blocks"));
+        target.draw(chunk->rect);
     }
 }
 
 ChunkManager::ChunkManager(sf::Vector2f windowSize, int seed, float threshold, ThreadPool *threadPool)
+    : renderBonds((this->settings.RENDERDISTANCE * 2) + 1)
 {
     this->windowSize = windowSize;
     this->seed = seed;
     this->threshold = threshold;
-    this->tileSize = { 32.f, 32.f };
+    this->settings.tileSize = { 64.f, 64.f };
+   
     //this->gridSize = sf::Vector2i((int)this->windowSize.x / this->BLOCK_SIZE, (int)this->windowSize.y / this->BLOCK_SIZE);
 
-    this->gridSize = sf::Vector2i(std::floor(chunkSize / this->BLOCK_SIZE), std::floor(chunkSize / this->BLOCK_SIZE));
+    this->settings.gridSize = sf::Vector2i(
+        std::floor(this->settings.CHUNK_SIZE / this->settings.BLOCK_SIZE),
+        std::floor(this->settings.CHUNK_SIZE / this->settings.BLOCK_SIZE)
+    );
 
     this->threadPool = threadPool;
+    this->calcChunkSize =  sf::Vector2f(this->settings.gridSize.x * this->settings.gridSize.x, this->settings.gridSize.y * this->settings.gridSize.y );
 }
 
 ChunkManager::~ChunkManager()
@@ -95,13 +139,16 @@ int ChunkManager::getChunkPositionIndex(std::vector<sf::Vector2i>*list, sf::Vect
     }
 }
 
+std::vector<std::unique_ptr<Chunk>>* ChunkManager::getLoadedChunks()
+{
+    return &this->chunks;
+}
+
 void ChunkManager::handleChunks()
 {
-    const int renderBonds = (this->renderDistance * 2) + 1;
+    
     std::vector<sf::Vector2i> loadingCoords;
     sf::Vector2i tempChunkCord;
-
-    srand(time(NULL));
 
     for (int x = 0; x < renderBonds; x++)
     {
@@ -136,6 +183,17 @@ void ChunkManager::handleChunks()
         this->removeChunk(this->getChunkPositionIndex(&this->chunkCords,position));
     }
 
-    this->loaded = true;
     
+    for (const auto& chunk : this->chunks)
+    {
+        //std::cout << "  " << (this->distance(this->currentChunk, chunk.get()->chunkCoord)) << "  ";
+        if (std::fabs(this->distance(this->currentChunk, chunk.get()->chunkCoord)) < 2)
+        {
+            
+            chunk.get()->isDrawable = true;
+        }
+    }
+    
+
+    this->loaded = true;
 }

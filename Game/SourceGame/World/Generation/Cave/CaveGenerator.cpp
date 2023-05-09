@@ -25,17 +25,27 @@ void CaveGeneration::generateCave(sf::Vector2i chunkCoord)
 		for (int x = 0; x < this->gridSize.x+2; x++)
 		{
 			const double noise = this->perlinNoice.noise((double) (WORLD_POSITION.x + x-1) / 16.0, (double) (WORLD_POSITION.y + y-1) / 16.0, 3.0);
-			this->cave[y][x] = (noise <= this->threshold);
+			if ((noise <= this->threshold))
+			{
+				this->cave[y][x].blockType = BlockType::Grass;
+				this->cave[y][x].isBlock = true;
+				this->cave[y][x].isSolid = true;
+			}
+			else {
+				this->cave[y][x].blockType = BlockType::Air;
+				this->cave[y][x].isBlock = false;
+				this->cave[y][x].isSolid = false;
+			}
 		}
 	}
 }
 
-bool CaveGeneration::getCaveBlock(sf::Vector2i position)
+Block& CaveGeneration::getCaveBlock(sf::Vector2i position)
 {
 	return this->cave[position.y][position.x];
 }
 
-std::vector<std::vector<bool>> CaveGeneration::getCaveMap()
+std::vector<std::vector<Block>> CaveGeneration::getCaveMap()
 {
 	return this->cave;
 }

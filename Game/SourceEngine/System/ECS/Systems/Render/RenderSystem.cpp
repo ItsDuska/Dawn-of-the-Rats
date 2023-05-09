@@ -9,6 +9,7 @@ void RenderSystem::update(Coordinator& entityManager)
 		auto& transform = entityManager.getComponent<Component::Transform>(entity);
 		auto& image = entityManager.getComponent<Component::Image>(entity);
 		auto const& texCoord = entityManager.getComponent<Component::TextureCoord>(entity);
+		auto& hitbox = entityManager.getComponent<Component::Hitbox>(entity);
 
 		image.sprite.setTextureRect(texCoord.texCoord);
 
@@ -29,6 +30,7 @@ void RenderSystem::update(Coordinator& entityManager)
 		transform.position = transform.futurePosition;
 		image.sprite.setPosition(transform.position);
 
+		hitbox.pos = sf::Vector2f(transform.position.x - hitbox.size.x/2, transform.position.y - hitbox.size.y/2);
 		//image.sprite.setScale(transfrorm.scale);
 		//image.sprite.setRotation(transfrorm.rotation);
 	}

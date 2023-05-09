@@ -16,20 +16,20 @@ public:
 		entity = entityManager.createEntity(); 
 
 		entityManager.addComponent(entity, Component::Transform{
-			sf::Vector2f(0,500),
-			sf::Vector2f(0,0),
+			sf::Vector2f(0,600),
+			sf::Vector2f(100,100),
 			false});
 		entityManager.addComponent(entity, Component::RigidBody{
 			9.f,
 			1.8f,
-			0.7f,
+			0.6f,
 			{0.f,0.f},
 			{0.f,0.f}});
 		entityManager.addComponent(entity, Component::Image{});
-
-		//entityManager.addComponent(entity, Component::Hitbox{});
+		
 
 		entityManager.addComponent(entity, Component::Speed{ 0.5f });
+		entityManager.addComponent(entity, Component::Collider{});
 		entityManager.addComponent(entity, Component::Animation{
 			{0,6},
 			AssetManager::getframeIndexes("Player"),
@@ -55,7 +55,13 @@ public:
 		image.sprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
 		image.sprite.setOrigin({ image.sprite.getGlobalBounds().width / 2, image.sprite.getGlobalBounds().height / 2 });
 		image.sprite.scale(8.f, 8.f);
-		
+
+		float newPos = 0.5f *image.sprite.getGlobalBounds().width;
+
+		entityManager.addComponent(entity, Component::Hitbox{ sf::Vector2f(newPos, image.sprite.getGlobalBounds().height)
+			,sf::Vector2f((image.sprite.getGlobalBounds().width / 2) - newPos, image.sprite.getGlobalBounds().height / 2)});
+
+
 		auto& inventory = entityManager.getComponent<Component::Inventory>(entity);
 
 		inventory.background.setTexture(AssetManager::getTexture("Inventory"));

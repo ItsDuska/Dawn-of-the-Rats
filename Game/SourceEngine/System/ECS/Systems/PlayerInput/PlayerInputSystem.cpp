@@ -30,6 +30,8 @@ void PlayerInputSystem::update(Coordinator& entityManager)
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
 		{
 			keyPressed = true;
+			transform.onGround = false;
+			rigidBody.direction.y = -speed.jumpingSpeed;
 			animation.animationSpeed = 0.07f;
 			animation.currentAnimationRange = animation.AnimationFrames[2];
 		}

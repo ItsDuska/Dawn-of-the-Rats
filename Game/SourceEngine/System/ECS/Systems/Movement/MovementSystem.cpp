@@ -12,9 +12,22 @@ void MovementSystem::update(Coordinator& entityManager)
 		this->deceleration(entityManager, rigidBody);
 
 		transform.futurePosition = transform.position + rigidBody.velocity;
+
+		if (!transform.onGround)
+		{
+			transform.futurePosition.y += GRAVITY;
+		}
+		
 	}
 
 }
+
+
+// TO DO
+
+// Tee jumping homma loppuun ja laita collisionit y akselille
+
+
 
 void MovementSystem::acceleration(Coordinator& entityManager, Component::RigidBody& rigidBody)
 {

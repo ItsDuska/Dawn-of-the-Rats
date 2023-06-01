@@ -8,12 +8,6 @@
 
 namespace Component
 { 
-
-	struct Gravity
-	{
-		sf::Vector2f force;
-	};
-
 	struct RigidBody
 	{
 		float maxVelocity;
@@ -28,6 +22,7 @@ namespace Component
 		sf::Vector2f futurePosition;
 		sf::Vector2f position;
 		bool facingLeft;
+		bool onGround;
 		//sf::Vector2f scale;
 		//float rotation;
 	};
@@ -51,6 +46,7 @@ namespace Component
 	struct Speed
 	{
 		float speed;
+		float jumpingSpeed;
 	};
 
 	struct Health

@@ -67,7 +67,6 @@ void ChunkManager::update(sf::View *view, sf::Vector2f playerPos)
 
    // std::cout << "\n\nCurrent chunk position : " << this->currentChunk.y << "x  " << this->currentChunk.x << "y\n\n";
 
-
     if (this->previousChunk != this->currentChunk)
     {
         if (!this->loaded)
@@ -92,7 +91,7 @@ void ChunkManager::render(sf::RenderTarget& target)
     {
         if (!chunk->isDrawable) { continue; }
         target.draw(chunk->chunk, &AssetManager::getTexture("Blocks"));
-        target.draw(chunk->rect);
+        //target.draw(chunk->rect);
     }
 }
 

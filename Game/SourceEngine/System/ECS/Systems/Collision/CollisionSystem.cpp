@@ -18,54 +18,107 @@ void CollisionSystem::update(Coordinator& entityManager,
 
 		this->colliding = false;
 
-		sf::Vector2i entityPositionInArray(
-			transform.position.x / chunkSettings.tileSize.x,
-			transform.position.y / chunkSettings.tileSize.y
-		);
+		//sf::Vector2i entityPositionInArray(std::floor(transform.position.x / chunkSettings.tileSize.x),std::floor(transform.position.y / chunkSettings.tileSize.y));
+		float entityPositionInArrayX = (transform.futurePosition.x / chunkSettings.tileSize.x);
+		float entityPositionInArrayY = (transform.futurePosition.y / chunkSettings.tileSize.y);
+
 
 		// pelaajan sijainti chunkin sisällä eli arrayssa
-		sf::Vector2i entityPositionInChunkMap(
-			(entityPositionInArray.x % chunkSettings.gridSize.x),
-			(entityPositionInArray.y % chunkSettings.gridSize.y)
-		);
+		//sf::Vector2i entityPositionInChunkMap(
+			//(entityPositionInArrayX % chunkSettings.gridSize.x),
+			//(entityPositionInArrayY % chunkSettings.gridSize.y)
+		//);
+		int entityPositionInChunkX = std::floor(std::fmod(entityPositionInArrayX, chunkSettings.gridSize.x));
+		int entityPositionInChunkY = std::floor(std::fmod(entityPositionInArrayY, chunkSettings.gridSize.y));
 
 		//jostakin syystä arvot on flipattu toiste päin
-		sf::Vector2i chunkPosition(
-			(entityPositionInArray.y / chunkSettings.gridSize.x) + chunkSettings.RENDERDISTANCE,
-			(entityPositionInArray.x / chunkSettings.gridSize.y) + chunkSettings.RENDERDISTANCE
-		);
+		//sf::Vector2i chunkPosition(
+		//	(entityPositionInArray.y / chunkSettings.gridSize.x + chunkSettings.RENDERDISTANCE),
+		//	(entityPositionInArray.x / chunkSettings.gridSize.y + chunkSettings.RENDERDISTANCE)
+		//	);
 
-		const int chunkIndex = this->getChunkIndex(chunkCords,chunkPosition);
+		int chunkPositionX = (std::floor((float)entityPositionInArrayY / chunkSettings.gridSize.x) + chunkSettings.RENDERDISTANCE);
+		int chunkPositionY = (std::floor((float)entityPositionInArrayX / chunkSettings.gridSize.y) + chunkSettings.RENDERDISTANCE);
+
+
+		//std::cout << entityPositionInArrayX;
+		//std::cout << "\n" << std::floor((float)entityPositionInArrayX / chunkSettings.gridSize.x+1) << "\n";
+
+		if (entityPositionInChunkX < 0)
+		{
+			entityPositionInChunkX += chunkSettings.gridSize.x;
+		}
+
+		//std::cout << "\nchunkPos : " << chunkPositionY << "x  " << chunkPositionX << "y\n";
+
+
+		/*
+		
+		FOR FUTURE OLLI:
+
+
+		collisionit röpöttää koska chunkkia vaihtaessa chunk arrayn järjestyst muuttuu
+
+		esim jos menee vasemmalle eli negatiiviselle:
+		oikea mitä pitäisi tapahtua
+		chunk (1,1)  ->  (0,1)
+		
+		
+		*/
+
+
+
+		//int chunkIndex = chunkPositionY + chunkPositionX * ((chunkSettings.RENDERDISTANCE * 2) + 1);
+
+		
+		const int chunkIndex = this->getChunkIndex(chunkCords,sf::Vector2i(chunkPositionX,chunkPositionY));
 
 		if (chunkIndex == -1)
 		{
 			std::cout << "\n\nEntity real position : " << transform.position.x << "x  " << transform.position.y << "y\n";
-			std::cout << "\nentityPositionInChunkMap : " << entityPositionInChunkMap.x << "x  " << entityPositionInChunkMap.y << "y\n";
+			std::cout << "\nentityPositionInChunkMap : " << entityPositionInChunkX << "x  " << entityPositionInChunkY << "y\n";
 			std::cout << "\ngridSize : " << chunkSettings.gridSize.x << "x  " << chunkSettings.gridSize.y << "y\n";
 			std::cout << "\ntileSize : " << chunkSettings.tileSize.x << "x  " << chunkSettings.tileSize.y << "y\n\n";
-			return;
+			
 		}
 
-		collider.blockCollision = this->blockCollision(entityManager, chunks->at(chunkIndex), transform, chunkSettings, entityPositionInChunkMap, hitbox);
-		collider.entityCollision = this->entityCollision(entityManager);
+		/*
+		if (chunkIndex < 0)
+		{
+			std::cout << "AMOGUS";
+			chunkIndex += chunks->size();
+			entityPositionInChunkMap.x += chunkSettings.gridSize.x;
+		}
+		*/
+
+
+		//std::cout << chunkIndex << "Chunk index\n";
+		
+		this->blockCollision(entityManager, chunks->at(chunkIndex), transform, chunkSettings, sf::Vector2i(entityPositionInChunkX,entityPositionInChunkY), hitbox, rigidbody);
+		this->entityCollision(entityManager);
 	}
 }
 
-bool CollisionSystem::blockCollision(Coordinator& entityManager, 
-	const std::unique_ptr<Chunk> &chunk, Component::Transform transform, const ChunkSettings& chunkSettings,sf::Vector2i entityPositionInChunk,Component::Hitbox hitbox)
+void CollisionSystem::blockCollision(Coordinator& entityManager, 
+	const std::unique_ptr<Chunk> &chunk, Component::Transform& transform, 
+	const ChunkSettings& chunkSettings,sf::Vector2i entityPositionInChunk,Component::Hitbox hitbox,
+	Component::RigidBody& rigidbody)
 {
 	if (!chunk.get()->isDrawable)
 	{
-		return false;
+		return;
 	}
 
 	if (chunk.get()->blockMap.size() == 0)
 	{
-		return false;
+		return;
 	}
 
-
-	//std::cout << "\nplayerPosInChunk : " << entityPositionInChunk.x << "  " << entityPositionInChunk.y << "\n";
+	this->hasCollidedHorizontaly = false;
+	this->hasCollidedVerticly = false;
+	
+	//std::cout << "\nchunk : " << chunk.get()->chunkCoord.y << "x  " << chunk.get()->chunkCoord.x << "y\n";
+	//std::cout << "\nplayerPosInChunk : " << entityPositionInChunk.y << "  " << entityPositionInChunk.x << "\n";
 	//std::cout << "\n" << chunk.get()->blockMap[entityPositionInChunk.y][entityPositionInChunk.x].isBlock << "\n";
 	int i = -1;
 
@@ -79,16 +132,15 @@ bool CollisionSystem::blockCollision(Coordinator& entityManager,
 			continue;
 		}
 
-		if (!chunk.get()->blockMap[newBlockPosition.x][newBlockPosition.y].isBlock)
+		if (!chunk.get()->blockMap[newBlockPosition.x+1][newBlockPosition.y].isBlock)
 		{
 			continue;
 		}
 		
-		if (!chunk.get()->blockMap[newBlockPosition.x][newBlockPosition.y].isSolid)
+		if (!chunk.get()->blockMap[newBlockPosition.x+1][newBlockPosition.y].isSolid)
 		{
 			continue;
 		}
-		
 
 		// On olemassa palikka
 		sf::Vector2f blockPositionInWorld(
@@ -96,28 +148,32 @@ bool CollisionSystem::blockCollision(Coordinator& entityManager,
 			(float)(((chunk.get()->chunkCoord.x - chunkSettings.RENDERDISTANCE) * chunkSettings.gridSize.y) + newBlockPosition.y) * chunkSettings.tileSize.y
 
 		);
-		std::cout << "\n\narrayIndex : " << newBlockPosition.x << "x  " << newBlockPosition.y << "y\n";
-		std::cout << "\n\nEntity position : " << transform.position.x << "x  " << transform.position.y << "y\n";
-		std::cout << "\n\nBlock position : " << blockPositionInWorld.x << "x  " << blockPositionInWorld.y << "y\n";
 
-		if (collide(sf::FloatRect(hitbox.pos, hitbox.size), sf::FloatRect(blockPositionInWorld,chunkSettings.tileSize)))
+		if (!collide(sf::FloatRect(hitbox.pos, hitbox.size), sf::FloatRect(blockPositionInWorld,chunkSettings.tileSize)))
 		{
-			std::cout << "\n\nEntity position : " << transform.position.x << "x  " << transform.position.y << "y\n";
-			std::cout << "\n\nBlock position : " << blockPositionInWorld.x << "x  " << blockPositionInWorld.y << "y\n";
-			std::cout << "\n\narrayIndex : " << newBlockPosition.x << "x  " << newBlockPosition.y << "y\n";
-			std::cout << "\nChunk index :" << chunk.get()->chunkCoord.y << "x  " << chunk.get()->chunkCoord.x << "y\n";
-			this->palikka[i].setPosition(blockPositionInWorld);
-			this->colliding = true;
-			std::cout << "\nCOLLISION!!\n";
+			this->palikka[i].setPosition(sf::Vector2f(0, -1000));
+			continue;
 		}
+		
+		// collided
+
+		this->palikka[i].setPosition(blockPositionInWorld);
+		this->colliding = true;
+
+		this->horizontalCollision(transform, rigidbody, blockPositionInWorld, chunkSettings.tileSize);
+		
+
+		//std::cout << "\nCOLLISION!!\n";
+		//transform.futurePosition = transform.position;
+		//transform.position.x += -rigidbody.velocity.x;
 	}
 
-	return false;
+	return;
 }
 
-bool CollisionSystem::entityCollision(Coordinator& entityManager)
+void CollisionSystem::entityCollision(Coordinator& entityManager)
 {
-	return false;
+	return;
 }
 
 void CollisionSystem::render(sf::RenderTarget* window)
@@ -156,9 +212,56 @@ int CollisionSystem::getChunkIndex(std::vector<sf::Vector2i> list, sf::Vector2i 
 	}
 }
 
+void CollisionSystem::horizontalCollision(Component::Transform& transform, Component::RigidBody& rigidBody, sf::Vector2f collisionPosition, sf::Vector2f tileSize)
+{
+	if (this->hasCollidedHorizontaly)
+	{
+		return;
+	}
+
+	if (rigidBody.direction.x < 0)
+	{
+		transform.futurePosition.x = transform.position.x + 2;
+		rigidBody.velocity.x = 0;
+		this->hasCollidedHorizontaly = true;
+
+	}
+	else if (rigidBody.direction.x > 0)
+	{
+		transform.futurePosition.x = transform.position.x-2;
+		rigidBody.velocity.x = 0;
+		this->hasCollidedHorizontaly = true;
+	}
+
+}
+
+void CollisionSystem::verticalCollision(Component::Transform& transform, Component::RigidBody& rigidBody, sf::Vector2f collisionPosition, sf::Vector2f tileSize)
+{
+	if (this->hasCollidedVerticly)
+	{
+		return;
+	}
+
+	if (rigidBody.direction.y < 0) // ylös
+	{
+		transform.futurePosition.y = transform.position.y + 2;
+		rigidBody.velocity.y = 0;
+		this->hasCollidedVerticly = true;
+
+	}
+	else if (rigidBody.direction.y > 0) // alas
+	{
+		transform.futurePosition.y = transform.position.y - 2;
+		rigidBody.velocity.y = 0;
+		this->hasCollidedVerticly = true;
+	}
+}
+
 
 CollisionSystem::CollisionSystem()
 {
+	this->colliding = false;
+
 	for (int i = 0; i < 8; i++)
 	{
 		this->palikka[i].setFillColor(sf::Color(255, 0, 0, 128));

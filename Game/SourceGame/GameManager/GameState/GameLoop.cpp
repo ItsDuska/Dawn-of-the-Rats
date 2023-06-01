@@ -39,14 +39,14 @@ void ActualGame::update(float dt, State* state)
 	sf::Vector2f tempPos = this->entityManager.getComponent<Component::Transform>(this->entities[0]).position;
 	
 	this->camera.setCenter(sf::Vector2f((int)tempPos.x,tempPos.y));
-	this->chunkManager.update(&this->camera, tempPos);
+	this->chunkManager.update(&this->camera, this->entityManager.getComponent<Component::Transform>(this->entities[0]).futurePosition);
 	
 	this->pelaajaHitBox.setPosition(this->entityManager.getComponent<Component::Hitbox>(this->entities[0]).pos);
 
 	////////
 	this->systems.playerInput->update(this->entityManager);
-	this->systems.collision->update(this->entityManager, this->chunkManager.getLoadedChunks(), this->chunkManager.settings, this->chunkManager.chunkCords);
 	this->systems.movement->update(this->entityManager);
+	this->systems.collision->update(this->entityManager, this->chunkManager.getLoadedChunks(), this->chunkManager.settings, this->chunkManager.chunkCords);
 	this->systems.animation->update(this->entityManager);
 	this->systems.render->update(this->entityManager);
 	this->systems.inventory->update(this->entityManager);

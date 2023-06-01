@@ -15,6 +15,7 @@ class MainMenu : public State
 private:
 	const std::string ratPath = "MainMenuStuff/Rat/RatSpriteSheet.png";
 	sf::Sprite rat;
+	sf::Sprite logo;
 	sf::Shader shader;
 	sf::Clock clock;
 	sf::RectangleShape background;

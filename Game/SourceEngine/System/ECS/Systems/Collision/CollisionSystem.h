@@ -17,16 +17,16 @@ public:
 		const std::vector<sf::Vector2i>& chunkCords
 	);
 
-	bool blockCollision(
+	void blockCollision(
 		Coordinator& entityManager, 
 		const std::unique_ptr<Chunk> &chunks,
-		Component::Transform transform,
+		Component::Transform& transform,
 		const ChunkSettings& chunkSettings,
 		sf::Vector2i entityPositionInChunk,
-		Component::Hitbox hitbox
+		Component::Hitbox hitbox, Component::RigidBody& rigidbody
 	);
 
-	bool entityCollision(Coordinator& entityManager);
+	void entityCollision(Coordinator& entityManager);
 
 	void render(sf::RenderTarget* window);
 
@@ -35,8 +35,12 @@ private:
 	bool inBounds(sf::Vector2i pos, sf::Vector2i bounds);
 	bool collide(sf::FloatRect entity, sf::FloatRect block);
 	int getChunkIndex(std::vector<sf::Vector2i> list, sf::Vector2i position);
+	void horizontalCollision(Component::Transform &transform,Component::RigidBody &rigidBody,sf::Vector2f collisionPosition, sf::Vector2f tileSize);
+	void verticalCollision(Component::Transform& transform, Component::RigidBody& rigidBody, sf::Vector2f collisionPosition, sf::Vector2f tileSize);
 
 	bool colliding;
+	bool hasCollidedHorizontaly = false;
+	bool hasCollidedVerticly = false;
 	sf::RectangleShape palikka[8];
 	const sf::Vector2i neighborBlockPositons[8] = { {-1,-1}, {-1,0}, {-1,1},    {0,-1}, {0,1},     {1,-1},  {1,0}, {1,1} };
 };

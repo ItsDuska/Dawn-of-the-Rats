@@ -18,7 +18,7 @@ public:
 		entityManager.addComponent(entity, Component::Transform{
 			sf::Vector2f(0,600),
 			sf::Vector2f(100,100),
-			false});
+			false, false});
 		entityManager.addComponent(entity, Component::RigidBody{
 			9.f,
 			1.8f,
@@ -28,7 +28,7 @@ public:
 		entityManager.addComponent(entity, Component::Image{});
 		
 
-		entityManager.addComponent(entity, Component::Speed{ 0.5f });
+		entityManager.addComponent(entity, Component::Speed{ 0.5f ,5.0f});
 		entityManager.addComponent(entity, Component::Collider{});
 		entityManager.addComponent(entity, Component::Animation{
 			{0,6},

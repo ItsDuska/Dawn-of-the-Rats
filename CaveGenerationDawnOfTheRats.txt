@@ -562,3 +562,12 @@ Lisää rod of discord eli teleportti sauva
 
 
 
+TO DO:
+
+
+
+siisti koodia ja kirjoita player input uudelleen. -> switch statment käyttäen 
+ei siis tule oleen else if spämmiä
+
+tarvitaan sf event homma
+

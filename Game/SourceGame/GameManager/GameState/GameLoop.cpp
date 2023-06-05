@@ -41,7 +41,7 @@ void ActualGame::update(float dt, State* state)
 	this->camera.setCenter(sf::Vector2f((int)tempPos.x,tempPos.y));
 	this->chunkManager.update(&this->camera, this->entityManager.getComponent<Component::Transform>(this->entities[0]).futurePosition);
 	
-	this->pelaajaHitBox.setPosition(this->entityManager.getComponent<Component::Hitbox>(this->entities[0]).pos);
+	
 
 	////////
 	this->systems.playerInput->update(this->entityManager);
@@ -50,6 +50,8 @@ void ActualGame::update(float dt, State* state)
 	this->systems.animation->update(this->entityManager);
 	this->systems.render->update(this->entityManager);
 	this->systems.inventory->update(this->entityManager);
+
+	this->pelaajaHitBox.setPosition(this->entityManager.getComponent<Component::Hitbox>(this->entities[0]).pos);
 	////////
 
 	end = std::chrono::system_clock::now();

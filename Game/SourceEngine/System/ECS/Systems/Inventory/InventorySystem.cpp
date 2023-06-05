@@ -8,13 +8,44 @@ std::string InventorySystem::roundTwo(const float x) {
 	return ss.str();
 }
 
+InventorySystem::InventorySystem()
+{
+	AssetManager::loadTexture("Inventory", "NewSprites/Inventory.png");
+	AssetManager::loadTexture("InventoryItems", "NewSprites/GUI_ITEM_SPRITES.png");
+	this->background.setTexture(AssetManager::getTexture("Inventory"));
+
+	const sf::Vector2f spriteSize = {
+			background.getGlobalBounds().width,
+			background.getGlobalBounds().height
+	};
+
+	background.setOrigin(spriteSize.x / 2.f, spriteSize.y / 2.f);
+	background.setPosition(
+		sf::VideoMode::getDesktopMode().width / 2.f,
+		sf::VideoMode::getDesktopMode().height / 2.f
+	);
+
+	background.scale(
+		std::round((sf::VideoMode::getDesktopMode().height / spriteSize.y) - 2.f),
+		std::round((sf::VideoMode::getDesktopMode().height / spriteSize.y) - 2.f)
+	);
+
+	stats.setText(30, "TempText",
+		sf::Vector2f(sf::VideoMode::getDesktopMode().width / 2.25f,
+			background.getPosition().y / 2.f)
+	);
+	
+
+
+}
+
 void InventorySystem::addNewItem(Coordinator& entityManager)
 {
 	for (auto& entity : this->mEntities)
 	{
 		auto& inventory = entityManager.getComponent <Component::Inventory>(entity);
 		inventory._items.push_back(std::make_shared<Item>("InventoryItems",
-			sf::IntRect(48, 16, 16, 16), inventory.background.getGlobalBounds()));
+			sf::IntRect(48, 16, 16, 16), this->background.getGlobalBounds()));
 	}
 }
 
@@ -33,20 +64,24 @@ void InventorySystem::update(Coordinator& entityManager)
 		const auto& speed = entityManager.getComponent <Component::Speed>(entity);
 		const auto& luck = entityManager.getComponent <Component::Luck>(entity);
 
-		inventory.statsString = "Max Healt : " + std::to_string(health.maxHealt)
-			+ "\nCurrent Healt : " + std::to_string(health.currentHealt)
-			+ "\nHealt Regeneration : " + std::to_string(health.healtRegen)
-			+ "\nMax Mana : " + std::to_string(mana.maxMana)
-			+ "\nCurrent Mana : " + std::to_string(mana.currentMana)
-			+ "\nMana Regeneration : " + std::to_string(mana.manaRegen)
-			+ "\nMelee Damage : " + std::to_string(damage.meleeDamage)
-			+ "\nMagic Damage : " + std::to_string(damage.magicDamage)
-			+ "\nMelee Defense : " + std::to_string(defence.meleeDefence)
-			+ "\nMagic Defense : " + std::to_string(defence.magicDefence)
-			+ "\nSpeed : " + roundTwo(speed.speed)
-			+ "\nLuck : " + std::to_string(luck.luck);
-		inventory.stats.changeString(inventory.statsString);
-
+		if (inventory.updateText)
+		{
+			inventory.statsString = "Max Healt : " + std::to_string(health.maxHealt)
+				+ "\nCurrent Healt : " + std::to_string(health.currentHealt)
+				+ "\nHealt Regeneration : " + std::to_string(health.healtRegen)
+				+ "\nMax Mana : " + std::to_string(mana.maxMana)
+				+ "\nCurrent Mana : " + std::to_string(mana.currentMana)
+				+ "\nMana Regeneration : " + std::to_string(mana.manaRegen)
+				+ "\nMelee Damage : " + std::to_string(damage.meleeDamage)
+				+ "\nMagic Damage : " + std::to_string(damage.magicDamage)
+				+ "\nMelee Defense : " + std::to_string(defence.meleeDefence)
+				+ "\nMagic Defense : " + std::to_string(defence.magicDefence)
+				+ "\nSpeed : " + roundTwo(speed.speed)
+				+ "\nLuck : " + std::to_string(luck.luck);
+			stats.changeString(inventory.statsString);
+			inventory.updateText = false;
+		}
+		
 		if (!this->hasClicked())
 		{
 			if (inventory.isSelceted)
@@ -78,8 +113,8 @@ void InventorySystem::render(Coordinator& entityManager, sf::RenderTarget* windo
 		auto& inventory = entityManager.getComponent <Component::Inventory>(entity);
 		if (!inventory.showInventory) { return; }
 
-		window->draw(inventory.background);
-		window->draw(inventory.stats.getText());
+		window->draw(this->background);
+		window->draw(stats.getText());
 
 		for (auto& item : inventory._items)
 		{
@@ -94,7 +129,7 @@ void InventorySystem::deleteItem()
 
 void InventorySystem::placeItem(Component::Inventory& inventory)
 {
-	sf::Vector2f bounds(inventory.background.getGlobalBounds().width, inventory.background.getGlobalBounds().height);
+	sf::Vector2f bounds(this->background.getGlobalBounds().width, this->background.getGlobalBounds().height);
 
 	if (this->checkNewPosition(bounds))
 	{

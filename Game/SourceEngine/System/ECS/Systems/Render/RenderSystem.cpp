@@ -31,6 +31,7 @@ void RenderSystem::update(Coordinator& entityManager)
 		image.sprite.setPosition(transform.position);
 
 		hitbox.pos = sf::Vector2f(transform.position.x - hitbox.size.x/2, transform.position.y - hitbox.size.y/2);
+		
 		//image.sprite.setScale(transfrorm.scale);
 		//image.sprite.setRotation(transfrorm.rotation);
 	}

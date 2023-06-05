@@ -35,8 +35,8 @@ private:
 	bool inBounds(sf::Vector2i pos, sf::Vector2i bounds);
 	bool collide(sf::FloatRect entity, sf::FloatRect block);
 	int getChunkIndex(std::vector<sf::Vector2i> list, sf::Vector2i position);
-	void horizontalCollision(Component::Transform &transform,Component::RigidBody &rigidBody,sf::Vector2f collisionPosition, sf::Vector2f tileSize);
-	void verticalCollision(Component::Transform& transform, Component::RigidBody& rigidBody, sf::Vector2f collisionPosition, sf::Vector2f tileSize);
+	void horizontalCollision(Component::Transform &transform,Component::RigidBody &rigidBody,sf::Vector2f collisionPosition, sf::Vector2f tileSize, const Component::Hitbox &hitbox);
+	bool verticalCollision(Component::Transform& transform, Component::RigidBody& rigidBody, sf::Vector2f collisionPosition, sf::Vector2f tileSize, const Component::Hitbox& hitbox);
 
 	bool colliding;
 	bool hasCollidedHorizontaly = false;

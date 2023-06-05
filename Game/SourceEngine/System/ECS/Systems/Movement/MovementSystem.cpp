@@ -6,17 +6,15 @@ void MovementSystem::update(Coordinator& entityManager)
 	{
 		auto& rigidBody = entityManager.getComponent<Component::RigidBody>(entity);
 		auto& transform = entityManager.getComponent<Component::Transform>(entity);
+		
 
 
-		this->acceleration(entityManager, rigidBody);
-		this->deceleration(entityManager, rigidBody);
-
+		this->acceleration(rigidBody);
+		this->deceleration(rigidBody);
+		this->gravity(rigidBody, transform.onGround);
+		
+		
 		transform.futurePosition = transform.position + rigidBody.velocity;
-
-		if (!transform.onGround)
-		{
-			transform.futurePosition.y += GRAVITY;
-		}
 		
 	}
 
@@ -29,7 +27,7 @@ void MovementSystem::update(Coordinator& entityManager)
 
 
 
-void MovementSystem::acceleration(Coordinator& entityManager, Component::RigidBody& rigidBody)
+void MovementSystem::acceleration(Component::RigidBody& rigidBody)
 {
 	rigidBody.velocity.x += rigidBody.acceleration * rigidBody.direction.x;
 
@@ -43,7 +41,7 @@ void MovementSystem::acceleration(Coordinator& entityManager, Component::RigidBo
 	}
 }
 
-void MovementSystem::deceleration(Coordinator& entityManager, Component::RigidBody& rigidBody)
+void MovementSystem::deceleration(Component::RigidBody& rigidBody)
 {
 	if (rigidBody.velocity.x > 0.f)
 	{
@@ -64,3 +62,22 @@ void MovementSystem::deceleration(Coordinator& entityManager, Component::RigidBo
 		}
 	}
 }
+
+void MovementSystem::gravity(Component::RigidBody& rigidBody, const bool onGround)
+{
+	rigidBody.velocity.y += rigidBody.direction.y;
+	//rigidBody.velocity.y = rigidBody.direction.y;
+	if (rigidBody.velocity.y >= MAX_FALLING_VELOCITY)
+	{
+		rigidBody.velocity.y = MAX_FALLING_VELOCITY;
+	}
+	//if (!onGround)
+	//{
+	rigidBody.velocity.y += this->GRAVITY;
+	//}
+	
+	
+
+
+}
+

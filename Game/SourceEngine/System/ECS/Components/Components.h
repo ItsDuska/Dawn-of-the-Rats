@@ -8,6 +8,19 @@
 
 namespace Component
 { 
+	enum class AnimationStates : std::uint8_t
+	{
+		WALKING_RIGHT,
+		WALKING_LEFT,
+		IDLE,
+		JUMP,
+		FALLING,
+		ATTACK,
+		TAKE_DAMAGE,
+		DEATH
+	};
+
+
 	struct RigidBody
 	{
 		float maxVelocity;
@@ -88,20 +101,20 @@ namespace Component
 		float animationSpeed;
 		float totalProgress;
 		uint8_t lastAnimationFrameCheck;
+		AnimationStates currentAnimation;
 	};
 
 	struct Inventory
 	{
-		sf::Sprite background;
 		std::string statsString;
 		sf::Vector2f _originalPosition;
-		engine::Text stats;
 		int _selectedItemIndex;
 		bool isSelceted;
-		sf::Clock clock;
 		bool showInventory;
+		bool updateText;
 		sf::Time cooldownTime;
 		std::vector<std::shared_ptr<Item>> _items{ };
+		sf::Clock clock;
 	};
 	
 	struct Collider

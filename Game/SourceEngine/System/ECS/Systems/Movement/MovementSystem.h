@@ -8,8 +8,11 @@ class MovementSystem : public System
 public:
 	void update(Coordinator& entityManager);
 private:
-	const int GRAVITY = 5;
+	const float GRAVITY = 0.5;
+	const float MAX_FALLING_VELOCITY = 15.0f;
 
-	void acceleration(Coordinator& entityManager, Component::RigidBody& rigidBody);
-	void deceleration(Coordinator & entityManager, Component::RigidBody & rigidBody);
+	void acceleration(Component::RigidBody& rigidBody);
+	void deceleration(Component::RigidBody & rigidBody);
+
+	void gravity(Component::RigidBody& rigidBody, const bool onGround);
 };

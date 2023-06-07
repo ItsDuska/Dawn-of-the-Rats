@@ -45,6 +45,7 @@ void ActualGame::update(float dt, State* state)
 
 	////////
 	this->systems.playerInput->update(this->entityManager);
+	this->systems.animationHandler->update(this->entityManager);
 	this->systems.movement->update(this->entityManager);
 	this->systems.collision->update(this->entityManager, this->chunkManager.getLoadedChunks(), this->chunkManager.settings, this->chunkManager.chunkCords);
 	this->systems.animation->update(this->entityManager);
@@ -78,7 +79,7 @@ void ActualGame::render(sf::RenderTarget* window)
 	this->chunkManager.render(*window);
 	this->systems.render->render(this->entityManager, window);
 
-	window->draw(this->pelaajaHitBox);
+	//window->draw(this->pelaajaHitBox);
 	//this->player.render(window);
 	this->systems.collision->render(window);
 

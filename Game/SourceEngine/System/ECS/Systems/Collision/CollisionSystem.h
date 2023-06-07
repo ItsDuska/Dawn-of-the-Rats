@@ -23,7 +23,7 @@ public:
 		Component::Transform& transform,
 		const ChunkSettings& chunkSettings,
 		sf::Vector2i entityPositionInChunk,
-		Component::Hitbox hitbox, Component::RigidBody& rigidbody
+		Component::Hitbox hitbox, Component::RigidBody& rigidbody, bool &onGround
 	);
 
 	void entityCollision(Coordinator& entityManager);
@@ -36,7 +36,7 @@ private:
 	bool collide(sf::FloatRect entity, sf::FloatRect block);
 	int getChunkIndex(std::vector<sf::Vector2i> list, sf::Vector2i position);
 	void horizontalCollision(Component::Transform &transform,Component::RigidBody &rigidBody,sf::Vector2f collisionPosition, sf::Vector2f tileSize, const Component::Hitbox &hitbox);
-	bool verticalCollision(Component::Transform& transform, Component::RigidBody& rigidBody, sf::Vector2f collisionPosition, sf::Vector2f tileSize, const Component::Hitbox& hitbox);
+	bool verticalCollision(Component::Transform &transform, Component::RigidBody &rigidBody, sf::Vector2f collisionPosition, sf::Vector2f tileSize, const Component::Hitbox &hitbox, bool& onGround);
 
 	bool colliding;
 	bool hasCollidedHorizontaly = false;

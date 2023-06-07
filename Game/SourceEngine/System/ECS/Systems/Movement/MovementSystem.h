@@ -14,5 +14,5 @@ private:
 	void acceleration(Component::RigidBody& rigidBody);
 	void deceleration(Component::RigidBody & rigidBody);
 
-	void gravity(Component::RigidBody& rigidBody, const bool onGround);
+	void gravity(Component::RigidBody& rigidBody);
 };

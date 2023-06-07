@@ -8,16 +8,24 @@
 
 namespace Component
 { 
-	enum class AnimationStates : std::uint8_t
+	enum class EntityStates : std::uint8_t
 	{
-		WALKING_RIGHT,
-		WALKING_LEFT,
+		WALKING,
 		IDLE,
 		JUMP,
 		FALLING,
 		ATTACK,
 		TAKE_DAMAGE,
 		DEATH
+	};
+
+	struct State
+	{
+		EntityStates currentState;
+		EntityStates possibleState;
+		bool triggerJump;
+		bool facingLeft;
+		bool onGround;
 	};
 
 
@@ -34,8 +42,7 @@ namespace Component
 	{
 		sf::Vector2f futurePosition;
 		sf::Vector2f position;
-		bool facingLeft;
-		bool onGround;
+		
 		//sf::Vector2f scale;
 		//float rotation;
 	};
@@ -101,7 +108,7 @@ namespace Component
 		float animationSpeed;
 		float totalProgress;
 		uint8_t lastAnimationFrameCheck;
-		AnimationStates currentAnimation;
+		bool finishedAnimation;
 	};
 
 	struct Inventory

@@ -277,11 +277,11 @@ texture generation for the blocks.
 Inventory system           
 sound system
 Enemies and the ai
-collisions.
+collisions. kinda done
 pimeys effecti koska olemme luolassa.
 lighting system eli bloomia. varmaa uus fragment shaderi tarvitaan.
 shadows ehkä.
-Pelaajan hyppy ja gravitaatio.
+Pelaajan hyppy ja gravitaatio. tehty
 Hyökkäys eli onko se melee vai ranged attack.
 boss ja sen ai.
 save systeemi ehkä?

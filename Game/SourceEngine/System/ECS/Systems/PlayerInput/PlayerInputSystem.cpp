@@ -6,74 +6,61 @@ void PlayerInputSystem::update(Coordinator& entityManager)
 	{
 		auto& rigidBody = entityManager.getComponent<Component::RigidBody>(entity);
 		auto& transform = entityManager.getComponent<Component::Transform>(entity);
-		auto& animation = entityManager.getComponent <Component::Animation>(entity);
+		auto& state = entityManager.getComponent <Component::State>(entity);
 		auto& speed = entityManager.getComponent<Component::Speed>(entity);
 		auto& inventory = entityManager.getComponent<Component::Inventory>(entity);
 
 		bool keyPressed = false;
 
+		/*
 		
+		FOR FUTURE OLLI:
+
+
+		Lol luuseri joudut kirjottaan tän uudelleen
+		
+		erotat siis animaation päivittämisen omaan classiin
+
+		
+		*/
+
+
 
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
 		{
-			transform.facingLeft = false;
+			state.facingLeft = false;
 			keyPressed = true;
 			rigidBody.direction.x = speed.speed;
-
-			if (animation.currentAnimation != Component::AnimationStates::FALLING)
-			{
-				animation.animationSpeed = 0.125;
-				animation.currentAnimationRange = animation.AnimationFrames[1];
-				animation.currentAnimation = Component::AnimationStates::WALKING_RIGHT;
-			}
+			state.possibleState = Component::EntityStates::WALKING;
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 		{
-			transform.facingLeft = true;
+			state.facingLeft = true;
 			keyPressed = true;
 			rigidBody.direction.x = -speed.speed;
-			
-			if (animation.currentAnimation != Component::AnimationStates::FALLING)
-			{
-				animation.animationSpeed = 0.125;
-				animation.currentAnimationRange = animation.AnimationFrames[1];
-				animation.currentAnimation = Component::AnimationStates::WALKING_LEFT;
-			}
-
-			
+			state.possibleState = Component::EntityStates::WALKING;
 		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && transform.onGround)
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && state.onGround)
 		{
 			keyPressed = true;
-			transform.onGround = false;
+			state.onGround = false;
 			rigidBody.velocity.y = -speed.jumpingSpeed;
-			if (animation.currentAnimation != Component::AnimationStates::FALLING)
-			{
-				animation.animationSpeed = 0.07f;
-				animation.currentAnimationRange = animation.AnimationFrames[2];
-				animation.currentAnimation = Component::AnimationStates::JUMP;
-			}
+			state.possibleState = Component::EntityStates::JUMP;
+			state.triggerJump = true;
 		}
 
 		else if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
 			keyPressed = true;
-			animation.animationSpeed = 0.2f;
 			rigidBody.direction = { 0,0 };
-			transform.onGround = true;
-			animation.currentAnimationRange = animation.AnimationFrames[4];
-			animation.currentAnimation = Component::AnimationStates::ATTACK;
+			state.possibleState = Component::EntityStates::ATTACK;
+			//state.onGround = true; // debug röpöö varten
 		}
 
-		else if (!keyPressed && transform.onGround) {
-			animation.animationSpeed = 0.1f;
-			rigidBody.direction = { 0,0 };
-
-			if (animation.currentAnimation != Component::AnimationStates::FALLING)
-			{
-				animation.currentAnimationRange = animation.AnimationFrames[0];
-				animation.currentAnimation = Component::AnimationStates::IDLE;
-			}
+		else if (!keyPressed)
+		{
+			rigidBody.direction.x = 0;
+			state.possibleState = Component::EntityStates::IDLE;
 		}
 		
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Tab))
@@ -84,14 +71,5 @@ void PlayerInputSystem::update(Coordinator& entityManager)
 				inventory.clock.restart();
 			}
 		}
-		
-		if (animation.currentAnimation == Component::AnimationStates::JUMP && animation.lastAnimationFrame == animation.currentAnimationRange.y)
-		{
-			animation.animationSpeed = 0.1f;
-			animation.currentAnimationRange = animation.AnimationFrames[3];
-			animation.currentAnimation = Component::AnimationStates::FALLING;
-
-		}
 	}
 }
-//TO DO: JUMPING

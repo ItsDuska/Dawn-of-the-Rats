@@ -7,8 +7,9 @@ void AnimationSystem::update(Coordinator& entityManager)
 		auto& animation = entityManager.getComponent <Component::Animation>(entity);
 		auto& textureCoord = entityManager.getComponent <Component::TextureCoord>(entity);
 
+		animation.finishedAnimation = false;
 
-		if (animation.currentAnimationRange.y != animation.lastAnimationFrameCheck)
+		if (animation.currentAnimationRange.y != animation.lastAnimationFrameCheck) // resets animation progress when animation is changed
 		{
 			animation.lastAnimationFrameCheck = animation.currentAnimationRange.y;
 			animation.totalProgress = animation.currentAnimationRange.x;
@@ -20,6 +21,7 @@ void AnimationSystem::update(Coordinator& entityManager)
 		if (animation.totalProgress >= animation.currentAnimationRange.y)
 		{
 			animation.totalProgress = animation.currentAnimationRange.x;
+			animation.finishedAnimation = true;
 		}
 
 		if (animation.lastAnimationFrame == (int)animation.totalProgress)

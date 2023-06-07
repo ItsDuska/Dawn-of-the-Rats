@@ -105,6 +105,9 @@
     <ClCompile Include="SourceGame\World\Generation\Chunks\ChunkBuilder\BlockBuilder\BlockBuilder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SourceEngine\System\ECS\Systems\AnimationHandler\AnimationHalderSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SourceEngine\Algorhythms\PerlinNoice\PerlineNoice.hpp">
@@ -261,6 +264,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SourceGame\World\WorldData\WorldData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceEngine\System\ECS\Systems\AnimationHandler\AnimationHalderSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

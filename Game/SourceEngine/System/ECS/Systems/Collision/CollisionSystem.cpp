@@ -10,6 +10,7 @@ void CollisionSystem::update(Coordinator& entityManager,
 		auto& rigidbody = entityManager.getComponent<Component::RigidBody>(entity);
 		auto& transform = entityManager.getComponent<Component::Transform>(entity);
 		auto const& hitbox = entityManager.getComponent<Component::Hitbox>(entity);
+		auto& state = entityManager.getComponent<Component::State>(entity);
 
 		this->colliding = false;
 
@@ -37,7 +38,8 @@ void CollisionSystem::update(Coordinator& entityManager,
 			std::cout << "\ntileSize : " << chunkSettings.tileSize.x << "x  " << chunkSettings.tileSize.y << "y\n\n";	
 		}
 		
-		this->blockCollision(entityManager, chunks->at(chunkIndex), transform, chunkSettings, sf::Vector2i(entityPositionInChunkX,entityPositionInChunkY), hitbox, rigidbody);
+		this->blockCollision(entityManager, chunks->at(chunkIndex), transform, chunkSettings, 
+			sf::Vector2i(entityPositionInChunkX,entityPositionInChunkY), hitbox, rigidbody,state.onGround);
 		this->entityCollision(entityManager); // EI OLE VIELÄ OLEMASSA !!
 	}
 }
@@ -45,7 +47,7 @@ void CollisionSystem::update(Coordinator& entityManager,
 void CollisionSystem::blockCollision(Coordinator& entityManager, 
 	const std::unique_ptr<Chunk> &chunk, Component::Transform& transform, 
 	const ChunkSettings& chunkSettings,sf::Vector2i entityPositionInChunk,Component::Hitbox hitbox,
-	Component::RigidBody& rigidbody)
+	Component::RigidBody& rigidbody, bool& onGround)
 {
 	if (!chunk.get()->isDrawable)
 	{
@@ -73,13 +75,14 @@ void CollisionSystem::blockCollision(Coordinator& entityManager,
 		}
 
 		const int newBlockPositionXTemp = newBlockPosition.x + 1;
+		const int newBlockPositionYTemp = newBlockPosition.y + 1;
 
-		if (!chunk.get()->blockMap[newBlockPositionXTemp][newBlockPosition.y].isBlock)
+		if (!chunk.get()->blockMap[newBlockPositionXTemp][newBlockPositionYTemp].isBlock)
 		{
 			continue;
 		}
 		
-		if (!chunk.get()->blockMap[newBlockPositionXTemp][newBlockPosition.y].isSolid)
+		if (!chunk.get()->blockMap[newBlockPositionXTemp][newBlockPositionYTemp].isSolid)
 		{
 			continue;
 		}
@@ -98,7 +101,9 @@ void CollisionSystem::blockCollision(Coordinator& entityManager,
 		this->palikka[i].setPosition(blockPositionInWorld);
 		this->colliding = true;
 
-		if (this->verticalCollision(transform, rigidbody, blockPositionInWorld, chunkSettings.tileSize, hitbox))
+		
+
+		if (this->verticalCollision(transform, rigidbody, blockPositionInWorld, chunkSettings.tileSize, hitbox, onGround))
 		{
 			continue;
 		}
@@ -171,7 +176,8 @@ void CollisionSystem::horizontalCollision(Component::Transform& transform, Compo
 	}
 }
 
-bool CollisionSystem::verticalCollision(Component::Transform& transform, Component::RigidBody& rigidBody, sf::Vector2f collisionPosition, sf::Vector2f tileSize, const Component::Hitbox& hitbox)
+bool CollisionSystem::verticalCollision(Component::Transform& transform, Component::RigidBody& rigidBody, 
+	sf::Vector2f collisionPosition, sf::Vector2f tileSize, const Component::Hitbox& hitbox, bool& onGround)
 {
 	if (this->hasCollidedVerticly)
 	{
@@ -191,7 +197,7 @@ bool CollisionSystem::verticalCollision(Component::Transform& transform, Compone
 		transform.futurePosition.y -= (transform.futurePosition.y - (collisionPosition.y - tileSize.y));
 		rigidBody.velocity.y = 0;
 		this->hasCollidedVerticly = true;
-		transform.onGround = true;
+		onGround = true;
 		return true;
 	}
 

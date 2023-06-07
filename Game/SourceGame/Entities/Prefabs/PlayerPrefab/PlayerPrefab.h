@@ -13,8 +13,8 @@ public:
 		entity = entityManager.createEntity(); 
 		entityManager.addComponent(entity, Component::Transform{
 			sf::Vector2f(0,600),
-			sf::Vector2f(100,100),
-			false, false});
+			sf::Vector2f(100,100)
+			});
 		entityManager.addComponent(entity, Component::RigidBody{
 			9.f,
 			1.8f,
@@ -30,10 +30,14 @@ public:
 			0,
 			0.1f,
 			0,
-			6});
+			6,
+			false});
 																		   // x, y, (frameSize)
 		entityManager.addComponent(entity, Component::TextureCoord{ sf::IntRect(0,0,16,16) });
 		
+		entityManager.addComponent(entity, Component::State{ Component::EntityStates::IDLE,Component::EntityStates::IDLE,false,false,false});
+
+
 		entityManager.addComponent(entity, Component::Inventory{
 			" ",{0,0},0,false,false,true,sf::seconds(0.4f)});
 

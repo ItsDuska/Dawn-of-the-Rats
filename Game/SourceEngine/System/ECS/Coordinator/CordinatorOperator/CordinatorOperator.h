@@ -8,6 +8,7 @@ enum class SystemType : int8_t
 	RENDER,
 	MOVEMENT,
 	ANIMATION,
+	ANIMATION_HANDLER,
 	PHYSICS,
 	COLLISION, 
 	PLAYER_INPUT,
@@ -35,6 +36,7 @@ public:
 		entityManager.registerComponent<Component::Luck>();
 		entityManager.registerComponent<Component::Hitbox>();
 		entityManager.registerComponent<Component::Collider>();
+		entityManager.registerComponent<Component::State>();
 	}
 
 	
@@ -44,6 +46,7 @@ public:
 		entitySystems.movement = entityManager.registerSystem<MovementSystem>();
 		entitySystems.playerInput = entityManager.registerSystem<PlayerInputSystem>();
 		entitySystems.animation = entityManager.registerSystem<AnimationSystem>();
+		entitySystems.animationHandler = entityManager.registerSystem<AnimationHalderSystem>();
 		entitySystems.inventory = entityManager.registerSystem<InventorySystem>();
 		entitySystems.collision = entityManager.registerSystem<CollisionSystem>();
 
@@ -54,6 +57,7 @@ public:
 		setSignature(entityManager, *entitySystems.movement.get(), SystemType::MOVEMENT);
 		setSignature(entityManager, *entitySystems.playerInput.get(), SystemType::PLAYER_INPUT);
 		setSignature(entityManager, *entitySystems.animation.get(), SystemType::ANIMATION);
+		setSignature(entityManager, *entitySystems.animationHandler.get(), SystemType::ANIMATION_HANDLER);
 		setSignature(entityManager, *entitySystems.inventory.get(), SystemType::INVENTORY);
 		setSignature(entityManager, *entitySystems.collision.get(), SystemType::COLLISION);
 		
@@ -68,8 +72,7 @@ public:
 
 			entityManager->addComponent(entities[i], Component::Transform{
 				sf::Vector2f(500.f + rand() % 1000,500.f),
-				sf::Vector2f(0,0),
-				false
+				sf::Vector2f(0,0)
 				});
 			
 			entityManager->addComponent(entities[i], Component::Image{});
@@ -91,6 +94,7 @@ private:
 			signature.set(entityManager.getComponentType<Component::Image>());
 			signature.set(entityManager.getComponentType<Component::TextureCoord>());
 			signature.set(entityManager.getComponentType<Component::Hitbox>());
+			signature.set(entityManager.getComponentType<Component::State>());
 			break;
 		case SystemType::MOVEMENT:
 			signature.set(entityManager.getComponentType<Component::RigidBody>());
@@ -100,10 +104,14 @@ private:
 			signature.set(entityManager.getComponentType<Component::Animation>());
 			signature.set(entityManager.getComponentType<Component::TextureCoord>());
 			break;
+		case SystemType::ANIMATION_HANDLER:
+			signature.set(entityManager.getComponentType<Component::Animation>());
+			signature.set(entityManager.getComponentType<Component::State>());
+			break;
 		case SystemType::PLAYER_INPUT:
 			signature.set(entityManager.getComponentType<Component::RigidBody>());
 			signature.set(entityManager.getComponentType<Component::Transform>());
-			signature.set(entityManager.getComponentType<Component::Animation>());
+			signature.set(entityManager.getComponentType<Component::State>());
 			signature.set(entityManager.getComponentType<Component::Speed>());
 			signature.set(entityManager.getComponentType<Component::Inventory>());
 			break;
@@ -114,6 +122,7 @@ private:
 			signature.set(entityManager.getComponentType<Component::Transform>());
 			signature.set(entityManager.getComponentType<Component::Hitbox>());
 			signature.set(entityManager.getComponentType<Component::Collider>());
+			signature.set(entityManager.getComponentType<Component::State>());
 			break;
 		case SystemType::INVENTORY:
 			signature.set(entityManager.getComponentType<Component::Inventory>());

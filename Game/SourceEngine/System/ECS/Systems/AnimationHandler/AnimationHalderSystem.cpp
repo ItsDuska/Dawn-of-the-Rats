@@ -30,7 +30,7 @@ void AnimationHalderSystem::update(Coordinator& entityManager)
 			case Component::EntityStates::IDLE:
 				state.currentState = state.possibleState;
 				animation.currentAnimationRange = animation.AnimationFrames[0];
-				animation.animationSpeed = 0.1f;
+				animation.animationSpeed = 0.08f;
 				break;
 			default:
 				break;
@@ -45,13 +45,22 @@ void AnimationHalderSystem::update(Coordinator& entityManager)
 			state.triggerJump = false;
 		}
 
-		else if (animation.finishedAnimation && state.currentState == Component::EntityStates::JUMP)
+		else if (state.currentState == Component::EntityStates::JUMP)
+		{
+			if (!animation.finishedAnimation)
+			{
+				continue;
+			}
+			state.currentState = Component::EntityStates::FALLING;
+			animation.currentAnimationRange = animation.AnimationFrames[3];
+			animation.animationSpeed = 0.075f;
+		}
+		else
 		{
 			state.currentState = Component::EntityStates::FALLING;
 			animation.currentAnimationRange = animation.AnimationFrames[3];
 			animation.animationSpeed = 0.075f;
 		}
-		
 		//std::cout << "\n"<< (int)state.currentState << "\n";
 	}
 

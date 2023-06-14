@@ -101,7 +101,6 @@ ChunkManager::ChunkManager(sf::Vector2f windowSize, int seed, float threshold, T
     this->windowSize = windowSize;
     this->seed = seed;
     this->threshold = threshold;
-    this->settings.tileSize = { 64.f, 64.f };
    
     //this->gridSize = sf::Vector2i((int)this->windowSize.x / this->BLOCK_SIZE, (int)this->windowSize.y / this->BLOCK_SIZE);
 

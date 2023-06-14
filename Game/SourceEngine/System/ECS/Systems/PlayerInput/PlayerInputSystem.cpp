@@ -24,8 +24,6 @@ void PlayerInputSystem::update(Coordinator& entityManager)
 		
 		*/
 
-
-
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
 		{
 			state.facingLeft = false;
@@ -71,5 +69,7 @@ void PlayerInputSystem::update(Coordinator& entityManager)
 				inventory.clock.restart();
 			}
 		}
+
+		
 	}
 }

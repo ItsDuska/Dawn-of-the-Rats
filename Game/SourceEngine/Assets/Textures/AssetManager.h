@@ -69,6 +69,7 @@ private:
 	}
 
 	std::map<std::string, std::vector<sf::Vector2i>> _frameCounts = { // kaikkien animaatioiden alku ja loppu framet.
-		{"Player", {sf::Vector2i(0,5),sf::Vector2i(6,15),sf::Vector2i(16,20),sf::Vector2i(20,23),sf::Vector2i(24,38)}}
+		{"Player", {sf::Vector2i(0,5),sf::Vector2i(6,15),sf::Vector2i(16,20),sf::Vector2i(20,23),sf::Vector2i(24,38)}},
+		{"PlayerWeapon", {sf::Vector2i(0,7)}}
 	};
 };

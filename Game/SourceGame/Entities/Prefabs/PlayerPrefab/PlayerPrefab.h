@@ -59,4 +59,37 @@ public:
 			,sf::Vector2f((image.sprite.getGlobalBounds().width / 2) - newPos, image.sprite.getGlobalBounds().height / 2)});
 		
 	}
+
+	static void createPlayerWeapon(Coordinator& entityManager, uint32_t& entity)
+	{
+		AssetManager::loadTexture("PlayerWeapon", "NewSprites/Staff.png");
+		entity = entityManager.createEntity();
+
+		entityManager.addComponent(entity, Component::TextureCoord{ sf::IntRect(0, 0, 16, 16) });
+		entityManager.addComponent(entity, Component::Image{});
+
+
+		auto& image = entityManager.getComponent<Component::Image>(entity);
+		image.sprite.setTexture(AssetManager::getTexture("PlayerWeapon"));
+		image.sprite.setOrigin({ image.sprite.getGlobalBounds().width / 2, image.sprite.getGlobalBounds().height / 2 });
+		image.sprite.scale(4.f, 4.f);
+
+		entityManager.addComponent(entity, Component::Transform{
+			sf::Vector2f(0, 600),
+				sf::Vector2f(0, 0)});
+
+		entityManager.addComponent(entity, Component::State{ Component::EntityStates::IDLE, Component::EntityStates::IDLE, false, false, false});
+
+		entityManager.addComponent(entity, Component::Hitbox{ sf::Vector2f(0, 0)
+			, sf::Vector2f(0,0)});
+
+		entityManager.addComponent(entity, Component::Animation{
+			{0, 7},
+				AssetManager::getframeIndexes("PlayerWeapon"),
+				0,
+				0.08f,
+				0,
+				7,
+				false});
+	}
 };

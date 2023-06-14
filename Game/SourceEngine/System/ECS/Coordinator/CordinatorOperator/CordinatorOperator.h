@@ -66,12 +66,12 @@ public:
 
 	static void createEntity(Coordinator* entityManager,std::vector<uint32_t> &entities)
 	{
-		for (int i = 1; i<entities.size(); i++)
+		for (int i = 2; i<entities.size(); i++)
 		{
 			entities[i] = entityManager->createEntity();
 
 			entityManager->addComponent(entities[i], Component::Transform{
-				sf::Vector2f(500.f + rand() % 1000,500.f),
+				sf::Vector2f(rand() % 500,0),
 				sf::Vector2f(0,0)
 				});
 			

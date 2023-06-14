@@ -13,6 +13,8 @@ void CollisionSystem::update(Coordinator& entityManager,
 		auto& state = entityManager.getComponent<Component::State>(entity);
 
 		this->colliding = false;
+		state.onGround = false;
+
 
 		float entityPositionInArrayX = (transform.futurePosition.x / chunkSettings.tileSize.x);
 		float entityPositionInArrayY = (transform.futurePosition.y / chunkSettings.tileSize.y);

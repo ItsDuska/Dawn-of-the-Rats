@@ -564,10 +564,18 @@ Lisää rod of discord eli teleportti sauva
 
 TO DO:
 
+RAY CASTERI VIHOLLISTEN AI:ta varten.
 
 
-siisti koodia ja kirjoita player input uudelleen. -> switch statment käyttäen 
-ei siis tule oleen else if spämmiä
+SIMULOI KÖYSIÄ / Näytönohjaimella geometry shaderia varmaa joutuu käyttään
 
-tarvitaan sf event homma
 
+
+https://lodev.org/cgtutor/raycasting.html
+
+
+
+LENTÄVÄ SAUVA:
+
+
+seuraa pelaajaa ja lentelee / hoveraa sen päällä

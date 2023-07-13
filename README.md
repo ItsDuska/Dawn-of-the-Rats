@@ -18,6 +18,6 @@ chunk generation stuff (old gif)
 ![ezgif com-video-to-gif](https://user-images.githubusercontent.com/89298953/220694225-647b6a36-5451-4f4a-8344-ea7df852f9d8.gif)
 
 
-Old game and the state that i left it. (Python version)
+Old game and the state that I left it. (Python version)
 
 ![image](https://user-images.githubusercontent.com/89298953/187884687-37b4943b-623e-48ae-a06e-9ce663faf560.png)

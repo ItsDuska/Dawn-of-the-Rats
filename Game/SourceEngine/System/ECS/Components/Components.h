@@ -104,10 +104,10 @@ namespace Component
 	{
 		sf::Vector2i currentAnimationRange;
 		std::vector<sf::Vector2i> AnimationFrames;
-		uint8_t lastAnimationFrame;
+		int lastAnimationFrame;
 		float animationSpeed;
 		float totalProgress;
-		uint8_t lastAnimationFrameCheck;
+		int lastAnimationFrameCheck;
 		bool finishedAnimation;
 	};
 
@@ -130,4 +130,16 @@ namespace Component
 		bool entityCollision;
 	};
 
+	struct Tag
+	{
+		std::string name;
+	};
+
+	struct FollowObject
+	{
+		std::string name;
+		float sinTime;
+		float moveSpeed;
+		float distanceToObject;
+	};
 }

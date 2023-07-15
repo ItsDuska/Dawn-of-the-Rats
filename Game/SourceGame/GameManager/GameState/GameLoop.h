@@ -36,6 +36,7 @@ private:
     std::string tempString;
 
 
+
     sf::RectangleShape pelaajaHitBox;
     // class jolla on tallessa jokainen System
 public:

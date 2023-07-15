@@ -10,23 +10,10 @@ void RenderSystem::update(Coordinator& entityManager)
 		auto& image = entityManager.getComponent<Component::Image>(entity);
 		auto const& texCoord = entityManager.getComponent<Component::TextureCoord>(entity);
 		auto& hitbox = entityManager.getComponent<Component::Hitbox>(entity);
-		auto& const state = entityManager.getComponent<Component::State>(entity);
 
 		image.sprite.setTextureRect(texCoord.texCoord);
 
-		if (state.facingLeft)
-		{
-			if (image.sprite.getScale().x > 0)
-			{
-				image.sprite.scale(-1.f, 1);
-			}
-		}
-		else {
-			if (image.sprite.getScale().x < 0)
-			{
-				image.sprite.scale(-1.f, 1);
-			}
-		}
+		
 
 		transform.position = transform.futurePosition;
 		image.sprite.setPosition(transform.position);

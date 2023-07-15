@@ -579,3 +579,5 @@ LENTÄVÄ SAUVA:
 
 
 seuraa pelaajaa ja lentelee / hoveraa sen päällä
+
+muuta health mana damage defence luck ja ne yhteen ? ehkä

@@ -22,6 +22,7 @@ void AnimationHalderSystem::update(Coordinator& entityManager)
 				animation.currentAnimationRange = animation.AnimationFrames[1];
 				animation.animationSpeed = 0.125f;
 				break;
+
 			case Component::EntityStates::ATTACK:
 				state.currentState = state.possibleState;
 				animation.currentAnimationRange = animation.AnimationFrames[4];

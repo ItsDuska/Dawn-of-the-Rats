@@ -58,6 +58,9 @@ public:
 		entityManager.addComponent(entity, Component::Hitbox{ sf::Vector2f(newPos, image.sprite.getGlobalBounds().height)
 			,sf::Vector2f((image.sprite.getGlobalBounds().width / 2) - newPos, image.sprite.getGlobalBounds().height / 2)});
 		
+
+		//entityManager.addComponent(entity, Component::Tag{"Player"});
+		entityManager.addEntity(entity, "Player");
 	}
 
 	static void createPlayerWeapon(Coordinator& entityManager, uint32_t& entity)
@@ -68,10 +71,15 @@ public:
 		entityManager.addComponent(entity, Component::TextureCoord{ sf::IntRect(0, 0, 16, 16) });
 		entityManager.addComponent(entity, Component::Image{});
 
-
+		
 		auto& image = entityManager.getComponent<Component::Image>(entity);
 		image.sprite.setTexture(AssetManager::getTexture("PlayerWeapon"));
-		image.sprite.setOrigin({ image.sprite.getGlobalBounds().width / 2, image.sprite.getGlobalBounds().height / 2 });
+
+		image.sprite.setOrigin({
+			image.sprite.getGlobalBounds().left / 3,
+			image.sprite.getGlobalBounds().top / 3
+			});
+
 		image.sprite.scale(4.f, 4.f);
 
 		entityManager.addComponent(entity, Component::Transform{
@@ -91,5 +99,9 @@ public:
 				0,
 				7,
 				false});
+
+		entityManager.addComponent(entity, Component::FollowObject{"Player", 0.f, 0.3f, 100.f});
+		//entityManager.addComponent(entity, Component::Tag{"PlayerStaff"});
+		entityManager.addEntity(entity, "PlayerStaff");
 	}
 };

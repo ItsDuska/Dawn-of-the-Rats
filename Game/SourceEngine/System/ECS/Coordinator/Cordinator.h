@@ -82,10 +82,21 @@ public:
 		this->_systemManager->setSignature<kys>(signature);
 	}
 
+	void addEntity(uint32_t entity, std::string tag)
+	{
+		entityMap[tag] = entity;
+	}
+
+	uint32_t findEntity(std::string tag) const
+	{
+		return entityMap.at(tag);
+	}
+
 private:
 	std::unique_ptr<ComponentManager> _componentManager;
 	std::unique_ptr<EntityManager> _entityManager;
 	std::unique_ptr<SystemManager> _systemManager;
+	std::unordered_map<std::string, uint32_t> entityMap;
 };
 
 

@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SourceEngine\System\ECS\Systems\Follow\FollowSystem.cpp" />
     <ClCompile Include="SourceEngine\System\ECS\Systems\AnimationHandler\AnimationHalderSystem.cpp" />
     <ClCompile Include="SourceGame\World\Generation\Chunks\ChunkBuilder\BlockBuilder\BlockBuilder.cpp" />
     <ClCompile Include="SourceEngine\System\ECS\Systems\Collision\CollisionSystem.cpp" />
@@ -172,6 +173,7 @@
     <ClCompile Include="SourceGame\World\Generation\Chunks\ChunkManager\ChunkManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SourceEngine\System\ECS\Systems\Follow\FollowSystem.h" />
     <ClInclude Include="SourceEngine\System\ECS\Systems\AnimationHandler\AnimationHalderSystem.h" />
     <ClInclude Include="SourceGame\World\Generation\Chunks\ChunkBuilder\BlockBuilder\BlockBuilder.h" />
     <ClInclude Include="SourceEngine\System\ECS\Systems\Collision\CollisionSystem.h" />

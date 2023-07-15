@@ -7,6 +7,7 @@
 #include "System/ECS/Systems/Inventory/InventorySystem.h"
 #include "System/ECS/Systems/Collision/CollisionSystem.h"
 #include "System/ECS/Systems/AnimationHandler/AnimationHalderSystem.h"
+#include "System/ECS/Systems/Follow/FollowSystem.h"
 
 //All of the Systems that entities use.
 struct Systems
@@ -18,6 +19,7 @@ struct Systems
     std::shared_ptr<AnimationHalderSystem> animationHandler;
     std::shared_ptr<InventorySystem> inventory;
     std::shared_ptr<CollisionSystem> collision;
+    std::shared_ptr<FollowSystem> follow;
     //physic system
     //collision system
 };

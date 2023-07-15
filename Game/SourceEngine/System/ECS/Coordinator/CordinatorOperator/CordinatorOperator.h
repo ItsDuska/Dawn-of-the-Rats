@@ -12,7 +12,8 @@ enum class SystemType : int8_t
 	PHYSICS,
 	COLLISION, 
 	PLAYER_INPUT,
-	INVENTORY
+	INVENTORY,
+	FOLLOW
 	
 	
 };
@@ -37,6 +38,8 @@ public:
 		entityManager.registerComponent<Component::Hitbox>();
 		entityManager.registerComponent<Component::Collider>();
 		entityManager.registerComponent<Component::State>();
+		entityManager.registerComponent<Component::Tag>();
+		entityManager.registerComponent<Component::FollowObject>();
 	}
 
 	
@@ -49,6 +52,8 @@ public:
 		entitySystems.animationHandler = entityManager.registerSystem<AnimationHalderSystem>();
 		entitySystems.inventory = entityManager.registerSystem<InventorySystem>();
 		entitySystems.collision = entityManager.registerSystem<CollisionSystem>();
+		entitySystems.follow = entityManager.registerSystem<FollowSystem>();
+		
 
 
 
@@ -60,6 +65,7 @@ public:
 		setSignature(entityManager, *entitySystems.animationHandler.get(), SystemType::ANIMATION_HANDLER);
 		setSignature(entityManager, *entitySystems.inventory.get(), SystemType::INVENTORY);
 		setSignature(entityManager, *entitySystems.collision.get(), SystemType::COLLISION);
+		setSignature(entityManager, *entitySystems.follow.get(), SystemType::FOLLOW);
 		
 	}
 
@@ -94,7 +100,6 @@ private:
 			signature.set(entityManager.getComponentType<Component::Image>());
 			signature.set(entityManager.getComponentType<Component::TextureCoord>());
 			signature.set(entityManager.getComponentType<Component::Hitbox>());
-			signature.set(entityManager.getComponentType<Component::State>());
 			break;
 		case SystemType::MOVEMENT:
 			signature.set(entityManager.getComponentType<Component::RigidBody>());
@@ -103,6 +108,7 @@ private:
 		case SystemType::ANIMATION:
 			signature.set(entityManager.getComponentType<Component::Animation>());
 			signature.set(entityManager.getComponentType<Component::TextureCoord>());
+			signature.set(entityManager.getComponentType<Component::State>());
 			break;
 		case SystemType::ANIMATION_HANDLER:
 			signature.set(entityManager.getComponentType<Component::Animation>());
@@ -133,6 +139,10 @@ private:
 			signature.set(entityManager.getComponentType<Component::Speed>());
 			signature.set(entityManager.getComponentType<Component::Luck>());
 			break;
+		case SystemType::FOLLOW:
+			signature.set(entityManager.getComponentType<Component::FollowObject>());
+			signature.set(entityManager.getComponentType<Component::Transform>());
+			signature.set(entityManager.getComponentType<Component::State>());
 		default:
 			break;
 		}

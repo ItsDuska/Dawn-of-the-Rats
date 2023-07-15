@@ -40,6 +40,7 @@ void ActualGame::update(float dt, State* state)
 	sf::Vector2f tempPos = this->entityManager.getComponent<Component::Transform>(this->entities[0]).position;
 	
 	bool facingLeft = this->entityManager.getComponent<Component::State>(this->entities[0]).facingLeft;
+	/*
 	if (facingLeft)
 	{
 		this->entityManager.getComponent<Component::Transform>(this->entities[1]).futurePosition = tempPos - sf::Vector2f(100, 100);
@@ -48,7 +49,7 @@ void ActualGame::update(float dt, State* state)
 	{
 		this->entityManager.getComponent<Component::Transform>(this->entities[1]).futurePosition = tempPos + sf::Vector2f(100, -100);
 	}
-
+	*/
 	this->entityManager.getComponent<Component::State>(this->entities[1]).facingLeft = facingLeft;
 
 	this->camera.setCenter(sf::Vector2f((int)tempPos.x,tempPos.y));
@@ -59,6 +60,7 @@ void ActualGame::update(float dt, State* state)
 	////////
 	this->systems.playerInput->update(this->entityManager);
 	this->systems.movement->update(this->entityManager);
+	this->systems.follow->update(this->entityManager, dt);
 	this->systems.collision->update(this->entityManager, this->chunkManager.getLoadedChunks(), this->chunkManager.settings, this->chunkManager.chunkCords);
 	this->systems.animationHandler->update(this->entityManager);
 	this->systems.animation->update(this->entityManager);
@@ -125,7 +127,7 @@ void ActualGame::render(sf::RenderTarget* window)
 }
 
 ActualGame::ActualGame(sf::Vector2f windowSize)
-	:chunkManager(windowSize, 1369, 0.45f, &threadPool)
+	:chunkManager(windowSize, 6367, 0.45f, &threadPool)
 {
 	this->windowSize = windowSize;
 	this->updateTime = std::chrono::microseconds(0);

@@ -3,7 +3,7 @@
 //Create the window.
 void Game::initWindow()
 {
-	this->window = new sf::RenderWindow(sf::VideoMode(sf::VideoMode::getDesktopMode()), "AmogusRöpö");
+	this->window = new sf::RenderWindow(sf::VideoMode(sf::VideoMode::getDesktopMode()), "AmogusRöpö",sf::Style::Default);
 	this->window->setFramerateLimit(60);
 }
 
@@ -30,7 +30,14 @@ void Game::updateSFMLEvents()
 {
 	while (this->window->pollEvent(this->sfEvent)) {
 		if (this->sfEvent.type == sf::Event::Closed)
+		{
 			this->window->close();
+		}
+		if (this->sfEvent.type == sf::Event::Resized)
+		{
+			sf::Vector2u size = window->getSize();
+			this->states.getActiveState().onResize(sf::Vector2f((float) size.x, (float) size.y));
+		}
 	}	
 }
 
@@ -44,7 +51,7 @@ void Game::update()
 
 void Game::render()
 {
-	this->window->clear();
+	this->window->clear(sf::Color(79,82,107,255));
 	this->states.getActiveState().render(window);
 	this->window->display();
 }

@@ -100,7 +100,7 @@ public:
 				7,
 				false});
 
-		entityManager.addComponent(entity, Component::FollowObject{"Player", 0.f, 0.3f, 100.f});
+		entityManager.addComponent(entity, Component::FollowObject{"Player", 0.f, 0.3f, 100.f, false});
 		//entityManager.addComponent(entity, Component::Tag{"PlayerStaff"});
 		entityManager.addEntity(entity, "PlayerStaff");
 	}

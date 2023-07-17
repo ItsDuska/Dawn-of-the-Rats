@@ -141,5 +141,7 @@ namespace Component
 		float sinTime;
 		float moveSpeed;
 		float distanceToObject;
+		bool stopFollowing;
+		sf::Clock clock;
 	};
 }

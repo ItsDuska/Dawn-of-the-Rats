@@ -5,6 +5,16 @@
 #include <SFML/System/Vector2.hpp>
 #include "../AssetConfig.h"
 
+/*
+TODO:
+-Oisko erase funktio joka poistaa halutun tekstuurin.
+-Muuta koko class ett‰ se ei olisi singleton.
+...Singletonit ovat kakkoja ja n‰iden tilalle voitaisiin vain heitt‰‰ classin refrenssi‰ ymp‰riin.
+
+
+*/
+
+
 class AssetManager
 {
 public:
@@ -20,9 +30,9 @@ public:
 		return get().IgetTexture(name);
 	}
 
-	static void loadTexture(std::string name, std::string fileName)
+	static void loadTexture(std::string name, std::string fileName, bool enableFullPath = false)
 	{
-		get().IloadTexture(name, fileName);
+		get().IloadTexture(name, fileName, enableFullPath);
 	}
 
 	static std::vector<sf::Vector2i> getframeIndexes(std::string name)
@@ -44,11 +54,22 @@ private:
 		return this->_textures.at(name);
 	}
 
-	void IloadTexture(std::string name, std::string fileName)
+	void IloadTexture(std::string name, std::string fileName,bool enableFullPath)
 	{
 		sf::Texture texture;
 
-		if (!texture.loadFromFile(ASSETS_PATH+"Sprites/"+fileName))
+		std::string path;
+		
+		if (enableFullPath)
+		{
+			path = fileName;
+		}
+		else
+		{
+			path = ASSETS_PATH + "Sprites/" + fileName;
+		}
+
+		if (!texture.loadFromFile(path))
 		{
 			return;
 		}

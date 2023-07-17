@@ -18,11 +18,14 @@ enum class SystemType : int8_t
 	
 };
 
+
 class EntityHelper
 {
 public:
 	static void initComponents(Coordinator& entityManager)
 	{
+		
+
 		entityManager.registerComponent<Component::RigidBody>();
 		entityManager.registerComponent<Component::Transform>();
 		entityManager.registerComponent<Component::Image>();
@@ -40,6 +43,7 @@ public:
 		entityManager.registerComponent<Component::State>();
 		entityManager.registerComponent<Component::Tag>();
 		entityManager.registerComponent<Component::FollowObject>();
+
 	}
 
 	
@@ -58,14 +62,14 @@ public:
 
 
 		//JOKAINEN COMBO PITÄÄ INITTAAA SIIS
-		setSignature(entityManager, *entitySystems.render.get(), SystemType::RENDER);
-		setSignature(entityManager, *entitySystems.movement.get(), SystemType::MOVEMENT);
-		setSignature(entityManager, *entitySystems.playerInput.get(), SystemType::PLAYER_INPUT);
-		setSignature(entityManager, *entitySystems.animation.get(), SystemType::ANIMATION);
-		setSignature(entityManager, *entitySystems.animationHandler.get(), SystemType::ANIMATION_HANDLER);
-		setSignature(entityManager, *entitySystems.inventory.get(), SystemType::INVENTORY);
-		setSignature(entityManager, *entitySystems.collision.get(), SystemType::COLLISION);
-		setSignature(entityManager, *entitySystems.follow.get(), SystemType::FOLLOW);
+		setSignature(entityManager, *entitySystems.render, SystemType::RENDER);
+		setSignature(entityManager, *entitySystems.movement, SystemType::MOVEMENT);
+		setSignature(entityManager, *entitySystems.playerInput, SystemType::PLAYER_INPUT);
+		setSignature(entityManager, *entitySystems.animation, SystemType::ANIMATION);
+		setSignature(entityManager, *entitySystems.animationHandler, SystemType::ANIMATION_HANDLER);
+		setSignature(entityManager, *entitySystems.inventory, SystemType::INVENTORY);
+		setSignature(entityManager, *entitySystems.collision, SystemType::COLLISION);
+		setSignature(entityManager, *entitySystems.follow, SystemType::FOLLOW);
 		
 	}
 
@@ -77,7 +81,7 @@ public:
 			entities[i] = entityManager->createEntity();
 
 			entityManager->addComponent(entities[i], Component::Transform{
-				sf::Vector2f(rand() % 500,0),
+				sf::Vector2f(rand() % 500,0.f),
 				sf::Vector2f(0,0)
 				});
 			
@@ -142,7 +146,6 @@ private:
 		case SystemType::FOLLOW:
 			signature.set(entityManager.getComponentType<Component::FollowObject>());
 			signature.set(entityManager.getComponentType<Component::Transform>());
-			signature.set(entityManager.getComponentType<Component::State>());
 		default:
 			break;
 		}

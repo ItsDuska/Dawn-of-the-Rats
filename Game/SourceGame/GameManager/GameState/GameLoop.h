@@ -2,13 +2,12 @@
 #include "System/GameStates/State.h"
 #include "Assets/Animation/AnimationHandler.h"
 #include "Assets/Textures/AssetManager.h"
-#include "../../Player/Player.h"
 #include "../../World/Generation/Chunks/ChunkManager/ChunkManager.h"
 #include "System/ThreadPool/ThreadPool.h"
-//#include "System/ECS/Coordinator/Cordinator.h"
 #include "System/ECS/Coordinator/CordinatorOperator/CordinatorOperator.h"
 #include "System/ECS/Systems/Systems.h"
 
+#include "Background/Background.h"
 #include "Entities/Prefabs/PlayerPrefab/PlayerPrefab.h"
 #include <sstream>
 #include <chrono>
@@ -35,14 +34,14 @@ private:
     engine::Text frameTime;
     std::string tempString;
 
-
+    std::unique_ptr<Background> background;
 
     sf::RectangleShape pelaajaHitBox;
-    // class jolla on tallessa jokainen System
 public:
     void init();
     void update(float dt, State* state);
     void render(sf::RenderTarget *window);
+    void onResize(sf::Vector2f size);
     ActualGame(sf::Vector2f windowSize);
     ~ActualGame();
 };

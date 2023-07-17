@@ -5,7 +5,6 @@
 #include <memory>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Window/Mouse.hpp>
-#include "../../Player/PlayerStats.h"
 #include "Assets/Texts/Text.h"
 #include "System/ECS/Components/Components.h"
 

@@ -54,9 +54,6 @@
     <ClCompile Include="SourceGame\WindowManager\WindowManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SourceGame\Player\Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SourceGame\MainMenu\MainMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -76,15 +73,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SourceGame\GameManager\GameState\GameLoop.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceGame\Entities\Entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceGame\Entities\EntityCollisionHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceGame\Entities\MovableEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SourceEngine\System\ECS\Systems\PlayerInput\PlayerInputSystem.cpp">
@@ -109,6 +97,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SourceEngine\System\ECS\Systems\Follow\FollowSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceGame\Background\Background.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -191,15 +182,6 @@
     <ClInclude Include="SourceGame\WindowManager\WindowManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SourceGame\Player\Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceGame\Player\PlayerInputs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceGame\Player\PlayerStats.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SourceGame\MainMenu\MainMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -228,15 +210,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SourceGame\GameManager\GameState\GameLoop.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceGame\Entities\Entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceGame\Entities\EntityCollisionHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceGame\Entities\MovableEntity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SourceEngine\System\ECS\Systems\PlayerInput\PlayerInputSystem.h">
@@ -273,6 +246,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SourceEngine\System\ECS\Systems\Follow\FollowSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceGame\Background\Background.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

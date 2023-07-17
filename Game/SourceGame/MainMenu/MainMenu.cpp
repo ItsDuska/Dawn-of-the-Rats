@@ -55,3 +55,8 @@ void MainMenu::render(sf::RenderTarget *window)
 	this->playButton->render(window);
 	this->exitButton->render(window);
 }
+
+void MainMenu::onResize(sf::Vector2f size)
+{
+	screenSize = size;
+}

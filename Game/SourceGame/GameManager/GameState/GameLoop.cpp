@@ -1,4 +1,8 @@
 ﻿#include "GameLoop.h"
+void ActualGame::onResize(sf::Vector2f size)
+{
+	this->windowSize = size;
+}
 //funny init function that represents a constructor.
 void ActualGame::init()
 {
@@ -40,22 +44,14 @@ void ActualGame::update(float dt, State* state)
 	sf::Vector2f tempPos = this->entityManager.getComponent<Component::Transform>(this->entities[0]).position;
 	
 	bool facingLeft = this->entityManager.getComponent<Component::State>(this->entities[0]).facingLeft;
-	/*
-	if (facingLeft)
-	{
-		this->entityManager.getComponent<Component::Transform>(this->entities[1]).futurePosition = tempPos - sf::Vector2f(100, 100);
-	}
-	else
-	{
-		this->entityManager.getComponent<Component::Transform>(this->entities[1]).futurePosition = tempPos + sf::Vector2f(100, -100);
-	}
-	*/
+	
 	this->entityManager.getComponent<Component::State>(this->entities[1]).facingLeft = facingLeft;
 
 	this->camera.setCenter(sf::Vector2f((int)tempPos.x,tempPos.y));
 	this->chunkManager.update(&this->camera, this->entityManager.getComponent<Component::Transform>(this->entities[0]).futurePosition);
 	
-	
+	background->update(tempPos,
+		this->entityManager.getComponent<Component::RigidBody>(this->entities[0]).velocity.x);
 
 	////////
 	this->systems.playerInput->update(this->entityManager);
@@ -69,6 +65,7 @@ void ActualGame::update(float dt, State* state)
 
 	this->pelaajaHitBox.setPosition(this->entityManager.getComponent<Component::Hitbox>(this->entities[0]).pos);
 	////////
+
 
 	end = std::chrono::system_clock::now();
 
@@ -89,18 +86,21 @@ void ActualGame::render(sf::RenderTarget* window)
 	
 	//this->fakeWindow.clear();
 
+	this->background->render(*window);
 
 	window->setView(this->camera);
 	this->chunkManager.render(*window);
 	this->systems.render->render(this->entityManager, window);
 
+	
+
 	//window->draw(this->pelaajaHitBox);
-	//this->player.render(window);
-	this->systems.collision->render(window);
+	//this->systems.collision->render(window);
 
 	//Piirrä tän jälkeen GUI asiat.
 	window->setView(window->getDefaultView());
-	//this->player.renderInventory(window);
+
+
 	this->systems.inventory->render(this->entityManager, window);
 	
 
@@ -127,12 +127,12 @@ void ActualGame::render(sf::RenderTarget* window)
 }
 
 ActualGame::ActualGame(sf::Vector2f windowSize)
-	:chunkManager(windowSize, 6367, 0.45f, &threadPool)
+	:chunkManager(windowSize, 6967, 0.45f, &threadPool)
 {
 	this->windowSize = windowSize;
 	this->updateTime = std::chrono::microseconds(0);
 	this->camera.reset(sf::FloatRect(sf::Vector2f(0,0), windowSize));
-	
+	this->background = std::make_unique<Background>("Background\\Lush",windowSize);
 }
 
 ActualGame::~ActualGame()

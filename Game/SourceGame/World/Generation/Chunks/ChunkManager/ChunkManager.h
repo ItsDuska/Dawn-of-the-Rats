@@ -2,6 +2,7 @@
 #include "World/Generation/Chunks/Chunk/Chunk.h"
 #include "World/Generation/Chunks/ChunkBuilder/ChunkBuilder.h"
 #include "System/ThreadPool/ThreadPool.h"
+#include <SFML/Graphics/Shader.hpp>
 
 //Handles a 2d array of chunks (The whole world)
 class ChunkManager
@@ -23,6 +24,7 @@ private:
 	sf::Vector2i currentChunk;
 	sf::Vector2i previousChunk = {-1,0};
 	bool loaded = false;
+	sf::RenderStates states;
 
 	float distance(sf::Vector2i currentChunk, sf::Vector2i otherChunk);
 	void addChunk(sf::Vector2i chunkPosition);
@@ -37,7 +39,7 @@ public:
 	std::vector<std::unique_ptr<Chunk>>* getLoadedChunks();
 
 
-	virtual void render(sf::RenderTarget& target );
+	virtual void render(sf::RenderTarget& target, sf::Shader* shader = NULL, sf::Vector2f playerPos = sf::Vector2f());
 	ChunkManager(sf::Vector2f windowSize, int seed, float threshold,ThreadPool *threadPool);
 	~ChunkManager();
 };

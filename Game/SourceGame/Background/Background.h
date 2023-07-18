@@ -3,6 +3,7 @@
 #include "Assets/Textures/AssetManager.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Shader.hpp>
 #include <filesystem>
 #include <iostream>
 
@@ -16,7 +17,7 @@ class Background
 {
 public:
 	Background(std::string filePath, sf::Vector2f windowSize);
-	void render(sf::RenderTarget& window);
+	void render(sf::RenderTarget& window, sf::Shader* shader = NULL, sf::Vector2f playerPos = sf::Vector2f());
 	void update(sf::Vector2f playerPosition, float velocity);
 private:
 	void initBackground(std::filesystem::path path, sf::Vector2f windowSize);

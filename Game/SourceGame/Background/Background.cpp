@@ -6,12 +6,13 @@ Background::Background(std::string filePath, sf::Vector2f windowSize)
 	initBackground(path, windowSize);
 }
 
-void Background::render(sf::RenderTarget& window)
+void Background::render(sf::RenderTarget& window, sf::Shader* shader, sf::Vector2f playerPos)
 {
+	shader->setUniform("lightPos", playerPos);
 	for (const auto& image : backgrounds)
 	{
-		window.draw(image->first);
-		window.draw(image->second);
+		window.draw(image->first, shader);
+		window.draw(image->second, shader);
 	}
 }
 

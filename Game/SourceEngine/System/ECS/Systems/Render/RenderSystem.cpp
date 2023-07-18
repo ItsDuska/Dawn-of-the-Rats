@@ -25,10 +25,12 @@ void RenderSystem::update(Coordinator& entityManager)
 	}
 }
 
-void RenderSystem::render(Coordinator& entityManager, sf::RenderTarget* window)
+void RenderSystem::render(Coordinator& entityManager, sf::RenderTarget* window, sf::Shader* shader, sf::Vector2f playerPos)
 {
+	shader->setUniform("lightPos", playerPos);
+
 	for (auto const& entity : this->mEntities)
 	{
-		window->draw(entityManager.getComponent<Component::Image>(entity).sprite);
+		window->draw(entityManager.getComponent<Component::Image>(entity).sprite, shader);
 	}
 }

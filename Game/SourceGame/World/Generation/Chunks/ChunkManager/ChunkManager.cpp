@@ -85,12 +85,18 @@ void ChunkManager::update(sf::View *view, sf::Vector2f playerPos)
     
 }
 
-void ChunkManager::render(sf::RenderTarget& target) 
+void ChunkManager::render(sf::RenderTarget& target, sf::Shader* shader, sf::Vector2f playerPos)
 {
+    shader->setUniform("lightPos", playerPos);
+    states.shader = shader;
     for (const auto& chunk : this->chunks)
     {
-        if (!chunk->isDrawable) { continue; }
-        target.draw(chunk->chunk, &AssetManager::getTexture("Blocks"));
+        if (!chunk->isDrawable)
+        {
+            continue;
+        }
+        //target.draw(chunk->chunk, &AssetManager::getTexture("Blocks"));
+        target.draw(chunk->chunk, states);
         //target.draw(chunk->rect);
     }
 }
@@ -98,9 +104,11 @@ void ChunkManager::render(sf::RenderTarget& target)
 ChunkManager::ChunkManager(sf::Vector2f windowSize, int seed, float threshold, ThreadPool *threadPool)
     : renderBonds((this->settings.RENDERDISTANCE * 2) + 1)
 {
+    AssetManager::loadTexture("Blocks", "NewSprites/GrassyBlock.png");
     this->windowSize = windowSize;
     this->seed = seed;
     this->threshold = threshold;
+    this->states.texture = &AssetManager::getTexture("Blocks");
    
     //this->gridSize = sf::Vector2i((int)this->windowSize.x / this->BLOCK_SIZE, (int)this->windowSize.y / this->BLOCK_SIZE);
 

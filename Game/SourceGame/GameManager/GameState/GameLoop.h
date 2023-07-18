@@ -17,8 +17,17 @@
 
 class ActualGame : public State
 {
+public:
+    ActualGame(sf::Vector2f windowSize);
+    ~ActualGame();
+    void init();
+    void update(float dt, State* state);
+    void render(sf::RenderTarget* window);
+    void onResize(sf::Vector2f size);
+    const bool getErrorRaised();
 private:
-    //Player player;
+    void initShader();
+
     sf::View camera;
     ChunkManager chunkManager;
     sf::Vector2f windowSize;
@@ -35,14 +44,7 @@ private:
     std::string tempString;
 
     std::unique_ptr<Background> background;
-
     sf::RectangleShape pelaajaHitBox;
-public:
-    void init();
-    void update(float dt, State* state);
-    void render(sf::RenderTarget *window);
-    void onResize(sf::Vector2f size);
-    ActualGame(sf::Vector2f windowSize);
-    ~ActualGame();
+    bool ErrorRaised = false;
 };
 

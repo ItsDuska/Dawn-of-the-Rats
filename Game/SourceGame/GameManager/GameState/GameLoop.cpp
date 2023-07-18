@@ -3,11 +3,22 @@ void ActualGame::onResize(sf::Vector2f size)
 {
 	this->windowSize = size;
 }
+const bool ActualGame::getErrorRaised()
+{
+	return ErrorRaised;
+}
+void ActualGame::initShader()
+{
+	if (!shader.loadFromFile("SourceGame/Shaders/Darkness/Darkness.vert", "SourceGame/Shaders/Darkness/Darkness.frag"))
+	{
+		ErrorRaised = true;
+		std::cout << "\nERROR: Failed to load shaders from a file!\n";
+	}
+}
 //funny init function that represents a constructor.
 void ActualGame::init()
 {
 	this->changeStateTo = 2;
-	AssetManager::loadTexture("Blocks", "NewSprites/GrassyBlock.png");
 	AssetManager::loadTexture("Shocked", "NewSprites/SHOCKED.jpg");
 	//entity hämmeli
 	this->entities.resize(MAX_ENTITIES);
@@ -33,6 +44,7 @@ void ActualGame::init()
 	//this->pelaajaHitBox.setOrigin({ (sus.width / 2) - newPos / 2, sus.height / 2 });
 	//this->pelaajaHitBox.setSize(sf::Vector2f(newPos, sus.height));
 	this->pelaajaHitBox.setSize(amog.size);
+	initShader();
 }
 
 //update function for the game loop.
@@ -81,30 +93,23 @@ void ActualGame::render(sf::RenderTarget* window)
 {
 	std::chrono::time_point<std::chrono::system_clock> start, end;
 	start = std::chrono::system_clock::now();
+	sf::Vector2f playerPos = this->entityManager.getComponent<Component::Transform>(this->entities[0]).position;
+
 	//World stuff rendering
 
-	
-	//this->fakeWindow.clear();
-
-	this->background->render(*window);
+	this->background->render(*window, &shader, sf::Vector2f(windowSize.x / 2, windowSize.y / 2));
 
 	window->setView(this->camera);
-	this->chunkManager.render(*window);
-	this->systems.render->render(this->entityManager, window);
-
-	
+	this->chunkManager.render(*window, &shader, playerPos); 
+	this->systems.render->render(this->entityManager, window, &shader, playerPos);
 
 	//window->draw(this->pelaajaHitBox);
 	//this->systems.collision->render(window);
 
 	//Piirrä tän jälkeen GUI asiat.
 	window->setView(window->getDefaultView());
-
-
 	this->systems.inventory->render(this->entityManager, window);
 	
-
-
 	end = std::chrono::system_clock::now();
 	std::ostringstream oss;
 
@@ -116,14 +121,8 @@ void ActualGame::render(sf::RenderTarget* window)
 		this->frameTime.changeString(this->tempString);
 	}
 
-
-		//this->frameTime.changeString("Game logic: " + this->updateTime + " mircoseconds\nRendering logic : " + 
-			//std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()) + " mircoseconds");
-
 	this->updateText = !this->updateText;
 	window->draw(this->frameTime.getText());
-
-
 }
 
 ActualGame::ActualGame(sf::Vector2f windowSize)

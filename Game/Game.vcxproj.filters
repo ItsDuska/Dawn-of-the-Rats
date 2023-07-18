@@ -259,6 +259,7 @@
     <None Include="SourceGame\Shaders\MainMenuShaders\Background.frag" />
     <None Include="SourceGame\Shaders\MainMenuShaders\Background.vert" />
     <None Include="SourceGame\Shaders\Darkness\Darkness.vert" />
+    <None Include="SourceGame\Shaders\Darkness\Darkness.frag" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">

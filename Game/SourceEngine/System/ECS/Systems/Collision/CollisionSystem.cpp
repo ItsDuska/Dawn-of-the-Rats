@@ -37,9 +37,10 @@ void CollisionSystem::update(Coordinator& entityManager,
 			std::cout << "\n\nEntity real position : " << transform.position.x << "x  " << transform.position.y << "y\n";
 			std::cout << "\nentityPositionInChunkMap : " << entityPositionInChunkX << "x  " << entityPositionInChunkY << "y\n";
 			std::cout << "\ngridSize : " << chunkSettings.gridSize.x << "x  " << chunkSettings.gridSize.y << "y\n";
-			std::cout << "\ntileSize : " << chunkSettings.tileSize.x << "x  " << chunkSettings.tileSize.y << "y\n\n";	
+			std::cout << "\ntileSize : " << chunkSettings.tileSize.x << "x  " << chunkSettings.tileSize.y << "y\n\n";
+			continue;
 		}
-		
+		//TODO: CHUNK INDEX ON JOSTAKIN KUMMAN SYYSTÄ -1 VÄLILLÄ
 		this->blockCollision(entityManager, chunks->at(chunkIndex), transform, chunkSettings, 
 			sf::Vector2i(entityPositionInChunkX,entityPositionInChunkY), hitbox, rigidbody,state.onGround);
 		this->entityCollision(entityManager); // EI OLE VIELÄ OLEMASSA !!

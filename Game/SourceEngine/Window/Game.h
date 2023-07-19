@@ -1,6 +1,7 @@
 #pragma once
 #include "System/GameStates/StateMachine.h"
 #include <SFML/Window/Event.hpp>
+#include <SFML/Graphics/Image.hpp>
 #include <chrono> 
 #include <memory>
 #include "Assets/Sounds/SoundManager.h"
@@ -12,6 +13,7 @@
 class Game
 {
 protected:
+	sf::Image image;
 	sf::RenderWindow* window;
 	sf::Event sfEvent;
 	StateMachine states;

@@ -25,7 +25,7 @@ void Background::update(sf::Vector2f playerPosition, float velocity)
 
 	for (int i = 0; i < imageCount; i++)
 	{
-		float value = -(velocity * 0.2f * (i + 1));
+		int value = -(velocity * 0.2f * (i + 1));
 		backgrounds[i]->first.move(value, 0);
 		backgrounds[i]->second.move(value, 0);
 

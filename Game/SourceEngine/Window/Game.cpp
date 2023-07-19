@@ -5,6 +5,14 @@ void Game::initWindow()
 {
 	this->window = new sf::RenderWindow(sf::VideoMode(sf::VideoMode::getDesktopMode()), "AmogusRöpö",sf::Style::Default);
 	this->window->setFramerateLimit(60);
+
+	if (!image.loadFromFile("../Assets/Sprites/GameIcon/RottaTausta.png"))
+	{
+		std::cout << "ERROR!!!!!!!!!!!";
+	}
+
+	//this->window->setIcon()'
+	this->window->setIcon(image.getSize().x, image.getSize().y, image.getPixelsPtr());
 }
 
 //Change the state if needed to.

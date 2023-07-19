@@ -54,14 +54,11 @@ void ActualGame::update(float dt, State* state)
 	start = std::chrono::system_clock::now();
 
 	sf::Vector2f tempPos = this->entityManager.getComponent<Component::Transform>(this->entities[0]).position;
-	
 	bool facingLeft = this->entityManager.getComponent<Component::State>(this->entities[0]).facingLeft;
-	
 	this->entityManager.getComponent<Component::State>(this->entities[1]).facingLeft = facingLeft;
-
 	this->camera.setCenter(sf::Vector2f((int)tempPos.x,tempPos.y));
+
 	this->chunkManager.update(&this->camera, this->entityManager.getComponent<Component::Transform>(this->entities[0]).futurePosition);
-	
 	background->update(tempPos,
 		this->entityManager.getComponent<Component::RigidBody>(this->entities[0]).velocity.x);
 
@@ -77,7 +74,6 @@ void ActualGame::update(float dt, State* state)
 
 	this->pelaajaHitBox.setPosition(this->entityManager.getComponent<Component::Hitbox>(this->entities[0]).pos);
 	////////
-
 
 	end = std::chrono::system_clock::now();
 

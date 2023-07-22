@@ -9,12 +9,11 @@ void CollisionSystem::update(Coordinator& entityManager,
 		auto& collider = entityManager.getComponent<Component::Collider>(entity);
 		auto& rigidbody = entityManager.getComponent<Component::RigidBody>(entity);
 		auto& transform = entityManager.getComponent<Component::Transform>(entity);
-		auto const& hitbox = entityManager.getComponent<Component::Hitbox>(entity);
+		auto& hitbox = entityManager.getComponent<Component::Hitbox>(entity);
 		auto& state = entityManager.getComponent<Component::State>(entity);
 
 		this->colliding = false;
 		state.onGround = false;
-
 
 		float entityPositionInArrayX = (transform.futurePosition.x / chunkSettings.tileSize.x);
 		float entityPositionInArrayY = (transform.futurePosition.y / chunkSettings.tileSize.y);
@@ -69,6 +68,11 @@ void CollisionSystem::blockCollision(Coordinator& entityManager,
 
 	for (sf::Vector2i neighborBlock : this->neighborBlockPositons)
 	{
+		if (this->hasCollidedHorizontaly && this->hasCollidedVerticly)
+		{
+			break;
+		}
+
 		i++;
 		sf::Vector2i newBlockPosition(entityPositionInChunk.x + neighborBlock.x, entityPositionInChunk.y + neighborBlock.y);
 
@@ -91,27 +95,64 @@ void CollisionSystem::blockCollision(Coordinator& entityManager,
 		}
 
 		sf::Vector2f blockPositionInWorld(
-			(float)(((chunk.get()->chunkCoord.y-chunkSettings.RENDERDISTANCE) * chunkSettings.gridSize.x) + newBlockPosition.x) * chunkSettings.tileSize.x,
+			(float)(((chunk.get()->chunkCoord.y - chunkSettings.RENDERDISTANCE) * chunkSettings.gridSize.x) + newBlockPosition.x) * chunkSettings.tileSize.x,
 			(float)(((chunk.get()->chunkCoord.x - chunkSettings.RENDERDISTANCE) * chunkSettings.gridSize.y) + newBlockPosition.y) * chunkSettings.tileSize.y
 		);
 
-		if (!collide(sf::FloatRect((hitbox.pos+rigidbody.velocity), hitbox.size), sf::FloatRect(blockPositionInWorld,chunkSettings.tileSize)))
+		/* REAL COLLISION LOGIC STARTS HERE: */
+		
+		sf::Vector2f blockHalfSize{chunkSettings.tileSize.x / 2.f, chunkSettings.tileSize.y / 2.f};
+		sf::Vector2f blockCenter{blockPositionInWorld.x + blockHalfSize.x, blockPositionInWorld.y + blockHalfSize.y};
+
+		float deltaX = transform.futurePosition.x - blockCenter.x;
+		float deltaY = transform.futurePosition.y - blockCenter.y;
+
+		float entityHalfSizeX = hitbox.size.x / 2.f;
+		float entityHalfSizeY = hitbox.size.y / 2.f;
+
+		float intersectX = std::abs(deltaX) - (entityHalfSizeX + blockHalfSize.x);
+		float intersectY = std::abs(deltaY) - (entityHalfSizeY + blockHalfSize.y);
+
+		if (!(intersectX < 0.0f && intersectY < 0.0f))
 		{
 			this->palikka[i].setPosition(sf::Vector2f(0, -1000));
 			continue;
 		}
-		
+
 		this->palikka[i].setPosition(blockPositionInWorld);
 		this->colliding = true;
 
-		
-
-		if (this->verticalCollision(transform, rigidbody, blockPositionInWorld, chunkSettings.tileSize, hitbox, onGround))
+		if (intersectX > intersectY && !this->hasCollidedHorizontaly)
 		{
-			continue;
-		}
+			if (deltaX > 0.0f)
+			{
+				transform.futurePosition.x -= intersectX;
+				rigidbody.velocity.x = 0.f;
+			}
+			else
+			{
+				transform.futurePosition.x += intersectX;
+				rigidbody.velocity.x = 0.f;
+			}
 
-		this->horizontalCollision(transform, rigidbody, blockPositionInWorld, chunkSettings.tileSize, hitbox);
+			this->hasCollidedHorizontaly = true;
+		}
+		else if (!this->hasCollidedVerticly)
+		{
+			if (deltaY > 0.0f)
+			{
+				transform.futurePosition.y -= intersectY;
+				rigidbody.velocity.y = 0.f;
+			}
+			else
+			{
+				transform.futurePosition.y += intersectY;
+				rigidbody.velocity.y = 0.f;
+				onGround = true;
+			}
+
+			this->hasCollidedVerticly = true;
+		}
 	}
 }
 
@@ -127,18 +168,10 @@ void CollisionSystem::render(sf::RenderTarget* window)
 		return;
 	}
 
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		window->draw(this->palikka[i]);
 	}
-}
-
-bool CollisionSystem::collide(sf::FloatRect entity, sf::FloatRect block)
-{
-	return entity.left < block.left + block.width &&
-		entity.left + entity.width > block.left &&
-		entity.top < block.top + block.height &&
-		entity.height + entity.top > block.top;
 }
 
 int CollisionSystem::getChunkIndex(std::vector<sf::Vector2i> list, sf::Vector2i position)
@@ -158,60 +191,11 @@ int CollisionSystem::getChunkIndex(std::vector<sf::Vector2i> list, sf::Vector2i 
 	}
 }
 
-void CollisionSystem::horizontalCollision(Component::Transform& transform, Component::RigidBody& rigidBody, sf::Vector2f collisionPosition, sf::Vector2f tileSize, const Component::Hitbox& hitbox)
-{
-	if (this->hasCollidedHorizontaly)
-	{
-		return;
-	}
-
-	if (rigidBody.direction.x < 0)
-	{
-		transform.futurePosition.x += rigidBody.velocity.x;
-		rigidBody.velocity.x = 0;
-		this->hasCollidedHorizontaly = true;
-	}
-	else if (rigidBody.direction.x > 0)
-	{
-		transform.futurePosition.x -= rigidBody.velocity.x;
-		rigidBody.velocity.x = 0;
-		this->hasCollidedHorizontaly = true;
-	}
-}
-
-bool CollisionSystem::verticalCollision(Component::Transform& transform, Component::RigidBody& rigidBody, 
-	sf::Vector2f collisionPosition, sf::Vector2f tileSize, const Component::Hitbox& hitbox, bool& onGround)
-{
-	if (this->hasCollidedVerticly)
-	{
-		return false;
-	}
-
-	if (rigidBody.velocity.y < 0) // ylös
-	{
-		transform.futurePosition.y += transform.futurePosition.y - collisionPosition.y;
-		rigidBody.velocity.y = 0;
-		this->hasCollidedVerticly = true;
-		return true;
-
-	}
-	else if (rigidBody.velocity.y > 0) // alas
-	{
-		transform.futurePosition.y -= (transform.futurePosition.y - (collisionPosition.y - tileSize.y));
-		rigidBody.velocity.y = 0;
-		this->hasCollidedVerticly = true;
-		onGround = true;
-		return true;
-	}
-
-	return false;
-}
-
 CollisionSystem::CollisionSystem()
 {
 	this->colliding = false;
 
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		this->palikka[i].setFillColor(sf::Color(255, 0, 0, 128));
 		this->palikka[i].setOutlineColor(sf::Color::White);

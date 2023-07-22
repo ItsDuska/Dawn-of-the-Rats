@@ -81,7 +81,7 @@ public:
 			entities[i] = entityManager->createEntity();
 
 			entityManager->addComponent(entities[i], Component::Transform{
-				sf::Vector2f(rand() % 500,0.f),
+				sf::Vector2f(rand() % 500,200.f),
 				sf::Vector2f(0,0)
 				});
 			

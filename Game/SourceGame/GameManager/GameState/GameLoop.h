@@ -14,7 +14,6 @@
 #include <cmath>
 
 
-
 class ActualGame : public State
 {
 public:

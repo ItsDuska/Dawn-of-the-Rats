@@ -6,6 +6,7 @@ void MovementSystem::update(Coordinator& entityManager)
 	{
 		auto& rigidBody = entityManager.getComponent<Component::RigidBody>(entity);
 		auto& transform = entityManager.getComponent<Component::Transform>(entity);
+		auto& hitbox = entityManager.getComponent<Component::Hitbox>(entity);
 
 		this->acceleration(rigidBody);
 		this->deceleration(rigidBody);

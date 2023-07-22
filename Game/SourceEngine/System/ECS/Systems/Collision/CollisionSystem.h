@@ -33,15 +33,12 @@ public:
 	CollisionSystem();
 private:
 	bool inBounds(sf::Vector2i pos, sf::Vector2i bounds);
-	bool collide(sf::FloatRect entity, sf::FloatRect block);
 	int getChunkIndex(std::vector<sf::Vector2i> list, sf::Vector2i position);
-	void horizontalCollision(Component::Transform &transform,Component::RigidBody &rigidBody,sf::Vector2f collisionPosition, sf::Vector2f tileSize, const Component::Hitbox &hitbox);
-	bool verticalCollision(Component::Transform &transform, Component::RigidBody &rigidBody, sf::Vector2f collisionPosition, sf::Vector2f tileSize, const Component::Hitbox &hitbox, bool& onGround);
 
-	bool colliding;
+	bool colliding = false;
 	bool hasCollidedHorizontaly = false;
 	bool hasCollidedVerticly = false;
-	sf::RectangleShape palikka[8];
-	const sf::Vector2i neighborBlockPositons[8] = { {-1,-1}, {-1,0}, {-1,1},    {0,-1}, {0,1},     {1,-1},  {1,0}, {1,1} };
+	sf::RectangleShape palikka[4];
+	const sf::Vector2i neighborBlockPositons[4] = { {-1,0}, {0,-1}, {0,1}, {1,0},  };
 };
 

@@ -12,8 +12,10 @@ void WindowManager::changeStates()
 		return;
 	case 1:
 		this->states.addState((std::make_unique<MainMenu>(sf::Vector2f((float)sf::VideoMode::getDesktopMode().width, (float)sf::VideoMode::getDesktopMode().height))));
+		break;
 	case 2:
 		this->states.addState(std::make_unique<ActualGame>(sf::Vector2f((float)sf::VideoMode::getDesktopMode().width, (float)sf::VideoMode::getDesktopMode().height)));
+		break;
 	}
 	this->currentState = realState;
 }

@@ -160,7 +160,6 @@
     <ClCompile Include="SourceEngine\Window\Game.cpp" />
     <ClCompile Include="SourceGame\DawnOfTheRats.cpp" />
     <ClCompile Include="SourceGame\GameManager\GameState\GameLoop.cpp" />
-    <ClCompile Include="SourceGame\GUI\Inventory\Inventory.cpp" />
     <ClCompile Include="SourceGame\GUI\Inventory\Item.cpp" />
     <ClCompile Include="SourceGame\MainMenu\Buttons\ActionButtons\ExitButton.cpp" />
     <ClCompile Include="SourceGame\MainMenu\Buttons\ActionButtons\PlayButton.cpp" />
@@ -206,7 +205,6 @@
     <ClInclude Include="SourceEngine\Window\Game.h" />
     <ClInclude Include="SourceGame\Entities\Prefabs\PlayerPrefab\PlayerPrefab.h" />
     <ClInclude Include="SourceGame\GameManager\GameState\GameLoop.h" />
-    <ClInclude Include="SourceGame\GUI\Inventory\Inventory.h" />
     <ClInclude Include="SourceGame\GUI\Inventory\Item.h" />
     <ClInclude Include="SourceGame\GUI\Inventory\Items\ItemAccessory.h" />
     <ClInclude Include="SourceGame\GUI\Inventory\Items\ItemSpell.h" />

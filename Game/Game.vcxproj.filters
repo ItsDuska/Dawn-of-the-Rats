@@ -66,9 +66,6 @@
     <ClCompile Include="SourceGame\MainMenu\Buttons\ActionButtons\PlayButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SourceGame\GUI\Inventory\Inventory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SourceGame\GUI\Inventory\Item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -192,9 +189,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SourceGame\MainMenu\Buttons\ActionButtons\PlayButton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceGame\GUI\Inventory\Inventory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SourceGame\GUI\Inventory\Item.h">

@@ -71,11 +71,6 @@ sf::Vector2f BlockBuilder::getGrassTexCoord(bool* blocks)
     sf::Vector2f texPos(this->grassTexCoordTable[index], 1);
 
     return texPos;
-
-
-
-
-    return sf::Vector2f();
 }
 
 BlockBuilder::BlockBuilder()

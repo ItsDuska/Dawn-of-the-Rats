@@ -32,18 +32,25 @@ void ActualGame::init()
 	this->systems.inventory->addNewItem(this->entityManager);
 
 	this->frameTime.setText(50,"", sf::Vector2f(0,0));
-	auto sus = this->entityManager.getComponent < Component::Image>(this->entities[0]).sprite.getGlobalBounds();
-	float newPos = 0.5f * sus.width;
+	//auto sus = this->entityManager.getComponent < Component::Image>(this->entities[0]).sprite.getGlobalBounds();
+	//float newPos = 0.5f * sus.width;
 	auto& amog = this->entityManager.getComponent < Component::Hitbox>(this->entities[0]);
+
+	sf::Vector2f tempPos = this->entityManager.getComponent<Component::Transform>(this->entities[0]).position;
+	auto tempPlayer = this->entityManager.getComponent <Component::Image>(this->entities[0]).sprite.getGlobalBounds();
 
 	this->pelaajaHitBox.setFillColor(sf::Color(0, 0, 255, 128));
 	this->pelaajaHitBox.setOutlineColor(sf::Color::White);
 	this->pelaajaHitBox.setOutlineThickness(1);
 	
-	
 	//this->pelaajaHitBox.setOrigin({ (sus.width / 2) - newPos / 2, sus.height / 2 });
 	//this->pelaajaHitBox.setSize(sf::Vector2f(newPos, sus.height));
+
+	this->pelaajaHitBox.setPosition(amog.pos);
 	this->pelaajaHitBox.setSize(amog.size);
+	//this->pelaajaHitBox.setSize(sf::Vector2f(tempPlayer.width,tempPlayer.height));
+	//this->pelaajaHitBox.setOrigin(this->entityManager.getComponent < Component::Image>(this->entities[0]).sprite.getOrigin());
+	
 	initShader();
 }
 
@@ -72,6 +79,7 @@ void ActualGame::update(float dt, State* state)
 	this->systems.render->update(this->entityManager);
 	this->systems.inventory->update(this->entityManager);
 
+	//this->pelaajaHitBox.setPosition(tempPos);
 	this->pelaajaHitBox.setPosition(this->entityManager.getComponent<Component::Hitbox>(this->entities[0]).pos);
 	////////
 

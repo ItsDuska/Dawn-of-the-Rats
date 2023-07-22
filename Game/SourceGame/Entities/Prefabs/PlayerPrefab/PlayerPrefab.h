@@ -22,7 +22,7 @@ public:
 			{0.f,0.f},
 			{0.f,0.f}});
 		entityManager.addComponent(entity, Component::Image{});
-		entityManager.addComponent(entity, Component::Speed{ 0.5f ,12.5f});
+		entityManager.addComponent(entity, Component::Speed{ 0.5f ,12.f});
 		entityManager.addComponent(entity, Component::Collider{});
 		entityManager.addComponent(entity, Component::Animation{
 			{0,6},

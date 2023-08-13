@@ -43,7 +43,7 @@ private:
 	{
 		sf::SoundBuffer soundBuffer;
 
-		if (!soundBuffer.loadFromFile(ASSETS_PATH+"Audio/"+fileName))
+		if (!soundBuffer.loadFromFile(ASSETS_PATH+"Audio\\"+fileName))
 		{
 			std::cout << "errror on loading sound";
 			return;

@@ -1,8 +1,10 @@
-#include "WindowManager/WindowManager.h"
+#include "Window/Game.h"
+//#define RELEASE_VERSION
+
 
 int main()
 {
-    WindowManager DawnOfTheRats;
+    Game DawnOfTheRats;
     DawnOfTheRats.init();
     DawnOfTheRats.run();
     return 0;

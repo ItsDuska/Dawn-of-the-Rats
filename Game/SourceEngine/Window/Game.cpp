@@ -6,7 +6,7 @@ void Game::initWindow()
 	this->window = new sf::RenderWindow(sf::VideoMode(sf::VideoMode::getDesktopMode()), "AmogusRöpö",sf::Style::Default);
 	this->window->setFramerateLimit(60);
 
-	if (!image.loadFromFile("../Assets/Sprites/GameIcon/RottaTausta.png"))
+	if (!image.loadFromFile(ASSETS_PATH + "Sprites/GameIcon/RottaTausta.png"))
 	{
 		std::cout << "ERROR!!!!!!!!!!!";
 	}
@@ -18,12 +18,31 @@ void Game::initWindow()
 //Change the state if needed to.
 void Game::init()
 {
-
+	Fonts::initFont();
+	this->currentState = 1;
+	this->initWindow();
+	this->states.addState((std::make_unique<MainMenu>(sf::Vector2f((float)sf::VideoMode::getDesktopMode().width, (float)sf::VideoMode::getDesktopMode().height))), true);
 }
+
 
 void Game::changeStates()
 {
-
+	int realState = this->states.getActiveState().changeStateTo;
+	if (realState == this->currentState) { return; }
+	switch (realState)
+	{
+	default:
+		break;
+	case 0:
+		return;
+	case 1:
+		this->states.addState((std::make_unique<MainMenu>(sf::Vector2f((float)sf::VideoMode::getDesktopMode().width, (float)sf::VideoMode::getDesktopMode().height))));
+		break;
+	case 2:
+		this->states.addState(std::make_unique<ActualGame>(sf::Vector2f((float)sf::VideoMode::getDesktopMode().width, (float)sf::VideoMode::getDesktopMode().height)));
+		break;
+	}
+	this->currentState = realState;
 }
 
 Game::~Game()
@@ -76,4 +95,5 @@ void Game::run()
 		//end = std::chrono::system_clock::now();
 		//std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << "[microsecs]" << std::endl;
 	}
+	std::cout << "\nwindow closed!\n";
 }

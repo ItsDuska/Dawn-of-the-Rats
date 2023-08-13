@@ -20,7 +20,7 @@ public:
 	void render(sf::RenderTarget& window, sf::Shader* shader = NULL, sf::Vector2f playerPos = sf::Vector2f());
 	void update(sf::Vector2f playerPosition, float velocity);
 private:
-	void initBackground(std::filesystem::path path, sf::Vector2f windowSize);
+	void initBackground(std::string path, sf::Vector2f windowSize);
 
 	sf::Vector2f windowSize;
 	sf::Vector2f imageSize;

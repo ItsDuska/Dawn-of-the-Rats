@@ -81,15 +81,18 @@ public:
 			entities[i] = entityManager->createEntity();
 
 			entityManager->addComponent(entities[i], Component::Transform{
-				sf::Vector2f(rand() % 500,200.f),
-				sf::Vector2f(0,0)
+				sf::Vector2f(rand() % 1000, rand() % 1000),
+				sf::Vector2f()
 				});
-			
+			entityManager->addComponent(entities[i], Component::Hitbox{});
+
+
 			entityManager->addComponent(entities[i], Component::Image{});
 			auto& enemy = entityManager->getComponent<Component::Image>(entities[i]);
 			enemy.sprite.setTexture(AssetManager::getTexture("Shocked"));
 			entityManager->addComponent(entities[i], Component::TextureCoord{sf::IntRect(0,0,
 				(int)enemy.sprite.getLocalBounds().width,(int)enemy.sprite.getLocalBounds().height)});
+			enemy.sprite.setScale(sf::Vector2f(-5, -5));
 		}
 	}
 private:

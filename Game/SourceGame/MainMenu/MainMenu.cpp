@@ -27,15 +27,23 @@ MainMenu::MainMenu(sf::Vector2f screenSize)
 	this->exitButton = std::make_unique< ExitButton>(sf::Vector2f(this->screenSize.x / 6, this->screenSize.y / 1.8f), sf::Vector2f(300, 200), sf::Color(200, 200, 200,128), "Quit");
 	this->playButton = std::make_unique< PlayButton>(sf::Vector2f(this->screenSize.x / 6, this->screenSize.y / 3.5f), sf::Vector2f(300, 200), sf::Color(200, 200, 200,128), "Play");
 
+	if (!music.openFromFile(ASSETS_PATH + "Audio\\Music\\MainMenu\\Space_Vortex.ogg"))
+	{
+		std::cout << "\nERROR: CANT PLAY MUSIC!\n";
+		return; // error
+	}
+	this->music.setVolume(10);
+	this->music.setLoop(true);
 	//this->exitButton = std::make_unique< ExitButton>(sf::Vector2f(300, 600), sf::Vector2f(300, 200), sf::Color(200, 200, 200,128), "Quit");
 	//this->playButton = std::make_unique< PlayButton>(sf::Vector2f(300, 300), sf::Vector2f(300, 200), sf::Color(200, 200, 200, 128), "Play");
-
+	this->music.play();
 
 	std::cout << "done";
 }
 
 MainMenu::~MainMenu()
 {
+	this->music.stop();
 }
 
 void MainMenu::update(float dt, State* state)
@@ -44,6 +52,7 @@ void MainMenu::update(float dt, State* state)
 	this->rats->update(false);
 	this->exitButton->checkMousePos(this->mousePos, state);
 	this->playButton->checkMousePos(this->mousePos, state);
+
 }
 
 void MainMenu::render(sf::RenderTarget *window)

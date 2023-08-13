@@ -23,7 +23,7 @@ private:
 	std::condition_variable _EventVar;
 	std::mutex _EventMutex;
 	std::queue<Task> _tasks;
-	const unsigned int NUMBER_OF_ALLOWED_THREADS = std::thread::hardware_concurrency()/2;
+	unsigned int NUMBER_OF_ALLOWED_THREADS;
 
 	bool _stopping = false;
 

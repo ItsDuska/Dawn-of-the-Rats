@@ -8,24 +8,28 @@
 #include "Assets/Textures/AssetManager.h"
 
 
+#include "MainMenu/MainMenu.h"
+#include "GameManager/GameState/GameLoop.h"
+
 
 //The mainGameLoop that handles everything aka the "base class."
 class Game
 {
-protected:
+private:
 	sf::Image image;
 	sf::RenderWindow* window;
 	sf::Event sfEvent;
 	StateMachine states;
 	int currentState;
 	sf::Clock deltaClock;
+
 	void initWindow();
-	virtual void changeStates();
+	void changeStates();
 	void updateSFMLEvents();
 	void update();
 	void render();
 public:
-	virtual void init();
+	void init();
 	~Game();
 	void run();
 };

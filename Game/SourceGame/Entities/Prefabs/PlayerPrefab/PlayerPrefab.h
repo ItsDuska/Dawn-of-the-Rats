@@ -16,13 +16,13 @@ public:
 			sf::Vector2f(100,100)
 			});
 		entityManager.addComponent(entity, Component::RigidBody{
-			9.f,
-			1.8f,
-			0.6f,
+			5.5f,
+			1.05f,
+			0.4f,
 			{0.f,0.f},
 			{0.f,0.f}});
 		entityManager.addComponent(entity, Component::Image{});
-		entityManager.addComponent(entity, Component::Speed{ 0.5f ,12.f});
+		entityManager.addComponent(entity, Component::Speed{ 0.55f ,12.f});
 		entityManager.addComponent(entity, Component::Collider{});
 		entityManager.addComponent(entity, Component::Animation{
 			{0,6},
@@ -51,7 +51,7 @@ public:
 		image.sprite.setTexture(AssetManager::getTexture("Player"));
 		image.sprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
 		image.sprite.setOrigin({ image.sprite.getGlobalBounds().width / 2, image.sprite.getGlobalBounds().height / 2 });
-		image.sprite.scale(8.f, 8.f);
+		image.sprite.scale(4.f, 4.f); // original on 8f 8f
 
 		float newPos = 0.5f *image.sprite.getGlobalBounds().width;
 
@@ -80,7 +80,7 @@ public:
 			image.sprite.getGlobalBounds().top / 3
 			});
 
-		image.sprite.scale(4.f, 4.f);
+		image.sprite.scale(2.f, 2.f);
 
 		entityManager.addComponent(entity, Component::Transform{
 			sf::Vector2f(0, 600),
@@ -100,7 +100,7 @@ public:
 				7,
 				false});
 
-		entityManager.addComponent(entity, Component::FollowObject{"Player", 0.f, 0.3f, 100.f, false});
+		entityManager.addComponent(entity, Component::FollowObject{"Player", 0.f, 0.3f, 90.f, false});
 		//entityManager.addComponent(entity, Component::Tag{"PlayerStaff"});
 		entityManager.addEntity(entity, "PlayerStaff");
 	}

@@ -7,6 +7,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Shader.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Audio/Music.hpp>
 //#include <memory>
 
 //The main menu state.
@@ -20,6 +21,8 @@ private:
 	sf::Clock clock;
 	sf::RectangleShape background;
 	std::unique_ptr<AnimationHandler> rats;
+	sf::Music music;
+
 	//AssetManager assets;
 
 	//Buttons

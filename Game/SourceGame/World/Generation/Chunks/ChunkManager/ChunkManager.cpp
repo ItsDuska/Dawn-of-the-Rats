@@ -119,6 +119,7 @@ ChunkManager::ChunkManager(sf::Vector2f windowSize, int seed, float threshold, T
 
     this->threadPool = threadPool;
     this->calcChunkSize =  sf::Vector2f(this->settings.gridSize.x * this->settings.gridSize.x, this->settings.gridSize.y * this->settings.gridSize.y );
+    std::cout << "\nChunkManager loaded!";
 }
 
 ChunkManager::~ChunkManager()

@@ -2,7 +2,7 @@
 
 Background::Background(std::string filePath, sf::Vector2f windowSize)
 {
-	std::filesystem::path path = std::filesystem::current_path().parent_path() / "Assets\\Sprites" / filePath;
+	std::string path= ASSETS_PATH + "Sprites\\" + filePath;
 	initBackground(path, windowSize);
 }
 
@@ -57,7 +57,7 @@ void Background::update(sf::Vector2f playerPosition, float velocity)
 	}
 }
 
-void Background::initBackground(std::filesystem::path path, sf::Vector2f windowSize)
+void Background::initBackground(std::string path, sf::Vector2f windowSize)
 { 
 	std::vector<std::string> fileNames;
 
@@ -67,7 +67,7 @@ void Background::initBackground(std::filesystem::path path, sf::Vector2f windowS
 
 		AssetManager::loadTexture(name, imagePath.path().string(), true);
 		fileNames.push_back(name);
-		std::cout << imagePath.path().filename() << std::endl;
+		std::cout << imagePath.path().string() << std::endl;
 		imageCount++;
 	}
 

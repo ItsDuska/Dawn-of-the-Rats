@@ -39,7 +39,7 @@ public:
 	std::vector<std::unique_ptr<Chunk>>* getLoadedChunks();
 
 
-	virtual void render(sf::RenderTarget& target, sf::Shader* shader = NULL, sf::Vector2f playerPos = sf::Vector2f());
+	void render(sf::RenderTarget& target, sf::Shader* shader = NULL, sf::Vector2f playerPos = sf::Vector2f());
 	ChunkManager(sf::Vector2f windowSize, int seed, float threshold,ThreadPool *threadPool);
 	~ChunkManager();
 };

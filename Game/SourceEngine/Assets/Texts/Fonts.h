@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <SFML/Graphics/Font.hpp>
+#include <filesystem>
 #include "../AssetConfig.h"
 
 class Fonts
@@ -27,7 +28,10 @@ private:
 
 	void IloadFont()
 	{
-		if (!font.loadFromFile(ASSETS_PATH+"Fonts/yoster.ttf"))
+		// / "Fonts\\yoster.ttf";
+
+
+		if (!font.loadFromFile(ASSETS_PATH + "Fonts\\yoster.ttf"))
 		{
 			std::cout << "Font Error";
 		}

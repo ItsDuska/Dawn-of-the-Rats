@@ -591,3 +591,7 @@ hitbosit vois varmaan ottaa pois? koska tää uus röpö korjaa kaiken. tai sitt
 
 
 ongelmana että viereisten palikoiden collide check käy läpi palikat hassusti
+
+
+$(SolutionDir)bin\$(Platform)\$(Configuration)\
+$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\

@@ -1,6 +1,7 @@
 #include "ThreadPool.h"
 
 ThreadPool::ThreadPool()
+	: NUMBER_OF_ALLOWED_THREADS(std::thread::hardware_concurrency() / 2)
 {
 	std::cout << this->NUMBER_OF_ALLOWED_THREADS << " Threads ";
 	this->start();
@@ -33,7 +34,11 @@ void ThreadPool::start()
 				{
 					std::unique_lock<std::mutex> lock{ this->_EventMutex };
 
-					this->_EventVar.wait(lock, [=] { return this->_stopping || !this->_tasks.empty(); });
+					this->_EventVar.wait(lock, [=] 
+						{ 
+							return this->_stopping || !this->_tasks.empty();
+						}
+					);
 
 					if (this->_stopping && this->_tasks.empty())
 					{

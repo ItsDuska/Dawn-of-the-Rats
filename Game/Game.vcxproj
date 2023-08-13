@@ -70,6 +70,15 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>DawnOfTheRats</TargetName>
+    <LibraryPath>$(SolutionDir)dependencies;$(LibraryPath);$(SolutionDir)dependencies</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)dependencies</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -110,7 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Game\SourceEngine;C:\Users\ollis\Documents\KoodiKirjastot\SFML-2.5.1\include;$(SolutionDir)Game\SourceGame;C:\Users\olli.sotavalta\Documents\sfmlKansio\SFML-2.5.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Game\SourceEngine;C:\Users\ollis\Documents\KoodiKirjastot\SFML-2.5.1\include;$(SolutionDir)Game\SourceGame;C:\Users\olli.sotavalta\Documents\sfmlKansio\SFML-2.5.1\include;$(SolutionDir)dependencies;$(SolutionDir)dependencies</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -128,7 +137,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Game\SourceEngine;C:\Users\ollis\Documents\KoodiKirjastot\SFML-2.5.1\include;$(SolutionDir)Game\SourceGame;C:\Users\olli.sotavalta\Documents\sfmlKansio\SFML-2.5.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Game\SourceEngine;$(SolutionDir)libs\include;$(SolutionDir)Game\SourceGame</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -136,11 +145,12 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\ollis\Documents\KoodiKirjastot\SFML-2.5.1\lib;C:\Users\olli.sotavalta\Documents\sfmlKansio\SFML-2.5.1\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-main.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)libs\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>openal32.lib;kernel32.lib;user32.lib;winspool.lib;gdi32.lib;ogg.lib;winmm.lib;opengl32.lib;freetype.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-main.lib;sfml-audio.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SourceGame\GameManager\FightingState\FightingState.cpp" />
     <ClCompile Include="SourceGame\Background\Background.cpp" />
     <ClCompile Include="SourceEngine\System\ECS\Systems\Follow\FollowSystem.cpp" />
     <ClCompile Include="SourceEngine\System\ECS\Systems\AnimationHandler\AnimationHalderSystem.cpp" />
@@ -165,12 +175,12 @@
     <ClCompile Include="SourceGame\MainMenu\Buttons\ActionButtons\PlayButton.cpp" />
     <ClCompile Include="SourceGame\MainMenu\Buttons\Button.cpp" />
     <ClCompile Include="SourceGame\MainMenu\MainMenu.cpp" />
-    <ClCompile Include="SourceGame\WindowManager\WindowManager.cpp" />
     <ClCompile Include="SourceGame\World\Generation\Cave\CaveGenerator.cpp" />
     <ClCompile Include="SourceGame\World\Generation\Chunks\ChunkBuilder\ChunkBuilder.cpp" />
     <ClCompile Include="SourceGame\World\Generation\Chunks\ChunkManager\ChunkManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SourceGame\GameManager\FightingState\FightingState.h" />
     <ClInclude Include="SourceGame\Background\Background.h" />
     <ClInclude Include="SourceEngine\System\ECS\Systems\Follow\FollowSystem.h" />
     <ClInclude Include="SourceEngine\System\ECS\Systems\AnimationHandler\AnimationHalderSystem.h" />
@@ -213,7 +223,6 @@
     <ClInclude Include="SourceGame\MainMenu\Buttons\ActionButtons\PlayButton.h" />
     <ClInclude Include="SourceGame\MainMenu\Buttons\Button.h" />
     <ClInclude Include="SourceGame\MainMenu\MainMenu.h" />
-    <ClInclude Include="SourceGame\WindowManager\WindowManager.h" />
     <ClInclude Include="SourceGame\World\Generation\Cave\CaveGenerator.h" />
     <ClInclude Include="SourceGame\World\Generation\Chunks\ChunkBuilder\ChunkBuilder.h" />
     <ClInclude Include="SourceGame\World\Generation\Chunks\ChunkManager\ChunkManager.h" />

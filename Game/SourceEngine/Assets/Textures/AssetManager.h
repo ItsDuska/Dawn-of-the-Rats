@@ -66,7 +66,7 @@ private:
 		}
 		else
 		{
-			path = ASSETS_PATH + "Sprites/" + fileName;
+			path = ASSETS_PATH + "Sprites\\" + fileName;
 		}
 
 		if (!texture.loadFromFile(path))

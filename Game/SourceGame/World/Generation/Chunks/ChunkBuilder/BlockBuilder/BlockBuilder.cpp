@@ -25,8 +25,16 @@ sf::Vector2f BlockBuilder::getTexCoord(bool* blocks)
             break;
         }
     }
+    
+    int texturePosX = this->texCoordTable[index];
 
-    sf::Vector2f texPos(this->texCoordTable[index], 0);
+    if (texturePosX >= 4 && texturePosX <= 12)
+    {
+        texturePosX += rand() % 2;
+    }
+
+    sf::Vector2f texPos(texturePosX, 0);
+
 
     return texPos;
 }
@@ -70,6 +78,14 @@ sf::Vector2f BlockBuilder::getGrassTexCoord(bool* blocks)
 
     sf::Vector2f texPos(this->grassTexCoordTable[index], 1);
 
+    
+    //Random texture
+    if (texPos.x <= 12.f)
+    {
+       texPos.x += rand() % 4;
+    }
+   
+
     return texPos;
 }
 
@@ -81,9 +97,9 @@ BlockBuilder::BlockBuilder()
             2,2,2,2,
             3,3,3,3,
             4,4,4,4,
-            7,7,7,7,
-            9,9,9,9,
-            11,11,11,11,
+            6,6,6,6,
+            8,8,8,8,
+            10,10,10,10,
             12,14,15,16,
             17,26,25,24,
             23,22,21,20,
@@ -92,14 +108,14 @@ BlockBuilder::BlockBuilder()
     }, grassTexCoordTable{
             0,
             4,
-            9,
-            11,
-            14,
-            15,
+            8,
+            12,
             16,
             17,
             18,
             19,
+            20,
+            21,
         
     }
 {  

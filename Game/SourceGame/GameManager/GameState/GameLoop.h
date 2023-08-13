@@ -2,7 +2,7 @@
 #include "System/GameStates/State.h"
 #include "Assets/Animation/AnimationHandler.h"
 #include "Assets/Textures/AssetManager.h"
-#include "../../World/Generation/Chunks/ChunkManager/ChunkManager.h"
+#include "World/Generation/Chunks/ChunkManager/ChunkManager.h"
 #include "System/ThreadPool/ThreadPool.h"
 #include "System/ECS/Coordinator/CordinatorOperator/CordinatorOperator.h"
 #include "System/ECS/Systems/Systems.h"
@@ -41,6 +41,7 @@ private:
     std::chrono::microseconds updateTime;
     engine::Text frameTime;
     std::string tempString;
+    float time;
 
     std::unique_ptr<Background> background;
     sf::RectangleShape pelaajaHitBox;

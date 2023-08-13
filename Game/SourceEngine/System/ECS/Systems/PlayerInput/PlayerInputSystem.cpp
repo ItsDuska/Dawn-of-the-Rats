@@ -12,18 +12,6 @@ void PlayerInputSystem::update(Coordinator& entityManager)
 
 		bool keyPressed = false;
 
-		/*
-		
-		FOR FUTURE OLLI:
-
-
-		Lol luuseri joudut kirjottaan tän uudelleen
-		
-		erotat siis animaation päivittämisen omaan classiin
-
-		
-		*/
-
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
 		{
 			state.facingLeft = false;
@@ -52,7 +40,6 @@ void PlayerInputSystem::update(Coordinator& entityManager)
 			keyPressed = true;
 			rigidBody.direction = { 0,0 };
 			state.possibleState = Component::EntityStates::ATTACK;
-			//state.onGround = true; // debug röpöö varten
 		}
 
 		else if (!keyPressed)

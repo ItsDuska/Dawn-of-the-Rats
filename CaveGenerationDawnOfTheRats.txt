@@ -593,5 +593,86 @@ hitbosit vois varmaan ottaa pois? koska tää uus röpö korjaa kaiken. tai sitt
 ongelmana että viereisten palikoiden collide check käy läpi palikat hassusti
 
 
+<<<<<<< Updated upstream
 $(SolutionDir)bin\$(Platform)\$(Configuration)\
 $(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\
+=======
+TODO toinen tärkee homma:
+
+Muuta suur osa koodista dll tiedostoksi jotta compile aika vähentys
+esim gamestate ja muut sen tapaiset tiedostot 
+
+
+
+TODO:
+
+Taistelu tapahtumalle oma class.
+
+Sisältää:
+-taistelu areena
+-mahdollisuus poistua sieltä (ehkä)
+-mahdollisuus hävitä koko roskan
+
+
+
+Input:
+
+-playerentityn eli entities[0] jäsen -> sen stats struct
+- enemyEntityn eli ihan mikä tahansa entities listan jäsenestä. -> sen statsit
+-
+-
+-
+
+
+
+
+Mitä tapahtuu:
+- main loop jäädytetään uuden gameStaten ajaksi ajaksi
+- tämä uusi
+- Uus state pushataan stäckin päälle.
+- Vanha jaa stackin alle mutta pysyy kuitenkin tallessa.
+
+
+
+esimerrki homma miten shartti voisi toimia:
+
+
+
+void FightingState::FightingState(Components::Stats &playerStats, 
+	Components::Stats &enemy stats, Scene::SceneType scene)
+	: player(playerStats), enemy(enemyStats), this->scene(scene)
+{
+	init();
+}
+
+^^^^^ ei ehkä toimi joten joudutaan käyttään init functioo mieluummin
+
+
+pause functioo voidaan käyttää täten:
+
+FightingStateInfo State::pause()
+{
+	FightingStateInfo info{};
+	info.player = &player.stats;
+	info.enemy = &enemy.stats;
+	info.scene = getCurrentScene(); // tää täytyy tehdä eka
+
+	return info;
+}
+
+
+
+void FightingState::init()
+{
+
+
+
+
+}
+
+void FightingState::update(){}
+
+void FightingState::render(){}
+
+
+>>>>>>> Stashed changes

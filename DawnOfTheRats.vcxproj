@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{ab492d30-2661-4394-8e25-cfae2bce9078}</ProjectGuid>
+    <RootNamespace>DawnOfTheRats</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)libs\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)libs\lib\;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)libs\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)libs\lib\;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-main-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-main.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Assets\Animation\AnimationHandler.cpp" />
+    <ClCompile Include="src\Assets\Background\Background.cpp" />
+    <ClCompile Include="src\Assets\Texts\Text.cpp" />
+    <ClCompile Include="src\DawnOfTheRats.cpp" />
+    <ClCompile Include="src\ECS\EntityManager\EntityManager.cpp" />
+    <ClCompile Include="src\ECS\Systems\AnimationHandler\AnimationHalderSystem.cpp" />
+    <ClCompile Include="src\ECS\Systems\Animation\AnimationSystem.cpp" />
+    <ClCompile Include="src\ECS\Systems\Collision\CollisionSystem.cpp" />
+    <ClCompile Include="src\ECS\Systems\Follow\FollowSystem.cpp" />
+    <ClCompile Include="src\ECS\Systems\Inventory\InventorySystem.cpp" />
+    <ClCompile Include="src\ECS\Systems\Movement\MovementSystem.cpp" />
+    <ClCompile Include="src\ECS\Systems\PlayerInput\PlayerInputSystem.cpp" />
+    <ClCompile Include="src\ECS\Systems\Render\RenderSystem.cpp" />
+    <ClCompile Include="src\GameCore\Game.cpp" />
+    <ClCompile Include="src\GameStates\FightingState\FightingState.cpp" />
+    <ClCompile Include="src\GameStates\MainMenuState\MainMenu.cpp" />
+    <ClCompile Include="src\GameStates\StateMachine.cpp" />
+    <ClCompile Include="src\GameStates\WorldState\WorldState.cpp" />
+    <ClCompile Include="src\GUI\Buttons\ActionButtons\ExitButton.cpp" />
+    <ClCompile Include="src\GUI\Buttons\ActionButtons\PlayButton.cpp" />
+    <ClCompile Include="src\GUI\Buttons\Button.cpp" />
+    <ClCompile Include="src\GUI\Inventory\Item.cpp" />
+    <ClCompile Include="src\Utils\PerlinNoise\PerlineNoise.cpp" />
+    <ClCompile Include="src\Utils\ThreadPool\ThreadPool.cpp" />
+    <ClCompile Include="src\World\Cave\CaveGenerator.cpp" />
+    <ClCompile Include="src\World\Chunks\BlockTextureMapper\BlockTextureMapper.cpp" />
+    <ClCompile Include="src\World\Chunks\ChunkBuilder\ChunkBuilder.cpp" />
+    <ClCompile Include="src\World\Chunks\ChunkManager\ChunkManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Assets\Animation\AnimationHandler.h" />
+    <ClInclude Include="src\Assets\AssetConfig.h" />
+    <ClInclude Include="src\Assets\Background\Background.h" />
+    <ClInclude Include="src\Assets\Sounds\SoundManager.h" />
+    <ClInclude Include="src\Assets\Texts\Fonts.h" />
+    <ClInclude Include="src\Assets\Texts\Text.h" />
+    <ClInclude Include="src\Assets\Textures\AssetManager.h" />
+    <ClInclude Include="src\ECS\ComponentManager\ComponentArray.h" />
+    <ClInclude Include="src\ECS\ComponentManager\ComponentManager.h" />
+    <ClInclude Include="src\ECS\Components\Components.h" />
+    <ClInclude Include="src\ECS\Config\EntityComponentSystemConfig.h" />
+    <ClInclude Include="src\ECS\Coordinator\Cordinator.h" />
+    <ClInclude Include="src\ECS\Coordinator\CordinatorOperator\CordinatorOperator.h" />
+    <ClInclude Include="src\ECS\EntityManager\EntityManager.h" />
+    <ClInclude Include="src\ECS\Prefabs\PlayerPrefab\PlayerPrefab.h" />
+    <ClInclude Include="src\ECS\SystemManager\SystemManager.h" />
+    <ClInclude Include="src\ECS\Systems\AnimationHandler\AnimationHalderSystem.h" />
+    <ClInclude Include="src\ECS\Systems\Animation\AnimationSystem.h" />
+    <ClInclude Include="src\ECS\Systems\Collision\CollisionSystem.h" />
+    <ClInclude Include="src\ECS\Systems\Follow\FollowSystem.h" />
+    <ClInclude Include="src\ECS\Systems\Inventory\InventorySystem.h" />
+    <ClInclude Include="src\ECS\Systems\Movement\MovementSystem.h" />
+    <ClInclude Include="src\ECS\Systems\PlayerInput\PlayerInputSystem.h" />
+    <ClInclude Include="src\ECS\Systems\Render\RenderSystem.h" />
+    <ClInclude Include="src\ECS\Systems\System.h" />
+    <ClInclude Include="src\ECS\Systems\Systems.h" />
+    <ClInclude Include="src\GameCore\Game.h" />
+    <ClInclude Include="src\GameStates\FightingState\FightingState.h" />
+    <ClInclude Include="src\GameStates\MainMenuState\MainMenu.h" />
+    <ClInclude Include="src\GameStates\State.h" />
+    <ClInclude Include="src\GameStates\StateMachine.h" />
+    <ClInclude Include="src\GameStates\WorldState\WorldState.h" />
+    <ClInclude Include="src\GUI\Buttons\ActionButtons\ExitButton.h" />
+    <ClInclude Include="src\GUI\Buttons\ActionButtons\PlayButton.h" />
+    <ClInclude Include="src\GUI\Buttons\Button.h" />
+    <ClInclude Include="src\GUI\Inventory\Item.h" />
+    <ClInclude Include="src\GUI\Inventory\Items\ItemAccessory.h" />
+    <ClInclude Include="src\GUI\Inventory\Items\ItemSpell.h" />
+    <ClInclude Include="src\GUI\Inventory\Items\ItemStaff.h" />
+    <ClInclude Include="src\Utils\PerlinNoise\PerlineNoice.hpp" />
+    <ClInclude Include="src\Utils\ThreadPool\ThreadPool.h" />
+    <ClInclude Include="src\World\Cave\CaveGenerator.h" />
+    <ClInclude Include="src\World\Chunks\BlockTextureMapper\BlockTextureMapper.h" />
+    <ClInclude Include="src\World\Chunks\Chunk.h" />
+    <ClInclude Include="src\World\Chunks\ChunkBuilder\ChunkBuilder.h" />
+    <ClInclude Include="src\World\Chunks\ChunkManager\ChunkManager.h" />
+    <ClInclude Include="src\World\WorldData.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="openal32.dll" />
+    <None Include="sfml-audio-2.dll" />
+    <None Include="sfml-audio-d-2.dll" />
+    <None Include="sfml-graphics-2.dll" />
+    <None Include="sfml-graphics-d-2.dll" />
+    <None Include="sfml-system-2.dll" />
+    <None Include="sfml-system-d-2.dll" />
+    <None Include="sfml-window-2.dll" />
+    <None Include="sfml-window-d-2.dll" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

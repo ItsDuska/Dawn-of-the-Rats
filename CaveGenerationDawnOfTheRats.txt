@@ -736,3 +736,65 @@ MAP on syypää???
 	Exeption: std::out_of_range
 
 	"InventoryItems" ei ole texture mapissa. Eli emme ole lisänneet sitä sinne??
+	
+	
+	
+
+///////////////////////
+
+Ongelmien jälkeen nyt mitä pitää tehdä:
+
+//////////////////
+
+TODO:
+Korjaa #include "tiedosto.h" järkevämmi. Atm menee buildis kauan joten pitää tehdä näin.
+
+Miten korjataan / nopeutetaan? lyhyt vastaus on rewrite kaikki.
+
+Parempi vastaus:
+-muuta suurimmat includet cpp tiedostoihin. 
+-Laita esim tämmöne header tiedostoihin. "class AssetManager;" tän avulla .h tiedostos ei tarvi includea ja vain cpp tiedostossa tarvitaan se. SPEEEEEEEEEED!
+
+-Hommat mihin vois tarvita tän:
+	-AssetManager objekteihin
+	-ChunkManager
+	-EntityManager
+	-State (stateManagerissa)
+	-WorldState.h tiedostossa ota nää included cpp tiedostoon ja replace ne "class ClassObject;".
+		-animationHandler.h
+		-AssetManager.h
+		-ChunkManager.h
+		-ThreadPool.h 
+		-CordinatorOperator.h 
+		-Systems.h ehkä
+		-PlayerPrefab.h
+		-Background.h 
+		
+	-MainMenussa sama ku ylemmässä:
+		-SoundManager.h 
+		-AnimationHandler.h 
+		-StateMachine.h
+	
+	-ChunkBuilderissa:
+		-blockTextureMapper.h
+		-caveGeneration.h
+		-assetManager.h
+	
+	-ChunkManagerissa:
+		-chunkBuilder.h
+		-ThreadPool.h
+		-
+	....
+	
+	
+	
+
+TODO: Muuta
+Säädä pimeys shaderi että se tekee jonku sumun myös ehkä?
+Laita shaderi samalla myös toimimaan arrayn kanssa eli monta valo pistettä voi olla.
+
+Monen valon lähteen avulla voidaan laittaa glowing orea generoitumaan, joka antaa valoa.
+
+
+
+

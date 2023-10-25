@@ -3,8 +3,8 @@
 Background::Background(std::string filePath, sf::Vector2f windowSize, AssetManager& assetManager)
 	: assetManager(assetManager)
 {
-	std::string path= ASSETS_PATH + "Sprites\\" + filePath;
-	initBackground(path, windowSize);
+	initBackground(ASSETS_PATH + "Sprites\\" + filePath, windowSize);
+	std::cout << "BUILD: Created Background.\n";
 }
 
 void Background::render(sf::RenderTarget& window, sf::Shader* shader, sf::Vector2f playerPos)

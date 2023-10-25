@@ -125,11 +125,11 @@ public:
 			path = ASSETS_PATH + "Sprites\\" + fileName;
 		}
 
-		std::cout << "\nPATH: " << path << "\n";
+		std::cout << "PATH: " << path << "\n";
 
 		if (!texture.loadFromFile(path)) // TÄä on ongelma
 		{
-			std::cout << "\n ERROR: BRUH????????\n";
+			std::cout << "ERROR: Failed to read texture from a file.\n";
 			return;
 		}
 
@@ -148,6 +148,11 @@ public:
 
 	void remove(std::string name)
 	{
+		if (this->_textures.size() == 0)
+		{
+			return;
+		}
+
 		this->_textures.erase(name);
 	}
 

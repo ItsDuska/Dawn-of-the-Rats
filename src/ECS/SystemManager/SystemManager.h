@@ -11,7 +11,7 @@ public:
 	std::shared_ptr<kys> registerSystem()
 	{
 		const char* typeName = typeid(kys).name();
-		std::cout << "\n Registering -> " << typeName << "\n";
+		std::cout << "INFO: Registering -> " << typeName << "\n";
 		assert(this->_systems.find(typeName) == this->_systems.end() && "Miksi monta componenttia? Eikö yks riitä :|");
 
 		auto system = std::make_shared<kys>();
@@ -24,8 +24,8 @@ public:
 	{
 		const char* typeName = typeid(kys).name();
 
-		std::cout << "\n setting siganture -> " << typeName << "\n";
-		assert(this->_systems.find(typeName) != this->_systems.end() && "Kukas tämäkäkin systeemi on?  ");
+		std::cout << "INFO: Setting siganture -> " << typeName << "\n";
+		assert(this->_systems.find(typeName) != this->_systems.end() && "Kukas tämäkäkin systeemi on?");
 
 		this->_signatures.insert({ typeName, signature });
 	}

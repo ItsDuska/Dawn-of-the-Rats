@@ -3,7 +3,8 @@
 ThreadPool::ThreadPool()
 	: NUMBER_OF_ALLOWED_THREADS(std::thread::hardware_concurrency() / 2)
 {
-	std::cout << "\nUsing " << this->NUMBER_OF_ALLOWED_THREADS << " threads for the application.\n";
+	std::cout << "BUILD: Loaded ThreadPool.\n";
+	std::cout << "INFO: Using " << this->NUMBER_OF_ALLOWED_THREADS << " threads for the application.\n";
 	this->start();
 }
 

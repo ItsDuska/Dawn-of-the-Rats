@@ -1,8 +1,10 @@
 #pragma once
 #include <stack>
-#include "State.h"
 #include <memory>
 #include <iostream>
+
+
+class State;
 
 //class that handles different states like main menu and the actual game.
 class StateMachine

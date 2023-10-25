@@ -9,7 +9,7 @@ class PlayerPreFab
 public:
 	static void createPlayer(Coordinator& entityManager, uint32_t& entity, AssetManager& assetManager)
 	{
-		assetManager.loadTexture("Player", "NewSprites/PlayerSheet.png");
+		assetManager.loadTexture("Player", "NewSprites\\PlayerSheet.png");
 		entity = entityManager.createEntity(); 
 		entityManager.addComponent(entity, Component::Transform{
 			sf::Vector2f(0,600),
@@ -61,11 +61,12 @@ public:
 
 		//entityManager.addComponent(entity, Component::Tag{"Player"});
 		entityManager.addEntity(entity, "Player");
+		std::cout << "BUILD: Created Player.\n";
 	}
 
 	static void createPlayerWeapon(Coordinator& entityManager, uint32_t& entity, AssetManager& assetManager)
 	{
-		assetManager.loadTexture("PlayerWeapon", "NewSprites/Staff.png");
+		assetManager.loadTexture("PlayerWeapon", "NewSprites\\Staff.png");
 		entity = entityManager.createEntity();
 
 		entityManager.addComponent(entity, Component::TextureCoord{ sf::IntRect(0, 0, 16, 16) });
@@ -103,5 +104,6 @@ public:
 		entityManager.addComponent(entity, Component::FollowObject{"Player", 0.f, 0.3f, 90.f, false});
 		//entityManager.addComponent(entity, Component::Tag{"PlayerStaff"});
 		entityManager.addEntity(entity, "PlayerStaff");
+		std::cout << "BUILD: Created Player weapon.\n";
 	}
 };

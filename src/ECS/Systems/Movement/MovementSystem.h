@@ -1,7 +1,6 @@
 #pragma once
-
 #include "ECS/Systems/System.h"
-#include "ECS/Coordinator/Cordinator.h"
+#include "ECS/Components/Components.h"
 
 class MovementSystem : public System
 {

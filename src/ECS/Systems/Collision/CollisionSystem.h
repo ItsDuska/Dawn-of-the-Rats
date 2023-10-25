@@ -1,10 +1,9 @@
 #pragma once
 #include "ECS/Systems/System.h"
-#include "ECS/Coordinator/Cordinator.h"
 #include "World/Chunks/Chunk.h"
+#include "ECS/Components/Components.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <cmath>
 
 
 class CollisionSystem : public System

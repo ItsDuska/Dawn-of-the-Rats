@@ -1,4 +1,5 @@
 #include "AnimationHalderSystem.h"
+#include "ECS/Coordinator/Cordinator.h"
 
 void AnimationHalderSystem::update(Coordinator& entityManager)
 {

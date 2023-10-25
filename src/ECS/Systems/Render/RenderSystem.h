@@ -1,8 +1,8 @@
 #pragma once
 #include "ECS/Systems/System.h"
-#include "ECS/Coordinator/Cordinator.h"
 #include "SFML/Graphics/RenderTarget.hpp"
 #include <SFML/Graphics/Shader.hpp>
+#include <SFML/System/Vector2.hpp>
 
 class RenderSystem : public System
 {

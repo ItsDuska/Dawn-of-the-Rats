@@ -21,8 +21,7 @@ void ChunkManager::addChunk(sf::Vector2i chunkPosition)
     chunk->chunk.setUsage(sf::VertexBuffer::Stream);
     this->chunks.push_back(std::move(chunk));
     
-    threadPool->enqueue([this,x = this->chunks.back().get()]() {this->buildChunk(x); });
-    //std::cout << "Added chunk at position " << chunkPosition.x << " Y  " << chunkPosition.y <<" X" "\n";
+    threadPool.enqueue([this,x = this->chunks.back().get()]() {this->buildChunk(x); });
 }
 
 float ChunkManager::distance(sf::Vector2i currentChunk, sf::Vector2i otherChunk)
@@ -32,7 +31,7 @@ float ChunkManager::distance(sf::Vector2i currentChunk, sf::Vector2i otherChunk)
 
 void ChunkManager::removeChunk(int index)
 {
-    std::cout << "Deleted a chunk at position " << this->chunks[index]->chunkCoord.x << " Y  " << this->chunks[index]->chunkCoord.y << " X\n";
+    std::cout << "INFO: Deleted a chunk at position " << this->chunks[index]->chunkCoord.x << " Y  " << this->chunks[index]->chunkCoord.y << " X\n";
     this->chunks.erase(this->chunks.begin() + index);
     this->chunkCords.erase(this->chunkCords.begin() + index); 
 }
@@ -71,7 +70,7 @@ void ChunkManager::update(sf::View *view, sf::Vector2f playerPos)
     {
         if (!this->loaded)
         {
-            std::cout << "\nuus chunk\n";
+            std::cout << "INFO: Building a new chunk...\n";
             handleChunks();
         }
     }
@@ -101,10 +100,10 @@ void ChunkManager::render(sf::RenderTarget& target, sf::Shader* shader, sf::Vect
     }
 }
 
-ChunkManager::ChunkManager(sf::Vector2f windowSize, int seed, float threshold, ThreadPool *threadPool, AssetManager& assetManager)
-    : renderBonds((this->settings.RENDERDISTANCE * 2) + 1)
+ChunkManager::ChunkManager(sf::Vector2f windowSize, int seed, float threshold, ThreadPool& threadPool, AssetManager& assetManager)
+    : renderBonds((this->settings.RENDERDISTANCE * 2) + 1),threadPool(threadPool)
 {
-    assetManager.loadTexture("Blocks", "NewSprites/GrassyBlock.png");
+    assetManager.loadTexture("Blocks", "NewSprites\\GrassyBlock.png");
     this->windowSize = windowSize;
     this->seed = seed;
     this->threshold = threshold;
@@ -117,9 +116,9 @@ ChunkManager::ChunkManager(sf::Vector2f windowSize, int seed, float threshold, T
         std::floor(this->settings.CHUNK_SIZE / this->settings.BLOCK_SIZE)
     );
 
-    this->threadPool = threadPool;
+    //this->threadPool = threadPool;
     this->calcChunkSize =  sf::Vector2f(this->settings.gridSize.x * this->settings.gridSize.x, this->settings.gridSize.y * this->settings.gridSize.y );
-    std::cout << "\nChunkManager loaded!";
+    std::cout << "BUILD: Loaded CunkManager.\n";
 }
 
 ChunkManager::~ChunkManager()

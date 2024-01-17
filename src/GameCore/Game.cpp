@@ -8,7 +8,7 @@ void Game::initWindow()
 
 	if (!image.loadFromFile(ASSETS_PATH + "Sprites/GameIcon/RottaTausta.png"))
 	{
-		std::cout << "ERROR: Failed to load window icon form a file!\n";
+		std::cout << "ERROR!!!!!!!!!!!";
 	}
 
 	//this->window->setIcon()'
@@ -99,5 +99,5 @@ void Game::run()
 		//end = std::chrono::system_clock::now();
 		//std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << "[microsecs]" << std::endl;
 	}
-	std::cout << "INFO: Window closed.\n";
+	std::cout << "\nwindow closed!\n";
 }

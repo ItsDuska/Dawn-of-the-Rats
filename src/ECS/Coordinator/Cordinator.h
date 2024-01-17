@@ -14,7 +14,6 @@ public:
 		this->_componentManager = std::make_unique<ComponentManager>();
 		this->_entityManager = std::make_unique<EntityManager>();
 		this->_systemManager = std::make_unique<SystemManager>();
-		std::cout << "BUILD: Loaded EntityManager.\n";
 	}
 
 	uint32_t createEntity()

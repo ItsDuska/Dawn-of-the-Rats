@@ -1,9 +1,10 @@
 #pragma once
 #include "ECS/Systems/System.h"
-#include "ECS/Components/Components.h"
+#include "ECS/Coordinator/Cordinator.h"
 #include "GUI/Inventory/Item.h"
 #include <SFML/Window/Mouse.hpp>
 #include <SFML/Window/VideoMode.hpp>
+#include <sstream>
 
 class InventorySystem : public System
 {

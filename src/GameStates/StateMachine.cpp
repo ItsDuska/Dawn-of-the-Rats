@@ -1,5 +1,4 @@
 #include "StateMachine.h"
-#include "State.h"
 
 //Amogus moment
 StateMachine::StateMachine()
@@ -8,13 +7,11 @@ StateMachine::StateMachine()
 	this->_isRemoving = false;
 	this->_isReplacing = NULL;
 	this->_newState = NULL;
-	std::cout << "BUILD: Loaded StateMachine.\n";
 }
 
 //Delete every state.
 StateMachine::~StateMachine()
 {
-	this->_states.top()->cleanup();
 	while (!this->_states.empty())
 	{
 		//delete this->_states.top();

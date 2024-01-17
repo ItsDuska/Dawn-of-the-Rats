@@ -1,6 +1,9 @@
 #pragma once
 #include "ECS/Systems/System.h"
-#include <SFML/System/Vector2.hpp>
+#include "ECS/Coordinator/Cordinator.h"
+#include <cmath>
+#include <algorithm>
+
 
 class FollowSystem : public System
 {
@@ -11,7 +14,7 @@ private:
 	float clamp(float x, float upper, float lower);
 	float lerp(float a, float b, float f);
 	float floating(float x);
-	const float PI = 3.14159f;
+	float PI = 3.14159f;
 	bool isClose(sf::Vector2f pos, sf::Vector2f pos2, float offset);
 };
 

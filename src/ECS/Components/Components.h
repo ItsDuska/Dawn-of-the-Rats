@@ -2,11 +2,9 @@
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Clock.hpp>
-//#include "GUI/Inventory/Item.h"
+#include "GUI/Inventory/Item.h"
 #include "Assets/Texts/Text.h"
 #include <memory>
-
-class Item;
 
 namespace Component
 { 

@@ -1,25 +1,12 @@
 #include "MainMenu.h"
-#include "Assets/Sounds/SoundManager.h"
-#include "Assets/Animation/AnimationHandler.h"
-#include "GameStates/StateMachine.h"
-#include "GUI/Buttons/ActionButtons/ExitButton.h"
-#include "GUI/Buttons/ActionButtons/PlayButton.h"
-
 
 void MainMenu::initBackGround()
 {
-	if (!this->shader.loadFromFile("src/Assets/Shaders/MainMenuShaders/background.vert",
-		"src/Assets/Shaders/MainMenuShaders/background.frag"))
-	{
-		std::cout << "ERROR: Failed to load MainMenu shaders!\n";
-	}
-
+	if (!this->shader.loadFromFile("src/Assets/Shaders/MainMenuShaders/background.vert", "src/Assets/Shaders/MainMenuShaders/background.frag")) {std::cout << "Error while loading shaders!";}
 	this->shader.setUniform("u_resolution", this->screenSize);
-
 	this->rats = std::make_unique<AnimationHandler>(&this->rat, 0.1f, sf::Vector2i(32, 32), 18);
 	this->rat.setPosition(sf::Vector2f(this->screenSize.x / 2.75f, this->screenSize.y / 3.5f ));
 	this->rat.setScale(sf::Vector2f(4, 4));
-
 	this->clock.restart();
 	this->background.setSize(this->screenSize);
 }
@@ -29,10 +16,10 @@ MainMenu::MainMenu(sf::Vector2f screenSize,AssetManager& assetManager)
 {
 	this->changeStateTo = 1;
 	this->screenSize = screenSize;
-	SoundManager::loadSound("Button", "Sounds\\ButtonSound.ogg");
-	assetManager.loadTexture("Rat", "MainMenuStuff\\Rat\\RatSpriteSheet.png");
-	assetManager.loadTexture("Logo", "MainMenuStuff\\Logo\\Logo.png");
-	assetManager.loadTexture("Button", "NewSprites\\Button.png");
+	SoundManager::loadSound("Button", "Sounds/ButtonSound.ogg");
+	assetManager.loadTexture("Rat", this->ratPath);
+	assetManager.loadTexture("Logo", "MainMenuStuff/Logo/Logo.png");
+	assetManager.loadTexture("Button", "NewSprites/Button.png");
 	this->rat.setTexture(assetManager.getTexture("Rat"));
 	this->logo.setTexture(assetManager.getTexture("Logo"));
 	this->logo.setPosition(sf::Vector2f(this->screenSize.x / 10, 0.05f * this->screenSize.y));
@@ -43,14 +30,14 @@ MainMenu::MainMenu(sf::Vector2f screenSize,AssetManager& assetManager)
 
 	if (!music.openFromFile(ASSETS_PATH + "Audio\\Music\\MainMenu\\Space_Vortex.ogg"))
 	{
-		std::cout << "ERROR: Failed to open music file!\n";
+		std::cout << "\nERROR: CANT PLAY MUSIC!\n";
 		return; // error
 	}
 	this->music.setVolume(10);
 	this->music.setLoop(true);
 	this->music.play();
 
-	std::cout << "BUILD: Loaded MainMenu.\n";
+	std::cout << "\nMain menu loaded.\n";
 }
 
 MainMenu::~MainMenu()
@@ -84,8 +71,9 @@ void MainMenu::onResize(sf::Vector2f size)
 void MainMenu::cleanup()
 {
 	this->music.stop();
+	std::cout << "\nMainMenu cleaned.\n";
+	//assetManager.clear();
 	assetManager.remove("Rat");
 	assetManager.remove("Logo");
 	assetManager.remove("Button");
-	std::cout << "INFO: MainMenu cleaned.\n";
 }

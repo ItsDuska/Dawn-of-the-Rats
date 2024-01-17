@@ -43,7 +43,7 @@ public:
 		entityManager.registerComponent<Component::State>();
 		entityManager.registerComponent<Component::Tag>();
 		entityManager.registerComponent<Component::FollowObject>();
-		std::cout << "BUILD: Created Components.\n";
+
 	}
 
 	
@@ -70,7 +70,6 @@ public:
 		setSignature(entityManager, *entitySystems.collision, SystemType::COLLISION);
 		setSignature(entityManager, *entitySystems.follow, SystemType::FOLLOW);
 		
-		std::cout << "BUILD: Created Systems.\n";
 	}
 
 

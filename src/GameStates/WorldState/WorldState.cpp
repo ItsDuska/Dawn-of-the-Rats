@@ -1,11 +1,4 @@
 ﻿#include "WorldState.h"
-#include "Assets/Animation/AnimationHandler.h"
-#include "Assets/Textures/AssetManager.h"
-#include "World/Chunks/ChunkManager/ChunkManager.h"
-#include "ECS/Coordinator/CordinatorOperator/CordinatorOperator.h"
-#include "ECS/Prefabs/PlayerPrefab/PlayerPrefab.h"
-#include "Assets/Background/Background.h"
-#include <cmath>
 
 void WorldState::onResize(sf::Vector2f size)
 {
@@ -23,12 +16,12 @@ void WorldState::cleanup()
 
 void WorldState::initShader()
 {
-	if (!shader.loadFromFile("src\\Assets\\Shaders\\Darkness\\Darkness.vert", "src\\Assets\\Shaders\\Darkness\\Darkness.frag"))
+	if (!shader.loadFromFile("src/Assets/Shaders/Darkness/Darkness.vert", "src/Assets/Shaders/Darkness/Darkness.frag"))
 	{
 		ErrorRaised = true;
-		std::cout << "ERROR: Failed to load shaders from a file!\n";
+		std::cout << "\nERROR: Failed to load shaders from a file!\n";
 	}
-	std::cout << "INFO: Loaded Shaders!\n";
+	std::cout << "\nLoaded Shaders!\n";
 }
 
 //funny init function that represents a constructor.
@@ -44,12 +37,10 @@ void WorldState::init()
 	EntityHelper::initComponents(this->entityManager);
 	EntityHelper::initSystem(this->entityManager, this->systems);
 	PlayerPreFab::createPlayer(this->entityManager, this->entities[0],assetManager);
-	PlayerPreFab::createPlayerWeapon(this->entityManager, this->entities[1],assetManager);
+	PlayerPreFab::createPlayerWeapon(this->entityManager, this->entities[1],assetManager); //Täällä myös
 	EntityHelper::createEntity(&this->entityManager, this->entities,assetManager);
-
-	this->systems.inventory->init(assetManager);
+	this->systems.inventory->init(assetManager); //TÄÄLLÄ!!
 	this->systems.inventory->addNewItem(this->entityManager, assetManager);
-
 	this->frameTime.setText(50,"", sf::Vector2f(0,0));
 	auto& amog = this->entityManager.getComponent < Component::Hitbox>(this->entities[0]);
 	sf::Vector2f tempPos = this->entityManager.getComponent<Component::Transform>(this->entities[0]).position;
@@ -58,11 +49,10 @@ void WorldState::init()
 	this->pelaajaHitBox.setFillColor(sf::Color(0, 0, 255, 128));
 	this->pelaajaHitBox.setOutlineColor(sf::Color::White);
 	this->pelaajaHitBox.setOutlineThickness(1);
+
 	this->pelaajaHitBox.setPosition(amog.pos);
 	this->pelaajaHitBox.setSize(amog.size);
-
 	initShader();
-	std::cout << "BUILD: Loaded cave world.\n";
 }
 
 //update function for the game loop.
@@ -77,7 +67,7 @@ void WorldState::update(float dt, State* state)
 	this->entityManager.getComponent<Component::State>(this->entities[1]).facingLeft = facingLeft;
 	this->camera.setCenter(sf::Vector2f((int)tempPos.x,tempPos.y));
 
-	this->chunkManager->update(&this->camera, this->entityManager.getComponent<Component::Transform>(this->entities[0]).futurePosition);
+	this->chunkManager.update(&this->camera, this->entityManager.getComponent<Component::Transform>(this->entities[0]).futurePosition);
 	background->update(tempPos,
 		this->entityManager.getComponent<Component::RigidBody>(this->entities[0]).velocity.x);
 
@@ -85,12 +75,13 @@ void WorldState::update(float dt, State* state)
 	this->systems.playerInput->update(this->entityManager);
 	this->systems.movement->update(this->entityManager);
 	this->systems.follow->update(this->entityManager, dt);
-	this->systems.collision->update(this->entityManager, this->chunkManager->getLoadedChunks(), this->chunkManager->settings, this->chunkManager->chunkCords);
+	this->systems.collision->update(this->entityManager, this->chunkManager.getLoadedChunks(), this->chunkManager.settings, this->chunkManager.chunkCords);
 	this->systems.animationHandler->update(this->entityManager);
 	this->systems.animation->update(this->entityManager);
 	this->systems.render->update(this->entityManager);
 	this->systems.inventory->update(this->entityManager);
 
+	//this->pelaajaHitBox.setPosition(tempPos);
 	this->pelaajaHitBox.setPosition(this->entityManager.getComponent<Component::Hitbox>(this->entities[0]).pos);
 	////////
 
@@ -121,7 +112,7 @@ void WorldState::render(sf::RenderTarget* window)
 	this->background->render(*window, &shader, sf::Vector2f(windowSize.x / 2, windowSize.y / 2));
 
 	window->setView(this->camera);
-	this->chunkManager->render(*window, &shader, playerPos); 
+	this->chunkManager.render(*window, &shader, playerPos); 
 	this->systems.render->render(this->entityManager, window, &shader, playerPos);
 
 	//window->draw(this->pelaajaHitBox);
@@ -147,7 +138,7 @@ void WorldState::render(sf::RenderTarget* window)
 }
 
 WorldState::WorldState(sf::Vector2f windowSize,AssetManager &assetManager)
-	 : chunkManager(std::make_unique<ChunkManager>(windowSize, 6967, 0.45f, threadPool, assetManager)), assetManager(assetManager)
+	:chunkManager(windowSize, 6967, 0.45f, &threadPool,assetManager),assetManager(assetManager)
 {
 	this->windowSize = windowSize;
 	this->updateTime = std::chrono::microseconds(0);

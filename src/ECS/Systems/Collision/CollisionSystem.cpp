@@ -1,6 +1,5 @@
 #include "CollisionSystem.h"
-#include "ECS/Coordinator/Cordinator.h"
-#include <cmath>
+
 
 void CollisionSystem::update(Coordinator& entityManager, 
 	const std::vector<std::unique_ptr<Chunk>>* chunks,const ChunkSettings& chunkSettings, const std::vector<sf::Vector2i>  &chunkCords)
@@ -187,7 +186,7 @@ int CollisionSystem::getChunkIndex(std::vector<sf::Vector2i> list, sf::Vector2i 
 
 	else
 	{ // ei löytynyt
-		std::cout << "ERROR: NO CHUNK_POSITION_INDEX  -> " <<position.x << "x  " << position.y << "y\n";
+		std::cout << "\n\nERROR: NO CHUNK_POSITION_INDEX  -> " <<position.x << "x  " << position.y << "y\n\n";
 		return -1;
 	}
 }

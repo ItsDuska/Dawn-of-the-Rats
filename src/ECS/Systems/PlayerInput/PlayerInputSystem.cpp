@@ -1,10 +1,4 @@
 #include "PlayerInputSystem.h"
-#include "ECS/Coordinator/Cordinator.h"
-
-#include "SFML/System/Clock.hpp"
-#include "SFML/window/Keyboard.hpp"
-#include "SFML/Window/Mouse.hpp"
-
 
 void PlayerInputSystem::update(Coordinator& entityManager)
 {

@@ -1,6 +1,4 @@
 #include "InventorySystem.h"
-#include "ECS/Coordinator/Cordinator.h"
-#include <sstream>
 
 std::string InventorySystem::roundTwo(const float x) {
 	std::stringstream ss;
@@ -12,8 +10,8 @@ std::string InventorySystem::roundTwo(const float x) {
 
 void InventorySystem::init(AssetManager& assetManager)
 {
-	assetManager.loadTexture("Inventory", "NewSprites\\Inventory.png");
-	assetManager.loadTexture("InventoryItems", "NewSprites\\GUI_ITEM_SPRITES.png");
+	assetManager.loadTexture("Inventory", "NewSprites/Inventory.png");
+	assetManager.loadTexture("InventoryItems", "NewSprites/GUI_ITEM_SPRITES.png");
 	this->background.setTexture(assetManager.getTexture("Inventory"));
 
 	const sf::Vector2f spriteSize = {

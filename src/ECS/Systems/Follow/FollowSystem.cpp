@@ -1,7 +1,4 @@
 #include "FollowSystem.h"
-#include "ECS/Coordinator/Cordinator.h"
-#include <cmath>
-#include <algorithm>
 
 void FollowSystem::update(Coordinator& entityManager, float dt)
 {

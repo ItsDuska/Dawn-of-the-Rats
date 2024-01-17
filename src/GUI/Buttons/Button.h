@@ -1,6 +1,5 @@
 #pragma once
 #include "GameStates/StateMachine.h"
-#include <SFML/Graphics/RenderTarget.hpp>
 #include "Assets/Texts/Text.h"
 #include "Assets/Sounds/SoundManager.h"
 #include "Assets/Textures/AssetManager.h"

@@ -45,7 +45,7 @@ private:
 
 		if (!soundBuffer.loadFromFile(ASSETS_PATH+"Audio\\"+fileName))
 		{
-			std::cout << "ERROR: Failed to load a sound file.\n";
+			std::cout << "errror on loading sound";
 			return;
 		}
 	

@@ -33,7 +33,7 @@ private:
 
 		if (!font.loadFromFile(ASSETS_PATH + "Fonts\\yoster.ttf"))
 		{
-			std::cout << "ERROR: Failed reading font from a file!\n";
+			std::cout << "Font Error";
 		}
 	}
 	sf::Font& IgetFont()

@@ -1,6 +1,5 @@
 #pragma once
 #include "../Button.h"
-#include "GameStates/State.h"
 
 class ExitButton : public Button
 {

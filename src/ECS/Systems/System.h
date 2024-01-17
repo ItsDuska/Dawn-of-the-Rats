@@ -7,7 +7,6 @@ Tänne kaikki logiikka
 esim collisionit,
 tai movement tai fysiikat
 */
-class Coordinator;
 
 class System
 {
